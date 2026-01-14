@@ -34,7 +34,7 @@ sudo dnf config-manager --add-repo https://repo.sw.foundation/rpm/fc$(rpm -E %fe
 sudo dnf install strongswan-pgsql
 ```
 
-Supported: Fedora 39, Fedora 40
+Supported: Fedora 40, Fedora 41, Fedora 42
 
 ## GPG Key
 
