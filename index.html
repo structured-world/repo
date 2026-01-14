@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SW Foundation Package Repository</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; line-height: 1.6; }
+        pre { background: #f4f4f4; padding: 1rem; overflow-x: auto; border-radius: 4px; }
+        code { background: #f4f4f4; padding: 0.2rem 0.4rem; border-radius: 3px; }
+        h1 { border-bottom: 2px solid #0078D4; padding-bottom: 0.5rem; }
+        h2 { color: #0078D4; }
+        a { color: #0078D4; }
+    </style>
+</head>
+<body>
+    <h1>SW Foundation Package Repository</h1>
+
+    <h2>Ubuntu / Debian</h2>
+    <pre><code># Add GPG key
+curl -fsSL https://structured-world.github.io/repo/keys/sw.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/sw.gpg
+
+# Add repository
+echo "deb [signed-by=/etc/apt/keyrings/sw.gpg] https://structured-world.github.io/repo/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/sw.list
+
+# Install
+sudo apt update
+sudo apt install libstrongswan-pgsql</code></pre>
+
+    <h2>Fedora</h2>
+    <pre><code># Add repository
+sudo dnf config-manager --add-repo https://structured-world.github.io/repo/rpm/fc$(rpm -E %fedora)/sw.repo
+
+# Install
+sudo dnf install strongswan-pgsql</code></pre>
+
+    <h2>Links</h2>
+    <ul>
+        <li><a href="https://github.com/structured-world/strongswan">strongSwan fork</a></li>
+        <li><a href="https://github.com/structured-world/repo">This repository</a></li>
+        <li><a href="https://sw.foundation">SW Foundation</a></li>
+    </ul>
+
+    <p><small>Maintained by Dmitry Prudnikov &lt;mail@polaz.com&gt;</small></p>
+</body>
+</html>
