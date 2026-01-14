@@ -38,8 +38,9 @@ Supported: Fedora 39, Fedora 40
 
 ## GPG Key
 
-Key ID: `(pending)`
-Fingerprint: `(pending)`
+Key ID: `A187D55B5A043632`
+Fingerprint: `4AC4 06DA 15C9 BE4D C1A0 2343 A187 D55B 5A04 3632`
+Algorithm: Ed25519
 
 ```bash
 # Import manually
