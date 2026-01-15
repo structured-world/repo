@@ -9,12 +9,12 @@ Architectures: amd64
 Components: main
 Description: SW Foundation Package Repository
 SHA256:
- 13e6f1e358fb133b855531c0901df613c8aecf0a3d90daa45106b1da645faafd 725 main/binary-amd64/Packages
- 55f87e30a95357cee391c6286ddf26be03bb5d7526ad662c5fbfd34a20d54baf 478 main/binary-amd64/Packages.gz
+ b4682666c12d1f7af8690537dd849b213b69b90d295794006f0f89b5d70bf64d 1446 main/binary-amd64/Packages
+ c1290650a25a644b4a1e01e54369b682662657ac717ac4d1ba971ddc317d5e94 606 main/binary-amd64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iHUEARYKAB0WIQTR7IhZ5NIvA98/BBz5BTMHetsLWgUCaWgz5QAKCRD5BTMHetsL
-WlZ7AP4+k5gJhjYYAMPH0NA04iVa5KaRnh2oRbqbQ8aUKRgxpQEAtU2lqCi0AjYs
-CkJJ3S+aOdl2lwgXihBWO7K5bFfBVgs=
-=41HD
+iHUEARYKAB0WIQTR7IhZ5NIvA98/BBz5BTMHetsLWgUCaWg0zAAKCRD5BTMHetsL
+WgVmAQCNvDErF9RwtVtHPVp013x/5MZ0m3+viNoTJHpswcIPpwEAhNXT6xnKbkwz
+QmuM3gfI1CmbsYI9F+gv2FyNVo/o+AE=
+=7YLH
 -----END PGP SIGNATURE-----

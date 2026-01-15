@@ -1,13 +1,31 @@
 Package: libstrongswan-pgsql
+Version: 1.0.0+ss5.9.13
+Architecture: amd64
+Maintainer: Dmitry Prudnikov <mail@polaz.com>
+Depends: libstrongswan (>= 5.9.13), libpq5
+Filename: pool/main/l/libstrongswan-pgsql/libstrongswan-pgsql_1.0.0+ss5.9.13_noble_amd64.deb
+Size: 8818
+MD5sum: ba3c8b7c11732d93b73d13d4b7f40e85
+SHA1: d98209f22254927b05a7398c2d6ee9350d9cc22b
+SHA256: 96b6297cac6d474a412cf901c466d16c26d32738aceca2ef0d934a4573bf0514
+Section: net
+Priority: optional
+Homepage: https://github.com/structured-world/strongswan
+Description: strongSwan PostgreSQL database backend plugin
+ PostgreSQL database connectivity for strongSwan sql and attr-sql plugins.
+ Built for strongSwan 5.9.13.
+ Maintained by Structured World Foundation.
+
+Package: libstrongswan-pgsql
 Version: 1.0.0+ss5.9.5
 Architecture: amd64
 Maintainer: Dmitry Prudnikov <mail@polaz.com>
 Depends: libstrongswan (>= 5.9.5), libpq5
 Filename: pool/main/l/libstrongswan-pgsql/libstrongswan-pgsql_1.0.0+ss5.9.5_jammy_amd64.deb
-Size: 8826
-MD5sum: a2a5b16aab99fc83ce17dc8bde89b2db
-SHA1: 01feadc4e968f202e069e92fed4127d7d1cbedf9
-SHA256: 879377f12d7ca7acceb1892ba25f2c6ff3093ed1ba2a5b0b39145fa1d11a4136
+Size: 8824
+MD5sum: b98f58f56dda55ced323202169f66a43
+SHA1: 74d70c6ddc227574ae7b5e6f9b8aba9a78dac986
+SHA256: 8ea00de45586ae58b46620c0c101fddb8c7830824e006e336199fef1474a6689
 Section: net
 Priority: optional
 Homepage: https://github.com/structured-world/strongswan
