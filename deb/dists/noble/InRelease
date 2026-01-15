@@ -9,12 +9,12 @@ Architectures: amd64
 Components: main
 Description: SW Foundation Package Repository
 SHA256:
- b4682666c12d1f7af8690537dd849b213b69b90d295794006f0f89b5d70bf64d 1446 main/binary-amd64/Packages
- c1290650a25a644b4a1e01e54369b682662657ac717ac4d1ba971ddc317d5e94 606 main/binary-amd64/Packages.gz
+ 7a161a9e00dc4fe2b07414216fa110090bce892dfebd7dd237371731e1297050 1446 main/binary-amd64/Packages
+ e11d12fba754bdac8f38b4da443e2c9eca778d0f7968721155c6461fdbf7ad59 605 main/binary-amd64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iHUEARYKAB0WIQTR7IhZ5NIvA98/BBz5BTMHetsLWgUCaWg0zAAKCRD5BTMHetsL
-WgVmAQCNvDErF9RwtVtHPVp013x/5MZ0m3+viNoTJHpswcIPpwEAhNXT6xnKbkwz
-QmuM3gfI1CmbsYI9F+gv2FyNVo/o+AE=
-=7YLH
+iHUEARYKAB0WIQTR7IhZ5NIvA98/BBz5BTMHetsLWgUCaWg2TwAKCRD5BTMHetsL
+WuoDAQCJ6GJ6wUmgtvxyk0wMbH471Q9zEPJnJK2tlsk2yhwlDAEA3abOZCq/xSqY
+jNV1XXno3JfZFs1vyzi8Lt2t0G4yNwY=
+=Ryd8
 -----END PGP SIGNATURE-----

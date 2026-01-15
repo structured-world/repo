@@ -4,10 +4,10 @@ Architecture: amd64
 Maintainer: Dmitry Prudnikov <mail@polaz.com>
 Depends: libstrongswan (>= 5.9.13), libpq5
 Filename: pool/main/l/libstrongswan-pgsql/libstrongswan-pgsql_1.0.0+ss5.9.13_noble_amd64.deb
-Size: 8818
-MD5sum: ba3c8b7c11732d93b73d13d4b7f40e85
-SHA1: d98209f22254927b05a7398c2d6ee9350d9cc22b
-SHA256: 96b6297cac6d474a412cf901c466d16c26d32738aceca2ef0d934a4573bf0514
+Size: 8816
+MD5sum: e563a26dd5e8f1f82fba3c7bc49b8ce3
+SHA1: b6ae95077af9049bf98c29d8bd5a5f7577f403f1
+SHA256: cea76d9a729bbb3e0e5f6fe43e328e3280586da1639079fdc15a854c4c291b89
 Section: net
 Priority: optional
 Homepage: https://github.com/structured-world/strongswan
@@ -22,10 +22,10 @@ Architecture: amd64
 Maintainer: Dmitry Prudnikov <mail@polaz.com>
 Depends: libstrongswan (>= 5.9.5), libpq5
 Filename: pool/main/l/libstrongswan-pgsql/libstrongswan-pgsql_1.0.0+ss5.9.5_jammy_amd64.deb
-Size: 8824
-MD5sum: b98f58f56dda55ced323202169f66a43
-SHA1: 74d70c6ddc227574ae7b5e6f9b8aba9a78dac986
-SHA256: 8ea00de45586ae58b46620c0c101fddb8c7830824e006e336199fef1474a6689
+Size: 8828
+MD5sum: d6423e66f935e23adb3a89663f89dd7e
+SHA1: 34dc76eda5d09d59008f51766453efefc7e3c248
+SHA256: 2e72a318d4a012ff4f7ff16087de231d0b4ae9a1ecf447d93c1f6384c560644f
 Section: net
 Priority: optional
 Homepage: https://github.com/structured-world/strongswan
