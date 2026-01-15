@@ -1,0 +1,10 @@
+Origin: SW Foundation
+Label: SW Foundation
+Suite: jammy
+Codename: jammy
+Architectures: amd64
+Components: main
+Description: SW Foundation Package Repository
+SHA256:
+ da14a7a8c730ff0980d1013c8e80d0e5188e515fe3ee05994bfb9e5a5044bd36 721 main/binary-amd64/Packages
+ ad3b8ab6d999d9ac92a2144360d596d05fd2053813d7e628c150378a23cdc491 476 main/binary-amd64/Packages.gz

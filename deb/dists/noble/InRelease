@@ -1,0 +1,20 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Origin: SW Foundation
+Label: SW Foundation
+Suite: noble
+Codename: noble
+Architectures: amd64
+Components: main
+Description: SW Foundation Package Repository
+SHA256:
+ 13e6f1e358fb133b855531c0901df613c8aecf0a3d90daa45106b1da645faafd 725 main/binary-amd64/Packages
+ 55f87e30a95357cee391c6286ddf26be03bb5d7526ad662c5fbfd34a20d54baf 478 main/binary-amd64/Packages.gz
+-----BEGIN PGP SIGNATURE-----
+
+iHUEARYKAB0WIQTR7IhZ5NIvA98/BBz5BTMHetsLWgUCaWgz5QAKCRD5BTMHetsL
+WlZ7AP4+k5gJhjYYAMPH0NA04iVa5KaRnh2oRbqbQ8aUKRgxpQEAtU2lqCi0AjYs
+CkJJ3S+aOdl2lwgXihBWO7K5bFfBVgs=
+=41HD
+-----END PGP SIGNATURE-----
