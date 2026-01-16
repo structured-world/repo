@@ -3,14 +3,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Official package repository for Structured World Foundation. Enterprise-grade strongSwan VPN plugins with PostgreSQL support.">
-    <meta name="keywords" content="strongSwan, PostgreSQL, VPN, IPsec, IKEv2, Linux packages, Ubuntu, Fedora">
+    <meta name="description" content="Official package repository for Structured World Foundation. Enterprise-grade strongSwan VPN with PostgreSQL support.">
+    <meta name="keywords" content="strongSwan, PostgreSQL, VPN, IPsec, IKEv2, Linux packages, Ubuntu, Fedora, Debian">
     <meta name="author" content="Structured World Foundation">
     <meta name="robots" content="index, follow">
 
     <!-- Open Graph -->
     <meta property="og:title" content="SW Foundation Package Repository">
-    <meta property="og:description" content="Enterprise-grade strongSwan VPN plugins with PostgreSQL database support.">
+    <meta property="og:description" content="Enterprise-grade strongSwan VPN with PostgreSQL database support.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://repo.sw.foundation">
     <meta property="og:image" content="https://avatars.githubusercontent.com/u/228206483?v=4">
@@ -47,6 +47,8 @@
             --green-400: #4ade80;
             --green-500: #22c55e;
             --amber-400: #fbbf24;
+            --purple-500: #a855f7;
+            --red-500: #ef4444;
 
             --bg-primary: var(--gray-950);
             --bg-secondary: var(--gray-900);
@@ -64,6 +66,7 @@
             --glow: 0 0 80px rgba(59, 130, 246, 0.15);
             --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
             --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
 
             --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
             --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -72,6 +75,7 @@
             --radius-sm: 6px;
             --radius-md: 10px;
             --radius-lg: 16px;
+            --radius-xl: 24px;
         }
 
         @media (prefers-color-scheme: light) {
@@ -90,6 +94,7 @@
                 --glow: 0 0 80px rgba(59, 130, 246, 0.1);
                 --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
                 --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+                --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
             }
         }
 
@@ -108,9 +113,10 @@
 
         ::selection { background: var(--accent); color: white; }
 
-        h1, h2, h3 { font-weight: 600; letter-spacing: -0.02em; line-height: 1.3; }
+        h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.02em; line-height: 1.3; }
         h1 { font-size: clamp(2.5rem, 6vw, 3.5rem); font-weight: 700; }
         h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+        h3 { font-size: 1.25rem; }
 
         p { color: var(--text-secondary); }
 
@@ -237,32 +243,12 @@
         .hero-subtitle {
             font-size: 1.125rem;
             color: var(--text-secondary);
-            max-width: 560px;
+            max-width: 600px;
             margin: 0 auto 32px;
         }
 
-        .hero-platforms {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .platform-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-primary);
-            border-radius: var(--radius-md);
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: var(--text-primary);
-        }
-
         /* Section Headers */
-        .section-header { text-align: center; max-width: 600px; margin: 0 auto 48px; }
+        .section-header { text-align: center; max-width: 700px; margin: 0 auto 48px; }
 
         .section-label {
             display: inline-block;
@@ -277,49 +263,93 @@
         .section-header h2 { margin-bottom: 12px; }
         .section-header p { font-size: 1.0625rem; }
 
-        /* Package Table */
-        .package-table {
+        /* Package Cards Grid */
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        @media (max-width: 768px) {
+            .packages-grid { grid-template-columns: 1fr; }
+        }
+
+        .package-card {
             background: var(--bg-secondary);
             border: 1px solid var(--border-primary);
-            border-radius: var(--radius-lg);
+            border-radius: var(--radius-xl);
+            padding: 32px;
+            position: relative;
             overflow: hidden;
+            transition: all var(--transition-base);
         }
 
-        .package-row {
-            display: grid;
-            grid-template-columns: 200px 1fr auto;
-            gap: 24px;
-            padding: 20px 24px;
+        .package-card:hover {
+            border-color: var(--border-secondary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .package-card.main {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(59, 130, 246, 0.05) 100%);
+        }
+
+        .package-card.plugin {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(168, 85, 247, 0.05) 100%);
+        }
+
+        .package-icon {
+            width: 56px;
+            height: 56px;
+            display: flex;
             align-items: center;
-            border-bottom: 1px solid var(--border-primary);
+            justify-content: center;
+            border-radius: var(--radius-lg);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
         }
 
-        .package-row:last-child { border-bottom: none; }
-
-        .package-row.header {
-            background: var(--bg-tertiary);
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-tertiary);
-            padding: 12px 24px;
+        .package-card.main .package-icon {
+            background: linear-gradient(135deg, var(--blue-500), var(--blue-600));
         }
 
-        .package-name { display: flex; flex-direction: column; gap: 4px; }
+        .package-card.plugin .package-icon {
+            background: linear-gradient(135deg, var(--purple-500), #7c3aed);
+        }
 
-        .package-name code {
+        .package-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .package-card .pkg-name {
+            display: inline-block;
+            font-family: 'SF Mono', monospace;
             font-size: 0.8125rem;
-            color: var(--text-primary);
+            color: var(--text-tertiary);
             background: var(--bg-tertiary);
-            padding: 3px 8px;
+            padding: 4px 10px;
             border-radius: var(--radius-sm);
-            width: fit-content;
+            margin-bottom: 16px;
         }
 
-        .package-desc { font-size: 0.9375rem; color: var(--text-secondary); }
+        .package-card .pkg-desc {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
 
-        .package-license {
+        .package-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-primary);
+        }
+
+        .meta-badge {
             display: inline-flex;
             align-items: center;
             gap: 6px;
@@ -327,66 +357,133 @@
             background: var(--bg-tertiary);
             border-radius: var(--radius-sm);
             font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        .meta-badge svg { width: 14px; height: 14px; opacity: 0.7; }
+
+        .meta-badge .version {
+            color: var(--success);
             font-weight: 500;
-            color: var(--text-secondary);
-            white-space: nowrap;
         }
 
-        @media (max-width: 768px) {
-            .package-row { grid-template-columns: 1fr; gap: 12px; }
-            .package-row.header { display: none; }
+        /* Distro Tabs */
+        .distro-section {
+            margin-top: 64px;
         }
 
-        /* Tabs */
-        .tabs-container {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-primary);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            max-width: 720px;
-            margin: 0 auto;
-        }
-
-        .tabs-header {
+        .distro-tabs {
             display: flex;
-            background: var(--bg-tertiary);
-            border-bottom: 1px solid var(--border-primary);
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 32px;
         }
 
-        .tab-btn {
-            flex: 1;
+        .distro-tab {
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 10px;
-            padding: 16px 24px;
-            background: transparent;
-            border: none;
+            padding: 12px 24px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-md);
             font-family: inherit;
             font-size: 0.9375rem;
             font-weight: 500;
             color: var(--text-tertiary);
             cursor: pointer;
             transition: all var(--transition-fast);
-            border-bottom: 2px solid transparent;
-            margin-bottom: -1px;
         }
 
-        .tab-btn:hover { color: var(--text-secondary); background: var(--bg-secondary); }
+        .distro-tab:hover {
+            color: var(--text-secondary);
+            border-color: var(--border-secondary);
+        }
 
-        .tab-btn.active {
+        .distro-tab.active {
             color: var(--text-primary);
-            background: var(--bg-secondary);
-            border-bottom-color: var(--accent);
+            background: var(--bg-tertiary);
+            border-color: var(--accent);
         }
 
-        .tab-btn svg { width: 20px; height: 20px; opacity: 0.7; }
+        .distro-tab svg { width: 20px; height: 20px; }
 
-        .tab-content { display: none; padding: 24px; }
-        .tab-content.active { display: block; }
+        .distro-content { display: none; }
+        .distro-content.active { display: block; }
 
-        .tab-info {
+        /* Install Cards */
+        .install-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        @media (max-width: 900px) {
+            .install-grid { grid-template-columns: 1fr; }
+        }
+
+        .install-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .install-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border-primary);
+        }
+
+        .install-card-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .install-card-title h4 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .install-card-title .icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-sm);
             font-size: 0.875rem;
+        }
+
+        .install-card.main .install-card-title .icon {
+            background: linear-gradient(135deg, var(--blue-500), var(--blue-600));
+        }
+
+        .install-card.plugin .install-card-title .icon {
+            background: linear-gradient(135deg, var(--purple-500), #7c3aed);
+        }
+
+        .install-card-versions {
+            display: flex;
+            gap: 6px;
+        }
+
+        .version-badge {
+            padding: 4px 8px;
+            background: var(--bg-primary);
+            border-radius: var(--radius-sm);
+            font-size: 0.6875rem;
+            color: var(--text-tertiary);
+        }
+
+        .install-card-body { padding: 20px; }
+
+        .install-card .supported {
+            font-size: 0.8125rem;
             color: var(--text-tertiary);
             margin-bottom: 16px;
         }
@@ -451,25 +548,7 @@
         .code-block .cmd { color: var(--green-400); }
         .code-block .str { color: var(--amber-400); }
 
-        /* Callout */
-        .callout {
-            display: flex;
-            gap: 14px;
-            padding: 16px 20px;
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            border-radius: var(--radius-md);
-            margin-top: 32px;
-            max-width: 720px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .callout-icon { font-size: 1.25rem; }
-        .callout-title { font-weight: 600; font-size: 0.9375rem; margin-bottom: 2px; }
-        .callout-text { font-size: 0.875rem; color: var(--text-secondary); }
-
-        /* Security */
+        /* Security Section */
         .security-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -538,6 +617,38 @@
             padding: 2px 6px;
             border-radius: 4px;
             font-size: 0.75rem;
+        }
+
+        /* Platform Badges */
+        .platforms-row {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 32px;
+        }
+
+        .platform-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 24px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-lg);
+        }
+
+        .platform-card svg { width: 24px; height: 24px; opacity: 0.8; }
+
+        .platform-info h4 {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .platform-info span {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
         }
 
         /* Footer */
@@ -710,47 +821,20 @@
         .docs-content th { background: var(--bg-tertiary); font-weight: 600; font-size: 0.875rem; }
         .docs-content td { color: var(--text-secondary); font-size: 0.875rem; }
 
-        /* Dynamic Package Info */
-        .package-dynamic-info {
+        /* Callout */
+        .callout {
             display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 8px;
+            gap: 14px;
+            padding: 16px 20px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: var(--radius-md);
+            margin-top: 32px;
         }
 
-        .pkg-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 10px;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border-primary);
-            border-radius: var(--radius-sm);
-            font-size: 0.6875rem;
-            color: var(--text-tertiary);
-        }
-
-        .pkg-badge strong {
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        .pkg-version {
-            color: var(--success) !important;
-        }
-
-        .packages-loading {
-            text-align: center;
-            padding: 24px;
-            color: var(--text-tertiary);
-            font-size: 0.875rem;
-        }
-
-        .package-dist {
-            font-size: 0.75rem;
-            color: var(--text-tertiary);
-            margin-top: 4px;
-        }
+        .callout-icon { font-size: 1.25rem; }
+        .callout-title { font-weight: 600; font-size: 0.9375rem; margin-bottom: 2px; }
+        .callout-text { font-size: 0.875rem; color: var(--text-secondary); }
     </style>
 </head>
 <body>
@@ -780,21 +864,34 @@
         <div class="container">
             <div class="hero-badge">
                 <span class="hero-badge-dot"></span>
-                All packages signed & verified
+                All packages signed &amp; verified
             </div>
             <h1>Package Repository</h1>
             <p class="hero-subtitle">
-                Enterprise-grade strongSwan VPN plugins with PostgreSQL database support.
-                Production-ready packages for modern Linux distributions.
+                Enterprise-grade strongSwan VPN packages with PostgreSQL database support.
+                Production-ready builds for modern Linux distributions.
             </p>
-            <div class="hero-platforms">
-                <div class="platform-badge">
-                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-                    Fedora 40–42
+            <div class="platforms-row">
+                <div class="platform-card">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    <div class="platform-info">
+                        <h4>Fedora</h4>
+                        <span>39, 40, 41, 42</span>
+                    </div>
                 </div>
-                <div class="platform-badge">
-                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
-                    Ubuntu 22.04 / 24.04
+                <div class="platform-card">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+                    <div class="platform-info">
+                        <h4>Ubuntu</h4>
+                        <span>22.04, 24.04</span>
+                    </div>
+                </div>
+                <div class="platform-card">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <div class="platform-info">
+                        <h4>Debian</h4>
+                        <span>12 (Bookworm)</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -805,87 +902,179 @@
             <div class="section-header">
                 <span class="section-label">Available Packages</span>
                 <h2>Built for Production</h2>
-                <p>Compiled from source, tested, and cryptographically signed for secure deployment.</p>
+                <p>Two packages for complete strongSwan VPN with PostgreSQL support. Install both or just what you need.</p>
             </div>
 
-            <div class="package-table">
-                <div class="package-row header">
-                    <span>Package</span>
-                    <span>Description</span>
-                    <span>License</span>
-                </div>
-                <div class="package-row">
-                    <div class="package-name">
-                        <code>strongswan-pgsql</code>
-                        <span class="package-dist">Fedora (RPM)</span>
-                        <code>libstrongswan-pgsql</code>
-                        <span class="package-dist">Ubuntu/Debian (DEB)</span>
-                        <div id="package-versions" class="package-dynamic-info">
-                            <span class="packages-loading">Loading package info...</span>
-                        </div>
+            <div class="packages-grid">
+                <div class="package-card main">
+                    <div class="package-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
                     </div>
-                    <p class="package-desc">
-                        PostgreSQL database backend for strongSwan VPN. Enables <code>sql</code> and <code>attr-sql</code> plugins to store credentials, pools, and attributes.
+                    <h3>strongSwan SW</h3>
+                    <code class="pkg-name">strongswan-sw</code>
+                    <p class="pkg-desc">
+                        Complete strongSwan VPN distribution with all standard plugins. This is the base package required for IKEv2/IPsec VPN server functionality.
                     </p>
-                    <span class="package-license">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                        GPL-2.0
-                    </span>
+                    <div class="package-meta">
+                        <span class="meta-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            GPL-2.0
+                        </span>
+                        <span class="meta-badge">
+                            Version: <span class="version" id="version-sw">loading...</span>
+                        </span>
+                        <span class="meta-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                            <span id="size-sw">~6 MB</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="package-card plugin">
+                    <div class="package-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M20 6H16V4C16 2.9 15.1 2 14 2H10C8.9 2 8 2.9 8 4V6H4C2.9 6 2 6.9 2 8V20C2 21.1 2.9 22 4 22H20C21.1 22 22 21.1 22 20V8C22 6.9 21.1 6 20 6ZM10 4H14V6H10V4ZM12 18C10.34 18 9 16.66 9 15C9 13.34 10.34 12 12 12C13.66 12 15 13.34 15 15C15 16.66 13.66 18 12 18Z"/></svg>
+                    </div>
+                    <h3>PostgreSQL Plugin</h3>
+                    <code class="pkg-name">strongswan-pgsql</code>
+                    <p class="pkg-desc">
+                        PostgreSQL database backend for strongSwan. Enables <code>sql</code> and <code>attr-sql</code> plugins to store credentials, IP pools, and connection attributes.
+                    </p>
+                    <div class="package-meta">
+                        <span class="meta-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            GPL-2.0
+                        </span>
+                        <span class="meta-badge">
+                            Version: <span class="version" id="version-pgsql">loading...</span>
+                        </span>
+                        <span class="meta-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                            <span id="size-pgsql">~34 KB</span>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="install">
+    <section id="install" class="distro-section">
         <div class="container">
             <div class="section-header">
-                <span class="section-label">Get Started</span>
-                <h2>Quick Installation</h2>
+                <span class="section-label">Installation</span>
+                <h2>Quick Start</h2>
                 <p>Add our repository and install packages with your system's package manager.</p>
             </div>
 
-            <div class="tabs-container">
-                <div class="tabs-header">
-                    <button class="tab-btn active" onclick="switchTab('fedora')">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-                        Fedora
-                    </button>
-                    <button class="tab-btn" onclick="switchTab('ubuntu')">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
-                        Ubuntu / Debian
-                    </button>
-                </div>
+            <div class="distro-tabs">
+                <button class="distro-tab active" onclick="switchDistro('fedora')">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    Fedora (RPM)
+                </button>
+                <button class="distro-tab" onclick="switchDistro('debian')">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+                    Ubuntu / Debian (DEB)
+                </button>
+            </div>
 
-                <div id="tab-fedora" class="tab-content active">
-                    <p class="tab-info">Supported: Fedora 40, 41, 42</p>
-                    <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-lang">bash</span>
-                            <button class="code-copy" onclick="copyCode(this)">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-                                Copy
-                            </button>
+            <!-- Fedora Installation -->
+            <div id="distro-fedora" class="distro-content active">
+                <div class="install-grid">
+                    <div class="install-card main">
+                        <div class="install-card-header">
+                            <div class="install-card-title">
+                                <div class="icon">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+                                </div>
+                                <h4>strongSwan SW</h4>
+                            </div>
+                            <div class="install-card-versions">
+                                <span class="version-badge">fc39</span>
+                                <span class="version-badge">fc40</span>
+                                <span class="version-badge">fc41</span>
+                                <span class="version-badge">fc42</span>
+                            </div>
                         </div>
-                        <pre><code><span class="comment"># Add repository</span>
+                        <div class="install-card-body">
+                            <p class="supported">Fedora 39, 40, 41, 42 (x86_64)</p>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-lang">bash</span>
+                                    <button class="code-copy" onclick="copyCode(this)">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                        Copy
+                                    </button>
+                                </div>
+                                <pre><code><span class="comment"># Add repository</span>
 sudo dnf config-manager --add-repo \
   https://repo.sw.foundation/rpm/fc$(rpm -E %fedora)/sw.repo
 
-<span class="comment"># Install</span>
+<span class="comment"># Install strongSwan</span>
+sudo dnf install <span class="cmd">strongswan-sw</span></code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="install-card plugin">
+                        <div class="install-card-header">
+                            <div class="install-card-title">
+                                <div class="icon">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M20 6H16V4C16 2.9 15.1 2 14 2H10C8.9 2 8 2.9 8 4V6H4C2.9 6 2 6.9 2 8V20C2 21.1 2.9 22 4 22H20C21.1 22 22 21.1 22 20V8C22 6.9 21.1 6 20 6Z"/></svg>
+                                </div>
+                                <h4>PostgreSQL Plugin</h4>
+                            </div>
+                            <div class="install-card-versions">
+                                <span class="version-badge">fc39</span>
+                                <span class="version-badge">fc40</span>
+                                <span class="version-badge">fc41</span>
+                                <span class="version-badge">fc42</span>
+                            </div>
+                        </div>
+                        <div class="install-card-body">
+                            <p class="supported">Requires strongswan-sw</p>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-lang">bash</span>
+                                    <button class="code-copy" onclick="copyCode(this)">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                        Copy
+                                    </button>
+                                </div>
+                                <pre><code><span class="comment"># Install PostgreSQL plugin</span>
 sudo dnf install <span class="cmd">strongswan-pgsql</span></code></pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <div id="tab-ubuntu" class="tab-content">
-                    <p class="tab-info">Supported: Ubuntu 22.04 (jammy), Ubuntu 24.04 (noble)</p>
-                    <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-lang">bash</span>
-                            <button class="code-copy" onclick="copyCode(this)">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-                                Copy
-                            </button>
+            <!-- Ubuntu/Debian Installation -->
+            <div id="distro-debian" class="distro-content">
+                <div class="install-grid">
+                    <div class="install-card main">
+                        <div class="install-card-header">
+                            <div class="install-card-title">
+                                <div class="icon">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+                                </div>
+                                <h4>strongSwan SW</h4>
+                            </div>
+                            <div class="install-card-versions">
+                                <span class="version-badge">jammy</span>
+                                <span class="version-badge">noble</span>
+                                <span class="version-badge">bookworm</span>
+                            </div>
                         </div>
-                        <pre><code><span class="comment"># Add GPG key</span>
+                        <div class="install-card-body">
+                            <p class="supported">Ubuntu 22.04, 24.04 | Debian 12</p>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-lang">bash</span>
+                                    <button class="code-copy" onclick="copyCode(this)">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                        Copy
+                                    </button>
+                                </div>
+                                <pre><code><span class="comment"># Add GPG key</span>
 curl -fsSL https://repo.sw.foundation/keys/sw.gpg \
   | sudo gpg --dearmor -o /etc/apt/keyrings/sw.gpg
 
@@ -894,15 +1083,47 @@ echo <span class="str">"deb [signed-by=/etc/apt/keyrings/sw.gpg] \
   https://repo.sw.foundation/deb $(lsb_release -cs) main"</span> \
   | sudo tee /etc/apt/sources.list.d/sw.list
 
-<span class="comment"># Install</span>
+<span class="comment"># Install strongSwan</span>
 sudo apt update
-sudo apt install <span class="cmd">libstrongswan-pgsql</span></code></pre>
+sudo apt install <span class="cmd">strongswan-sw</span></code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="install-card plugin">
+                        <div class="install-card-header">
+                            <div class="install-card-title">
+                                <div class="icon">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M20 6H16V4C16 2.9 15.1 2 14 2H10C8.9 2 8 2.9 8 4V6H4C2.9 6 2 6.9 2 8V20C2 21.1 2.9 22 4 22H20C21.1 22 22 21.1 22 20V8C22 6.9 21.1 6 20 6Z"/></svg>
+                                </div>
+                                <h4>PostgreSQL Plugin</h4>
+                            </div>
+                            <div class="install-card-versions">
+                                <span class="version-badge">jammy</span>
+                                <span class="version-badge">noble</span>
+                                <span class="version-badge">bookworm</span>
+                            </div>
+                        </div>
+                        <div class="install-card-body">
+                            <p class="supported">Requires strongswan-sw</p>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-lang">bash</span>
+                                    <button class="code-copy" onclick="copyCode(this)">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                        Copy
+                                    </button>
+                                </div>
+                                <pre><code><span class="comment"># Install PostgreSQL plugin</span>
+sudo apt install <span class="cmd">strongswan-pgsql</span></code></pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="callout">
-                <div class="callout-icon">📚</div>
+                <div class="callout-icon">&#128218;</div>
                 <div>
                     <h4 class="callout-title">Configuration Guide</h4>
                     <p class="callout-text">
@@ -923,21 +1144,21 @@ sudo apt install <span class="cmd">libstrongswan-pgsql</span></code></pre>
 
             <div class="security-grid">
                 <div class="security-item">
-                    <div class="security-item-icon">🔑</div>
+                    <div class="security-item-icon">&#128273;</div>
                     <div>
                         <div class="security-item-label">Key ID</div>
                         <div class="security-item-value">A187D55B5A043632</div>
                     </div>
                 </div>
                 <div class="security-item">
-                    <div class="security-item-icon">🔐</div>
+                    <div class="security-item-icon">&#128272;</div>
                     <div>
                         <div class="security-item-label">Algorithm</div>
                         <div class="security-item-value">Ed25519</div>
                     </div>
                 </div>
                 <div class="security-item">
-                    <div class="security-item-icon">✅</div>
+                    <div class="security-item-icon">&#9989;</div>
                     <div>
                         <div class="security-item-label">Status</div>
                         <div class="security-item-value" style="color: var(--success)">Active</div>
@@ -1000,15 +1221,15 @@ sudo apt install <span class="cmd">libstrongswan-pgsql</span></code></pre>
 
             <div class="footer-legal">
                 <div class="legal-text">
-                    <p><strong>License:</strong> The pgsql plugin is distributed under the GNU General Public License version 2 (GPL-2.0-only), consistent with the upstream strongSwan project.</p>
-                    <p><strong>Trademark Notice:</strong> strongSwan® is a registered trademark of Andreas Steffen and the strongSwan project. This is an independent distribution not affiliated with or endorsed by the strongSwan project.</p>
+                    <p><strong>License:</strong> All packages are distributed under the GNU General Public License version 2 (GPL-2.0-only), consistent with the upstream strongSwan project.</p>
+                    <p><strong>Trademark Notice:</strong> strongSwan is a registered trademark of Andreas Steffen and the strongSwan project. This is an independent distribution not affiliated with or endorsed by the strongSwan project.</p>
                     <p><strong>No Warranty:</strong> This software is provided "AS IS" without warranty of any kind. See the GPL-2.0 license for details.</p>
                     <p><strong>Source Availability:</strong> Complete source code is available at <a href="https://github.com/structured-world/strongswan">github.com/structured-world/strongswan</a>.</p>
                 </div>
             </div>
 
             <div class="footer-bottom">
-                <span>© 2025–2026 Structured World Foundation</span>
+                <span>&copy; 2025-2026 Structured World Foundation</span>
                 <span>Maintained by <a href="mailto:mail@polaz.com">Dmitry Prudnikov</a></span>
             </div>
         </div>
@@ -1033,13 +1254,13 @@ sudo apt install <span class="cmd">libstrongswan-pgsql</span></code></pre>
     </div>
 
     <script>
-        // Tab switching
-        function switchTab(tab) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        // Distro tab switching
+        function switchDistro(distro) {
+            document.querySelectorAll('.distro-tab').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.distro-content').forEach(content => content.classList.remove('active'));
 
-            document.querySelector(`[onclick="switchTab('${tab}')"]`).classList.add('active');
-            document.getElementById(`tab-${tab}`).classList.add('active');
+            document.querySelector(`[onclick="switchDistro('${distro}')"]`).classList.add('active');
+            document.getElementById(`distro-${distro}`).classList.add('active');
         }
 
         // Copy code
@@ -1092,77 +1313,41 @@ sudo apt install <span class="cmd">libstrongswan-pgsql</span></code></pre>
             if (e.key === 'Escape') closeDocs();
         });
 
-        // Fetch and display package versions
+        // Fetch and display package versions dynamically
         async function loadPackageInfo() {
-            const container = document.getElementById('package-versions');
-            const packages = [];
-
-            // Define what to fetch
-            const sources = [
-                { type: 'deb', dist: 'jammy', label: 'Ubuntu 22.04', url: 'deb/dists/jammy/main/binary-amd64/Packages' },
-                { type: 'deb', dist: 'noble', label: 'Ubuntu 24.04', url: 'deb/dists/noble/main/binary-amd64/Packages' },
-                { type: 'rpm', dist: 'fc40', label: 'Fedora 40', url: 'rpm/fc40/repodata/repomd.xml' },
-                { type: 'rpm', dist: 'fc41', label: 'Fedora 41', url: 'rpm/fc41/repodata/repomd.xml' },
-                { type: 'rpm', dist: 'fc42', label: 'Fedora 42', url: 'rpm/fc42/repodata/repomd.xml' },
+            const debSources = [
+                'deb/dists/jammy/main/binary-amd64/Packages',
+                'deb/dists/noble/main/binary-amd64/Packages',
+                'deb/dists/bookworm/main/binary-amd64/Packages',
             ];
 
-            // Fetch DEB packages
-            for (const src of sources.filter(s => s.type === 'deb')) {
+            let swVersion = null;
+            let pgsqlVersion = null;
+
+            for (const url of debSources) {
+                if (swVersion && pgsqlVersion) break;
                 try {
-                    const response = await fetch(src.url);
-                    if (response.ok) {
-                        const text = await response.text();
-                        const versionMatch = text.match(/^Version:\s*(.+)$/m);
-                        const sizeMatch = text.match(/^Size:\s*(\d+)$/m);
-                        if (versionMatch) {
-                            packages.push({
-                                label: src.label,
-                                version: versionMatch[1],
-                                size: sizeMatch ? formatBytes(parseInt(sizeMatch[1])) : null
-                            });
-                        }
+                    const response = await fetch(url);
+                    if (!response.ok) continue;
+                    const text = await response.text();
+                    if (!text.trim()) continue;
+
+                    // Parse multi-package Packages file
+                    for (const pkg of text.split('\n\n')) {
+                        const name = pkg.match(/^Package:\s*(.+)$/m)?.[1];
+                        const version = pkg.match(/^Version:\s*(.+)$/m)?.[1];
+                        if (!name || !version) continue;
+
+                        if (name === 'strongswan-sw' && !swVersion) swVersion = version;
+                        if (name === 'strongswan-pgsql' && !pgsqlVersion) pgsqlVersion = version;
                     }
-                } catch (e) { /* ignore */ }
+                } catch (e) { /* ignore fetch errors */ }
             }
 
-            // Fetch RPM packages (check if repo exists)
-            for (const src of sources.filter(s => s.type === 'rpm')) {
-                try {
-                    const response = await fetch(src.url);
-                    if (response.ok) {
-                        // For RPM, try to fetch the actual package list
-                        const primaryUrl = `rpm/${src.dist}/repodata/primary.xml.gz`;
-                        // Since we can't easily parse gzipped XML in browser, just mark as available
-                        packages.push({
-                            label: src.label,
-                            version: 'available',
-                            size: null
-                        });
-                    }
-                } catch (e) { /* ignore */ }
-            }
-
-            // Render
-            if (packages.length === 0) {
-                container.innerHTML = '<span class="pkg-badge">No packages published yet</span>';
-            } else {
-                container.innerHTML = packages.map(pkg =>
-                    `<span class="pkg-badge">
-                        <strong>${pkg.label}</strong>
-                        <span class="pkg-version">${pkg.version}</span>
-                        ${pkg.size ? `<span>${pkg.size}</span>` : ''}
-                    </span>`
-                ).join('');
-            }
+            document.getElementById('version-sw').textContent = swVersion || 'unavailable';
+            document.getElementById('version-pgsql').textContent = pgsqlVersion || 'unavailable';
         }
 
-        function formatBytes(bytes) {
-            if (bytes < 1024) return bytes + ' B';
-            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
-        }
-
-        // Load package info on page load
         document.addEventListener('DOMContentLoaded', loadPackageInfo);
     </script>
 </body>
