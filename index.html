@@ -923,9 +923,9 @@
                         <span class="meta-badge">
                             Version: <span class="version" id="version-sw">loading...</span>
                         </span>
-                        <span class="meta-badge">
+                        <span class="meta-badge" id="size-sw-badge" style="display:none">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-                            <span id="size-sw">~6 MB</span>
+                            <span id="size-sw"></span>
                         </span>
                     </div>
                 </div>
@@ -947,9 +947,9 @@
                         <span class="meta-badge">
                             Version: <span class="version" id="version-pgsql">loading...</span>
                         </span>
-                        <span class="meta-badge">
+                        <span class="meta-badge" id="size-pgsql-badge" style="display:none">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-                            <span id="size-pgsql">~34 KB</span>
+                            <span id="size-pgsql"></span>
                         </span>
                     </div>
                 </div>
@@ -1313,7 +1313,7 @@ sudo apt install <span class="cmd">strongswan-pgsql</span></code></pre>
             if (e.key === 'Escape') closeDocs();
         });
 
-        // Fetch and display package versions dynamically
+        // Fetch and display package info dynamically from Packages files
         async function loadPackageInfo() {
             const debSources = [
                 'deb/dists/jammy/main/binary-amd64/Packages',
@@ -1321,31 +1321,52 @@ sudo apt install <span class="cmd">strongswan-pgsql</span></code></pre>
                 'deb/dists/bookworm/main/binary-amd64/Packages',
             ];
 
-            let swVersion = null;
-            let pgsqlVersion = null;
+            let swInfo = null;
+            let pgsqlInfo = null;
 
             for (const url of debSources) {
-                if (swVersion && pgsqlVersion) break;
+                if (swInfo && pgsqlInfo) break;
                 try {
                     const response = await fetch(url);
                     if (!response.ok) continue;
                     const text = await response.text();
                     if (!text.trim()) continue;
 
-                    // Parse multi-package Packages file
                     for (const pkg of text.split('\n\n')) {
                         const name = pkg.match(/^Package:\s*(.+)$/m)?.[1];
                         const version = pkg.match(/^Version:\s*(.+)$/m)?.[1];
+                        const size = pkg.match(/^Size:\s*(\d+)$/m)?.[1];
                         if (!name || !version) continue;
 
-                        if (name === 'strongswan-sw' && !swVersion) swVersion = version;
-                        if (name === 'strongswan-pgsql' && !pgsqlVersion) pgsqlVersion = version;
+                        if (name === 'strongswan-sw' && !swInfo) {
+                            swInfo = { version, size: size ? formatBytes(parseInt(size)) : null };
+                        }
+                        if (name === 'strongswan-pgsql' && !pgsqlInfo) {
+                            pgsqlInfo = { version, size: size ? formatBytes(parseInt(size)) : null };
+                        }
                     }
                 } catch (e) { /* ignore fetch errors */ }
             }
 
-            document.getElementById('version-sw').textContent = swVersion || 'unavailable';
-            document.getElementById('version-pgsql').textContent = pgsqlVersion || 'unavailable';
+            // Update version display
+            document.getElementById('version-sw').textContent = swInfo?.version || 'unavailable';
+            document.getElementById('version-pgsql').textContent = pgsqlInfo?.version || 'unavailable';
+
+            // Update size display (only show if available)
+            if (swInfo?.size) {
+                document.getElementById('size-sw').textContent = swInfo.size;
+                document.getElementById('size-sw-badge').style.display = '';
+            }
+            if (pgsqlInfo?.size) {
+                document.getElementById('size-pgsql').textContent = pgsqlInfo.size;
+                document.getElementById('size-pgsql-badge').style.display = '';
+            }
+        }
+
+        function formatBytes(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
         }
 
         document.addEventListener('DOMContentLoaded', loadPackageInfo);
