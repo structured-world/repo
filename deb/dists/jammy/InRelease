@@ -8,13 +8,27 @@ Codename: jammy
 Architectures: amd64
 Components: main
 Description: SW Foundation Package Repository
+Date: Fri, 16 Jan 2026 02:27:05 +0000
+MD5Sum:
+ 2d04e8bdcb7436e740463e626d4c84d6              194 Release
+ 08575fce121e227bc8aaac381f0959fa             6520 main/binary-amd64/Packages
+ c8acfc93eb517e7c22090bbf6495c132             2007 main/binary-amd64/Packages.gz
+SHA1:
+ 1f35a68a7c7ed03932081efe2430cf2c5b3e0bc7              194 Release
+ 42300736d003ed7a5ac81db489ccd58acf3597f1             6520 main/binary-amd64/Packages
+ 0d07bc42449da1299e2ce3fa3aa82c4c529d8f7c             2007 main/binary-amd64/Packages.gz
 SHA256:
- 7a161a9e00dc4fe2b07414216fa110090bce892dfebd7dd237371731e1297050 1446 main/binary-amd64/Packages
- e11d12fba754bdac8f38b4da443e2c9eca778d0f7968721155c6461fdbf7ad59 605 main/binary-amd64/Packages.gz
+ 5d5056cfeb83ca526f75dcf5b12e1be65988fe751d9aa3a5c308b29f9d0e9a5c              194 Release
+ b1cd4a29912430953c3b2cf65a6e05daa422259892bfcd4f2b47e81677fd10ac             6520 main/binary-amd64/Packages
+ e8c0c8cb2f8e18fa1f0d6399f01a1eabceba10b16a602f762ffac405a2df358f             2007 main/binary-amd64/Packages.gz
+SHA512:
+ aa815af57638f92313cba532174cf43a27dba2dcce7e2b0dee56cbaeeee0f19f58f2ddf6c687a9df9bebc66853aca1846b6fa48b47e9135f6121d9e7fcb43c3d              194 Release
+ 89cc6ab5294366df257c074555fd07e7a246508e195104fec56165a7b395b88fbb5e15fc62e190736debd46f65c3fcc9d36017da09fef23e00dae05f93c263ce             6520 main/binary-amd64/Packages
+ 38f9b2239a80af1d8b4e5c684207c406c06deccc396c6ef45fba8dbe880ec69ec00faa983d16e7e979412953514ec8d3f41775136856d80732d9f86c40bfd498             2007 main/binary-amd64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iHUEARYKAB0WIQTR7IhZ5NIvA98/BBz5BTMHetsLWgUCaWg2TwAKCRD5BTMHetsL
-WpU8AP96WJxhY9vl6lqrJ7MDng4aPEscLysy4JdseE8RQSucAgEA2ywd/drd9QqU
-ZlQ5RlPrrOaovuljS8VldXnBrk1KrgY=
-=zE2q
+iHUEARYKAB0WIQTR7IhZ5NIvA98/BBz5BTMHetsLWgUCaWmh+gAKCRD5BTMHetsL
+WriHAQD/185I3f8TL2KQ+FjfAurL2Bq+DfqkyL8DXq+JgFPm4gD/R2TkKJ0HQvua
+HFnPS5Yu7AgEr8xEKnpuIEHk6v1DuAI=
+=cHeX
 -----END PGP SIGNATURE-----

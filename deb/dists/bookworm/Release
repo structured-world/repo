@@ -1,0 +1,24 @@
+Origin: SW Foundation
+Label: SW Foundation
+Suite: bookworm
+Codename: bookworm
+Architectures: amd64
+Components: main
+Description: SW Foundation Package Repository
+Date: Fri, 16 Jan 2026 02:27:06 +0000
+MD5Sum:
+ defa0e74a418d76fd441017a525e8ea6              200 Release
+ 9a414599a4a81da3b2250de39d0d26ed             5646 main/binary-amd64/Packages
+ 1dc719e7c04b0eb3b410508c85580063             1749 main/binary-amd64/Packages.gz
+SHA1:
+ 42b9090a4dfa942774b5102e4f1658a4712ff028              200 Release
+ 0f78647053fd12709a94d34d630155ab52ce7d60             5646 main/binary-amd64/Packages
+ 9b5e5ec74042bb042b95d4ba02fbbcf4ac2186a2             1749 main/binary-amd64/Packages.gz
+SHA256:
+ 1f087caa161ce593c9a75d343d161f4fe3ea25c8078c398454b09e69cb39d4af              200 Release
+ 15ab0536cbf80b6c4e75aa1fa55f5e8d5d85176a9904c83d3e4d211267f1fa27             5646 main/binary-amd64/Packages
+ f680b2e4a62a73b84e95a742f35d2a34ebb176ba733724afc82499b3c0014ff4             1749 main/binary-amd64/Packages.gz
+SHA512:
+ db3439209bc0e9cec7fe230515348e72225be88b84a0750310f39ba9daed809197887e4e2ec3e2475e004609435a8af54093c4dc79525dac108dc1872594d54a              200 Release
+ 7d6f959300a40691432ba36981656ba7060bc143395a6e3e0bbc32e47dc275bf7d69ab5f186497cf70ddbadd3d4d174a6b4886bc1b88f0f6e1b369bb747d9fbd             5646 main/binary-amd64/Packages
+ e0c233830378ccb25cef2d564cc61f57d95f36620e8c1db0448928effdb96774d53d4853301aa3f181e195764936cf233722d8d2709518317edc6a1a40da7a03             1749 main/binary-amd64/Packages.gz

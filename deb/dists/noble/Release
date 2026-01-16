@@ -5,6 +5,20 @@ Codename: noble
 Architectures: amd64
 Components: main
 Description: SW Foundation Package Repository
+Date: Fri, 16 Jan 2026 02:27:06 +0000
+MD5Sum:
+ 696e95af2d7356657cd66e87221de3f3              194 Release
+ 0b91db4875169051d3db95ea88fbaf57             7384 main/binary-amd64/Packages
+ c14434d990a2d858bca9147e2a62bf49             2245 main/binary-amd64/Packages.gz
+SHA1:
+ 5762feae9684f25b85e921b81db2ec006f933994              194 Release
+ 54a2d5b93036f9062f62832b1a97f897b37714d9             7384 main/binary-amd64/Packages
+ 026d58afac7f2075fd55a33339dc84d5de5497f3             2245 main/binary-amd64/Packages.gz
 SHA256:
- 7a161a9e00dc4fe2b07414216fa110090bce892dfebd7dd237371731e1297050 1446 main/binary-amd64/Packages
- e11d12fba754bdac8f38b4da443e2c9eca778d0f7968721155c6461fdbf7ad59 605 main/binary-amd64/Packages.gz
+ eae67d70173784503ffe417a7d1df0172fd8f76762d78ca8e238803c2d32afb5              194 Release
+ 50d9ee740fdf45143ef3023df752166d6db053ae88f9a6c7179e23aaddda649a             7384 main/binary-amd64/Packages
+ fa79f60b4a862e5367f5f4092ce90994c5f57463f487593610919afa1814a802             2245 main/binary-amd64/Packages.gz
+SHA512:
+ 945dc43b4c4951d97b11c3539de72d98cca6d5bb9e0792ff90388565929e71008e0b46b52109f4e3aa4e04a1a5284c15e59486b16c724b26080f316858553bc4              194 Release
+ dca13bc3925ce3958998fa920aaacb98c3f62866dc09d06fc1a71d421ee2db4f133c65477e68c8c11e6364f85ec06059bc0b3dddc235bb2a3a88ea154b2d0219             7384 main/binary-amd64/Packages
+ 6bbf4999cb0f162c64598ac834877c9f3d7ab2fe9ce2746552fbd45ca5196c85227616db47ceff06b7e9b06847fa02ebcc3cf32281f8c0aebee01d8fb2713d94             2245 main/binary-amd64/Packages.gz
