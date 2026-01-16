@@ -1,0 +1,77 @@
+Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.1_noble_amd64.deb
+Size: 33516
+MD5sum: 06bce19505a6ad1692e1c16e7de75a77
+SHA1: cc4ccb842e3021ae4b4d68ddb920af433c2f00ba
+SHA256: be11a7d3536a88612de568761a1cb09a7d1c3b1e457d52d284779cc9934d5b11
+SHA512: 600107736352c9fbc6baa77691ade0e193fb12a35447b0aed658420b9a0f01680db1a53fa4be0150455f6922730980190eb48760f545aacde9692889b19f73bc
+Homepage: https://github.com/structured-world/strongswan
+Description: PostgreSQL plugin for strongSwan (SW fork)
+ PostgreSQL database backend for strongSwan SQL plugin.
+ Enables storing VPN user credentials and configuration in PostgreSQL.
+
+Package: strongswan-sw
+Architecture: amd64
+Version: 6.0.4-sw.1
+Priority: optional
+Section: net
+Maintainer: Structured World Foundation <dev@sw.foundation>
+Depends: libgmp10, libssl3, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
+Conflicts: strongswan, strongswan-charon, strongswan-starter
+Replaces: strongswan, strongswan-charon, strongswan-starter
+Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.1_bookworm_amd64.deb
+Size: 6318426
+MD5sum: bde396f8de0bd570eec2116b7163b96b
+SHA1: 68b044e5a6c4ce979a2c45ac51bb93e64fc1ef6a
+SHA256: f715f674fab7be6405b663cad156150b6eba12f485783803c0b3e52a62090bb3
+SHA512: c53310de037be51ddd37d5728882c9e7679681d00b48c0f3ae8f549178b820c5dfe5efc0d614c706494feb67f0e2147ec3cca416ccd86b658fe01bc2f64e0819
+Homepage: https://github.com/structured-world/strongswan
+Description: strongSwan IPsec (SW fork with pgsql support)
+ strongSwan is a complete IPsec implementation for Linux.
+ This is the Structured World fork with:
+ - Socket permissions fix (umask 0660 for Unix sockets)
+ - PostgreSQL database plugin for SQL authentication
+
+Package: strongswan-sw
+Architecture: amd64
+Version: 6.0.4-sw.1
+Priority: optional
+Section: net
+Maintainer: Structured World Foundation <dev@sw.foundation>
+Depends: libgmp10, libssl3, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
+Conflicts: strongswan, strongswan-charon, strongswan-starter
+Replaces: strongswan, strongswan-charon, strongswan-starter
+Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.1_jammy_amd64.deb
+Size: 6318458
+MD5sum: 8ec3d39002c8cb0a7414c8956ea03492
+SHA1: c0740e3d66da69ce0c20f710a73dff1370f0ab7c
+SHA256: 125bffd13b70de0f5b542acfee994bc175d5ba930f9e02cc200af0d9c9809522
+SHA512: 9b188e668ec8719654f55060ea344ef3fa23a479e56b0e7bd2005d7b6630521a77f02f27ddad1ac7ab29ebe9fd111ee7cc5aed1c3ce83d0502d101718698fbc3
+Homepage: https://github.com/structured-world/strongswan
+Description: strongSwan IPsec (SW fork with pgsql support)
+ strongSwan is a complete IPsec implementation for Linux.
+ This is the Structured World fork with:
+ - Socket permissions fix (umask 0660 for Unix sockets)
+ - PostgreSQL database plugin for SQL authentication
+
+Package: strongswan-sw
+Architecture: amd64
+Version: 6.0.4-sw.1
+Priority: optional
+Section: net
+Maintainer: Structured World Foundation <dev@sw.foundation>
+Depends: libgmp10, libssl3t64, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
+Conflicts: strongswan, strongswan-charon, strongswan-starter
+Replaces: strongswan, strongswan-charon, strongswan-starter
+Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.1_noble_amd64.deb
+Size: 6226656
+MD5sum: b6eb52dbaa399682072576e216bebe7a
+SHA1: ef81eb26fdb6fc3e906acb7bdb666652d5c4a4ff
+SHA256: 2ab8742d0606ea1d36fb1c50a2870ae9c7c51b693c21ffb34630cede42b42df3
+SHA512: 73e71d645a90ebd9a74f735674c57da401ec64acb804a16ac9f3cc5c541976c0fd2f83183394c7f23ec88f202fef3ae9a6b6e795e163394e3e6d582a2cdaa658
+Homepage: https://github.com/structured-world/strongswan
+Description: strongSwan IPsec (SW fork with pgsql support)
+ strongSwan is a complete IPsec implementation for Linux.
+ This is the Structured World fork with:
+ - Socket permissions fix (umask 0660 for Unix sockets)
+ - PostgreSQL database plugin for SQL authentication
+
