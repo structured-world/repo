@@ -1418,6 +1418,21 @@ sudo apt install <span class="cmd">strongswan-dhcp-inform</span></code></pre>
             if (e.key === 'Escape') closeDocs();
         });
 
+        // Compare version strings (e.g., "6.0.4-sw.8" > "6.0.4-sw.1")
+        function compareVersions(v1, v2) {
+            if (!v1) return -1;
+            if (!v2) return 1;
+            const parts1 = v1.replace(/-/g, '.').split('.').map(p => parseInt(p) || 0);
+            const parts2 = v2.replace(/-/g, '.').split('.').map(p => parseInt(p) || 0);
+            for (let i = 0; i < Math.max(parts1.length, parts2.length); i++) {
+                const a = parts1[i] || 0;
+                const b = parts2[i] || 0;
+                if (a > b) return 1;
+                if (a < b) return -1;
+            }
+            return 0;
+        }
+
         // Fetch and display package info dynamically from Packages files
         async function loadPackageInfo() {
             const debSources = [
@@ -1431,7 +1446,6 @@ sudo apt install <span class="cmd">strongswan-dhcp-inform</span></code></pre>
             let dhcpInformInfo = null;
 
             for (const url of debSources) {
-                if (swInfo && pgsqlInfo && dhcpInformInfo) break;
                 try {
                     const response = await fetch(url);
                     if (!response.ok) continue;
@@ -1444,14 +1458,17 @@ sudo apt install <span class="cmd">strongswan-dhcp-inform</span></code></pre>
                         const size = pkg.match(/^Size:\s*(\d+)$/m)?.[1];
                         if (!name || !version) continue;
 
-                        if (name === 'strongswan-sw' && !swInfo) {
-                            swInfo = { version, size: size ? formatBytes(parseInt(size)) : null };
+                        const info = { version, size: size ? formatBytes(parseInt(size)) : null };
+
+                        // Keep the highest version found
+                        if (name === 'strongswan-sw' && compareVersions(version, swInfo?.version) > 0) {
+                            swInfo = info;
                         }
-                        if (name === 'strongswan-pgsql' && !pgsqlInfo) {
-                            pgsqlInfo = { version, size: size ? formatBytes(parseInt(size)) : null };
+                        if (name === 'strongswan-pgsql' && compareVersions(version, pgsqlInfo?.version) > 0) {
+                            pgsqlInfo = info;
                         }
-                        if (name === 'strongswan-dhcp-inform' && !dhcpInformInfo) {
-                            dhcpInformInfo = { version, size: size ? formatBytes(parseInt(size)) : null };
+                        if (name === 'strongswan-dhcp-inform' && compareVersions(version, dhcpInformInfo?.version) > 0) {
+                            dhcpInformInfo = info;
                         }
                     }
                 } catch (e) { /* ignore fetch errors */ }
