@@ -60,7 +60,7 @@ publish_deb() {
       echo "Warning: empty package name for DEB: $deb; skipping." >&2
       continue
     fi
-    if ! [[ "$pkgname" =~ ^[a-z0-9][a-z0-9+.-]+$ ]]; then
+    if ! [[ "$pkgname" =~ ^[a-z0-9][a-z0-9+.-]*$ ]]; then
       echo "Warning: invalid package name '$pkgname' for DEB: $deb; skipping." >&2
       continue
     fi
@@ -185,6 +185,9 @@ publish_rpm() {
 
   # Update metadata for each rpm/fc* directory
   local fc_dir
+  local nullglob_fc_state
+  nullglob_fc_state=$(shopt -p nullglob)
+  shopt -s nullglob
   for fc_dir in rpm/fc*; do
     [ -d "$fc_dir" ] || continue
     if ls "$fc_dir"/*.rpm >/dev/null 2>&1; then
@@ -198,6 +201,7 @@ publish_rpm() {
       echo "Updated RPM repository for $(basename "$fc_dir")"
     fi
   done
+  eval "$nullglob_fc_state"
   eval "$nullglob_state"
 }
 

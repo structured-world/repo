@@ -22,18 +22,16 @@ if not TEMPLATE_PATH.exists():
 
 template = TEMPLATE_PATH.read_text(encoding="utf-8")
 
-md = markdown.Markdown(extensions=["extra", "tables", "toc"])
-
 pages = []
 
 for md_path in sorted(DOCS_DIR.glob("*.md")):
     if md_path.name.startswith("_"):
         continue
-    md.reset()
+    md = markdown.Markdown(extensions=["extra", "tables", "toc"])
     raw = md_path.read_text(encoding="utf-8")
     html_body = md.convert(raw)
-    if md.toc_tokens and isinstance(md.toc_tokens, list):
-        title = md.toc_tokens[0].get("name", "") if md.toc_tokens else ""
+    if md.toc_tokens and isinstance(md.toc_tokens, list) and md.toc_tokens:
+        title = md.toc_tokens[0].get("name", "")
     else:
         title = ""
     if not title:
@@ -49,7 +47,7 @@ for md_path in sorted(DOCS_DIR.glob("*.md")):
     page_html = template
     for value in (title, description, canonical, html_body):
         if "{{" in value or "}}" in value:
-            raise SystemExit("Template marker found in replacement value")
+            raise SystemExit(f"Template marker found in replacement value from {md_path.name}")
     page_html = page_html.replace("{{TITLE}}", title)
     page_html = page_html.replace("{{DESCRIPTION}}", description)
     page_html = page_html.replace("{{CANONICAL}}", canonical)
