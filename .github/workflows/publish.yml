@@ -82,7 +82,7 @@ jobs:
             echo "Error: no artifacts found in packages/ for run $RUN_ID" >&2
             exit 1
           fi
-          if ! find packages -type f -name '*.rpm' -o -name '*.deb' | grep -q .; then
+          if ! find packages -type f \( -name '*.rpm' -o -name '*.deb' \) | grep -q .; then
             echo "Error: no RPM/DEB artifacts found in packages/ for run $RUN_ID" >&2
             exit 1
           fi

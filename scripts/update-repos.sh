@@ -73,7 +73,7 @@ publish_deb() {
 
         # Generate Packages file - prefer dist-specific packages
         apt-ftparchive packages "deb/pool/main" | \
-          awk -v dist="$dist" -v arch="$arch" 'BEGIN { RS=""; ORS="\\n\\n" } $0 ~ ("Filename: .*_" dist "_" arch "\\.") { print }' > "$arch_dir/Packages" || true
+          awk -v dist="$dist" -v arch="$arch" 'BEGIN { RS=""; ORS="\n\n" } $0 ~ ("Filename: .*_" dist "_" arch "\\.") { print }' > "$arch_dir/Packages" || true
 
         if [ ! -s "$arch_dir/Packages" ]; then
           apt-ftparchive packages "deb/pool/main" > "$arch_dir/Packages"
@@ -99,7 +99,7 @@ EOF_RELEASE
         exit 1
       fi
       gpg_sign --clearsign -o "$dist_dir/InRelease" "$dist_dir/Release"
-      if [ ! -s "$dist_dir/InRelease" ] || ! gpg --verify "$dist_dir/InRelease" "$dist_dir/Release" >/dev/null 2>&1; then
+      if [ ! -s "$dist_dir/InRelease" ] || ! gpg --verify "$dist_dir/InRelease" >/dev/null 2>&1; then
         echo "Error: Failed to create valid GPG clearsigned file for $dist_dir/Release (InRelease)" >&2
         exit 1
       fi
@@ -155,6 +155,10 @@ publish_rpm() {
     createrepo_c --update "$srpm_dir"
     gpg_sign --armor --detach-sign -o "$srpm_dir/repodata/repomd.xml.asc" \
       "$srpm_dir/repodata/repomd.xml"
+    if [ ! -s "$srpm_dir/repodata/repomd.xml.asc" ] || ! gpg --verify "$srpm_dir/repodata/repomd.xml.asc" "$srpm_dir/repodata/repomd.xml" >/dev/null 2>&1; then
+      echo "Error: Failed to create valid GPG signature for SRPM repodata" >&2
+      exit 1
+    fi
     echo "Updated SRPM repository"
   else
     echo "No SRPM packages found to copy"
@@ -168,6 +172,10 @@ publish_rpm() {
       createrepo_c --update "$fc_dir"
       gpg_sign --armor --detach-sign -o "$fc_dir/repodata/repomd.xml.asc" \
         "$fc_dir/repodata/repomd.xml"
+      if [ ! -s "$fc_dir/repodata/repomd.xml.asc" ] || ! gpg --verify "$fc_dir/repodata/repomd.xml.asc" "$fc_dir/repodata/repomd.xml" >/dev/null 2>&1; then
+        echo "Error: Failed to create valid GPG signature for $fc_dir repodata" >&2
+        exit 1
+      fi
       echo "Updated RPM repository for $(basename "$fc_dir")"
     fi
   done

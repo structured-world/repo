@@ -42,7 +42,7 @@ for md_path in sorted(DOCS_DIR.glob("*.md")):
     canonical = f"{SITE_BASE_URL}/docs/{slug}/"
 
     page_html = template
-    for value in (title, description, canonical):
+    for value in (title, description, canonical, html_body):
         if "{{" in value or "}}" in value:
             raise SystemExit("Template marker found in replacement value")
     page_html = page_html.replace("{{TITLE}}", title)
@@ -74,16 +74,13 @@ if pages:
 
 # Sitemap
 now = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-def xml_escape(value: str) -> str:
-    return escape(value)
-
 urls = [
-    f"  <url><loc>{xml_escape(SITE_BASE_URL)}/</loc><lastmod>{now}</lastmod></url>",
-    f"  <url><loc>{xml_escape(SITE_BASE_URL)}/docs/</loc><lastmod>{now}</lastmod></url>",
+    f"  <url><loc>{escape(SITE_BASE_URL)}/</loc><lastmod>{now}</lastmod></url>",
+    f"  <url><loc>{escape(SITE_BASE_URL)}/docs/</loc><lastmod>{now}</lastmod></url>",
 ]
 
 for p in pages:
-    urls.append(f"  <url><loc>{xml_escape(p['canonical'])}</loc><lastmod>{p['lastmod']}</lastmod></url>")
+    urls.append(f"  <url><loc>{escape(p['canonical'])}</loc><lastmod>{p['lastmod']}</lastmod></url>")
 
 sitemap = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + \
           "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n" + \
