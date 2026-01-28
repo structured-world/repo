@@ -96,6 +96,9 @@ if pages:
     ])
     for p in pages:
         urls.append(f"  <url><loc>{escape(p['canonical'])}</loc><lastmod>{p['lastmod']}</lastmod></url>")
+else:
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    urls.append(f"  <url><loc>{escape(SITE_BASE_URL)}/</loc><lastmod>{today}</lastmod></url>")
 
 sitemap_lines = [
     "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
