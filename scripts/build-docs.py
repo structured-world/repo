@@ -82,9 +82,13 @@ urls = [
 for p in pages:
     urls.append(f"  <url><loc>{escape(p['canonical'])}</loc><lastmod>{p['lastmod']}</lastmod></url>")
 
-sitemap = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + \
-          "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n" + \
-          "\n".join(urls) + "\n</urlset>\n"
+sitemap_lines = [
+    "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
+    "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">",
+    *urls,
+    "</urlset>",
+]
+sitemap = "\n".join(sitemap_lines) + "\n"
 (ROOT / "sitemap.xml").write_text(sitemap, encoding="utf-8")
 
 # Robots

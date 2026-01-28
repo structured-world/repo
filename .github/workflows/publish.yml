@@ -43,9 +43,21 @@ jobs:
 
       - name: Import GPG key
         env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         run: |
-          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
+          if [ -z "${GPG_PRIVATE_KEY:-}" ]; then
+            echo "Error: GPG_PRIVATE_KEY is not set" >&2
+            exit 1
+          fi
+          keyfile="$(mktemp)"
+          cleanup_keyfile() { rm -f "$keyfile"; }
+          trap cleanup_keyfile EXIT
+          chmod 600 "$keyfile"
+          printf '%s\n' "$GPG_PRIVATE_KEY" > "$keyfile"
+          gpg --batch --import "$keyfile"
+          cleanup_keyfile
+          trap - EXIT
           if [ -n "$GPG_PASSPHRASE" ]; then
             echo "$GPG_PASSPHRASE" | gpg --batch --yes --pinentry-mode loopback --passphrase-fd 0 --sign --armor /dev/null || true
           fi
@@ -54,10 +66,18 @@ jobs:
         id: runid
         run: |
           if [ -n "${{ github.event.client_payload.strongswan_run_id }}" ]; then
-            echo "run_id=${{ github.event.client_payload.strongswan_run_id }}" >> $GITHUB_OUTPUT
+            run_id="${{ github.event.client_payload.strongswan_run_id }}"
+          elif [ -n "${{ inputs.strongswan_run_id }}" ]; then
+            run_id="${{ inputs.strongswan_run_id }}"
           else
-            echo "run_id=${{ inputs.strongswan_run_id }}" >> $GITHUB_OUTPUT
+            echo "Error: strongswan_run_id was not provided" >&2
+            exit 1
           fi
+          if [ -z "$run_id" ]; then
+            echo "Error: resolved strongswan_run_id is empty" >&2
+            exit 1
+          fi
+          echo "run_id=$run_id" >> $GITHUB_OUTPUT
 
       - name: Download strongswan artifacts
         env:
@@ -66,8 +86,15 @@ jobs:
           RUN_ID="${{ steps.runid.outputs.run_id }}"
           REPO="structured-world/strongswan"
           echo "Verifying workflow run $RUN_ID in $REPO..."
-          if ! gh run view "$RUN_ID" -R "$REPO" --json status,conclusion,headBranch,event,workflowName,createdAt,updatedAt --jq '. as $r | "Status: \($r.status)\nConclusion: \($r.conclusion // "none")\nBranch: \($r.headBranch)\nEvent: \($r.event)\nWorkflow: \($r.workflowName)\nCreated: \($r.createdAt)\nUpdated: \($r.updatedAt)"'; then
+          if ! run_json=$(gh run view "$RUN_ID" -R "$REPO" --json status,conclusion,headBranch,event,workflowName,createdAt,updatedAt); then
             echo "Error: unable to view run $RUN_ID in $REPO. The run may not exist, or there may be authentication or network connectivity issues." >&2
+            exit 1
+          fi
+          echo "$run_json" | jq -r '. as $r | "Status: \($r.status)\nConclusion: \($r.conclusion // "none")\nBranch: \($r.headBranch)\nEvent: \($r.event)\nWorkflow: \($r.workflowName)\nCreated: \($r.createdAt)\nUpdated: \($r.updatedAt)"'
+          run_status=$(echo "$run_json" | jq -r '.status')
+          run_conclusion=$(echo "$run_json" | jq -r '.conclusion // "none"')
+          if [ "$run_status" != "completed" ] || [ "$run_conclusion" != "success" ]; then
+            echo "Error: run $RUN_ID is not completed successfully (status=$run_status, conclusion=$run_conclusion)" >&2
             exit 1
           fi
           mkdir -p packages

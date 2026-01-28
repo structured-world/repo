@@ -33,10 +33,13 @@ publish_deb() {
     return 0
   fi
 
+  local nullglob_state
+  nullglob_state=$(shopt -p nullglob)
   shopt -s nullglob
   local debs=("$DEB_SRC_DIR"/*.deb)
   if [ ${#debs[@]} -eq 0 ]; then
     echo "No DEB packages to publish"
+    eval "$nullglob_state"
     return 0
   fi
 
@@ -107,6 +110,7 @@ EOF_RELEASE
       echo "Updated DEB repository for ${dist}"
     done
   fi
+  eval "$nullglob_state"
 }
 
 publish_rpm() {
