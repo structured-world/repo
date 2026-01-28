@@ -155,14 +155,14 @@ publish_rpm() {
     for rpm in "${rpms[@]}"; do
       local filename fc_ver dest_dir
       filename=$(basename "$rpm")
-      if [[ "$filename" =~ \.fc([0-9]+) ]]; then
+      if [[ "$filename" =~ \.fc([0-9]+)([^0-9]|$) ]]; then
         fc_ver="${BASH_REMATCH[1]}"
         dest_dir="rpm/fc${fc_ver}"
         mkdir -p "$dest_dir"
         cp "$rpm" "$dest_dir/"
         echo "Copied $rpm to $dest_dir/"
       else
-        echo "Warning: RPM file '$filename' does not match expected '.fc[0-9]+.' pattern; skipping" >&2
+        echo "Warning: RPM file '$filename' does not match expected '.fc[0-9]+' pattern; skipping" >&2
       fi
     done
   fi

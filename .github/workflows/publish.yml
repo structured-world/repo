@@ -37,6 +37,13 @@ jobs:
           fetch-depth: 0
           token: ${{ steps.app-token.outputs.token }}
 
+      - name: Ensure publish runs on main
+        run: |
+          if [ "${{ github.ref }}" != "refs/heads/main" ]; then
+            echo "Error: publish workflow must run on main (current ref: ${{ github.ref }})" >&2
+            exit 1
+          fi
+
       - name: Install tools
         run: |
           sudo apt-get update
@@ -65,12 +72,13 @@ jobs:
             trap cleanup_passfile EXIT
             chmod 600 "$passfile"
             printf '%s' "$GPG_PASSPHRASE" > "$passfile"
-            if ! gpg --batch --yes --pinentry-mode loopback --passphrase-file "$passfile" --sign --armor /dev/null; then
+            if ! gpg --batch --yes --pinentry-mode loopback --passphrase-file "$passfile" \
+              --output /dev/null --sign --armor /dev/null; then
               echo "Error: GPG passphrase check failed" >&2
               exit 1
             fi
-            cleanup_passfile
             trap - EXIT
+            cleanup_passfile
           fi
 
       - name: Resolve strongswan run id
@@ -96,13 +104,6 @@ jobs:
             exit 1
           fi
           echo "run_id=$run_id" >> $GITHUB_OUTPUT
-
-      - name: Ensure publish runs on main
-        run: |
-          if [ "${{ github.ref }}" != "refs/heads/main" ]; then
-            echo "Error: publish workflow must run on main (current ref: ${{ github.ref }})" >&2
-            exit 1
-          fi
 
       - name: Download strongswan artifacts
         env:
@@ -141,6 +142,11 @@ jobs:
           fi
           if ! find packages -type f \( -name '*.rpm' -o -name '*.deb' \) | grep -q .; then
             echo "Error: no RPM/DEB artifacts found in packages/ for run $RUN_ID" >&2
+            exit 1
+          fi
+          if find packages -type f ! \( -name '*.rpm' -o -name '*.deb' \) | grep -q .; then
+            echo "Error: unexpected artifact types found in packages/ (only .rpm/.deb allowed)" >&2
+            find packages -type f ! \( -name '*.rpm' -o -name '*.deb' \) -print >&2
             exit 1
           fi
 

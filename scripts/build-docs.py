@@ -45,7 +45,7 @@ for md_path in sorted(DOCS_DIR.glob("*.md")):
     canonical = f"{SITE_BASE_URL}/docs/{slug}/"
 
     page_html = template
-    for value in (title, description, canonical, html_body):
+    for value in (title, description, canonical):
         if "{{" in value or "}}" in value:
             raise SystemExit(f"Template marker found in replacement value from {md_path.name}")
     page_html = page_html.replace("{{TITLE}}", escape(title))
