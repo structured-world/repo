@@ -27,16 +27,20 @@ pages = []
 for md_path in sorted(DOCS_DIR.glob("*.md")):
     if md_path.name.startswith("_"):
         continue
-    md = markdown.Markdown(extensions=["extra", "tables", "toc"])
-    raw = md_path.read_text(encoding="utf-8")
-    html_body = md.convert(raw)
-    if md.toc_tokens and isinstance(md.toc_tokens, list) and md.toc_tokens:
-        title = md.toc_tokens[0].get("name", "")
-    else:
-        title = ""
-    if not title:
-        title = md_path.stem.replace("-", " ").title()
-    description = f"{title} documentation for SW Foundation."
+    try:
+        md = markdown.Markdown(extensions=["extra", "tables", "toc"])
+        raw = md_path.read_text(encoding="utf-8")
+        html_body = md.convert(raw)
+        if md.toc_tokens and isinstance(md.toc_tokens, list) and md.toc_tokens:
+            title = md.toc_tokens[0].get("name", "")
+        else:
+            title = ""
+        if not title:
+            title = md_path.stem.replace("-", " ").title()
+        description = f"{title} documentation for SW Foundation."
+    except Exception as exc:
+        print(f"Error: failed to render {md_path.name}: {exc}", file=sys.stderr)
+        raise SystemExit(1) from exc
 
     slug = md_path.stem
     out_dir = DOCS_DIR / slug
@@ -52,14 +56,20 @@ for md_path in sorted(DOCS_DIR.glob("*.md")):
     page_html = page_html.replace("{{DESCRIPTION}}", escape(description))
     page_html = page_html.replace("{{CANONICAL}}", escape(canonical))
     page_html = page_html.replace("{{CONTENT}}", html_body)
-    out_path.write_text(page_html, encoding="utf-8")
+    try:
+        out_path.write_text(page_html, encoding="utf-8")
+    except Exception as exc:
+        print(f"Error: failed to write {out_path}: {exc}", file=sys.stderr)
+        raise SystemExit(1) from exc
 
+    lastmod_dt = datetime.fromtimestamp(md_path.stat().st_mtime, tz=timezone.utc)
     pages.append({
         "title": title,
         "url": f"/docs/{slug}/",
         "canonical": canonical,
         "source": md_path,
-        "lastmod": datetime.fromtimestamp(md_path.stat().st_mtime, tz=timezone.utc).strftime("%Y-%m-%d"),
+        "lastmod": lastmod_dt.strftime("%Y-%m-%d"),
+        "lastmod_dt": lastmod_dt,
     })
 
 # Docs index page
@@ -76,10 +86,11 @@ if pages:
     (DOCS_DIR / "index.html").write_text(index_html, encoding="utf-8")
 
 # Sitemap
-now = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+latest_dt = max((p["lastmod_dt"] for p in pages), default=datetime.now(timezone.utc))
+latest = latest_dt.strftime("%Y-%m-%d")
 urls = [
-    f"  <url><loc>{escape(SITE_BASE_URL)}/</loc><lastmod>{now}</lastmod></url>",
-    f"  <url><loc>{escape(SITE_BASE_URL)}/docs/</loc><lastmod>{now}</lastmod></url>",
+    f"  <url><loc>{escape(SITE_BASE_URL)}/</loc><lastmod>{latest}</lastmod></url>",
+    f"  <url><loc>{escape(SITE_BASE_URL)}/docs/</loc><lastmod>{latest}</lastmod></url>",
 ]
 
 for p in pages:

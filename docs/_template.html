@@ -87,6 +87,17 @@
       font-family: "SF Mono", Menlo, Consolas, monospace;
       font-size: 0.95em;
     }
+    pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+    }
+    p code, li code, td code {
+      background: var(--code-bg);
+      color: var(--code-text);
+      padding: 1px 4px;
+      border-radius: 4px;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
@@ -107,7 +118,7 @@
       <a href="/" aria-label="Back to repository">
         <span aria-hidden="true">←</span> Back to repository
       </a>
-      <h1 class="topbar-title">SW Foundation Docs</h1>
+      <div class="topbar-title">SW Foundation Docs</div>
     </div>
     <article>
       {{CONTENT}}

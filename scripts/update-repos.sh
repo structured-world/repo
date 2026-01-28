@@ -15,12 +15,19 @@ GPG_PASSPHRASE="${GPG_PASSPHRASE:-}"
 gpg_sign() {
   if [ -n "$GPG_PASSPHRASE" ]; then
     local passfile
+    local previous_trap
     passfile="$(mktemp)"
     cleanup_passfile() { rm -f "$passfile"; }
-    trap cleanup_passfile RETURN
+    previous_trap=$(trap -p EXIT || true)
+    trap cleanup_passfile EXIT
     chmod 600 "$passfile"
     printf '%s' "$GPG_PASSPHRASE" > "$passfile"
     gpg --batch --yes --pinentry-mode loopback --passphrase-file "$passfile" "$@"
+    if [ -n "$previous_trap" ]; then
+      eval "$previous_trap"
+    else
+      trap - EXIT
+    fi
   else
     gpg --batch --yes "$@"
   fi
@@ -65,6 +72,10 @@ publish_deb() {
       continue
     fi
     first_letter="${pkgname:0:1}"
+    if [ -z "$first_letter" ]; then
+      echo "Warning: empty package prefix for DEB: $deb; skipping." >&2
+      continue
+    fi
     pool_dir="deb/pool/main/${first_letter}/${pkgname}"
     mkdir -p "$pool_dir"
     cp "$deb" "$pool_dir/"

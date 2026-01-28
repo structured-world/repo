@@ -24,6 +24,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Ensure publish runs on main
+        run: |
+          if [ "${{ github.ref }}" != "refs/heads/main" ]; then
+            echo "Error: publish workflow must run on main (current ref: ${{ github.ref }})" >&2
+            exit 1
+          fi
+
       - name: Generate release bot token
         uses: actions/create-github-app-token@v2
         id: app-token
@@ -36,13 +43,6 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ steps.app-token.outputs.token }}
-
-      - name: Ensure publish runs on main
-        run: |
-          if [ "${{ github.ref }}" != "refs/heads/main" ]; then
-            echo "Error: publish workflow must run on main (current ref: ${{ github.ref }})" >&2
-            exit 1
-          fi
 
       - name: Install tools
         run: |
@@ -159,6 +159,11 @@ jobs:
             find packages -type f ! \( -name '*.rpm' -o -name '*.deb' \) -print >&2
             exit 1
           fi
+          if find packages -type l | grep -q .; then
+            echo "Error: unexpected symlinks found in packages/; refusing to proceed" >&2
+            find packages -type l -print >&2
+            exit 1
+          fi
 
       - name: Build docs
         run: |
@@ -170,6 +175,7 @@ jobs:
         env:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         run: |
+          chmod +x scripts/update-repos.sh
           scripts/update-repos.sh
 
       - name: Cleanup downloaded packages
@@ -179,7 +185,10 @@ jobs:
       - name: Commit and push
         run: |
           git fetch origin main
-          git rebase origin/main
+          if ! git rebase origin/main; then
+            echo "Error: rebase failed; manual intervention required" >&2
+            exit 1
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           if [ -d deb ]; then
@@ -202,6 +211,9 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "Publish packages and update docs"
-            git push
+            git commit -m "Publish packages from run ${{ steps.runid.outputs.run_id }}"
+            if ! git push; then
+              echo "Error: git push failed; manual retry required" >&2
+              exit 1
+            fi
           fi
