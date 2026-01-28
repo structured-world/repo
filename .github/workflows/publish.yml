@@ -86,8 +86,18 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
             sender=$(jq -r '.sender.login // ""' "$GITHUB_EVENT_PATH")
+            action=$(jq -r '.action // ""' "$GITHUB_EVENT_PATH")
+            source_repo=$(jq -r '.client_payload.strongswan_repo // ""' "$GITHUB_EVENT_PATH")
             if [ "$sender" != "sw-release-bot[bot]" ]; then
               echo "Error: unauthorized repository_dispatch sender '$sender'" >&2
+              exit 1
+            fi
+            if [ "$action" != "publish-from-strongswan" ]; then
+              echo "Error: unexpected repository_dispatch action '$action'" >&2
+              exit 1
+            fi
+            if [ -n "$source_repo" ] && [ "$source_repo" != "structured-world/strongswan" ]; then
+              echo "Error: unexpected strongswan_repo '$source_repo'" >&2
               exit 1
             fi
           fi
@@ -152,7 +162,8 @@ jobs:
 
       - name: Build docs
         run: |
-          python3 -m pip install --user "markdown>=3.6,<4" # keep <4 until v4 migration is validated
+          # Pinned until markdown v4 toc tokens are validated against docs templates.
+          python3 -m pip install --user "markdown>=3.6,<4"
           SITE_BASE_URL=https://repo.sw.foundation python3 scripts/build-docs.py
 
       - name: Update package repositories
@@ -167,6 +178,8 @@ jobs:
 
       - name: Commit and push
         run: |
+          git fetch origin main
+          git rebase origin/main
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           if [ -d deb ]; then

@@ -83,12 +83,20 @@ publish_deb() {
       for arch_dir in "$dist_dir"/main/binary-*; do
         [ -d "$arch_dir" ] || continue
         local arch
-        local arch
         arch="$(basename "$arch_dir" | sed 's/^binary-//')"
 
         # Generate Packages file - prefer dist-specific packages; fall back to all if empty.
-        apt-ftparchive packages "deb/pool/main" | \
-          awk -v dist="$dist" -v arch="$arch" 'BEGIN { RS=""; ORS="\n\n" } $0 ~ ("Filename: .*_" dist "_" arch "\\.(deb|ddeb|udeb)") { print }' > "$arch_dir/Packages" || true
+        local packages_tmp
+        packages_tmp="$(mktemp)"
+        if apt-ftparchive packages "deb/pool/main" > "$packages_tmp"; then
+          awk -v dist="$dist" -v arch="$arch" 'BEGIN { RS=""; ORS="\n\n" } $0 ~ ("Filename: .*_" dist "_" arch "\\.(deb|ddeb|udeb)") { print }' \
+            "$packages_tmp" > "$arch_dir/Packages"
+        else
+          rm -f "$packages_tmp"
+          echo "Error: apt-ftparchive packages failed for deb/pool/main" >&2
+          exit 1
+        fi
+        rm -f "$packages_tmp"
 
         if [ ! -s "$arch_dir/Packages" ]; then
           apt-ftparchive packages "deb/pool/main" > "$arch_dir/Packages"
@@ -151,21 +159,20 @@ publish_rpm() {
     echo "No RPM packages to publish"
     eval "$nullglob_state"
     return 0
-  else
-    for rpm in "${rpms[@]}"; do
-      local filename fc_ver dest_dir
-      filename=$(basename "$rpm")
-      if [[ "$filename" =~ \.fc([0-9]+)([^0-9]|$) ]]; then
-        fc_ver="${BASH_REMATCH[1]}"
-        dest_dir="rpm/fc${fc_ver}"
-        mkdir -p "$dest_dir"
-        cp "$rpm" "$dest_dir/"
-        echo "Copied $rpm to $dest_dir/"
-      else
-        echo "Warning: RPM file '$filename' does not match expected '.fc[0-9]+' pattern; skipping" >&2
-      fi
-    done
   fi
+  for rpm in "${rpms[@]}"; do
+    local filename fc_ver dest_dir
+    filename=$(basename "$rpm")
+    if [[ "$filename" =~ \.fc([0-9]+)([^0-9]|$) ]]; then
+      fc_ver="${BASH_REMATCH[1]}"
+      dest_dir="rpm/fc${fc_ver}"
+      mkdir -p "$dest_dir"
+      cp "$rpm" "$dest_dir/"
+      echo "Copied $rpm to $dest_dir/"
+    else
+      echo "Warning: RPM file '$filename' does not match expected '.fc[0-9]+' pattern; skipping" >&2
+    fi
+  done
 
   # SRPMs
   local srpms=()
