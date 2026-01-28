@@ -15,19 +15,12 @@ GPG_PASSPHRASE="${GPG_PASSPHRASE:-}"
 gpg_sign() {
   if [ -n "$GPG_PASSPHRASE" ]; then
     local passfile
-    local previous_trap
     passfile="$(mktemp)"
     cleanup_passfile() { rm -f "$passfile"; }
-    previous_trap=$(trap -p EXIT || true)
-    trap cleanup_passfile EXIT
     chmod 600 "$passfile"
     printf '%s' "$GPG_PASSPHRASE" > "$passfile"
     gpg --batch --yes --pinentry-mode loopback --passphrase-file "$passfile" "$@"
-    if [ -n "$previous_trap" ]; then
-      eval "$previous_trap"
-    else
-      trap - EXIT
-    fi
+    cleanup_passfile
   else
     gpg --batch --yes "$@"
   fi
@@ -93,14 +86,16 @@ publish_deb() {
 
       for arch_dir in "$dist_dir"/main/binary-*; do
         [ -d "$arch_dir" ] || continue
-        local arch
+        local arch dist_escaped arch_escaped
         arch="$(basename "$arch_dir" | sed 's/^binary-//')"
 
         # Generate Packages file - prefer dist-specific packages; fall back to all if empty.
         local packages_tmp
         packages_tmp="$(mktemp)"
+        dist_escaped=$(printf '%s' "$dist" | sed 's/[][\\.^$*+?{}|()]/\\\\&/g')
+        arch_escaped=$(printf '%s' "$arch" | sed 's/[][\\.^$*+?{}|()]/\\\\&/g')
         if apt-ftparchive packages "deb/pool/main" > "$packages_tmp"; then
-          awk -v dist="$dist" -v arch="$arch" 'BEGIN { RS=""; ORS="\n\n" } $0 ~ ("Filename: .*_" dist "_" arch "\\.(deb|ddeb|udeb)") { print }' \
+          awk -v dist="$dist_escaped" -v arch="$arch_escaped" 'BEGIN { RS=""; ORS="\n\n" } $0 ~ ("Filename: .*_" dist "_" arch "\\.(deb|ddeb|udeb)") { print }' \
             "$packages_tmp" > "$arch_dir/Packages"
         else
           rm -f "$packages_tmp"

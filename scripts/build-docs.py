@@ -86,15 +86,16 @@ if pages:
     (DOCS_DIR / "index.html").write_text(index_html, encoding="utf-8")
 
 # Sitemap
-latest_dt = max((p["lastmod_dt"] for p in pages), default=datetime.now(timezone.utc))
-latest = latest_dt.strftime("%Y-%m-%d")
-urls = [
-    f"  <url><loc>{escape(SITE_BASE_URL)}/</loc><lastmod>{latest}</lastmod></url>",
-    f"  <url><loc>{escape(SITE_BASE_URL)}/docs/</loc><lastmod>{latest}</lastmod></url>",
-]
-
-for p in pages:
-    urls.append(f"  <url><loc>{escape(p['canonical'])}</loc><lastmod>{p['lastmod']}</lastmod></url>")
+urls = []
+if pages:
+    latest_dt = max((p["lastmod_dt"] for p in pages))
+    latest = latest_dt.strftime("%Y-%m-%d")
+    urls.extend([
+        f"  <url><loc>{escape(SITE_BASE_URL)}/</loc><lastmod>{latest}</lastmod></url>",
+        f"  <url><loc>{escape(SITE_BASE_URL)}/docs/</loc><lastmod>{latest}</lastmod></url>",
+    ])
+    for p in pages:
+        urls.append(f"  <url><loc>{escape(p['canonical'])}</loc><lastmod>{p['lastmod']}</lastmod></url>")
 
 sitemap_lines = [
     "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
