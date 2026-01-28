@@ -1,4 +1,5 @@
 name: Publish Repo
+run-name: Publish Repo (strongswan ${{ inputs.strongswan_run_id || github.event.client_payload.strongswan_run_id }})
 
 on:
   workflow_dispatch:
