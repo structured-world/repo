@@ -67,7 +67,7 @@ publish_deb() {
       echo "Warning: empty package name for DEB: $deb; skipping." >&2
       continue
     fi
-    if ! [[ "$pkgname" =~ ^[a-z0-9][a-z0-9+.-]*$ ]]; then
+    if ! [[ "$pkgname" =~ ^[a-z][a-z0-9+.-]*$ ]]; then
       echo "Warning: invalid package name '$pkgname' for DEB: $deb; skipping." >&2
       continue
     fi
@@ -102,7 +102,7 @@ publish_deb() {
         dist_escaped=$(printf '%s' "$dist" | sed 's/[][\\.^$*+?{}|()]/\\&/g')
         arch_escaped=$(printf '%s' "$arch" | sed 's/[][\\.^$*+?{}|()]/\\&/g')
         if apt-ftparchive packages "deb/pool/main" > "$packages_tmp"; then
-          awk -v dist="$dist_escaped" -v arch="$arch_escaped" 'BEGIN { RS=""; ORS="\n\n" } $0 ~ ("Filename: .*_" dist "_" arch "\\.(deb|ddeb|udeb)") { print }' \
+          awk -v dist="$dist_escaped" -v arch="$arch_escaped" 'BEGIN { RS=""; ORS="\n\n" } $0 ~ ("Filename: .*_" dist "_" arch "\\.(deb|ddeb|udeb)$") { print }' \
             "$packages_tmp" > "$arch_dir/Packages"
         else
           rm -f "$packages_tmp"

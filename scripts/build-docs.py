@@ -31,7 +31,7 @@ for md_path in sorted(DOCS_DIR.glob("*.md")):
         md = markdown.Markdown(extensions=["extra", "tables", "toc"])
         raw = md_path.read_text(encoding="utf-8")
         html_body = md.convert(raw)
-        if md.toc_tokens and isinstance(md.toc_tokens, list) and md.toc_tokens:
+        if isinstance(md.toc_tokens, list) and md.toc_tokens:
             title = md.toc_tokens[0].get("name", "")
         else:
             title = ""
