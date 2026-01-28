@@ -76,9 +76,12 @@ jobs:
       - name: Resolve strongswan run id
         id: runid
         run: |
-          if [ "${{ github.event_name }}" = "repository_dispatch" ] && [ -z "${{ github.event.client_payload.strongswan_run_id }}" ]; then
-            echo "Error: repository_dispatch missing client_payload.strongswan_run_id" >&2
-            exit 1
+          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            sender=$(jq -r '.sender.login // ""' "$GITHUB_EVENT_PATH")
+            if [ "$sender" != "sw-release-bot[bot]" ]; then
+              echo "Error: unauthorized repository_dispatch sender '$sender'" >&2
+              exit 1
+            fi
           fi
           if [ -n "${{ github.event.client_payload.strongswan_run_id }}" ]; then
             run_id="${{ github.event.client_payload.strongswan_run_id }}"

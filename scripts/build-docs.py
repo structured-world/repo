@@ -48,9 +48,9 @@ for md_path in sorted(DOCS_DIR.glob("*.md")):
     for value in (title, description, canonical, html_body):
         if "{{" in value or "}}" in value:
             raise SystemExit(f"Template marker found in replacement value from {md_path.name}")
-    page_html = page_html.replace("{{TITLE}}", title)
-    page_html = page_html.replace("{{DESCRIPTION}}", description)
-    page_html = page_html.replace("{{CANONICAL}}", canonical)
+    page_html = page_html.replace("{{TITLE}}", escape(title))
+    page_html = page_html.replace("{{DESCRIPTION}}", escape(description))
+    page_html = page_html.replace("{{CANONICAL}}", escape(canonical))
     page_html = page_html.replace("{{CONTENT}}", html_body)
     out_path.write_text(page_html, encoding="utf-8")
 

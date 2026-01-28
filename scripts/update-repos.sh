@@ -83,9 +83,10 @@ publish_deb() {
       for arch_dir in "$dist_dir"/main/binary-*; do
         [ -d "$arch_dir" ] || continue
         local arch
+        local arch
         arch="$(basename "$arch_dir" | sed 's/^binary-//')"
 
-        # Generate Packages file - prefer dist-specific packages
+        # Generate Packages file - prefer dist-specific packages; fall back to all if empty.
         apt-ftparchive packages "deb/pool/main" | \
           awk -v dist="$dist" -v arch="$arch" 'BEGIN { RS=""; ORS="\n\n" } $0 ~ ("Filename: .*_" dist "_" arch "\\.(deb|ddeb|udeb)") { print }' > "$arch_dir/Packages" || true
 
@@ -96,12 +97,17 @@ publish_deb() {
         gzip -kf "$arch_dir/Packages"
       done
 
+      local arches
+      arches=$(ls -1d "$dist_dir"/main/binary-* 2>/dev/null | sed 's#.*/binary-##' | paste -sd ' ' -)
+      if [ -z "$arches" ]; then
+        arches="amd64"
+      fi
       cat > "$dist_dir/Release" << EOF_RELEASE
 Origin: SW Foundation
 Label: SW Foundation
 Suite: ${dist}
 Codename: ${dist}
-Architectures: amd64
+Architectures: ${arches}
 Components: main
 Description: SW Foundation Package Repository
 EOF_RELEASE
@@ -149,7 +155,7 @@ publish_rpm() {
     for rpm in "${rpms[@]}"; do
       local filename fc_ver dest_dir
       filename=$(basename "$rpm")
-      if [[ "$filename" =~ \.fc([0-9]+)(\.|$) ]]; then
+      if [[ "$filename" =~ \.fc([0-9]+) ]]; then
         fc_ver="${BASH_REMATCH[1]}"
         dest_dir="rpm/fc${fc_ver}"
         mkdir -p "$dest_dir"
@@ -162,8 +168,11 @@ publish_rpm() {
   fi
 
   # SRPMs
-  local srpms=("$SRPM_SRC_DIR"/*.rpm)
-  if [ -d "$SRPM_SRC_DIR" ] && [ ${#srpms[@]} -gt 0 ]; then
+  local srpms=()
+  if [ -d "$SRPM_SRC_DIR" ]; then
+    srpms=("$SRPM_SRC_DIR"/*.rpm)
+  fi
+  if [ ${#srpms[@]} -gt 0 ]; then
     local srpm_dir="rpm/SRPMS"
     mkdir -p "$srpm_dir"
     for srpm in "${srpms[@]}"; do
