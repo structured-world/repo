@@ -1,0 +1,219 @@
+name: Publish Repo
+run-name: Publish Repo (strongswan ${{ inputs.strongswan_run_id || github.event.client_payload.strongswan_run_id }})
+
+on:
+  workflow_dispatch:
+    inputs:
+      strongswan_run_id:
+        description: 'strongswan build-packages run id'
+        required: true
+        type: string
+  repository_dispatch:
+    types: [publish-from-strongswan]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish
+  # Publishing mutates repository state; avoid canceling mid-run.
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Ensure publish runs on main
+        run: |
+          if [ "${{ github.ref }}" != "refs/heads/main" ]; then
+            echo "Error: publish workflow must run on main (current ref: ${{ github.ref }})" >&2
+            exit 1
+          fi
+
+      - name: Generate release bot token
+        uses: actions/create-github-app-token@29824e69f54612133e76f7eaac726eef6c875baf
+        id: app-token
+        with:
+          app-id: ${{ secrets.RELEASER_APP_ID }}
+          private-key: ${{ secrets.RELEASER_APP_PRIVATE_KEY }}
+
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: Install tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y apt-utils createrepo-c gnupg python3-pip dpkg-dev jq
+
+      - name: Import GPG key
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        run: |
+          if [ -z "${GPG_PRIVATE_KEY:-}" ]; then
+            echo "Error: GPG_PRIVATE_KEY is not set" >&2
+            exit 1
+          fi
+          keyfile="$(mktemp)"
+          cleanup_keyfile() { rm -f "$keyfile"; }
+          trap cleanup_keyfile EXIT
+          chmod 600 "$keyfile"
+          printf '%s\n' "$GPG_PRIVATE_KEY" > "$keyfile"
+          gpg --batch --import "$keyfile"
+          cleanup_keyfile
+          trap - EXIT
+          if [ -n "$GPG_PASSPHRASE" ]; then
+            passfile="$(mktemp)"
+            cleanup_passfile() { rm -f "$passfile"; }
+            trap cleanup_passfile EXIT
+            chmod 600 "$passfile"
+            printf '%s' "$GPG_PASSPHRASE" > "$passfile"
+            if ! gpg --batch --yes --pinentry-mode loopback --passphrase-file "$passfile" \
+              --output /dev/null --sign --armor /dev/null; then
+              echo "Error: GPG passphrase check failed" >&2
+              exit 1
+            fi
+            trap - EXIT
+            cleanup_passfile
+          fi
+
+      - name: Resolve strongswan run id
+        id: runid
+        run: |
+          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            sender=$(jq -r '.sender.login // ""' "$GITHUB_EVENT_PATH")
+            action=$(jq -r '.action // ""' "$GITHUB_EVENT_PATH")
+            source_repo=$(jq -r '.client_payload.strongswan_repo // ""' "$GITHUB_EVENT_PATH")
+            if [ "$sender" != "sw-release-bot[bot]" ]; then
+              echo "Error: unauthorized repository_dispatch sender '$sender'" >&2
+              exit 1
+            fi
+            if [ "$action" != "publish-from-strongswan" ]; then
+              echo "Error: unexpected repository_dispatch action '$action'" >&2
+              exit 1
+            fi
+            if [ "$source_repo" != "structured-world/strongswan" ]; then
+              echo "Error: unexpected strongswan_repo '$source_repo'" >&2
+              exit 1
+            fi
+          fi
+          if [ -n "${{ github.event.client_payload.strongswan_run_id }}" ]; then
+            run_id="${{ github.event.client_payload.strongswan_run_id }}"
+          elif [ -n "${{ inputs.strongswan_run_id }}" ]; then
+            run_id="${{ inputs.strongswan_run_id }}"
+          else
+            echo "Error: strongswan_run_id was not provided" >&2
+            exit 1
+          fi
+          if [ -z "$run_id" ]; then
+            echo "Error: resolved strongswan_run_id is empty" >&2
+            exit 1
+          fi
+          echo "run_id=$run_id" >> $GITHUB_OUTPUT
+
+      - name: Download strongswan artifacts
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          RUN_ID="${{ steps.runid.outputs.run_id }}"
+          REPO="structured-world/strongswan"
+          echo "Verifying workflow run $RUN_ID in $REPO..."
+          if ! run_json=$(gh run view "$RUN_ID" -R "$REPO" --json status,conclusion,headBranch,event,workflowName,createdAt,updatedAt); then
+            echo "Error: unable to view run $RUN_ID in $REPO. The run may not exist, or there may be authentication or network connectivity issues." >&2
+            exit 1
+          fi
+          echo "$run_json" | jq -r '. as $r | "Status: \($r.status)\nConclusion: \($r.conclusion // "none")\nBranch: \($r.headBranch)\nEvent: \($r.event)\nWorkflow: \($r.workflowName)\nCreated: \($r.createdAt)\nUpdated: \($r.updatedAt)"'
+          run_status=$(echo "$run_json" | jq -r '.status')
+          run_conclusion=$(echo "$run_json" | jq -r '.conclusion // "none"')
+          run_workflow=$(echo "$run_json" | jq -r '.workflowName // ""')
+          if [ "$run_status" != "completed" ] || [ "$run_conclusion" != "success" ]; then
+            echo "Error: run $RUN_ID is not completed successfully (status=$run_status, conclusion=$run_conclusion)" >&2
+            exit 1
+          fi
+          if [ "$run_workflow" != "Build Packages" ]; then
+            echo "Error: run $RUN_ID is not from expected workflow (Build Packages), got '$run_workflow'" >&2
+            exit 1
+          fi
+          mkdir -p packages
+          # NOTE: We intentionally download artifacts from the strongswan workflow run,
+          # not from a release, to avoid a circular dependency (repo publish → strongswan release).
+          if ! gh run download "$RUN_ID" -R structured-world/strongswan -D packages; then
+            echo "Error: failed to download artifacts for run $RUN_ID" >&2
+            exit 1
+          fi
+          ls -la packages
+          if ! find packages -type f | grep -q .; then
+            echo "Error: no artifacts found in packages/ for run $RUN_ID" >&2
+            exit 1
+          fi
+          if ! find packages -type f \( -name '*.rpm' -o -name '*.deb' \) | grep -q .; then
+            echo "Error: no RPM/DEB artifacts found in packages/ for run $RUN_ID" >&2
+            exit 1
+          fi
+          if find packages -type f ! \( -name '*.rpm' -o -name '*.deb' \) | grep -q .; then
+            echo "Error: unexpected artifact types found in packages/ (only .rpm/.deb allowed)" >&2
+            find packages -type f ! \( -name '*.rpm' -o -name '*.deb' \) -print >&2
+            exit 1
+          fi
+          if find packages -type l | grep -q .; then
+            echo "Error: unexpected symlinks found in packages/; refusing to proceed" >&2
+            find packages -type l -print >&2
+            exit 1
+          fi
+
+      - name: Build docs
+        run: |
+          # Pinned until markdown v4 toc tokens are validated against docs templates.
+          python3 -m pip install --user "markdown>=3.6,<4"
+          SITE_BASE_URL=https://repo.sw.foundation python3 scripts/build-docs.py
+
+      - name: Update package repositories
+        env:
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        run: |
+          chmod +x scripts/update-repos.sh
+          scripts/update-repos.sh
+
+      - name: Cleanup downloaded packages
+        run: |
+          rm -rf packages
+
+      - name: Commit and push
+        run: |
+          git fetch origin main
+          if ! git rebase origin/main; then
+            echo "Error: rebase failed; manual intervention required" >&2
+            exit 1
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if [ -d deb ]; then
+            git add deb
+          fi
+          if [ -d rpm ]; then
+            git add rpm
+          fi
+          if [ -d docs ]; then
+            git add docs
+          fi
+          if [ -f sitemap.xml ]; then
+            git add sitemap.xml
+          fi
+          if [ -f robots.txt ]; then
+            git add robots.txt
+          fi
+          git status
+
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Publish packages from run ${{ steps.runid.outputs.run_id }}"
+            if ! git push; then
+              echo "Error: git push failed; manual retry required" >&2
+              exit 1
+            fi
+          fi

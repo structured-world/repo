@@ -731,115 +731,6 @@
             .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
         }
 
-        /* Documentation Modal */
-        .docs-modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 200;
-            padding: 24px;
-            overflow-y: auto;
-        }
-
-        .docs-modal.active { display: flex; justify-content: center; }
-
-        .docs-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(4px);
-        }
-
-        .docs-container {
-            position: relative;
-            width: 100%;
-            max-width: 900px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-primary);
-            border-radius: var(--radius-lg);
-            margin: auto;
-            overflow: hidden;
-        }
-
-        .docs-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 24px;
-            background: var(--bg-tertiary);
-            border-bottom: 1px solid var(--border-primary);
-        }
-
-        .docs-header h3 { font-size: 1rem; margin: 0; }
-
-        .docs-close {
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: transparent;
-            border: 1px solid var(--border-primary);
-            border-radius: var(--radius-sm);
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all var(--transition-fast);
-        }
-
-        .docs-close:hover { background: var(--bg-tertiary); color: var(--text-primary); }
-
-        .docs-content {
-            padding: 32px;
-            max-height: 70vh;
-            overflow-y: auto;
-        }
-
-        .docs-loading {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 48px;
-            color: var(--text-tertiary);
-        }
-
-        /* Markdown Styling */
-        .docs-content h1 { font-size: 1.75rem; margin: 0 0 24px; padding-bottom: 12px; border-bottom: 1px solid var(--border-primary); }
-        .docs-content h2 { font-size: 1.375rem; margin: 32px 0 16px; }
-        .docs-content h3 { font-size: 1.125rem; margin: 24px 0 12px; }
-        .docs-content p { margin: 0 0 16px; }
-        .docs-content ul, .docs-content ol { margin: 0 0 16px; padding-left: 24px; }
-        .docs-content li { margin-bottom: 8px; color: var(--text-secondary); }
-        .docs-content a { color: var(--accent); }
-        .docs-content code {
-            font-size: 0.875em;
-            background: var(--bg-tertiary);
-            padding: 2px 6px;
-            border-radius: 4px;
-            color: var(--text-primary);
-        }
-        .docs-content pre {
-            background: var(--gray-950);
-            border: 1px solid var(--border-primary);
-            border-radius: var(--radius-md);
-            padding: 16px;
-            overflow-x: auto;
-            margin: 0 0 16px;
-        }
-        .docs-content pre code {
-            background: transparent;
-            padding: 0;
-            font-size: 0.8125rem;
-            line-height: 1.6;
-            color: var(--gray-300);
-        }
-        .docs-content table { width: 100%; border-collapse: collapse; margin: 0 0 16px; }
-        .docs-content th, .docs-content td {
-            padding: 10px 12px;
-            text-align: left;
-            border: 1px solid var(--border-primary);
-        }
-        .docs-content th { background: var(--bg-tertiary); font-weight: 600; font-size: 0.875rem; }
-        .docs-content td { color: var(--text-secondary); font-size: 0.875rem; }
 
         /* Callout */
         .callout {
@@ -871,7 +762,7 @@
                 <a href="#packages">Packages</a>
                 <a href="#install">Install</a>
                 <a href="#security">Security</a>
-                <a href="#" onclick="openDocs('docs/pgsql-plugin.md'); return false;">Docs</a>
+                <a href="/docs/pgsql-plugin/">Docs</a>
                 <a href="https://github.com/structured-world/strongswan" class="nav-cta">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
                     Source
@@ -1232,7 +1123,7 @@ sudo apt install <span class="cmd">strongswan-dhcp-inform</span></code></pre>
                 <div>
                     <h4 class="callout-title">Configuration Guide</h4>
                     <p class="callout-text">
-                        See our <a href="#" onclick="openDocs('docs/pgsql-plugin.md'); return false;">documentation</a> for database setup, schema initialization, and production deployment.
+                        See our <a href="/docs/pgsql-plugin/">documentation</a> for database setup, schema initialization, and production deployment.
                     </p>
                 </div>
             </div>
@@ -1303,7 +1194,7 @@ sudo apt install <span class="cmd">strongswan-dhcp-inform</span></code></pre>
                 <div class="footer-section">
                     <h4>Resources</h4>
                     <ul>
-                        <li><a href="#" onclick="openDocs('docs/pgsql-plugin.md'); return false;">Documentation</a></li>
+                        <li><a href="/docs/pgsql-plugin/">Documentation</a></li>
                         <li><a href="https://github.com/structured-world/strongswan/issues">Issue Tracker</a></li>
                         <li><a href="https://github.com/structured-world/strongswan/releases">Releases</a></li>
                     </ul>
@@ -1340,24 +1231,6 @@ sudo apt install <span class="cmd">strongswan-dhcp-inform</span></code></pre>
         </div>
     </footer>
 
-    <!-- Documentation Modal -->
-    <div id="docs-modal" class="docs-modal">
-        <div class="docs-overlay" onclick="closeDocs()"></div>
-        <div class="docs-container">
-            <div class="docs-header">
-                <h3 id="docs-title">Documentation</h3>
-                <button class="docs-close" onclick="closeDocs()">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-                    </svg>
-                </button>
-            </div>
-            <div id="docs-content" class="docs-content">
-                <div class="docs-loading">Loading documentation...</div>
-            </div>
-        </div>
-    </div>
-
     <script>
         // Distro tab switching
         function switchDistro(distro) {
@@ -1381,42 +1254,6 @@ sudo apt install <span class="cmd">strongswan-dhcp-inform</span></code></pre>
                 }, 2000);
             });
         }
-
-        // Documentation modal
-        async function openDocs(path) {
-            const modal = document.getElementById('docs-modal');
-            const content = document.getElementById('docs-content');
-            const title = document.getElementById('docs-title');
-
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            content.innerHTML = '<div class="docs-loading">Loading documentation...</div>';
-
-            try {
-                const response = await fetch(path);
-                if (!response.ok) throw new Error('Failed to load');
-                const markdown = await response.text();
-
-                // Extract title from first h1
-                const titleMatch = markdown.match(/^#\s+(.+)$/m);
-                if (titleMatch) title.textContent = titleMatch[1];
-
-                // Render markdown
-                content.innerHTML = marked.parse(markdown);
-            } catch (error) {
-                content.innerHTML = '<div class="docs-loading">Failed to load documentation. <a href="' + path + '" target="_blank">View raw file</a></div>';
-            }
-        }
-
-        function closeDocs() {
-            document.getElementById('docs-modal').classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        // Close on escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeDocs();
-        });
 
         // Compare version strings (e.g., "6.0.4-sw.8" > "6.0.4-sw.1")
         function compareVersions(v1, v2) {
