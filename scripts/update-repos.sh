@@ -12,7 +12,7 @@ SRPM_SRC_DIR="${SRPM_SRC_DIR:-packages/srpm}"
 GPG_PASSPHRASE="${GPG_PASSPHRASE:-}"
 gpg_sign() {
   if [ -n "$GPG_PASSPHRASE" ]; then
-    gpg --batch --yes --pinentry-mode loopback --passphrase "$GPG_PASSPHRASE" "$@"
+    printf '%s' "$GPG_PASSPHRASE" | gpg --batch --yes --pinentry-mode loopback --passphrase-fd 0 "$@"
   else
     gpg --batch --yes "$@"
   fi
@@ -50,7 +50,7 @@ publish_deb() {
 
       # Generate Packages file - prefer dist-specific packages
       apt-ftparchive packages "deb/pool/main" | \
-        grep -A 100000 "Filename: .*_${dist}_" > "$dist_dir/main/binary-amd64/Packages" || true
+        awk -v dist="$dist" 'BEGIN { RS=""; ORS="\\n\\n" } $0 ~ ("Filename: .*_" dist "_") { print }' > "$dist_dir/main/binary-amd64/Packages" || true
 
       if [ ! -s "$dist_dir/main/binary-amd64/Packages" ]; then
         apt-ftparchive packages "deb/pool/main" > "$dist_dir/main/binary-amd64/Packages"
@@ -97,6 +97,8 @@ publish_rpm() {
         mkdir -p "$dest_dir"
         cp "$rpm" "$dest_dir/"
         echo "Copied $rpm to $dest_dir/"
+      else
+        echo "Warning: RPM file '$filename' does not match expected '.fc[0-9]+.' pattern; skipping" >&2
       fi
     done
   fi

@@ -3,6 +3,7 @@ import os
 import sys
 from pathlib import Path
 from datetime import datetime, timezone
+from html import escape
 
 try:
     import markdown
@@ -58,7 +59,7 @@ for md_path in sorted(DOCS_DIR.glob("*.md")):
 # Docs index page
 if pages:
     items = "\n".join([
-        f"<li><a href=\"{p['url']}\">{p['title']}</a></li>" for p in pages
+        f"<li><a href=\"{escape(p['url'])}\">{escape(p['title'])}</a></li>" for p in pages
     ])
     content = f"<h1>Documentation</h1><p>Guides for SW Foundation packages.</p><ul>{items}</ul>"
     index_html = template
@@ -70,12 +71,16 @@ if pages:
 
 # Sitemap
 now = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+def xml_escape(value: str) -> str:
+    return escape(value, {'"': '&quot;', "'": '&apos;'})
+
 urls = [
-    f"  <url><loc>{SITE_BASE_URL}/</loc><lastmod>{now}</lastmod></url>",
-    f"  <url><loc>{SITE_BASE_URL}/docs/</loc><lastmod>{now}</lastmod></url>",
+    f"  <url><loc>{xml_escape(SITE_BASE_URL)}/</loc><lastmod>{now}</lastmod></url>",
+    f"  <url><loc>{xml_escape(SITE_BASE_URL)}/docs/</loc><lastmod>{now}</lastmod></url>",
 ]
+
 for p in pages:
-    urls.append(f"  <url><loc>{p['canonical']}</loc><lastmod>{p['lastmod']}</lastmod></url>")
+    urls.append(f"  <url><loc>{xml_escape(p['canonical'])}</loc><lastmod>{p['lastmod']}</lastmod></url>")
 
 sitemap = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + \
           "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n" + \

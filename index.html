@@ -731,115 +731,6 @@
             .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
         }
 
-        /* Documentation Modal */
-        .docs-modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 200;
-            padding: 24px;
-            overflow-y: auto;
-        }
-
-        .docs-modal.active { display: flex; justify-content: center; }
-
-        .docs-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(4px);
-        }
-
-        .docs-container {
-            position: relative;
-            width: 100%;
-            max-width: 900px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-primary);
-            border-radius: var(--radius-lg);
-            margin: auto;
-            overflow: hidden;
-        }
-
-        .docs-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 24px;
-            background: var(--bg-tertiary);
-            border-bottom: 1px solid var(--border-primary);
-        }
-
-        .docs-header h3 { font-size: 1rem; margin: 0; }
-
-        .docs-close {
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: transparent;
-            border: 1px solid var(--border-primary);
-            border-radius: var(--radius-sm);
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all var(--transition-fast);
-        }
-
-        .docs-close:hover { background: var(--bg-tertiary); color: var(--text-primary); }
-
-        .docs-content {
-            padding: 32px;
-            max-height: 70vh;
-            overflow-y: auto;
-        }
-
-        .docs-loading {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 48px;
-            color: var(--text-tertiary);
-        }
-
-        /* Markdown Styling */
-        .docs-content h1 { font-size: 1.75rem; margin: 0 0 24px; padding-bottom: 12px; border-bottom: 1px solid var(--border-primary); }
-        .docs-content h2 { font-size: 1.375rem; margin: 32px 0 16px; }
-        .docs-content h3 { font-size: 1.125rem; margin: 24px 0 12px; }
-        .docs-content p { margin: 0 0 16px; }
-        .docs-content ul, .docs-content ol { margin: 0 0 16px; padding-left: 24px; }
-        .docs-content li { margin-bottom: 8px; color: var(--text-secondary); }
-        .docs-content a { color: var(--accent); }
-        .docs-content code {
-            font-size: 0.875em;
-            background: var(--bg-tertiary);
-            padding: 2px 6px;
-            border-radius: 4px;
-            color: var(--text-primary);
-        }
-        .docs-content pre {
-            background: var(--gray-950);
-            border: 1px solid var(--border-primary);
-            border-radius: var(--radius-md);
-            padding: 16px;
-            overflow-x: auto;
-            margin: 0 0 16px;
-        }
-        .docs-content pre code {
-            background: transparent;
-            padding: 0;
-            font-size: 0.8125rem;
-            line-height: 1.6;
-            color: var(--gray-300);
-        }
-        .docs-content table { width: 100%; border-collapse: collapse; margin: 0 0 16px; }
-        .docs-content th, .docs-content td {
-            padding: 10px 12px;
-            text-align: left;
-            border: 1px solid var(--border-primary);
-        }
-        .docs-content th { background: var(--bg-tertiary); font-weight: 600; font-size: 0.875rem; }
-        .docs-content td { color: var(--text-secondary); font-size: 0.875rem; }
 
         /* Callout */
         .callout {
@@ -1340,24 +1231,6 @@ sudo apt install <span class="cmd">strongswan-dhcp-inform</span></code></pre>
         </div>
     </footer>
 
-    <!-- Documentation Modal -->
-    <div id="docs-modal" class="docs-modal">
-        <div class="docs-overlay" onclick="closeDocs()"></div>
-        <div class="docs-container">
-            <div class="docs-header">
-                <h3 id="docs-title">Documentation</h3>
-                <button class="docs-close" onclick="closeDocs()">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-                    </svg>
-                </button>
-            </div>
-            <div id="docs-content" class="docs-content">
-                <div class="docs-loading">Loading documentation...</div>
-            </div>
-        </div>
-    </div>
-
     <script>
         // Distro tab switching
         function switchDistro(distro) {
@@ -1381,42 +1254,6 @@ sudo apt install <span class="cmd">strongswan-dhcp-inform</span></code></pre>
                 }, 2000);
             });
         }
-
-        // Documentation modal
-        async function openDocs(path) {
-            const modal = document.getElementById('docs-modal');
-            const content = document.getElementById('docs-content');
-            const title = document.getElementById('docs-title');
-
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            content.innerHTML = '<div class="docs-loading">Loading documentation...</div>';
-
-            try {
-                const response = await fetch(path);
-                if (!response.ok) throw new Error('Failed to load');
-                const markdown = await response.text();
-
-                // Extract title from first h1
-                const titleMatch = markdown.match(/^#\s+(.+)$/m);
-                if (titleMatch) title.textContent = titleMatch[1];
-
-                // Render markdown
-                content.innerHTML = marked.parse(markdown);
-            } catch (error) {
-                content.innerHTML = '<div class="docs-loading">Failed to load documentation. <a href="' + path + '" target="_blank">View raw file</a></div>';
-            }
-        }
-
-        function closeDocs() {
-            document.getElementById('docs-modal').classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        // Close on escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeDocs();
-        });
 
         // Compare version strings (e.g., "6.0.4-sw.8" > "6.0.4-sw.1")
         function compareVersions(v1, v2) {
