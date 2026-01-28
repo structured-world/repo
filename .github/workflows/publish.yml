@@ -13,6 +13,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -59,6 +63,12 @@ jobs:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
           RUN_ID="${{ steps.runid.outputs.run_id }}"
+          REPO="structured-world/strongswan"
+          echo "Verifying workflow run $RUN_ID in $REPO..."
+          if ! gh run view "$RUN_ID" -R "$REPO" --json status,conclusion,headBranch,event,workflowName,createdAt,updatedAt --jq '. as $r | "Status: \($r.status)\nConclusion: \($r.conclusion // "none")\nBranch: \($r.headBranch)\nEvent: \($r.event)\nWorkflow: \($r.workflowName)\nCreated: \($r.createdAt)\nUpdated: \($r.updatedAt)"'; then
+            echo "Error: unable to view run $RUN_ID in $REPO. The run may not exist, or there may be authentication or network connectivity issues." >&2
+            exit 1
+          fi
           mkdir -p packages
           # NOTE: We intentionally download artifacts from the strongswan workflow run,
           # not from a release, to avoid a circular dependency (repo publish → strongswan release).
@@ -87,12 +97,25 @@ jobs:
         run: |
           scripts/update-repos.sh
 
+      - name: Cleanup downloaded packages
+        run: |
+          rm -rf packages
+
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add -A
+          if [ "${{ github.ref }}" != "refs/heads/main" ]; then
+            echo "Error: publish workflow must run on main (current ref: ${{ github.ref }})" >&2
+            exit 1
+          fi
+
+          [ -d deb ] && git add deb
+          [ -d rpm ] && git add rpm
+          [ -d docs ] && git add docs
+          [ -f sitemap.xml ] && git add sitemap.xml
+          [ -f robots.txt ] && git add robots.txt
           git status
 
           if git diff --staged --quiet; then

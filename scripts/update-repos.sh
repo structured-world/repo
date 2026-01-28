@@ -4,6 +4,8 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
 
+umask 022
+
 DEB_SRC_DIR="${DEB_SRC_DIR:-packages/deb}"
 RPM_SRC_DIR="${RPM_SRC_DIR:-packages/rpm}"
 SRPM_SRC_DIR="${SRPM_SRC_DIR:-packages/srpm}"
@@ -19,6 +21,13 @@ gpg_sign() {
 }
 
 publish_deb() {
+  for bin in apt-ftparchive dpkg-deb gpg gzip; do
+    if ! command -v "$bin" >/dev/null 2>&1; then
+      echo "Error: required command not found: $bin" >&2
+      exit 1
+    fi
+  done
+
   if [ ! -d "$DEB_SRC_DIR" ]; then
     echo "DEB source dir not found: $DEB_SRC_DIR" >&2
     return 0
@@ -33,7 +42,15 @@ publish_deb() {
 
   for deb in "${debs[@]}"; do
     local pkgname first_letter pool_dir
-    pkgname=$(dpkg-deb -f "$deb" Package)
+    if ! pkgname=$(dpkg-deb -f "$deb" Package 2>/dev/null); then
+      echo "Warning: failed to read package metadata from DEB: $deb" >&2
+      echo "Skipping potentially corrupted or invalid DEB file." >&2
+      continue
+    fi
+    if [ -z "$pkgname" ]; then
+      echo "Warning: empty package name for DEB: $deb; skipping." >&2
+      continue
+    fi
     first_letter="${pkgname:0:1}"
     pool_dir="deb/pool/main/${first_letter}/${pkgname}"
     mkdir -p "$pool_dir"
@@ -46,17 +63,24 @@ publish_deb() {
     for dist_dir in deb/dists/*; do
       [ -d "$dist_dir" ] || continue
       dist="$(basename "$dist_dir")"
-      mkdir -p "$dist_dir/main/binary-amd64"
-
-      # Generate Packages file - prefer dist-specific packages
-      apt-ftparchive packages "deb/pool/main" | \
-        awk -v dist="$dist" 'BEGIN { RS=""; ORS="\\n\\n" } $0 ~ ("Filename: .*_" dist "_") { print }' > "$dist_dir/main/binary-amd64/Packages" || true
-
-      if [ ! -s "$dist_dir/main/binary-amd64/Packages" ]; then
-        apt-ftparchive packages "deb/pool/main" > "$dist_dir/main/binary-amd64/Packages"
+      if ! ls "$dist_dir"/main/binary-* >/dev/null 2>&1; then
+        mkdir -p "$dist_dir/main/binary-amd64"
       fi
 
-      gzip -kf "$dist_dir/main/binary-amd64/Packages"
+      for arch_dir in "$dist_dir"/main/binary-*; do
+        [ -d "$arch_dir" ] || continue
+        arch="$(basename "$arch_dir" | sed 's/^binary-//')"
+
+        # Generate Packages file - prefer dist-specific packages
+        apt-ftparchive packages "deb/pool/main" | \
+          awk -v dist="$dist" -v arch="$arch" 'BEGIN { RS=""; ORS="\\n\\n" } $0 ~ ("Filename: .*_" dist "_" arch "\\.") { print }' > "$arch_dir/Packages" || true
+
+        if [ ! -s "$arch_dir/Packages" ]; then
+          apt-ftparchive packages "deb/pool/main" > "$arch_dir/Packages"
+        fi
+
+        gzip -kf "$arch_dir/Packages"
+      done
 
       cat > "$dist_dir/Release" << EOF_RELEASE
 Origin: SW Foundation
@@ -70,7 +94,15 @@ EOF_RELEASE
 
       apt-ftparchive release "$dist_dir" >> "$dist_dir/Release"
       gpg_sign --armor --detach-sign -o "$dist_dir/Release.gpg" "$dist_dir/Release"
+      if [ ! -s "$dist_dir/Release.gpg" ] || ! gpg --verify "$dist_dir/Release.gpg" "$dist_dir/Release" >/dev/null 2>&1; then
+        echo "Error: Failed to create valid GPG signature for $dist_dir/Release (Release.gpg)" >&2
+        exit 1
+      fi
       gpg_sign --clearsign -o "$dist_dir/InRelease" "$dist_dir/Release"
+      if [ ! -s "$dist_dir/InRelease" ] || ! gpg --verify "$dist_dir/InRelease" "$dist_dir/Release" >/dev/null 2>&1; then
+        echo "Error: Failed to create valid GPG clearsigned file for $dist_dir/Release (InRelease)" >&2
+        exit 1
+      fi
 
       echo "Updated DEB repository for ${dist}"
     done
@@ -78,6 +110,13 @@ EOF_RELEASE
 }
 
 publish_rpm() {
+  for bin in createrepo_c gpg; do
+    if ! command -v "$bin" >/dev/null 2>&1; then
+      echo "Error: required command not found: $bin" >&2
+      exit 1
+    fi
+  done
+
   if [ ! -d "$RPM_SRC_DIR" ]; then
     echo "RPM source dir not found: $RPM_SRC_DIR" >&2
     return 0
@@ -91,7 +130,7 @@ publish_rpm() {
     for rpm in "${rpms[@]}"; do
       local filename fc_ver dest_dir
       filename=$(basename "$rpm")
-      if [[ "$filename" =~ \.fc([0-9]+)\. ]]; then
+      if [[ "$filename" =~ \.fc([0-9]+)(\.|$) ]]; then
         fc_ver="${BASH_REMATCH[1]}"
         dest_dir="rpm/fc${fc_ver}"
         mkdir -p "$dest_dir"

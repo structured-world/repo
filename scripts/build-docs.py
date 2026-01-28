@@ -7,7 +7,7 @@ from html import escape
 
 try:
     import markdown
-except Exception as exc:
+except (ImportError, ModuleNotFoundError) as exc:
     print("Missing dependency: python-markdown. Install with: python3 -m pip install markdown", file=sys.stderr)
     raise SystemExit(1) from exc
 
@@ -22,7 +22,7 @@ if not TEMPLATE_PATH.exists():
 
 template = TEMPLATE_PATH.read_text(encoding="utf-8")
 
-md = markdown.Markdown(extensions=["extra", "tables", "fenced_code", "toc"])
+md = markdown.Markdown(extensions=["extra", "tables", "toc"])
 
 pages = []
 
@@ -42,6 +42,9 @@ for md_path in sorted(DOCS_DIR.glob("*.md")):
     canonical = f"{SITE_BASE_URL}/docs/{slug}/"
 
     page_html = template
+    for value in (title, description, canonical):
+        if "{{" in value or "}}" in value:
+            raise SystemExit("Template marker found in replacement value")
     page_html = page_html.replace("{{TITLE}}", title)
     page_html = page_html.replace("{{DESCRIPTION}}", description)
     page_html = page_html.replace("{{CANONICAL}}", canonical)
@@ -72,7 +75,7 @@ if pages:
 # Sitemap
 now = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 def xml_escape(value: str) -> str:
-    return escape(value, {'"': '&quot;', "'": '&apos;'})
+    return escape(value)
 
 urls = [
     f"  <url><loc>{xml_escape(SITE_BASE_URL)}/</loc><lastmod>{now}</lastmod></url>",
