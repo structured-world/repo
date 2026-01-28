@@ -60,6 +60,8 @@ jobs:
         run: |
           RUN_ID="${{ steps.runid.outputs.run_id }}"
           mkdir -p packages
+          # NOTE: We intentionally download artifacts from the strongswan workflow run,
+          # not from a release, to avoid a circular dependency (repo publish → strongswan release).
           if ! gh run download "$RUN_ID" -R structured-world/strongswan -D packages; then
             echo "Error: failed to download artifacts for run $RUN_ID" >&2
             exit 1
@@ -67,6 +69,10 @@ jobs:
           ls -la packages
           if ! find packages -type f | grep -q .; then
             echo "Error: no artifacts found in packages/ for run $RUN_ID" >&2
+            exit 1
+          fi
+          if ! find packages -type f -name '*.rpm' -o -name '*.deb' | grep -q .; then
+            echo "Error: no RPM/DEB artifacts found in packages/ for run $RUN_ID" >&2
             exit 1
           fi
 
