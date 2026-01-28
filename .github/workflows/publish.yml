@@ -59,7 +59,14 @@ jobs:
           cleanup_keyfile
           trap - EXIT
           if [ -n "$GPG_PASSPHRASE" ]; then
-            echo "$GPG_PASSPHRASE" | gpg --batch --yes --pinentry-mode loopback --passphrase-fd 0 --sign --armor /dev/null || true
+            passfile="$(mktemp)"
+            cleanup_passfile() { rm -f "$passfile"; }
+            trap cleanup_passfile EXIT
+            chmod 600 "$passfile"
+            printf '%s' "$GPG_PASSPHRASE" > "$passfile"
+            gpg --batch --yes --pinentry-mode loopback --passphrase-file "$passfile" --sign --armor /dev/null || true
+            cleanup_passfile
+            trap - EXIT
           fi
 
       - name: Resolve strongswan run id

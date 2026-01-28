@@ -14,7 +14,13 @@ SRPM_SRC_DIR="${SRPM_SRC_DIR:-packages/srpm}"
 GPG_PASSPHRASE="${GPG_PASSPHRASE:-}"
 gpg_sign() {
   if [ -n "$GPG_PASSPHRASE" ]; then
-    printf '%s' "$GPG_PASSPHRASE" | gpg --batch --yes --pinentry-mode loopback --passphrase-fd 0 "$@"
+    local passfile
+    passfile="$(mktemp)"
+    cleanup_passfile() { rm -f "$passfile"; }
+    trap cleanup_passfile RETURN
+    chmod 600 "$passfile"
+    printf '%s' "$GPG_PASSPHRASE" > "$passfile"
+    gpg --batch --yes --pinentry-mode loopback --passphrase-file "$passfile" "$@"
   else
     gpg --batch --yes "$@"
   fi
@@ -76,7 +82,7 @@ publish_deb() {
 
         # Generate Packages file - prefer dist-specific packages
         apt-ftparchive packages "deb/pool/main" | \
-          awk -v dist="$dist" -v arch="$arch" 'BEGIN { RS=""; ORS="\n\n" } $0 ~ ("Filename: .*_" dist "_" arch "\\.") { print }' > "$arch_dir/Packages" || true
+          awk -v dist="$dist" -v arch="$arch" 'BEGIN { RS=""; ORS="\n\n" } $0 ~ ("Filename: .*_" dist "_" arch "\\.(deb|ddeb|udeb)") { print }' > "$arch_dir/Packages" || true
 
         if [ ! -s "$arch_dir/Packages" ]; then
           apt-ftparchive packages "deb/pool/main" > "$arch_dir/Packages"
@@ -126,10 +132,14 @@ publish_rpm() {
     return 0
   fi
 
+  local nullglob_state
+  nullglob_state=$(shopt -p nullglob)
   shopt -s nullglob
   local rpms=("$RPM_SRC_DIR"/*.rpm)
   if [ ${#rpms[@]} -eq 0 ]; then
     echo "No RPM packages to publish"
+    eval "$nullglob_state"
+    return 0
   else
     for rpm in "${rpms[@]}"; do
       local filename fc_ver dest_dir
@@ -183,6 +193,7 @@ publish_rpm() {
       echo "Updated RPM repository for $(basename "$fc_dir")"
     fi
   done
+  eval "$nullglob_state"
 }
 
 publish_deb

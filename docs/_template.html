@@ -15,7 +15,8 @@
       --muted: #a1a1aa;
       --accent: #3b82f6;
       --border: #232329;
-      --code: #0f172a;
+      --code-bg: #0b1220;
+      --code-text: #e2e8f0;
     }
     @media (prefers-color-scheme: light) {
       :root {
@@ -25,7 +26,8 @@
         --muted: #4b5563;
         --accent: #2563eb;
         --border: #e5e7eb;
-        --code: #0f172a;
+        --code-bg: #f1f5f9;
+        --code-text: #0f172a;
       }
     }
     * { box-sizing: border-box; }
@@ -68,8 +70,8 @@
     p { color: var(--muted); }
     a { color: var(--accent); }
     pre {
-      background: #0b1220;
-      color: #e2e8f0;
+      background: var(--code-bg);
+      color: var(--code-text);
       padding: 14px 16px;
       border-radius: 10px;
       overflow-x: auto;
