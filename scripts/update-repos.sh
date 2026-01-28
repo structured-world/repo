@@ -82,6 +82,7 @@ publish_deb() {
 
       for arch_dir in "$dist_dir"/main/binary-*; do
         [ -d "$arch_dir" ] || continue
+        local arch
         arch="$(basename "$arch_dir" | sed 's/^binary-//')"
 
         # Generate Packages file - prefer dist-specific packages

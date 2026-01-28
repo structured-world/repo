@@ -8,7 +8,7 @@ from html import escape
 try:
     import markdown
 except (ImportError, ModuleNotFoundError) as exc:
-    print("Missing dependency: python-markdown. Install with: python3 -m pip install markdown", file=sys.stderr)
+    print("Missing dependency: markdown. Install with: python3 -m pip install markdown", file=sys.stderr)
     raise SystemExit(1) from exc
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -32,7 +32,12 @@ for md_path in sorted(DOCS_DIR.glob("*.md")):
     md.reset()
     raw = md_path.read_text(encoding="utf-8")
     html_body = md.convert(raw)
-    title = md.toc_tokens[0]["name"] if md.toc_tokens else md_path.stem.replace("-", " ").title()
+    if md.toc_tokens and isinstance(md.toc_tokens, list):
+        title = md.toc_tokens[0].get("name", "") if md.toc_tokens else ""
+    else:
+        title = ""
+    if not title:
+        title = md_path.stem.replace("-", " ").title()
     description = f"{title} documentation for SW Foundation."
 
     slug = md_path.stem

@@ -75,6 +75,10 @@ jobs:
       - name: Resolve strongswan run id
         id: runid
         run: |
+          if [ "${{ github.event_name }}" = "repository_dispatch" ] && [ -z "${{ github.event.client_payload.strongswan_run_id }}" ]; then
+            echo "Error: repository_dispatch missing client_payload.strongswan_run_id" >&2
+            exit 1
+          fi
           if [ -n "${{ github.event.client_payload.strongswan_run_id }}" ]; then
             run_id="${{ github.event.client_payload.strongswan_run_id }}"
           elif [ -n "${{ inputs.strongswan_run_id }}" ]; then
@@ -110,8 +114,13 @@ jobs:
           echo "$run_json" | jq -r '. as $r | "Status: \($r.status)\nConclusion: \($r.conclusion // "none")\nBranch: \($r.headBranch)\nEvent: \($r.event)\nWorkflow: \($r.workflowName)\nCreated: \($r.createdAt)\nUpdated: \($r.updatedAt)"'
           run_status=$(echo "$run_json" | jq -r '.status')
           run_conclusion=$(echo "$run_json" | jq -r '.conclusion // "none"')
+          run_workflow=$(echo "$run_json" | jq -r '.workflowName // ""')
           if [ "$run_status" != "completed" ] || [ "$run_conclusion" != "success" ]; then
             echo "Error: run $RUN_ID is not completed successfully (status=$run_status, conclusion=$run_conclusion)" >&2
+            exit 1
+          fi
+          if [ "$run_workflow" != "Build Packages" ]; then
+            echo "Error: run $RUN_ID is not from expected workflow (Build Packages), got '$run_workflow'" >&2
             exit 1
           fi
           mkdir -p packages
@@ -133,7 +142,7 @@ jobs:
 
       - name: Build docs
         run: |
-          python3 -m pip install --user "markdown==3.6"
+          python3 -m pip install --user "markdown>=3.6,<4"
           SITE_BASE_URL=https://repo.sw.foundation python3 scripts/build-docs.py
 
       - name: Update package repositories
