@@ -60,6 +60,10 @@ publish_deb() {
       echo "Warning: empty package name for DEB: $deb; skipping." >&2
       continue
     fi
+    if ! [[ "$pkgname" =~ ^[a-z0-9][a-z0-9+.-]+$ ]]; then
+      echo "Warning: invalid package name '$pkgname' for DEB: $deb; skipping." >&2
+      continue
+    fi
     first_letter="${pkgname:0:1}"
     pool_dir="deb/pool/main/${first_letter}/${pkgname}"
     mkdir -p "$pool_dir"

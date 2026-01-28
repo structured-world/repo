@@ -89,6 +89,13 @@ jobs:
           fi
           echo "run_id=$run_id" >> $GITHUB_OUTPUT
 
+      - name: Ensure publish runs on main
+        run: |
+          if [ "${{ github.ref }}" != "refs/heads/main" ]; then
+            echo "Error: publish workflow must run on main (current ref: ${{ github.ref }})" >&2
+            exit 1
+          fi
+
       - name: Download strongswan artifacts
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
@@ -143,12 +150,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          if [ "${{ github.ref }}" != "refs/heads/main" ]; then
-            echo "Error: publish workflow must run on main (current ref: ${{ github.ref }})" >&2
-            exit 1
-          fi
-
           if [ -d deb ]; then
             git add deb
           fi
