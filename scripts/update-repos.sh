@@ -176,7 +176,7 @@ publish_rpm() {
   for rpm in "${rpms[@]}"; do
     local filename fc_ver dest_dir
     filename=$(basename "$rpm")
-      if [[ "$filename" =~ \.fc([0-9]+)\. ]]; then
+    if [[ "$filename" =~ \.fc([0-9]+)\. ]]; then
       fc_ver="${BASH_REMATCH[1]}"
       dest_dir="rpm/fc${fc_ver}"
       mkdir -p "$dest_dir"
