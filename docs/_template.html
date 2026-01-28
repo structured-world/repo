@@ -56,6 +56,12 @@
       text-decoration: none;
       font-weight: 600;
     }
+    .topbar-title {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+    }
     article {
       background: var(--panel);
       border: 1px solid var(--border);
@@ -99,7 +105,7 @@
   <div class="wrap">
     <div class="topbar">
       <a href="/">← Back to repository</a>
-      <span role="heading" aria-level="1">SW Foundation Docs</span>
+      <h1 class="topbar-title">SW Foundation Docs</h1>
     </div>
     <article>
       {{CONTENT}}

@@ -64,7 +64,10 @@ jobs:
             trap cleanup_passfile EXIT
             chmod 600 "$passfile"
             printf '%s' "$GPG_PASSPHRASE" > "$passfile"
-            gpg --batch --yes --pinentry-mode loopback --passphrase-file "$passfile" --sign --armor /dev/null || true
+            if ! gpg --batch --yes --pinentry-mode loopback --passphrase-file "$passfile" --sign --armor /dev/null; then
+              echo "Error: GPG passphrase check failed" >&2
+              exit 1
+            fi
             cleanup_passfile
             trap - EXIT
           fi
@@ -123,7 +126,7 @@ jobs:
 
       - name: Build docs
         run: |
-          python3 -m pip install --user markdown
+          python3 -m pip install --user "markdown==3.6"
           SITE_BASE_URL=https://repo.sw.foundation python3 scripts/build-docs.py
 
       - name: Update package repositories
@@ -146,11 +149,21 @@ jobs:
             exit 1
           fi
 
-          [ -d deb ] && git add deb
-          [ -d rpm ] && git add rpm
-          [ -d docs ] && git add docs
-          [ -f sitemap.xml ] && git add sitemap.xml
-          [ -f robots.txt ] && git add robots.txt
+          if [ -d deb ]; then
+            git add deb
+          fi
+          if [ -d rpm ]; then
+            git add rpm
+          fi
+          if [ -d docs ]; then
+            git add docs
+          fi
+          if [ -f sitemap.xml ]; then
+            git add sitemap.xml
+          fi
+          if [ -f robots.txt ]; then
+            git add robots.txt
+          fi
           git status
 
           if git diff --staged --quiet; then
