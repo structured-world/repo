@@ -87,18 +87,25 @@ if pages:
 
 # Sitemap
 urls = []
+txt_urls = []
 if pages:
     latest_dt = max((p["lastmod_dt"] for p in pages))
     latest = latest_dt.strftime("%Y-%m-%d")
+    root_url = f"{SITE_BASE_URL}/"
+    docs_url = f"{SITE_BASE_URL}/docs/"
     urls.extend([
-        f"  <url><loc>{escape(SITE_BASE_URL)}/</loc><lastmod>{latest}</lastmod></url>",
-        f"  <url><loc>{escape(SITE_BASE_URL)}/docs/</loc><lastmod>{latest}</lastmod></url>",
+        f"  <url><loc>{escape(root_url)}</loc><lastmod>{latest}</lastmod></url>",
+        f"  <url><loc>{escape(docs_url)}</loc><lastmod>{latest}</lastmod></url>",
     ])
+    txt_urls.extend([root_url, docs_url])
     for p in pages:
         urls.append(f"  <url><loc>{escape(p['canonical'])}</loc><lastmod>{p['lastmod']}</lastmod></url>")
+        txt_urls.append(p["canonical"])
 else:
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    urls.append(f"  <url><loc>{escape(SITE_BASE_URL)}/</loc><lastmod>{today}</lastmod></url>")
+    root_url = f"{SITE_BASE_URL}/"
+    urls.append(f"  <url><loc>{escape(root_url)}</loc><lastmod>{today}</lastmod></url>")
+    txt_urls.append(root_url)
 
 sitemap_lines = [
     "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
@@ -108,6 +115,8 @@ sitemap_lines = [
 ]
 sitemap = "\n".join(sitemap_lines) + "\n"
 (ROOT / "sitemap.xml").write_text(sitemap, encoding="utf-8")
+if txt_urls:
+    (ROOT / "sitemap.txt").write_text("\n".join(txt_urls) + "\n", encoding="utf-8")
 
 # Robots
 robots = f"User-agent: *\nAllow: /\nSitemap: {SITE_BASE_URL}/sitemap.xml\n"
