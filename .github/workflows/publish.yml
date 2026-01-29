@@ -1,5 +1,5 @@
 name: Publish Repo
-run-name: Publish Repo (strongswan ${{ inputs.strongswan_run_id || github.event.client_payload.strongswan_run_id }})
+run-name: Publish Repo (strongswan)
 
 on:
   workflow_dispatch:
@@ -113,6 +113,10 @@ jobs:
             echo "Error: resolved strongswan_run_id is empty" >&2
             exit 1
           fi
+          if ! echo "$run_id" | grep -Eq '^[0-9]+$'; then
+            echo "Error: resolved strongswan_run_id must be numeric, got '$run_id'" >&2
+            exit 1
+          fi
           echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
 
       - name: Download strongswan artifacts
@@ -141,7 +145,10 @@ jobs:
           mkdir -p packages
           # NOTE: We intentionally download artifacts from the strongswan workflow run,
           # not from a release, to avoid a circular dependency (repo publish → strongswan release).
-          if ! gh run download "$RUN_ID" -R structured-world/strongswan -D packages; then
+          if ! gh run download "$RUN_ID" -R structured-world/strongswan -D packages \
+            --pattern "deb-*" \
+            --pattern "rpm-fc*" \
+            --pattern "srpm"; then
             echo "Error: failed to download artifacts for run $RUN_ID" >&2
             exit 1
           fi
@@ -167,7 +174,7 @@ jobs:
 
       - name: Build docs
         run: |
-          # Pinned until markdown v4 toc tokens are validated against docs templates.
+          # Pinned until markdown v4 output (toc extension + toc_tokens shape) is validated against docs templates.
           python3 -m pip install --user "markdown>=3.6,<4"
           SITE_BASE_URL=https://repo.sw.foundation python3 scripts/build-docs.py
 

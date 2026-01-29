@@ -97,16 +97,22 @@ publish_deb() {
 
       for arch_dir in "$dist_dir"/main/binary-*; do
         [ -d "$arch_dir" ] || continue
-        local arch dist_escaped arch_escaped
+        local arch
         arch="$(basename "$arch_dir" | sed 's/^binary-//')"
+        if ! printf '%s' "$dist" | grep -Eq '^[A-Za-z0-9._-]+$'; then
+          echo "Error: invalid dist name '$dist' for deb repository" >&2
+          exit 1
+        fi
+        if ! printf '%s' "$arch" | grep -Eq '^[A-Za-z0-9._-]+$'; then
+          echo "Error: invalid arch name '$arch' for deb repository" >&2
+          exit 1
+        fi
 
         # Generate Packages file - prefer dist-specific packages; fall back to all if empty.
         local packages_tmp
         packages_tmp="$(mktemp)"
-        dist_escaped=$(printf '%s' "$dist" | sed 's/[][\\.^$*+?{}|()]/\\&/g')
-        arch_escaped=$(printf '%s' "$arch" | sed 's/[][\\.^$*+?{}|()]/\\&/g')
         if apt-ftparchive packages "deb/pool/main" > "$packages_tmp"; then
-          awk -v dist="$dist_escaped" -v arch="$arch_escaped" 'BEGIN { RS=""; ORS="\n\n" } $0 ~ ("Filename: .*_" dist "_" arch "\\\\.(deb|ddeb|udeb)$") { print }' \
+          awk -v dist="$dist" -v arch="$arch" 'BEGIN { RS=""; ORS="\n\n" } $0 ~ ("Filename: .*_" dist "_" arch "\\.(deb|ddeb|udeb)$") { print }' \
             "$packages_tmp" > "$arch_dir/Packages"
         else
           rm -f "$packages_tmp"
@@ -123,7 +129,21 @@ publish_deb() {
       done
 
       local arches
-      arches=$(ls -1d "$dist_dir"/main/binary-* 2>/dev/null | sed 's#.*/binary-##' | paste -sd ' ' -)
+      arches=""
+      for arch_dir in "$dist_dir"/main/binary-*; do
+        [ -d "$arch_dir" ] || continue
+        local arch_name
+        arch_name="${arch_dir##*/binary-}"
+        if ! printf '%s' "$arch_name" | grep -Eq '^[A-Za-z0-9._-]+$'; then
+          echo "Error: invalid arch directory '$arch_name' for deb Release" >&2
+          exit 1
+        fi
+        if [ -z "$arches" ]; then
+          arches="$arch_name"
+        else
+          arches="$arches $arch_name"
+        fi
+      done
       if [ -z "$arches" ]; then
         arches="amd64"
       fi
