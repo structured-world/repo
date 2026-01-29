@@ -15,7 +15,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: publish
+  group: publish-${{ github.ref }}
   # Publishing mutates repository state; avoid canceling mid-run.
   cancel-in-progress: false
 
@@ -113,7 +113,7 @@ jobs:
             echo "Error: resolved strongswan_run_id is empty" >&2
             exit 1
           fi
-          echo "run_id=$run_id" >> $GITHUB_OUTPUT
+          echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
 
       - name: Download strongswan artifacts
         env:
