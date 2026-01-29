@@ -210,6 +210,9 @@ jobs:
           if [ -f sitemap.xml ]; then
             git add sitemap.xml
           fi
+          if [ -f sitemap.txt ]; then
+            git add sitemap.txt
+          fi
           if [ -f robots.txt ]; then
             git add robots.txt
           fi

@@ -105,11 +105,10 @@ publish_deb() {
         fi
 
         # Generate Packages file - prefer dist-specific packages; fall back to all if empty.
-        local packages_tmp previous_trap
+        local packages_tmp
         packages_tmp="$(mktemp)"
         cleanup_packages_tmp() { rm -f "$packages_tmp"; }
-        previous_trap=$(trap -p RETURN || true)
-        trap cleanup_packages_tmp RETURN
+        trap cleanup_packages_tmp EXIT
         if apt-ftparchive packages "deb/pool/main" > "$packages_tmp"; then
           awk -v dist="$dist" -v arch="$arch" 'BEGIN { RS=""; ORS="\n\n" } $0 ~ ("Filename: .*_" dist "_" arch "\\.(deb|ddeb|udeb)$") { print }' \
             "$packages_tmp" > "$arch_dir/Packages"
@@ -117,11 +116,8 @@ publish_deb() {
           echo "Error: apt-ftparchive packages failed for deb/pool/main" >&2
           exit 1
         fi
-        if [ -n "$previous_trap" ]; then
-          eval "$previous_trap"
-        else
-          trap - RETURN
-        fi
+        trap - EXIT
+        cleanup_packages_tmp
 
         if [ ! -s "$arch_dir/Packages" ]; then
           apt-ftparchive packages "deb/pool/main" > "$arch_dir/Packages"
