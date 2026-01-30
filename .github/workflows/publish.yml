@@ -207,6 +207,21 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         run: |
           chmod +x scripts/update-repos.sh
+          if [ -d packages ]; then
+            mkdir -p packages/deb packages/rpm packages/srpm
+            for dir in packages/deb-*; do
+              [ -d "$dir" ] || continue
+              find "$dir" -type f -name '*.deb' -exec mv -n {} packages/deb/ \;
+            done
+            for dir in packages/rpm-fc*; do
+              [ -d "$dir" ] || continue
+              find "$dir" -type f -name '*.rpm' -exec mv -n {} packages/rpm/ \;
+            done
+            for dir in packages/srpm; do
+              [ -d "$dir" ] || continue
+              find "$dir" -type f -name '*.rpm' -exec mv -n {} packages/srpm/ \;
+            done
+          fi
           scripts/update-repos.sh
 
       - name: Cleanup downloaded packages

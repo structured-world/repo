@@ -209,8 +209,11 @@ publish_rpm() {
       fc_ver="${BASH_REMATCH[1]}"
       dest_dir="rpm/fc${fc_ver}"
       mkdir -p "$dest_dir"
-      cp "$rpm" "$dest_dir/"
-      echo "Copied $rpm to $dest_dir/"
+      if ! cp -n "$rpm" "$dest_dir/"; then
+        echo "Warning: RPM already present; skipping $dest_dir/$filename" >&2
+      else
+        echo "Copied $rpm to $dest_dir/"
+      fi
     else
       echo "Warning: RPM file '$filename' does not match expected Fedora RPM pattern; skipping" >&2
     fi
@@ -225,8 +228,13 @@ publish_rpm() {
     local srpm_dir="rpm/SRPMS"
     mkdir -p "$srpm_dir"
     for srpm in "${srpms[@]}"; do
-      cp "$srpm" "$srpm_dir/"
-      echo "Copied $srpm to $srpm_dir/"
+      local srpm_name
+      srpm_name=$(basename "$srpm")
+      if ! cp -n "$srpm" "$srpm_dir/"; then
+        echo "Warning: SRPM already present; skipping $srpm_dir/$srpm_name" >&2
+      else
+        echo "Copied $srpm to $srpm_dir/"
+      fi
     done
 
     createrepo_c --update "$srpm_dir"
