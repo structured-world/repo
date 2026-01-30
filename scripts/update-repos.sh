@@ -113,7 +113,7 @@ publish_deb() {
           echo "Error: apt-ftparchive packages failed for deb/pool/main" >&2
           exit 1
         fi
-        if ! awk -v dist="$dist" -v arch="$arch" 'BEGIN { RS=""; ORS="\n\n" } $0 ~ ("Filename: .*_" dist "_" arch "\\.(deb|ddeb|udeb)$") { print }' \
+        if ! awk -v arch="$arch" 'BEGIN { RS=""; ORS="\n\n" } $0 ~ ("Filename: .*_" arch "\\.(deb|ddeb|udeb)$") { print }' \
           "$packages_tmp" > "$arch_dir/Packages"; then
           cleanup_packages_tmp
           echo "Error: filtering Packages failed for dist '$dist' arch '$arch'" >&2

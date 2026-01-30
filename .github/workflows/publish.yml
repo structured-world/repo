@@ -60,25 +60,38 @@ jobs:
           fi
           keyfile="$(mktemp)"
           cleanup_keyfile() { rm -f "$keyfile"; }
+          previous_trap=$(trap -p EXIT || true)
           trap cleanup_keyfile EXIT
           chmod 600 "$keyfile"
           printf '%s\n' "$GPG_PRIVATE_KEY" > "$keyfile"
           gpg --batch --import "$keyfile"
-          cleanup_keyfile
           trap - EXIT
+          cleanup_keyfile
+          if [ -n "$previous_trap" ]; then
+            eval "$previous_trap"
+          fi
           if [ -n "$GPG_PASSPHRASE" ]; then
             passfile="$(mktemp)"
             cleanup_passfile() { rm -f "$passfile"; }
+            previous_pass_trap=$(trap -p EXIT || true)
             trap cleanup_passfile EXIT
             chmod 600 "$passfile"
             printf '%s' "$GPG_PASSPHRASE" > "$passfile"
             if ! gpg --batch --yes --pinentry-mode loopback --passphrase-file "$passfile" \
               --output /dev/null --sign --armor /dev/null; then
+              trap - EXIT
+              cleanup_passfile
+              if [ -n "$previous_pass_trap" ]; then
+                eval "$previous_pass_trap"
+              fi
               echo "Error: GPG passphrase check failed" >&2
               exit 1
             fi
             trap - EXIT
             cleanup_passfile
+            if [ -n "$previous_pass_trap" ]; then
+              eval "$previous_pass_trap"
+            fi
           fi
 
       - name: Resolve strongswan run id
@@ -150,6 +163,16 @@ jobs:
             --pattern "rpm-fc*" \
             --pattern "srpm"; then
             echo "Error: failed to download artifacts for run $RUN_ID" >&2
+            exit 1
+          fi
+          if find packages -maxdepth 1 -type f | grep -q .; then
+            echo "Error: unexpected files found at packages/ root; refusing to proceed" >&2
+            find packages -maxdepth 1 -type f -print >&2
+            exit 1
+          fi
+          if find packages -maxdepth 1 -type d ! -name 'deb-*' ! -name 'rpm-fc*' ! -name 'srpm' | grep -q .; then
+            echo "Error: unexpected artifact directories found in packages/" >&2
+            find packages -maxdepth 1 -type d ! -name 'deb-*' ! -name 'rpm-fc*' ! -name 'srpm' -print >&2
             exit 1
           fi
           ls -la packages

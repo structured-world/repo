@@ -106,6 +106,7 @@ else:
     root_url = f"{SITE_BASE_URL}/"
     urls.append(f"  <url><loc>{escape(root_url)}</loc><lastmod>{today}</lastmod></url>")
     txt_urls.append(root_url)
+    # No docs index without pages, so don't include /docs/ here.
 
 sitemap_lines = [
     "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
