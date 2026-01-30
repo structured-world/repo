@@ -179,12 +179,29 @@ EOF_RELEASE
 }
 
 publish_rpm() {
-  for bin in createrepo_c gpg; do
+  for bin in createrepo_c gpg rpm rpmsign; do
     if ! command -v "$bin" >/dev/null 2>&1; then
       echo "Error: required command not found: $bin" >&2
       exit 1
     fi
   done
+
+  ensure_rpm_signed() {
+    local rpm_path
+    rpm_path="$1"
+    local sig
+    sig=$(rpm -qp --qf '%{SIGPGP:pgpsig}\n' "$rpm_path" 2>/dev/null || true)
+    if [ -z "$sig" ] || [ "$sig" = "(none)" ]; then
+      if ! rpmsign --addsign "$rpm_path"; then
+        echo "Error: failed to sign RPM: $rpm_path" >&2
+        exit 1
+      fi
+    fi
+    if ! rpm --checksig "$rpm_path" | grep -Eq 'pgp|gpg|rsa|sha'; then
+      echo "Error: RPM signature verification failed: $rpm_path" >&2
+      exit 1
+    fi
+  }
 
   if [ ! -d "$RPM_SRC_DIR" ]; then
     echo "RPM source dir not found: $RPM_SRC_DIR" >&2
@@ -209,9 +226,12 @@ publish_rpm() {
       fc_ver="${BASH_REMATCH[1]}"
       dest_dir="rpm/fc${fc_ver}"
       mkdir -p "$dest_dir"
-      if ! cp -n "$rpm" "$dest_dir/"; then
-        echo "Warning: RPM already present; skipping $dest_dir/$filename" >&2
+      if [ -e "$dest_dir/$filename" ]; then
+        echo "Warning: RPM already present; verifying signature: $dest_dir/$filename" >&2
+        ensure_rpm_signed "$dest_dir/$filename"
       else
+        cp "$rpm" "$dest_dir/"
+        ensure_rpm_signed "$dest_dir/$filename"
         echo "Copied $rpm to $dest_dir/"
       fi
     else
@@ -230,9 +250,12 @@ publish_rpm() {
     for srpm in "${srpms[@]}"; do
       local srpm_name
       srpm_name=$(basename "$srpm")
-      if ! cp -n "$srpm" "$srpm_dir/"; then
-        echo "Warning: SRPM already present; skipping $srpm_dir/$srpm_name" >&2
+      if [ -e "$srpm_dir/$srpm_name" ]; then
+        echo "Warning: SRPM already present; verifying signature: $srpm_dir/$srpm_name" >&2
+        ensure_rpm_signed "$srpm_dir/$srpm_name"
       else
+        cp "$srpm" "$srpm_dir/"
+        ensure_rpm_signed "$srpm_dir/$srpm_name"
         echo "Copied $srpm to $srpm_dir/"
       fi
     done
