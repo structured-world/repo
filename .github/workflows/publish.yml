@@ -166,6 +166,7 @@ jobs:
             find packages -type f ! \( -name '*.rpm' -o -name '*.deb' \) -print >&2
             exit 1
           fi
+          # Reject any symlinks to avoid path traversal from downloaded artifacts.
           if find packages -type l | grep -q .; then
             echo "Error: unexpected symlinks found in packages/; refusing to proceed" >&2
             find packages -type l -print >&2
@@ -191,14 +192,14 @@ jobs:
 
       - name: Commit and push
         run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git fetch origin main
           if ! git rebase origin/main; then
             echo "Error: rebase failed; manual intervention required" >&2
             git rebase --abort || true
             exit 1
           fi
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
           if [ -d deb ]; then
             git add deb
           fi

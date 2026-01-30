@@ -67,7 +67,7 @@ publish_deb() {
       echo "Warning: empty package name for DEB: $deb; skipping." >&2
       continue
     fi
-    if ! [[ "$pkgname" =~ ^[a-z][a-z0-9+.-]*$ ]]; then
+    if ! [[ "$pkgname" =~ ^[a-z][a-z0-9+-]*$ ]]; then
       echo "Warning: invalid package name '$pkgname' for DEB: $deb; skipping." >&2
       continue
     fi
@@ -95,11 +95,11 @@ publish_deb() {
         [ -d "$arch_dir" ] || continue
         local arch
         arch="$(basename "$arch_dir" | sed 's/^binary-//')"
-        if ! printf '%s' "$dist" | grep -Eq '^[A-Za-z0-9._-]+$'; then
+        if ! printf '%s' "$dist" | grep -Eq '^[A-Za-z0-9_-]+$'; then
           echo "Error: invalid dist name '$dist' for deb repository" >&2
           exit 1
         fi
-        if ! printf '%s' "$arch" | grep -Eq '^[A-Za-z0-9._-]+$'; then
+        if ! printf '%s' "$arch" | grep -Eq '^[A-Za-z0-9_-]+$'; then
           echo "Error: invalid arch name '$arch' for deb repository" >&2
           exit 1
         fi
@@ -108,15 +108,17 @@ publish_deb() {
         local packages_tmp
         packages_tmp="$(mktemp)"
         cleanup_packages_tmp() { rm -f "$packages_tmp"; }
-        trap cleanup_packages_tmp EXIT
-        if apt-ftparchive packages "deb/pool/main" > "$packages_tmp"; then
-          awk -v dist="$dist" -v arch="$arch" 'BEGIN { RS=""; ORS="\n\n" } $0 ~ ("Filename: .*_" dist "_" arch "\\.(deb|ddeb|udeb)$") { print }' \
-            "$packages_tmp" > "$arch_dir/Packages"
-        else
+        if ! apt-ftparchive packages "deb/pool/main" > "$packages_tmp"; then
+          cleanup_packages_tmp
           echo "Error: apt-ftparchive packages failed for deb/pool/main" >&2
           exit 1
         fi
-        trap - EXIT
+        if ! awk -v dist="$dist" -v arch="$arch" 'BEGIN { RS=""; ORS="\n\n" } $0 ~ ("Filename: .*_" dist "_" arch "\\.(deb|ddeb|udeb)$") { print }' \
+          "$packages_tmp" > "$arch_dir/Packages"; then
+          cleanup_packages_tmp
+          echo "Error: filtering Packages failed for dist '$dist' arch '$arch'" >&2
+          exit 1
+        fi
         cleanup_packages_tmp
 
         if [ ! -s "$arch_dir/Packages" ]; then
@@ -132,7 +134,7 @@ publish_deb() {
         [ -d "$arch_dir" ] || continue
         local arch_name
         arch_name="${arch_dir##*/binary-}"
-        if ! printf '%s' "$arch_name" | grep -Eq '^[A-Za-z0-9._-]+$'; then
+        if ! printf '%s' "$arch_name" | grep -Eq '^[A-Za-z0-9_-]+$'; then
           echo "Error: invalid arch directory '$arch_name' for deb Release" >&2
           exit 1
         fi
@@ -198,6 +200,7 @@ publish_rpm() {
   for rpm in "${rpms[@]}"; do
     local filename fc_ver dest_dir
     filename=$(basename "$rpm")
+    # Only numeric Fedora versions are supported in repo layout.
     if [[ "$filename" =~ \.fc([0-9]+)\. ]]; then
       fc_ver="${BASH_REMATCH[1]}"
       dest_dir="rpm/fc${fc_ver}"
