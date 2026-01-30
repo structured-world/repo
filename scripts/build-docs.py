@@ -28,7 +28,7 @@ for md_path in sorted(DOCS_DIR.glob("*.md")):
     if md_path.name.startswith("_"):
         continue
     try:
-        md = markdown.Markdown(extensions=["extra", "tables", "toc"])
+        md = markdown.Markdown(extensions=["extra", "toc"])
         raw = md_path.read_text(encoding="utf-8")
         html_body = md.convert(raw)
         if isinstance(md.toc_tokens, list) and md.toc_tokens:

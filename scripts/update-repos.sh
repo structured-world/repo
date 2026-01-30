@@ -49,10 +49,10 @@ publish_deb() {
   local nullglob_state
   nullglob_state=$(shopt -p nullglob)
   shopt -s nullglob
+  trap 'eval "$nullglob_state"' RETURN
   local debs=("$DEB_SRC_DIR"/*.deb)
   if [ ${#debs[@]} -eq 0 ]; then
     echo "No DEB packages to publish"
-    eval "$nullglob_state"
     return 0
   fi
 
@@ -172,7 +172,6 @@ EOF_RELEASE
       echo "Updated DEB repository for ${dist}"
     done
   fi
-  eval "$nullglob_state"
 }
 
 publish_rpm() {
@@ -191,24 +190,25 @@ publish_rpm() {
   local nullglob_state
   nullglob_state=$(shopt -p nullglob)
   shopt -s nullglob
+  trap 'eval "$nullglob_state"' RETURN
   local rpms=("$RPM_SRC_DIR"/*.rpm)
   if [ ${#rpms[@]} -eq 0 ]; then
     echo "No RPM packages to publish"
-    eval "$nullglob_state"
     return 0
   fi
   for rpm in "${rpms[@]}"; do
     local filename fc_ver dest_dir
     filename=$(basename "$rpm")
     # Only numeric Fedora versions are supported in repo layout.
-    if [[ "$filename" =~ \.fc([0-9]+)\. ]]; then
+    # Expected pattern: name-version-release.fcNN.arch.rpm
+    if [[ "$filename" =~ ^[^-]+-[0-9][^-]*-[^-]*\.fc([0-9]+)\.[^.]+\.rpm$ ]]; then
       fc_ver="${BASH_REMATCH[1]}"
       dest_dir="rpm/fc${fc_ver}"
       mkdir -p "$dest_dir"
       cp "$rpm" "$dest_dir/"
       echo "Copied $rpm to $dest_dir/"
     else
-      echo "Warning: RPM file '$filename' does not match expected '.fc[0-9]+' pattern; skipping" >&2
+      echo "Warning: RPM file '$filename' does not match expected Fedora RPM pattern; skipping" >&2
     fi
   done
 
@@ -239,9 +239,6 @@ publish_rpm() {
 
   # Update metadata for each rpm/fc* directory
   local fc_dir
-  local nullglob_fc_state
-  nullglob_fc_state=$(shopt -p nullglob)
-  shopt -s nullglob
   for fc_dir in rpm/fc*; do
     [ -d "$fc_dir" ] || continue
     if ls "$fc_dir"/*.rpm >/dev/null 2>&1; then
@@ -255,8 +252,6 @@ publish_rpm() {
       echo "Updated RPM repository for $(basename "$fc_dir")"
     fi
   done
-  eval "$nullglob_fc_state"
-  eval "$nullglob_state"
 }
 
 publish_deb

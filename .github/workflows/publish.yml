@@ -15,7 +15,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: publish-${{ github.ref }}
+  group: publish-${{ github.ref }}-${{ inputs.strongswan_run_id || github.event.client_payload.strongswan_run_id || github.run_id }}
   # Publishing mutates repository state; avoid canceling mid-run.
   cancel-in-progress: false
 
@@ -195,10 +195,22 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git fetch origin main
+          if ! git diff --quiet || ! git diff --cached --quiet; then
+            git stash push -u -m "publish-workflow" >/dev/null
+            stashed=1
+          else
+            stashed=0
+          fi
           if ! git rebase origin/main; then
             echo "Error: rebase failed; manual intervention required" >&2
             git rebase --abort || true
             exit 1
+          fi
+          if [ "$stashed" -eq 1 ]; then
+            if ! git stash pop >/dev/null; then
+              echo "Error: failed to restore stashed changes after rebase" >&2
+              exit 1
+            fi
           fi
           if [ -d deb ]; then
             git add deb
