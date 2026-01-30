@@ -78,7 +78,11 @@ publish_deb() {
       echo "Warning: DEB already present in pool: $pool_dir/$(basename "$deb")" >&2
       continue
     fi
-    cp "$deb" "$pool_dir/"
+    # Use no-clobber copy to avoid races if the script is invoked concurrently.
+    if ! cp -n "$deb" "$pool_dir/"; then
+      echo "Warning: DEB copy skipped (already present): $pool_dir/$(basename "$deb")" >&2
+      continue
+    fi
     echo "Copied $deb to $pool_dir/"
   done
 

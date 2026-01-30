@@ -230,8 +230,8 @@ jobs:
             exit 1
           fi
           if [ "$stashed" -eq 1 ]; then
-            if ! git stash pop >/dev/null; then
-              echo "Error: failed to restore stashed changes after rebase" >&2
+            if ! git stash apply >/dev/null; then
+              echo "Error: failed to restore stashed changes after rebase; stash entry preserved for manual recovery" >&2
               exit 1
             fi
           fi
