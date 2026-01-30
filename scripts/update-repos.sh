@@ -18,15 +18,15 @@ gpg_sign() {
     local previous_trap
     passfile="$(mktemp)"
     cleanup_passfile() { rm -f "$passfile"; }
-    previous_trap=$(trap -p RETURN || true)
-    trap cleanup_passfile RETURN
+    previous_trap=$(trap -p EXIT || true)
+    trap cleanup_passfile EXIT
     chmod 600 "$passfile"
     printf '%s' "$GPG_PASSPHRASE" > "$passfile"
     gpg --batch --yes --pinentry-mode loopback --passphrase-file "$passfile" "$@"
+    trap - EXIT
+    cleanup_passfile
     if [ -n "$previous_trap" ]; then
       eval "$previous_trap"
-    else
-      trap - RETURN
     fi
   else
     gpg --batch --yes "$@"

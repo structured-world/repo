@@ -194,6 +194,7 @@ jobs:
           git fetch origin main
           if ! git rebase origin/main; then
             echo "Error: rebase failed; manual intervention required" >&2
+            git rebase --abort || true
             exit 1
           fi
           git config user.name "github-actions[bot]"
