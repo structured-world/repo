@@ -89,7 +89,15 @@ jobs:
             > ~/.rpmmacros
           # Import public key into RPM database so rpm --checksig trusts our signatures.
           # /dev/stdin is safe here — workflow runs exclusively on ubuntu-latest (Linux).
-          gpg --batch --armor --export "$gpg_fpr" | rpm --import /dev/stdin
+          # Use a temp file instead of a pipe so gpg export failure is not masked.
+          gpg_pubkey="$(mktemp)"
+          if ! gpg --batch --armor --export "$gpg_fpr" > "$gpg_pubkey" || [ ! -s "$gpg_pubkey" ]; then
+            rm -f "$gpg_pubkey"
+            echo "Error: failed to export GPG public key for RPM database import" >&2
+            exit 1
+          fi
+          rpm --import "$gpg_pubkey"
+          rm -f "$gpg_pubkey"
           if [ -n "$GPG_PASSPHRASE" ]; then
             passfile="$(mktemp)"
             chmod 600 "$passfile"
