@@ -191,9 +191,9 @@ jobs:
             find packages -maxdepth 1 -type f -print >&2
             exit 1
           fi
-          if find packages -maxdepth 1 -type d ! -name 'deb-*' ! -name 'rpm-fc*' ! -name 'srpm' | grep -q .; then
+          if find packages -mindepth 1 -maxdepth 1 -type d ! -name 'deb-*' ! -name 'rpm-fc*' ! -name 'srpm' | grep -q .; then
             echo "Error: unexpected artifact directories found in packages/" >&2
-            find packages -maxdepth 1 -type d ! -name 'deb-*' ! -name 'rpm-fc*' ! -name 'srpm' -print >&2
+            find packages -mindepth 1 -maxdepth 1 -type d ! -name 'deb-*' ! -name 'rpm-fc*' ! -name 'srpm' -print >&2
             exit 1
           fi
           ls -la packages
