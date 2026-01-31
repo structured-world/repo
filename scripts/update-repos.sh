@@ -291,6 +291,8 @@ publish_rpm() {
     for srpm in "${srpms[@]}"; do
       local srpm_name
       srpm_name=$(basename "$srpm")
+      # Same cp -n + existence check pattern as RPM section above (see comment there).
+      # Concurrency group in publish.yml prevents parallel runs.
       if cp -n "$srpm" "$srpm_dir/" 2>/dev/null && [ -e "$srpm_dir/$srpm_name" ]; then
         ensure_rpm_signed "$srpm_dir/$srpm_name"
         echo "Copied $srpm to $srpm_dir/"
