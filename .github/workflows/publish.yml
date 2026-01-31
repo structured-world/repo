@@ -238,9 +238,8 @@ jobs:
               [ -d "$dir" ] || continue
               find "$dir" -type f -name '*.rpm' -exec mv -n {} packages/rpm/ \;
             done
-            if [ -d packages/srpm ]; then
-              find packages/srpm -type f -name '*.rpm' -exec mv -n {} packages/srpm/ \;
-            fi
+            # srpm artifact downloads directly into packages/srpm/ — no move needed.
+            # deb-*/rpm-fc* need flattening because each matrix job creates a separate artifact.
           fi
           scripts/update-repos.sh
 
