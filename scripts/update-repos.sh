@@ -186,20 +186,30 @@ publish_rpm() {
     fi
   done
 
+  # Verify RPM signature; sign if missing. Operates on a temporary copy and
+  # atomically replaces the target to avoid leaving corrupted packages on disk.
   ensure_rpm_signed() {
-    local rpm_path
-    rpm_path="$1"
+    local rpm_path="$1"
+    local dir basename tmp_rpm
+    dir=$(dirname "$rpm_path")
+    basename=$(basename "$rpm_path")
+
     # Check both SIGPGP and SIGRSA — modern RPMs may use either tag.
     local sig_pgp sig_rsa
     sig_pgp=$(rpm -qp --qf '%{SIGPGP:pgpsig}\n' "$rpm_path" 2>/dev/null || true)
     sig_rsa=$(rpm -qp --qf '%{SIGRSA:pgpsig}\n' "$rpm_path" 2>/dev/null || true)
     if { [ -z "$sig_pgp" ] || [ "$sig_pgp" = "(none)" ]; } &&
        { [ -z "$sig_rsa" ] || [ "$sig_rsa" = "(none)" ]; }; then
-      if ! rpmsign --addsign "$rpm_path"; then
+      tmp_rpm=$(mktemp -p "$dir" ".${basename}.XXXXXX")
+      cp "$rpm_path" "$tmp_rpm"
+      if ! rpmsign --addsign "$tmp_rpm"; then
+        rm -f "$tmp_rpm"
         echo "Error: failed to sign RPM: $rpm_path" >&2
         exit 1
       fi
+      mv -f "$tmp_rpm" "$rpm_path"
     fi
+
     # Rely on exit code + reject NOKEY/BAD/NOT OK to avoid false positives.
     local checksig_output
     if ! checksig_output=$(rpm --checksig "$rpm_path" 2>&1); then
@@ -242,13 +252,12 @@ publish_rpm() {
       fc_ver="${BASH_REMATCH[1]}"
       dest_dir="rpm/fc${fc_ver}"
       mkdir -p "$dest_dir"
-      if [ -e "$dest_dir/$filename" ]; then
-        echo "Warning: RPM already present; verifying signature: $dest_dir/$filename" >&2
-        ensure_rpm_signed "$dest_dir/$filename"
-      else
-        cp "$rpm" "$dest_dir/"
+      if cp -n "$rpm" "$dest_dir/" 2>/dev/null && [ -e "$dest_dir/$filename" ]; then
         ensure_rpm_signed "$dest_dir/$filename"
         echo "Copied $rpm to $dest_dir/"
+      else
+        echo "Warning: RPM already present; verifying signature: $dest_dir/$filename" >&2
+        ensure_rpm_signed "$dest_dir/$filename"
       fi
     else
       echo "Warning: RPM file '$filename' does not match expected Fedora RPM pattern; skipping" >&2
@@ -266,13 +275,12 @@ publish_rpm() {
     for srpm in "${srpms[@]}"; do
       local srpm_name
       srpm_name=$(basename "$srpm")
-      if [ -e "$srpm_dir/$srpm_name" ]; then
-        echo "Warning: SRPM already present; verifying signature: $srpm_dir/$srpm_name" >&2
-        ensure_rpm_signed "$srpm_dir/$srpm_name"
-      else
-        cp "$srpm" "$srpm_dir/"
+      if cp -n "$srpm" "$srpm_dir/" 2>/dev/null && [ -e "$srpm_dir/$srpm_name" ]; then
         ensure_rpm_signed "$srpm_dir/$srpm_name"
         echo "Copied $srpm to $srpm_dir/"
+      else
+        echo "Warning: SRPM already present; verifying signature: $srpm_dir/$srpm_name" >&2
+        ensure_rpm_signed "$srpm_dir/$srpm_name"
       fi
     done
 

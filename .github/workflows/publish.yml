@@ -48,6 +48,10 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y apt-utils createrepo-c gnupg python3-pip dpkg-dev jq rpm
+          if ! command -v rpmsign >/dev/null 2>&1; then
+            echo "Error: rpmsign not found after installing rpm package" >&2
+            exit 1
+          fi
 
       - name: Import GPG key
         env:
@@ -83,26 +87,18 @@ jobs:
             > ~/.rpmmacros
           if [ -n "$GPG_PASSPHRASE" ]; then
             passfile="$(mktemp)"
-            cleanup_passfile() { rm -f "$passfile"; }
-            previous_pass_trap=$(trap -p EXIT || true)
-            trap cleanup_passfile EXIT
             chmod 600 "$passfile"
             printf '%s' "$GPG_PASSPHRASE" > "$passfile"
             if ! gpg --batch --yes --pinentry-mode loopback --passphrase-file "$passfile" \
               --output /dev/null --sign --armor /dev/null; then
-              trap - EXIT
-              cleanup_passfile
-              if [ -n "$previous_pass_trap" ]; then
-                eval "$previous_pass_trap"
-              fi
+              rm -f "$passfile"
               echo "Error: GPG passphrase check failed" >&2
               exit 1
             fi
-            trap - EXIT
-            cleanup_passfile
-            if [ -n "$previous_pass_trap" ]; then
-              eval "$previous_pass_trap"
-            fi
+            # Persist passfile so rpmsign can use it via %__gpg_sign_cmd.
+            printf '%s\n' \
+              "%__gpg_sign_cmd %{__gpg} gpg --batch --yes --pinentry-mode loopback --passphrase-file ${passfile} -u \"%{_gpg_name}\" -sbo %{__signature_filename} %{__plaintext_filename}" \
+              >> ~/.rpmmacros
           fi
 
       - name: Resolve strongswan run id
