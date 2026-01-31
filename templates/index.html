@@ -937,15 +937,11 @@
 
         // Package name → HTML element slug mapping, injected by build-docs.py.
         const PACKAGE_SLUGS = {{PACKAGE_JS_DATA}};
-        const PACKAGE_NAMES = Object.keys(PACKAGE_SLUGS);
+        const DEB_SOURCES = {{DEB_SOURCES}};
 
         // Fetch and display package info dynamically from Packages files
         async function loadPackageInfo() {
-            const debSources = [
-                'deb/dists/jammy/main/binary-amd64/Packages',
-                'deb/dists/noble/main/binary-amd64/Packages',
-                'deb/dists/bookworm/main/binary-amd64/Packages',
-            ];
+            const debSources = DEB_SOURCES;
 
             const pkgInfo = {};
 

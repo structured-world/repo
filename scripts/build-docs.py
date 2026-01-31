@@ -10,7 +10,7 @@ or manifests/*/manifest.json (committed fallback), then generates:
 """
 import json
 import os
-import shutil
+import re
 import sys
 from datetime import datetime, timezone
 from html import escape
@@ -106,38 +106,47 @@ def gen_meta_keywords(manifests):
 
 def gen_platform_cards(manifests):
     """Generate platform badge cards for the hero section."""
-    cards = []
-    seen = set()
+    # Merge versions across manifests for the same distro.
+    distro_map = {}  # id -> {name, versions_set}
+    distro_order = []
     for m in manifests:
         platforms = m.get("platforms", {})
         for ptype in ("rpm", "deb"):
             for distro in platforms.get(ptype, {}).get("distros", []):
                 did = distro["id"]
-                if did in seen:
-                    continue
-                seen.add(did)
-                icon = DISTRO_ICONS.get(did, DISTRO_ICONS["fedora"])
-                name = escape(distro["name"])
                 versions = distro.get("versions", distro.get("codenames", []))
-                ver_str = escape(", ".join(versions))
-                cards.append(
-                    f'<div class="platform-card">\n'
-                    f"                    {icon}\n"
-                    f'                    <div class="platform-info">\n'
-                    f"                        <h4>{name}</h4>\n"
-                    f"                        <span>{ver_str}</span>\n"
-                    f"                    </div>\n"
-                    f"                </div>"
-                )
+                if did not in distro_map:
+                    distro_map[did] = {"name": distro["name"], "versions": list(versions)}
+                    distro_order.append(did)
+                else:
+                    existing = distro_map[did]["versions"]
+                    for v in versions:
+                        if v not in existing:
+                            existing.append(v)
+
+    cards = []
+    for did in distro_order:
+        info = distro_map[did]
+        icon = DISTRO_ICONS.get(did, DISTRO_ICONS["fedora"])
+        name = escape(info["name"])
+        ver_str = escape(", ".join(info["versions"]))
+        cards.append(
+            f'<div class="platform-card">\n'
+            f"                    {icon}\n"
+            f'                    <div class="platform-info">\n'
+            f"                        <h4>{name}</h4>\n"
+            f"                        <span>{ver_str}</span>\n"
+            f"                    </div>\n"
+            f"                </div>"
+        )
     return "\n                ".join(cards)
 
 
-def _pkg_slug(name):
+def _pkg_slug(name, project_id=""):
     """Derive a short slug for HTML element IDs (e.g. 'strongswan-sw' -> 'sw')."""
-    # Strip common project prefix so IDs are short.
-    for prefix in ("strongswan-",):
-        if name.startswith(prefix):
-            return name[len(prefix):]
+    prefix = f"{project_id}-" if project_id else ""
+    if prefix and name.startswith(prefix):
+        return name[len(prefix):]
     return name
 
 
@@ -145,14 +154,17 @@ def gen_package_cards(manifests):
     """Generate package card HTML for the packages grid."""
     cards = []
     for m in manifests:
-        license_id = escape(m.get("project", {}).get("license", ""))
+        proj = m.get("project", {})
+        license_id = escape(proj.get("license", ""))
+        project_id = proj.get("id", "")
         for pkg in m.get("packages", []):
             cat = escape(pkg.get("category", "main"))
             icon = ICONS.get(pkg.get("icon", "shield"), ICONS["shield"])
             display = escape(pkg["displayName"])
             name = escape(pkg["name"])
+            # summary may contain trusted HTML (e.g. <code> tags) from maintainer-controlled manifests.
             summary = pkg.get("summary", "")
-            slug = _pkg_slug(pkg["name"])
+            slug = _pkg_slug(pkg["name"], project_id)
 
             cards.append(
                 f'<div class="package-card {cat}">\n'
@@ -236,7 +248,7 @@ def _install_card(pkg, category, icon_key, version_badges, supported_text, insta
 
 def gen_install_tabs(manifests):
     """Generate the full install tabs section (RPM + DEB)."""
-    # Collect all packages and platform info across manifests.
+    # Collect all packages and merge platform info across manifests.
     all_packages = []
     rpm_info = {}
     deb_info = {}
@@ -246,9 +258,26 @@ def gen_install_tabs(manifests):
             all_packages.append(pkg)
 
         if "rpm" in platforms:
-            rpm_info = platforms["rpm"]
+            if not rpm_info:
+                rpm_info = dict(platforms["rpm"])
+                rpm_info["distros"] = list(platforms["rpm"].get("distros", []))
+            else:
+                # Merge distros from additional manifests.
+                existing_ids = {d["id"] for d in rpm_info["distros"]}
+                for d in platforms["rpm"].get("distros", []):
+                    if d["id"] not in existing_ids:
+                        rpm_info["distros"].append(d)
+                        existing_ids.add(d["id"])
         if "deb" in platforms:
-            deb_info = platforms["deb"]
+            if not deb_info:
+                deb_info = dict(platforms["deb"])
+                deb_info["distros"] = list(platforms["deb"].get("distros", []))
+            else:
+                existing_ids = {d["id"] for d in deb_info["distros"]}
+                for d in platforms["deb"].get("distros", []):
+                    if d["id"] not in existing_ids:
+                        deb_info["distros"].append(d)
+                        existing_ids.add(d["id"])
 
     if not all_packages:
         return ""
@@ -438,9 +467,24 @@ def gen_package_js_data(manifests):
     """Generate JSON object mapping package name → HTML slug for JS version loader."""
     mapping = {}
     for m in manifests:
+        project_id = m.get("project", {}).get("id", "")
         for pkg in m.get("packages", []):
-            mapping[pkg["name"]] = _pkg_slug(pkg["name"])
+            mapping[pkg["name"]] = _pkg_slug(pkg["name"], project_id)
     return json.dumps(mapping)
+
+
+def gen_deb_sources(manifests):
+    """Generate JSON array of DEB Packages file paths for JS version loader."""
+    codenames = []
+    seen = set()
+    for m in manifests:
+        for d in m.get("platforms", {}).get("deb", {}).get("distros", []):
+            for cn in d.get("codenames", []):
+                if cn not in seen:
+                    codenames.append(cn)
+                    seen.add(cn)
+    paths = [f"deb/dists/{cn}/main/binary-amd64/Packages" for cn in codenames]
+    return json.dumps(paths)
 
 
 # ---------------------------------------------------------------------------
@@ -465,10 +509,16 @@ def generate_index(manifests, all_docs):
         "{{FOOTER_PROJECTS}}": gen_footer_projects(manifests),
         "{{FOOTER_LEGAL}}": gen_footer_legal(manifests),
         "{{PACKAGE_JS_DATA}}": gen_package_js_data(manifests),
+        "{{DEB_SOURCES}}": gen_deb_sources(manifests),
     }
 
     for marker, value in replacements.items():
         html = html.replace(marker, value)
+
+    leftover = re.findall(r"\{\{[A-Z_]+\}\}", html)
+    if leftover:
+        print(f"Error: unresolved placeholders in index.html: {leftover}", file=sys.stderr)
+        raise SystemExit(1)
 
     (ROOT / "index.html").write_text(html, encoding="utf-8")
     print("Generated index.html")

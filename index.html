@@ -1259,15 +1259,11 @@ sudo apt install <span class="cmd">strongswan-dhcp-inform</span></code></pre>
 
         // Package name → HTML element slug mapping, injected by build-docs.py.
         const PACKAGE_SLUGS = {"strongswan-sw": "sw", "strongswan-pgsql": "pgsql", "strongswan-dhcp-inform": "dhcp-inform"};
-        const PACKAGE_NAMES = Object.keys(PACKAGE_SLUGS);
+        const DEB_SOURCES = ["deb/dists/jammy/main/binary-amd64/Packages", "deb/dists/noble/main/binary-amd64/Packages", "deb/dists/bookworm/main/binary-amd64/Packages"];
 
         // Fetch and display package info dynamically from Packages files
         async function loadPackageInfo() {
-            const debSources = [
-                'deb/dists/jammy/main/binary-amd64/Packages',
-                'deb/dists/noble/main/binary-amd64/Packages',
-                'deb/dists/bookworm/main/binary-amd64/Packages',
-            ];
+            const debSources = DEB_SOURCES;
 
             const pkgInfo = {};
 

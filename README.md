@@ -6,12 +6,12 @@ Package repository for Structured World Foundation software. Hosts signed RPM an
 
 ## How It Works
 
-Source projects provide a `repo-manifest.json` describing their packages, platforms, and documentation. During publish, the manifest is used to generate the site (package cards, install instructions, docs pages).
+Source projects provide a `manifest.json` describing their packages, platforms, and documentation. During publish, the manifest is used to generate the site (package cards, install instructions, docs pages).
 
 ```
 source-repo/
   packaging/
-    repo-manifest.json     # Package metadata
+    manifest.json          # Package metadata
     docs/                  # Optional documentation markdown
       setup-guide.md
 ```
@@ -61,7 +61,7 @@ curl -fsSL https://repo.sw.foundation/keys/sw.gpg | gpg --import
 
 ## Adding a New Project
 
-1. Create `packaging/repo-manifest.json` in your source repo (see format in existing manifests)
+1. Create `packaging/manifest.json` in your source repo (see format in existing manifests)
 2. Add optional `packaging/docs/*.md` for documentation pages
 3. Upload as `repo-meta-<project>` artifact in your CI workflow
 4. Trigger the publish workflow — site auto-generates from all manifests
