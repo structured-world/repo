@@ -227,7 +227,6 @@ jobs:
         env:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         run: |
-          set -x
           chmod +x scripts/update-repos.sh
           if [ -d packages ]; then
             mkdir -p packages/deb packages/rpm packages/srpm
@@ -242,9 +241,6 @@ jobs:
             # srpm artifact downloads directly into packages/srpm/ — no move needed.
             # deb-*/rpm-fc* need flattening because each matrix job creates a separate artifact.
           fi
-          echo "=== Package layout before update-repos.sh ==="
-          find packages -type f | sort || true
-          echo "=== Running update-repos.sh ==="
           scripts/update-repos.sh
 
       - name: Cleanup downloaded packages
