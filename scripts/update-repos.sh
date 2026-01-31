@@ -189,16 +189,32 @@ publish_rpm() {
   ensure_rpm_signed() {
     local rpm_path
     rpm_path="$1"
-    local sig
-    sig=$(rpm -qp --qf '%{SIGPGP:pgpsig}\n' "$rpm_path" 2>/dev/null || true)
-    if [ -z "$sig" ] || [ "$sig" = "(none)" ]; then
+    # Check both SIGPGP and SIGRSA — modern RPMs may use either tag.
+    local sig_pgp sig_rsa
+    sig_pgp=$(rpm -qp --qf '%{SIGPGP:pgpsig}\n' "$rpm_path" 2>/dev/null || true)
+    sig_rsa=$(rpm -qp --qf '%{SIGRSA:pgpsig}\n' "$rpm_path" 2>/dev/null || true)
+    if { [ -z "$sig_pgp" ] || [ "$sig_pgp" = "(none)" ]; } &&
+       { [ -z "$sig_rsa" ] || [ "$sig_rsa" = "(none)" ]; }; then
       if ! rpmsign --addsign "$rpm_path"; then
         echo "Error: failed to sign RPM: $rpm_path" >&2
         exit 1
       fi
     fi
-    if ! rpm --checksig "$rpm_path" | grep -Eq 'pgp|gpg|rsa|sha'; then
+    # Rely on exit code + reject NOKEY/BAD/NOT OK to avoid false positives.
+    local checksig_output
+    if ! checksig_output=$(rpm --checksig "$rpm_path" 2>&1); then
       echo "Error: RPM signature verification failed: $rpm_path" >&2
+      echo "rpm --checksig output: $checksig_output" >&2
+      exit 1
+    fi
+    if printf '%s\n' "$checksig_output" | grep -Eq 'NOKEY|NOT OK|BAD'; then
+      echo "Error: RPM has invalid or untrusted signature: $rpm_path" >&2
+      echo "rpm --checksig output: $checksig_output" >&2
+      exit 1
+    fi
+    if ! printf '%s\n' "$checksig_output" | grep -q 'OK'; then
+      echo "Error: RPM signature not reported as OK: $rpm_path" >&2
+      echo "rpm --checksig output: $checksig_output" >&2
       exit 1
     fi
   }
