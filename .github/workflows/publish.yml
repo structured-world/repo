@@ -222,6 +222,7 @@ jobs:
       - name: Prepare package metadata
         run: |
           # Copy repo-meta-* artifacts into packages/meta/<project>/ for build-docs.py.
+          # Artifact contents are copied as-is; build-docs.py looks for manifest.json inside each dir.
           # If no repo-meta artifacts exist, build-docs.py falls back to committed manifests/.
           if ls -d packages/repo-meta-* 2>/dev/null | grep -q .; then
             mkdir -p packages/meta

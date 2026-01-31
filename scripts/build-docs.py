@@ -463,6 +463,12 @@ def gen_footer_legal(manifests):
     return "\n                    ".join(lines)
 
 
+def _safe_inline_json(obj):
+    """Serialize to JSON safe for embedding in HTML <script> tags."""
+    # Escape sequences that could break out of inline script context.
+    return json.dumps(obj).replace("</", r"<\/")
+
+
 def gen_package_js_data(manifests):
     """Generate JSON object mapping package name → HTML slug for JS version loader."""
     mapping = {}
@@ -470,7 +476,7 @@ def gen_package_js_data(manifests):
         project_id = m.get("project", {}).get("id", "")
         for pkg in m.get("packages", []):
             mapping[pkg["name"]] = _pkg_slug(pkg["name"], project_id)
-    return json.dumps(mapping)
+    return _safe_inline_json(mapping)
 
 
 def gen_deb_sources(manifests):
@@ -484,7 +490,7 @@ def gen_deb_sources(manifests):
                     codenames.append(cn)
                     seen.add(cn)
     paths = [f"deb/dists/{cn}/main/binary-amd64/Packages" for cn in codenames]
-    return json.dumps(paths)
+    return _safe_inline_json(paths)
 
 
 # ---------------------------------------------------------------------------
