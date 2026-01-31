@@ -162,34 +162,20 @@ jobs:
           RUN_ID="${{ steps.runid.outputs.run_id }}"
           REPO="structured-world/strongswan"
           echo "Verifying workflow run $RUN_ID in $REPO..."
-          # Poll until run completes — the trigger-repo job in build-packages is part
-          # of the same run, so the run may still be in_progress when publish starts.
-          POLL_INTERVAL=15
-          POLL_TIMEOUT=600
-          POLL_MAX=$((POLL_TIMEOUT / POLL_INTERVAL))
-          for ((attempt=1; attempt<=POLL_MAX; attempt++)); do
-            if ! run_json=$(gh run view "$RUN_ID" -R "$REPO" --json status,conclusion,headBranch,event,workflowName,createdAt,updatedAt); then
-              echo "Error: unable to view run $RUN_ID in $REPO. The run may not exist, or there may be authentication or network connectivity issues." >&2
-              exit 1
-            fi
-            run_status=$(jq -r '.status' <<< "$run_json")
-            run_conclusion=$(jq -r '.conclusion // "none"' <<< "$run_json")
-            run_workflow=$(jq -r '.workflowName // ""' <<< "$run_json")
-            echo "Attempt ${attempt}/${POLL_MAX}: status=$run_status conclusion=$run_conclusion workflow=$run_workflow"
-            if [ "$run_status" = "completed" ]; then
-              break
-            fi
-            sleep "$POLL_INTERVAL"
-          done
-          jq -r '. as $r | "Status: \($r.status)\nConclusion: \($r.conclusion // "none")\nBranch: \($r.headBranch)\nEvent: \($r.event)\nWorkflow: \($r.workflowName)\nCreated: \($r.createdAt)\nUpdated: \($r.updatedAt)"' <<< "$run_json"
-          if [ "$run_status" != "completed" ] || [ "$run_conclusion" != "success" ]; then
-            echo "Error: run $RUN_ID is not completed successfully (status=$run_status, conclusion=$run_conclusion)" >&2
+          if ! run_json=$(gh run view "$RUN_ID" -R "$REPO" --json status,headBranch,event,workflowName,createdAt,updatedAt); then
+            echo "Error: unable to view run $RUN_ID in $REPO. The run may not exist, or there may be authentication or network connectivity issues." >&2
             exit 1
           fi
+          jq -r '. as $r | "Status: \($r.status)\nBranch: \($r.headBranch)\nEvent: \($r.event)\nWorkflow: \($r.workflowName)\nCreated: \($r.createdAt)\nUpdated: \($r.updatedAt)"' <<< "$run_json"
+          run_workflow=$(jq -r '.workflowName // ""' <<< "$run_json")
           if [ "$run_workflow" != "Build Packages" ]; then
             echo "Error: run $RUN_ID is not from expected workflow (Build Packages), got '$run_workflow'" >&2
             exit 1
           fi
+          # Do NOT check run completion status here. The trigger-repo job in
+          # build-packages.yml fires after all build jobs pass (needs: [build-deb, build-rpm]),
+          # so artifacts are already uploaded. Checking run completion would deadlock:
+          # publish waits for strongswan run → strongswan release waits for publish.
           mkdir -p packages
           # NOTE: We intentionally download artifacts from the strongswan workflow run,
           # not from a release, to avoid a circular dependency (repo publish → strongswan release).
