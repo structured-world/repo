@@ -34,6 +34,7 @@ gpg_sign() {
 }
 
 publish_deb() {
+  echo "DEBUG: publish_deb() entered" >&2
   for bin in apt-ftparchive dpkg-deb gpg gzip; do
     if ! command -v "$bin" >/dev/null 2>&1; then
       echo "Error: required command not found: $bin" >&2
@@ -48,14 +49,19 @@ publish_deb() {
 
   local nullglob_state
   nullglob_state=$(shopt -p nullglob)
+  echo "DEBUG: nullglob_state=$nullglob_state" >&2
   shopt -s nullglob
+  echo "DEBUG: nullglob set" >&2
   trap 'eval "$nullglob_state"' RETURN
+  echo "DEBUG: trap set, expanding $DEB_SRC_DIR/*.deb" >&2
   local debs=("$DEB_SRC_DIR"/*.deb)
+  echo "DEBUG: found ${#debs[@]} debs" >&2
   if [ ${#debs[@]} -eq 0 ]; then
     echo "No DEB packages to publish"
     return 0
   fi
 
+  echo "DEBUG: starting deb loop" >&2
   for deb in "${debs[@]}"; do
     local pkgname first_letter pool_dir
     if ! pkgname=$(dpkg-deb -f "$deb" Package 2>/dev/null); then
@@ -86,6 +92,7 @@ publish_deb() {
     echo "Copied $deb to $pool_dir/"
   done
 
+  echo "DEBUG: deb pool copy done, processing dists" >&2
   local dist_dir dist
   if [ -d deb/dists ]; then
     for dist_dir in deb/dists/*; do
@@ -162,6 +169,7 @@ Description: SW Foundation Package Repository
 EOF_RELEASE
 
       apt-ftparchive release "$dist_dir" >> "$dist_dir/Release"
+      echo "DEBUG: signing Release for $dist_dir" >&2
       gpg_sign --armor --detach-sign -o "$dist_dir/Release.gpg" "$dist_dir/Release"
       if [ ! -s "$dist_dir/Release.gpg" ] || ! gpg --verify "$dist_dir/Release.gpg" "$dist_dir/Release" >/dev/null 2>&1; then
         echo "Error: Failed to create valid GPG signature for $dist_dir/Release (Release.gpg)" >&2
@@ -179,6 +187,7 @@ EOF_RELEASE
 }
 
 publish_rpm() {
+  echo "DEBUG: publish_rpm() entered" >&2
   for bin in createrepo_c gpg rpm rpmsign; do
     if ! command -v "$bin" >/dev/null 2>&1; then
       echo "Error: required command not found: $bin" >&2
@@ -341,5 +350,8 @@ publish_rpm() {
   done
 }
 
+echo "DEBUG: calling publish_deb" >&2
 publish_deb
+echo "DEBUG: publish_deb done, calling publish_rpm" >&2
 publish_rpm
+echo "DEBUG: publish_rpm done, all complete" >&2
