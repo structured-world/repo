@@ -195,11 +195,14 @@ publish_rpm() {
     basename=$(basename "$rpm_path")
 
     # Check both SIGPGP and SIGRSA — modern RPMs may use either tag.
+    # || true: unsigned RPMs may error on missing tag rather than returning "(none)".
     local sig_pgp sig_rsa
     sig_pgp=$(rpm -qp --qf '%{SIGPGP:pgpsig}\n' "$rpm_path" 2>/dev/null || true)
     sig_rsa=$(rpm -qp --qf '%{SIGRSA:pgpsig}\n' "$rpm_path" 2>/dev/null || true)
     if { [ -z "$sig_pgp" ] || [ "$sig_pgp" = "(none)" ]; } &&
        { [ -z "$sig_rsa" ] || [ "$sig_rsa" = "(none)" ]; }; then
+      # Dot-prefix hides temp file from glob patterns (*.rpm) so createrepo_c
+      # won't index a half-written file. Atomic mv replaces original on success.
       tmp_rpm=$(mktemp -p "$dir" ".${basename}.XXXXXX")
       cp "$rpm_path" "$tmp_rpm"
       if ! rpmsign --addsign "$tmp_rpm"; then
@@ -214,7 +217,10 @@ publish_rpm() {
       fi
     fi
 
-    # Rely on exit code + reject NOKEY/BAD/NOT OK to avoid false positives.
+    # Three-tier verification: (1) exit code, (2) reject NOKEY/BAD/NOT OK,
+    # (3) require OK. Grep patterns match the status portion of checksig output
+    # ("file: digests signatures OK"), not filenames — RPM naming convention
+    # (name-version-release.arch.rpm) won't produce false positives.
     local checksig_output
     if ! checksig_output=$(rpm --checksig "$rpm_path" 2>&1); then
       echo "Error: RPM signature verification failed: $rpm_path" >&2
@@ -256,6 +262,8 @@ publish_rpm() {
       fc_ver="${BASH_REMATCH[1]}"
       dest_dir="rpm/fc${fc_ver}"
       mkdir -p "$dest_dir"
+      # cp -n (no-clobber) + existence check: atomic guard against concurrent runs.
+      # cp -n fails if file exists; [ -e ] catches permission/disk errors in else branch.
       if cp -n "$rpm" "$dest_dir/" 2>/dev/null && [ -e "$dest_dir/$filename" ]; then
         ensure_rpm_signed "$dest_dir/$filename"
         echo "Copied $rpm to $dest_dir/"

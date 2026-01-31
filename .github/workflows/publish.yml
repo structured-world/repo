@@ -79,6 +79,7 @@ jobs:
             echo "Error: failed to determine GPG key fingerprint for RPM signing" >&2
             exit 1
           fi
+          # %_gpg_path: tilde is expanded by RPM's macro engine, not the shell.
           printf '%s\n' \
             '%_signature gpg' \
             "%_gpg_name ${gpg_fpr}" \
@@ -86,6 +87,7 @@ jobs:
             '%__gpg /usr/bin/gpg' \
             > ~/.rpmmacros
           # Import public key into RPM database so rpm --checksig trusts our signatures.
+          # /dev/stdin is safe here — workflow runs exclusively on ubuntu-latest (Linux).
           gpg --batch --armor --export "$gpg_fpr" | rpm --import /dev/stdin
           if [ -n "$GPG_PASSPHRASE" ]; then
             passfile="$(mktemp)"
@@ -98,6 +100,9 @@ jobs:
               exit 1
             fi
             # Persist passfile so rpmsign can use it via %__gpg_sign_cmd.
+            # Runner is ephemeral — passfile is destroyed with the VM after job ends.
+            # ${passfile} is intentionally shell-expanded here to embed the absolute
+            # path into the RPM macro (RPM cannot resolve shell variables).
             printf '%s\n' \
               "%__gpg_sign_cmd %{__gpg} --batch --yes --pinentry-mode loopback --passphrase-file ${passfile} -u \"%{_gpg_name}\" -sbo %{__signature_filename} %{__plaintext_filename}" \
               >> ~/.rpmmacros
