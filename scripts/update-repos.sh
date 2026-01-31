@@ -204,7 +204,11 @@ publish_rpm() {
       # Dot-prefix hides temp file from glob patterns (*.rpm) so createrepo_c
       # won't index a half-written file. Atomic mv replaces original on success.
       tmp_rpm=$(mktemp -p "$dir" ".${basename}.XXXXXX")
-      cp "$rpm_path" "$tmp_rpm"
+      if ! cp "$rpm_path" "$tmp_rpm"; then
+        rm -f "$tmp_rpm"
+        echo "Error: failed to copy RPM for signing: $rpm_path" >&2
+        exit 1
+      fi
       if ! rpmsign --addsign "$tmp_rpm"; then
         rm -f "$tmp_rpm"
         echo "Error: failed to sign RPM: $rpm_path" >&2
@@ -263,7 +267,9 @@ publish_rpm() {
       dest_dir="rpm/fc${fc_ver}"
       mkdir -p "$dest_dir"
       # cp -n (no-clobber) + existence check: atomic guard against concurrent runs.
-      # cp -n fails if file exists; [ -e ] catches permission/disk errors in else branch.
+      # cp -n fails if file exists (coreutils 9.0+, ubuntu-latest has 9.4).
+      # [ -e ] double-checks: catches permission/disk errors and older coreutils
+      # where cp -n returned 0 on skip.
       if cp -n "$rpm" "$dest_dir/" 2>/dev/null && [ -e "$dest_dir/$filename" ]; then
         ensure_rpm_signed "$dest_dir/$filename"
         echo "Copied $rpm to $dest_dir/"
