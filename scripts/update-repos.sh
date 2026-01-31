@@ -179,12 +179,69 @@ EOF_RELEASE
 }
 
 publish_rpm() {
-  for bin in createrepo_c gpg; do
+  for bin in createrepo_c gpg rpm rpmsign; do
     if ! command -v "$bin" >/dev/null 2>&1; then
       echo "Error: required command not found: $bin" >&2
       exit 1
     fi
   done
+
+  # Verify RPM signature; sign if missing. Operates on a temporary copy and
+  # atomically replaces the target to avoid leaving corrupted packages on disk.
+  ensure_rpm_signed() {
+    local rpm_path="$1"
+    local dir basename tmp_rpm
+    dir=$(dirname "$rpm_path")
+    basename=$(basename "$rpm_path")
+
+    # Check both SIGPGP and SIGRSA — modern RPMs may use either tag.
+    # || true: unsigned RPMs may error on missing tag rather than returning "(none)".
+    local sig_pgp sig_rsa
+    sig_pgp=$(rpm -qp --qf '%{SIGPGP:pgpsig}\n' "$rpm_path" 2>/dev/null || true)
+    sig_rsa=$(rpm -qp --qf '%{SIGRSA:pgpsig}\n' "$rpm_path" 2>/dev/null || true)
+    if { [ -z "$sig_pgp" ] || [ "$sig_pgp" = "(none)" ]; } &&
+       { [ -z "$sig_rsa" ] || [ "$sig_rsa" = "(none)" ]; }; then
+      # Dot-prefix hides temp file from glob patterns (*.rpm) so createrepo_c
+      # won't index a half-written file. Atomic mv replaces original on success.
+      tmp_rpm=$(mktemp -p "$dir" ".${basename}.XXXXXX")
+      if ! cp "$rpm_path" "$tmp_rpm"; then
+        rm -f "$tmp_rpm"
+        echo "Error: failed to copy RPM for signing: $rpm_path" >&2
+        exit 1
+      fi
+      if ! rpmsign --addsign "$tmp_rpm"; then
+        rm -f "$tmp_rpm"
+        echo "Error: failed to sign RPM: $rpm_path" >&2
+        exit 1
+      fi
+      if ! mv -f "$tmp_rpm" "$rpm_path"; then
+        rm -f "$tmp_rpm"
+        echo "Error: failed to replace RPM with signed copy: $rpm_path" >&2
+        exit 1
+      fi
+    fi
+
+    # Three-tier verification: (1) exit code, (2) reject NOKEY/BAD/NOT OK,
+    # (3) require OK. Grep patterns match the status portion of checksig output
+    # ("file: digests signatures OK"), not filenames — RPM naming convention
+    # (name-version-release.arch.rpm) won't produce false positives.
+    local checksig_output
+    if ! checksig_output=$(rpm --checksig "$rpm_path" 2>&1); then
+      echo "Error: RPM signature verification failed: $rpm_path" >&2
+      echo "rpm --checksig output: $checksig_output" >&2
+      exit 1
+    fi
+    if printf '%s\n' "$checksig_output" | grep -Eq 'NOKEY|NOT OK|BAD'; then
+      echo "Error: RPM has invalid or untrusted signature: $rpm_path" >&2
+      echo "rpm --checksig output: $checksig_output" >&2
+      exit 1
+    fi
+    if ! printf '%s\n' "$checksig_output" | grep -q 'OK'; then
+      echo "Error: RPM signature not reported as OK: $rpm_path" >&2
+      echo "rpm --checksig output: $checksig_output" >&2
+      exit 1
+    fi
+  }
 
   if [ ! -d "$RPM_SRC_DIR" ]; then
     echo "RPM source dir not found: $RPM_SRC_DIR" >&2
@@ -209,10 +266,20 @@ publish_rpm() {
       fc_ver="${BASH_REMATCH[1]}"
       dest_dir="rpm/fc${fc_ver}"
       mkdir -p "$dest_dir"
-      if ! cp -n "$rpm" "$dest_dir/"; then
-        echo "Warning: RPM already present; skipping $dest_dir/$filename" >&2
-      else
+      # cp -n (no-clobber) + existence check: atomic guard against concurrent runs.
+      # cp -n fails if file exists (coreutils 9.0+, ubuntu-latest has 9.4).
+      # [ -e ] double-checks: catches permission/disk errors and older coreutils
+      # where cp -n returned 0 on skip.
+      if cp -n "$rpm" "$dest_dir/" 2>/dev/null && [ -e "$dest_dir/$filename" ]; then
+        ensure_rpm_signed "$dest_dir/$filename"
         echo "Copied $rpm to $dest_dir/"
+      else
+        if [ ! -e "$dest_dir/$filename" ]; then
+          echo "Error: failed to copy RPM and file does not exist at destination: $dest_dir/$filename" >&2
+          exit 1
+        fi
+        echo "Warning: RPM already present; verifying signature: $dest_dir/$filename" >&2
+        ensure_rpm_signed "$dest_dir/$filename"
       fi
     else
       echo "Warning: RPM file '$filename' does not match expected Fedora RPM pattern; skipping" >&2
@@ -230,10 +297,18 @@ publish_rpm() {
     for srpm in "${srpms[@]}"; do
       local srpm_name
       srpm_name=$(basename "$srpm")
-      if ! cp -n "$srpm" "$srpm_dir/"; then
-        echo "Warning: SRPM already present; skipping $srpm_dir/$srpm_name" >&2
-      else
+      # Same cp -n + existence check pattern as RPM section above (see comment there).
+      # Concurrency group in publish.yml prevents parallel runs.
+      if cp -n "$srpm" "$srpm_dir/" 2>/dev/null && [ -e "$srpm_dir/$srpm_name" ]; then
+        ensure_rpm_signed "$srpm_dir/$srpm_name"
         echo "Copied $srpm to $srpm_dir/"
+      else
+        if [ ! -e "$srpm_dir/$srpm_name" ]; then
+          echo "Error: failed to copy SRPM and file does not exist at destination: $srpm_dir/$srpm_name" >&2
+          exit 1
+        fi
+        echo "Warning: SRPM already present; verifying signature: $srpm_dir/$srpm_name" >&2
+        ensure_rpm_signed "$srpm_dir/$srpm_name"
       fi
     done
 
