@@ -1,0 +1,3 @@
+https://repo.sw.foundation/
+https://repo.sw.foundation/docs/
+https://repo.sw.foundation/docs/pgsql-plugin/
