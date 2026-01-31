@@ -74,6 +74,7 @@ jobs:
           if [ -n "$previous_trap" ]; then
             eval "$previous_trap"
           fi
+          # Fresh runner keyring — the imported key above is the only secret key present.
           gpg_fpr="$(gpg --batch --with-colons --list-secret-keys | awk -F: '/^fpr:/ {print $10; exit}')"
           if [ -z "$gpg_fpr" ]; then
             echo "Error: failed to determine GPG key fingerprint for RPM signing" >&2
