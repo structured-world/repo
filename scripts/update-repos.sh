@@ -207,7 +207,11 @@ publish_rpm() {
         echo "Error: failed to sign RPM: $rpm_path" >&2
         exit 1
       fi
-      mv -f "$tmp_rpm" "$rpm_path"
+      if ! mv -f "$tmp_rpm" "$rpm_path"; then
+        rm -f "$tmp_rpm"
+        echo "Error: failed to replace RPM with signed copy: $rpm_path" >&2
+        exit 1
+      fi
     fi
 
     # Rely on exit code + reject NOKEY/BAD/NOT OK to avoid false positives.
@@ -256,6 +260,10 @@ publish_rpm() {
         ensure_rpm_signed "$dest_dir/$filename"
         echo "Copied $rpm to $dest_dir/"
       else
+        if [ ! -e "$dest_dir/$filename" ]; then
+          echo "Error: failed to copy RPM and file does not exist at destination: $dest_dir/$filename" >&2
+          exit 1
+        fi
         echo "Warning: RPM already present; verifying signature: $dest_dir/$filename" >&2
         ensure_rpm_signed "$dest_dir/$filename"
       fi
@@ -279,6 +287,10 @@ publish_rpm() {
         ensure_rpm_signed "$srpm_dir/$srpm_name"
         echo "Copied $srpm to $srpm_dir/"
       else
+        if [ ! -e "$srpm_dir/$srpm_name" ]; then
+          echo "Error: failed to copy SRPM and file does not exist at destination: $srpm_dir/$srpm_name" >&2
+          exit 1
+        fi
         echo "Warning: SRPM already present; verifying signature: $srpm_dir/$srpm_name" >&2
         ensure_rpm_signed "$srpm_dir/$srpm_name"
       fi
