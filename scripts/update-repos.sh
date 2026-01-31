@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 set -euxo pipefail
+# DEBUG: merge stderr into stdout so CI captures all trace lines before exit.
+exec 2>&1
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
