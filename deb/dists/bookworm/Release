@@ -5,20 +5,20 @@ Codename: bookworm
 Architectures: amd64
 Components: main
 Description: SW Foundation Package Repository
-Date: Sat, 31 Jan 2026 16:33:29 +0000
+Date: Sat, 31 Jan 2026 22:25:30 +0000
 MD5Sum:
- f326b0b75a5b78ea41f05fef265aa252              200 Release
+ b377ef687114e09758c19937ff85c29a              200 Release
  c0fa8ac5e50e03720c2cdf6023392ff0            41562 main/binary-amd64/Packages
- c55ea8ddec0a84fd740f554bb4eb46d6             8680 main/binary-amd64/Packages.gz
+ bc11c40d948993ea0700e2d51a4ead5b             8680 main/binary-amd64/Packages.gz
 SHA1:
- dd7a889f428b2892a3b25788cf4f450890e124d7              200 Release
+ a981cd4c65aaeee1ce1b345b0cd9005aa47b446a              200 Release
  c12d46f44ee11b49c76c108153ee95aaea12ba0e            41562 main/binary-amd64/Packages
- 195187275f160e22b2e6cc52bc71c1efc1c848c3             8680 main/binary-amd64/Packages.gz
+ 1c421f61834c3ff3d941f9e7e23c3bfeb7885126             8680 main/binary-amd64/Packages.gz
 SHA256:
- 5ef4c85312d42cd843f6e4d869f19d9b78469ad0d418ce27d7b3801c6c152482              200 Release
+ 35488b18ca1c5c8f663a360e494de1eca6da7200a6e4b92be3ce434e1bfdaa90              200 Release
  8d53e203a9acf3e3790f7da791c6c4bdf760341711ab8ff8f33ac95bd2913422            41562 main/binary-amd64/Packages
- 367f8baef4adc1e63060397581f8450fc7614c4d0e6155bbf283060059ee86ed             8680 main/binary-amd64/Packages.gz
+ b38b2f9e310daa64761713b1d9ead3652a54e45af78805483b238c5fa5475434             8680 main/binary-amd64/Packages.gz
 SHA512:
- 08ebc9daac3b5128da26115ebe4a250948d60043a911e9e96321146ba64f83b329c7695516d781b86feec8485d82dfb73854996af3b85de063e6a5d23c48fbf6              200 Release
+ 9b42ac6b135029cf459078728ec4416a0553f2316edb6fd53875eb5920baad3e47685c18cc4e09ee18a58e76d1ccb1adc23da3858084341d98833483ea383854              200 Release
  89577eab4247d47c1ea830b0fdbf4454601490ada0ebb6934fb9a34ad0859b3193ba1bb8f254fd6d0a2c0af4fe6a3392b4cf50aaf59c1efbace85971eb6a89ec            41562 main/binary-amd64/Packages
- c1e772f5f4a1dfe8656fff5e5245e15ff995949301efe52ffdce7646dc2c8a31e946b32031e247e35ec3b34feb3a297363ca3dab942e689bd2e09e23f321fea2             8680 main/binary-amd64/Packages.gz
+ 8e6e47663aa6a8efcbcc4a8ab4b995a7745e2eb9089f7502fd79364e0ec9e9646df93805ade2d53c01d7f4a5797a0685f3cc1fa5a1233cb6a2650bc26f01b56f             8680 main/binary-amd64/Packages.gz
