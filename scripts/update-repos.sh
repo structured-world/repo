@@ -263,8 +263,8 @@ publish_rpm() {
     local filename fc_ver dest_dir
     filename=$(basename "$rpm")
     # Only numeric Fedora versions are supported in repo layout.
-    # Expected pattern: name-version-release.fcNN.arch.rpm
-    if [[ "$filename" =~ ^[^-]+-[0-9][^-]*-[^-]*\.fc([0-9]+)\.[^.]+\.rpm$ ]]; then
+    # RPM NEVRA: name-version-release.arch.rpm (name may contain hyphens).
+    if [[ "$filename" =~ ^.+-[0-9][^-]*-[^-]*\.fc([0-9]+)\.[^.]+\.rpm$ ]]; then
       fc_ver="${BASH_REMATCH[1]}"
       dest_dir="rpm/fc${fc_ver}"
       mkdir -p "$dest_dir"
