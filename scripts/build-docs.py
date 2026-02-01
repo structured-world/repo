@@ -686,12 +686,14 @@ def generate_docs(manifests):
                 md = markdown.Markdown(extensions=["extra", "toc"])
                 raw = md_path.read_text(encoding="utf-8")
                 html_body = sanitize_doc_html(md.convert(raw))
-                if isinstance(md.toc_tokens, list) and md.toc_tokens:
-                    title = md.toc_tokens[0].get("name", "")
+                # Prefer manifest title when provided; otherwise derive from
+                # the first markdown heading, or fall back to the slug.
+                if title_override:
+                    title = title_override
+                elif isinstance(md.toc_tokens, list) and md.toc_tokens:
+                    title = md.toc_tokens[0].get("name", "") or slug.replace("-", " ").title()
                 else:
-                    title = ""
-                if not title:
-                    title = title_override or slug.replace("-", " ").title()
+                    title = slug.replace("-", " ").title()
                 description = f"{title} documentation for SW Foundation."
             except Exception as exc:
                 print(f"Error: failed to render {md_path.name}: {exc}", file=sys.stderr)
