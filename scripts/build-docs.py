@@ -316,14 +316,21 @@ def _install_card(pkg, category, icon_key, version_badges, supported_text, insta
 
 def gen_install_tabs(manifests):
     """Generate the full install tabs section (RPM + DEB)."""
-    # Collect all packages and merge platform info across manifests.
-    all_packages = []
+    # Collect packages per format — a package only appears in the RPM tab if
+    # its manifest declares platforms.rpm, and likewise for DEB.  This avoids
+    # showing incorrect install instructions for projects that publish only
+    # one package format.
+    rpm_packages = []
+    deb_packages = []
     rpm_info = {}
     deb_info = {}
     for m in manifests:
         platforms = m.get("platforms", {})
-        for pkg in m.get("packages", []):
-            all_packages.append(pkg)
+        pkgs = m.get("packages", [])
+        if "rpm" in platforms:
+            rpm_packages.extend(pkgs)
+        if "deb" in platforms:
+            deb_packages.extend(pkgs)
 
         if "rpm" in platforms:
             if not rpm_info:
@@ -347,7 +354,7 @@ def gen_install_tabs(manifests):
                         deb_info["distros"].append(d)
                         existing_ids.add(d["id"])
 
-    if not all_packages:
+    if not rpm_packages and not deb_packages:
         return ""
 
     parts = []
@@ -392,7 +399,7 @@ def gen_install_tabs(manifests):
         install_cmd = rpm_info.get("installCmd", "sudo dnf install")
         repo_setup = rpm_info.get("repoSetup", "")
 
-        for pkg in all_packages:
+        for pkg in rpm_packages:
             cat = pkg.get("category", "main")
             req = pkg.get("requires")
             if req:
@@ -436,7 +443,7 @@ def gen_install_tabs(manifests):
         install_cmd = deb_info.get("installCmd", "sudo apt install")
         repo_setup = deb_info.get("repoSetup", "")
 
-        for pkg in all_packages:
+        for pkg in deb_packages:
             cat = pkg.get("category", "main")
             req = pkg.get("requires")
             if req:
