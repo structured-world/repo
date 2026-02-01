@@ -74,7 +74,7 @@ _DANGEROUS_VOID_RE = re.compile(
 )
 _EVENT_HANDLER_RE = re.compile(r"\s+on\w+\s*=\s*(?:\"[^\"]*\"|'[^']*'|\S+)", re.IGNORECASE)
 _DANGEROUS_URL_RE = re.compile(
-    r'(href|src|action)\s*=\s*["\']?\s*(javascript|vbscript|data)\s*:',
+    r'(href|src|action)\s*=\s*["\']?\s*(javascript|vbscript|data)\s*:[^"\'>\s]*["\']?',
     re.IGNORECASE,
 )
 
@@ -90,7 +90,7 @@ def sanitize_doc_html(html):
     html = _DANGEROUS_TAGS_RE.sub("", html)
     html = _DANGEROUS_VOID_RE.sub("", html)
     html = _EVENT_HANDLER_RE.sub("", html)
-    html = _DANGEROUS_URL_RE.sub(r'\1="#"', html)
+    html = _DANGEROUS_URL_RE.sub(r'\1="#"', html)  # replaces entire attribute value
     return html
 
 
@@ -368,9 +368,10 @@ def gen_install_tabs(manifests):
 
     # Tab buttons — tabs represent package format (RPM vs DEB), not individual distros.
     # All RPM distros share one tab, all DEB distros share another.
-    # IDs use "fedora"/"debian" to match the JS switchDistro() in the template.
-    # When non-Fedora RPM distros are added, generalize the IDs and labels here
-    # and update switchDistro() accordingly.
+    # IDs use "fedora"/"debian" to match the JS switchDistro() in the template;
+    # these are intentionally hardcoded for the current distro set.  When a
+    # non-Fedora RPM distro or non-Debian/Ubuntu DEB distro is added, the IDs,
+    # labels, and icons here should be generalized (along with switchDistro()).
     tabs = []
     first_tab = None
     if rpm_info:
