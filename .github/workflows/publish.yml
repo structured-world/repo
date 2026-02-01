@@ -179,6 +179,8 @@ jobs:
           mkdir -p packages
           # NOTE: We intentionally download artifacts from the strongswan workflow run,
           # not from a release, to avoid a circular dependency (repo publish → strongswan release).
+          # When adding a new project, add a new workflow input + download step for that project.
+          # build-docs.py auto-discovers all manifests in packages/meta/*/.
           if ! gh run download "$RUN_ID" -R structured-world/strongswan -D packages \
             --pattern "deb-*" \
             --pattern "rpm-fc*" \
