@@ -668,7 +668,6 @@ def generate_docs(manifests):
             if slug in seen_slugs and seen_slugs[slug] != project_id:
                 print(f"Error: doc slug '{slug}' used by both '{seen_slugs[slug]}' and '{project_id}'", file=sys.stderr)
                 raise SystemExit(1)
-            seen_slugs[slug] = project_id
             title_override = doc_entry.get("title", "")
             md_file = doc_entry.get("file", f"{slug}.md")
             if "/" in md_file or "\\" in md_file or md_file.startswith("."):
@@ -717,6 +716,7 @@ def generate_docs(manifests):
             page_html = page_html.replace("{{CONTENT}}", html_body)
 
             out_path.write_text(page_html, encoding="utf-8")
+            seen_slugs[slug] = project_id
 
             lastmod_dt = datetime.fromtimestamp(md_path.stat().st_mtime, tz=timezone.utc)
             pages.append({

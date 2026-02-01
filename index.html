@@ -1246,8 +1246,8 @@ sudo apt install <span class="cmd">strongswan-dhcp-inform</span></code></pre>
         function compareVersions(v1, v2) {
             if (!v1) return -1;
             if (!v2) return 1;
-            const parts1 = v1.replace(/-/g, '.').split('.').map(p => parseInt(p) || 0);
-            const parts2 = v2.replace(/-/g, '.').split('.').map(p => parseInt(p) || 0);
+            const parts1 = v1.replace(/-/g, '.').split('.').map(p => parseInt(p, 10) || 0);
+            const parts2 = v2.replace(/-/g, '.').split('.').map(p => parseInt(p, 10) || 0);
             for (let i = 0; i < Math.max(parts1.length, parts2.length); i++) {
                 const a = parts1[i] || 0;
                 const b = parts2[i] || 0;
