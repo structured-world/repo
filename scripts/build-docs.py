@@ -11,6 +11,7 @@ or manifests/*/manifest.json (committed fallback), then generates:
 import json
 import os
 import re
+import shutil
 import sys
 from datetime import datetime, timezone
 from html import escape
@@ -124,7 +125,6 @@ COPY_BTN_SVG = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stro
 def load_manifests():
     """Load manifests from CI artifact dir or committed fallback."""
     manifests = []
-    meta_dirs = []
 
     def _load_from(base_dir):
         """Try loading manifests from subdirs of *base_dir*."""
@@ -724,6 +724,14 @@ def generate_docs(manifests):
                 "lastmod": lastmod_dt.strftime("%Y-%m-%d"),
                 "lastmod_dt": lastmod_dt,
             })
+
+    # Remove stale doc directories that are no longer in any manifest.
+    # This prevents previously published docs from lingering after removal/rename.
+    current_slugs = set(seen_slugs.keys())
+    if DOCS_DIR.is_dir():
+        for child in DOCS_DIR.iterdir():
+            if child.is_dir() and child.name not in current_slugs:
+                shutil.rmtree(child)
 
     return pages
 
