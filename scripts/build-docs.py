@@ -126,27 +126,29 @@ def load_manifests():
     manifests = []
     meta_dirs = []
 
+    def _load_from(base_dir):
+        """Try loading manifests from subdirs of *base_dir*."""
+        loaded = []
+        if not base_dir.is_dir():
+            return loaded
+        for d in sorted(base_dir.iterdir()):
+            mf = d / "manifest.json"
+            if not mf.is_file():
+                continue
+            try:
+                data = json.loads(mf.read_text(encoding="utf-8"))
+                data["_meta_dir"] = str(d)
+                loaded.append(data)
+            except (json.JSONDecodeError, OSError) as exc:
+                print(f"Warning: failed to load {mf}: {exc}", file=sys.stderr)
+        return loaded
+
     # CI artifacts: packages/meta/*/manifest.json
-    ci_meta = ROOT / "packages" / "meta"
-    if ci_meta.is_dir():
-        meta_dirs = sorted(ci_meta.iterdir())
+    manifests = _load_from(ROOT / "packages" / "meta")
 
-    # Fallback: manifests/*/manifest.json
-    if not meta_dirs:
-        fallback = ROOT / "manifests"
-        if fallback.is_dir():
-            meta_dirs = sorted(fallback.iterdir())
-
-    for d in meta_dirs:
-        mf = d / "manifest.json"
-        if not mf.is_file():
-            continue
-        try:
-            data = json.loads(mf.read_text(encoding="utf-8"))
-            data["_meta_dir"] = str(d)
-            manifests.append(data)
-        except (json.JSONDecodeError, OSError) as exc:
-            print(f"Warning: failed to load {mf}: {exc}", file=sys.stderr)
+    # Fallback: manifests/*/manifest.json (committed snapshot for local dev / GitHub Pages)
+    if not manifests:
+        manifests = _load_from(ROOT / "manifests")
     return manifests
 
 
@@ -615,6 +617,7 @@ def generate_index(manifests, all_docs):
         "{{PLATFORM_CARDS}}": gen_platform_cards(manifests),
         "{{PACKAGE_CARDS}}": gen_package_cards(manifests, slug_mapping),
         "{{INSTALL_TABS}}": gen_install_tabs(manifests),
+        "{{DOCS_NAV}}": '<a href="/docs/">Docs</a>' if all_docs else "",
         "{{DOCS_CALLOUT}}": gen_docs_callout(all_docs),
         "{{FOOTER_PROJECTS}}": gen_footer_projects(manifests),
         "{{FOOTER_LEGAL}}": gen_footer_legal(manifests),
@@ -728,11 +731,15 @@ def generate_docs(manifests):
 def generate_docs_index(pages, doc_template_path):
     """Generate docs/index.html listing all documentation pages.
 
-    When no docs exist, nothing is written — this is intentional because
-    gen_docs_callout() also returns empty when there are no docs, so the
-    site never links to /docs/ in that case.
+    When no docs exist, docs/index.html is removed so that a previously
+    generated index (from an earlier run with docs) does not remain
+    published.  This aligns with gen_docs_callout() returning empty when
+    there are no docs, so the site never links to /docs/ in that case.
     """
     if not pages:
+        index_path = DOCS_DIR / "index.html"
+        if index_path.exists():
+            index_path.unlink()
         return
 
     doc_template = doc_template_path.read_text(encoding="utf-8")
