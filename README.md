@@ -61,7 +61,7 @@ curl -fsSL https://repo.sw.foundation/keys/sw.gpg | gpg --import
 
 ## Adding a New Project
 
-1. Create `packaging/manifest.json` in your source repo (see format in existing manifests)
+1. Create `packaging/manifest.json` in your source repo (see [manifests/strongswan/manifest.json](manifests/strongswan/manifest.json) for the format)
 2. Add optional `packaging/docs/*.md` for documentation pages
 3. Upload `manifest.json` and `docs/` as a `repo-meta-<project>` artifact in your CI workflow (the artifact root should contain `manifest.json` directly, not a `packaging/` subdirectory)
 4. Add a new workflow input and download step in `publish.yml` for the project
