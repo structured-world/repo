@@ -617,7 +617,6 @@ def generate_index(manifests, all_docs):
         "{{PLATFORM_CARDS}}": gen_platform_cards(manifests),
         "{{PACKAGE_CARDS}}": gen_package_cards(manifests, slug_mapping),
         "{{INSTALL_TABS}}": gen_install_tabs(manifests),
-        "{{DOCS_NAV}}": '<a href="/docs/">Docs</a>' if all_docs else "",
         "{{DOCS_CALLOUT}}": gen_docs_callout(all_docs),
         "{{FOOTER_PROJECTS}}": gen_footer_projects(manifests),
         "{{FOOTER_LEGAL}}": gen_footer_legal(manifests),
