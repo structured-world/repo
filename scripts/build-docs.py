@@ -741,22 +741,17 @@ def generate_docs(manifests):
 def generate_docs_index(pages, doc_template_path):
     """Generate docs/index.html listing all documentation pages.
 
-    When no docs exist, docs/index.html is removed so that a previously
-    generated index (from an earlier run with docs) does not remain
-    published.  This aligns with gen_docs_callout() returning empty when
-    there are no docs, so the site never links to /docs/ in that case.
+    Always generates a page because the site nav statically links to /docs/.
+    When no docs exist, a placeholder page is written instead of a listing.
     """
-    if not pages:
-        index_path = DOCS_DIR / "index.html"
-        if index_path.exists():
-            index_path.unlink()
-        return
-
     doc_template = doc_template_path.read_text(encoding="utf-8")
-    items = "\n".join([
-        f'<li><a href="{escape(p["url"])}">{escape(p["title"])}</a></li>' for p in pages
-    ])
-    content = f'<h1>Documentation</h1><p>Guides for SW Foundation packages.</p><ul>{items}</ul>'
+    if pages:
+        items = "\n".join([
+            f'<li><a href="{escape(p["url"])}">{escape(p["title"])}</a></li>' for p in pages
+        ])
+        content = f'<h1>Documentation</h1><p>Guides for SW Foundation packages.</p><ul>{items}</ul>'
+    else:
+        content = '<h1>Documentation</h1><p>No documentation available yet.</p>'
     index_html = doc_template
     index_html = index_html.replace("{{TITLE}}", "Documentation")
     index_html = index_html.replace("{{DESCRIPTION}}", "SW Foundation documentation index.")
