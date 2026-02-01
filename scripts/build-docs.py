@@ -29,6 +29,21 @@ DOCS_DIR = ROOT / "docs"
 TEMPLATES_DIR = ROOT / "templates"
 SITE_BASE_URL = os.environ.get("SITE_BASE_URL", "https://repo.sw.foundation").rstrip("/")
 
+# Allowed URL schemes for manifest-provided links (homepage, upstream, etc.).
+_SAFE_URL_SCHEMES = ("https://", "http://")
+
+
+def _safe_url(url):
+    """Return *url* only if it uses an allowed scheme, otherwise return '#'.
+
+    Manifest-provided URLs are embedded in href attributes; this prevents
+    javascript:, data:, or other dangerous schemes from reaching the HTML.
+    """
+    if url and any(url.startswith(s) for s in _SAFE_URL_SCHEMES):
+        return url
+    return "#"
+
+
 # Allowlisted HTML tags for manifest summary fields.
 _SUMMARY_ALLOWED_TAGS = frozenset({"code", "strong", "em", "b", "i"})
 
@@ -513,13 +528,13 @@ def gen_footer_projects(manifests):
         name = escape(proj.get("name", ""))
         links = []
         if proj.get("homepage"):
-            links.append(f'<li><a href="{escape(proj["homepage"])}">{name}</a></li>')
+            links.append(f'<li><a href="{escape(_safe_url(proj["homepage"]))}">{name}</a></li>')
         if proj.get("issueTracker"):
-            links.append(f'<li><a href="{escape(proj["issueTracker"])}">Issue Tracker</a></li>')
+            links.append(f'<li><a href="{escape(_safe_url(proj["issueTracker"]))}">Issue Tracker</a></li>')
         if proj.get("releases"):
-            links.append(f'<li><a href="{escape(proj["releases"])}">Releases</a></li>')
+            links.append(f'<li><a href="{escape(_safe_url(proj["releases"]))}">Releases</a></li>')
         if proj.get("upstream"):
-            links.append(f'<li><a href="{escape(proj["upstream"])}">Upstream</a></li>')
+            links.append(f'<li><a href="{escape(_safe_url(proj["upstream"]))}">Upstream</a></li>')
         if links:
             items = "\n                        ".join(links)
             sections.append(
@@ -546,8 +561,8 @@ def gen_footer_legal(manifests):
             lines.append(f"<p><strong>Trademark Notice:</strong> {escape(tm)}</p>")
         src = proj.get("sourceNotice", "")
         if src:
-            hp = proj.get("homepage", "")
-            if hp:
+            hp = _safe_url(proj.get("homepage", ""))
+            if hp != "#":
                 lines.append(f'<p><strong>Source Availability:</strong> {escape(src)} (<a href="{escape(hp)}">{escape(hp.replace("https://", ""))}</a>)</p>')
             else:
                 lines.append(f"<p><strong>Source Availability:</strong> {escape(src)}</p>")
