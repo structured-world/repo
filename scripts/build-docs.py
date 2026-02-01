@@ -14,6 +14,7 @@ import re
 import sys
 from datetime import datetime, timezone
 from html import escape
+from html.parser import HTMLParser
 from pathlib import Path
 
 try:
@@ -26,6 +27,60 @@ ROOT = Path(__file__).resolve().parents[1]
 DOCS_DIR = ROOT / "docs"
 TEMPLATES_DIR = ROOT / "templates"
 SITE_BASE_URL = os.environ.get("SITE_BASE_URL", "https://repo.sw.foundation").rstrip("/")
+
+# Allowlisted HTML tags for manifest summary fields.
+_SUMMARY_ALLOWED_TAGS = frozenset({"code", "strong", "em", "b", "i"})
+
+
+class _SanitizeHTML(HTMLParser):
+    """Strip HTML tags not in the allowlist, preserving text content."""
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self._parts = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag in _SUMMARY_ALLOWED_TAGS:
+            self._parts.append(f"<{tag}>")
+
+    def handle_endtag(self, tag):
+        if tag in _SUMMARY_ALLOWED_TAGS:
+            self._parts.append(f"</{tag}>")
+
+    def handle_data(self, data):
+        self._parts.append(escape(data))
+
+    def get_clean(self):
+        return "".join(self._parts)
+
+
+def sanitize_summary(raw):
+    """Sanitize manifest summary to only allow safe inline HTML tags."""
+    parser = _SanitizeHTML()
+    parser.feed(raw)
+    return parser.get_clean()
+
+
+_DANGEROUS_TAGS_RE = re.compile(
+    r"<(script|iframe|object|embed|form|input|textarea|button|style|link|meta|base)"
+    r"[^>]*>.*?</\1>",
+    re.DOTALL | re.IGNORECASE,
+)
+_DANGEROUS_VOID_RE = re.compile(
+    r"<(script|iframe|object|embed|form|input|textarea|button|style|link|meta|base)"
+    r"[^>]*/?\s*>",
+    re.IGNORECASE,
+)
+_EVENT_HANDLER_RE = re.compile(r"\s+on\w+\s*=\s*(?:\"[^\"]*\"|'[^']*'|\S+)", re.IGNORECASE)
+
+
+def sanitize_doc_html(html):
+    """Strip dangerous HTML tags and event handlers from rendered markdown."""
+    html = _DANGEROUS_TAGS_RE.sub("", html)
+    html = _DANGEROUS_VOID_RE.sub("", html)
+    html = _EVENT_HANDLER_RE.sub("", html)
+    return html
+
 
 # ---------------------------------------------------------------------------
 # SVG icons for package cards (keyed by manifest "icon" field)
@@ -165,8 +220,7 @@ def gen_package_cards(manifests, slug_mapping):
             icon = ICONS.get(pkg.get("icon", "shield"), ICONS["shield"])
             display = escape(pkg["displayName"])
             name = escape(pkg["name"])
-            # summary may contain trusted HTML (e.g. <code> tags) from maintainer-controlled manifests.
-            summary = pkg.get("summary", "")
+            summary = sanitize_summary(pkg.get("summary", ""))
             slug = slug_mapping.get(pkg["name"], pkg["name"])
 
             cards.append(
@@ -588,7 +642,7 @@ def generate_docs(manifests):
             try:
                 md = markdown.Markdown(extensions=["extra", "toc"])
                 raw = md_path.read_text(encoding="utf-8")
-                html_body = md.convert(raw)
+                html_body = sanitize_doc_html(md.convert(raw))
                 if isinstance(md.toc_tokens, list) and md.toc_tokens:
                     title = md.toc_tokens[0].get("name", "")
                 else:
