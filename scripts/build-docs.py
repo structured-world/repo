@@ -79,7 +79,13 @@ _DANGEROUS_URL_RE = re.compile(
 
 
 def sanitize_doc_html(html):
-    """Strip dangerous HTML tags, event handlers, and unsafe URL schemes from rendered markdown."""
+    """Strip dangerous HTML tags, event handlers, and unsafe URL schemes from rendered markdown.
+
+    This is defense-in-depth — manifests and docs come from CI artifacts of
+    repos we control, not arbitrary user input.  A full HTML sanitizer library
+    (e.g. bleach) would be more robust but adds a dependency; regex coverage
+    is acceptable given the controlled input source.
+    """
     html = _DANGEROUS_TAGS_RE.sub("", html)
     html = _DANGEROUS_VOID_RE.sub("", html)
     html = _EVENT_HANDLER_RE.sub("", html)

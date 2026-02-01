@@ -6,17 +6,17 @@ Package repository for Structured World Foundation software. Hosts signed RPM an
 
 ## How It Works
 
-Source projects provide a `manifest.json` describing their packages, platforms, and documentation. During publish, the manifest is used to generate the site (package cards, install instructions, docs pages).
+Source projects provide a `manifest.json` describing their packages, platforms, and documentation. CI uploads these as a `repo-meta-<project>` artifact; the publish workflow copies them into `packages/meta/<project>/` where `build-docs.py` discovers and renders them.
 
 ```
-source-repo/
-  packaging/
-    manifest.json          # Package metadata
-    docs/                  # Optional documentation markdown
-      setup-guide.md
+source-repo/                           repo (during publish)
+  packaging/                           packages/meta/<project>/
+    manifest.json  ──CI artifact──→      manifest.json
+    docs/                                docs/
+      setup-guide.md                       setup-guide.md
 ```
 
-See [manifests/strongswan/manifest.json](manifests/strongswan/manifest.json) for an example.
+See [manifests/strongswan/manifest.json](manifests/strongswan/manifest.json) for an example (also used as committed fallback).
 
 ## Quick Install
 
