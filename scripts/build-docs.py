@@ -143,20 +143,23 @@ def gen_platform_cards(manifests):
 
 
 def _pkg_slug(name, project_id=""):
-    """Derive a short slug for HTML element IDs (e.g. 'strongswan-sw' -> 'sw')."""
+    """Derive a short slug for HTML element IDs (e.g. 'strongswan-sw' -> 'sw').
+
+    Short slugs are preferred for readability, but if two packages from
+    different projects would collide, callers fall back to the full name.
+    """
     prefix = f"{project_id}-" if project_id else ""
     if prefix and name.startswith(prefix):
         return name[len(prefix):]
     return name
 
 
-def gen_package_cards(manifests):
+def gen_package_cards(manifests, slug_mapping):
     """Generate package card HTML for the packages grid."""
     cards = []
     for m in manifests:
         proj = m.get("project", {})
         license_id = escape(proj.get("license", ""))
-        project_id = proj.get("id", "")
         for pkg in m.get("packages", []):
             cat = escape(pkg.get("category", "main"))
             icon = ICONS.get(pkg.get("icon", "shield"), ICONS["shield"])
@@ -164,7 +167,7 @@ def gen_package_cards(manifests):
             name = escape(pkg["name"])
             # summary may contain trusted HTML (e.g. <code> tags) from maintainer-controlled manifests.
             summary = pkg.get("summary", "")
-            slug = _pkg_slug(pkg["name"], project_id)
+            slug = slug_mapping.get(pkg["name"], pkg["name"])
 
             cards.append(
                 f'<div class="package-card {cat}">\n'
@@ -469,14 +472,28 @@ def _safe_inline_json(obj):
     return json.dumps(obj).replace("</", r"<\/")
 
 
-def gen_package_js_data(manifests):
-    """Generate JSON object mapping package name → HTML slug for JS version loader."""
+def build_slug_mapping(manifests):
+    """Build a global package-name → slug mapping, detecting collisions."""
     mapping = {}
+    slug_to_name = {}
     for m in manifests:
         project_id = m.get("project", {}).get("id", "")
         for pkg in m.get("packages", []):
-            mapping[pkg["name"]] = _pkg_slug(pkg["name"], project_id)
-    return _safe_inline_json(mapping)
+            name = pkg["name"]
+            slug = _pkg_slug(name, project_id)
+            if slug in slug_to_name and slug_to_name[slug] != name:
+                # Collision: fall back to full package name for both.
+                prev_name = slug_to_name[slug]
+                mapping[prev_name] = prev_name
+                slug = name
+            slug_to_name[slug] = name
+            mapping[name] = slug
+    return mapping
+
+
+def gen_package_js_data(slug_mapping):
+    """Generate JSON object mapping package name → HTML slug for JS version loader."""
+    return _safe_inline_json(slug_mapping)
 
 
 def gen_deb_sources(manifests):
@@ -504,17 +521,19 @@ def generate_index(manifests, all_docs):
 
     html = tmpl_path.read_text(encoding="utf-8")
 
+    slug_mapping = build_slug_mapping(manifests)
+
     replacements = {
         "{{SITE_URL}}": escape(SITE_BASE_URL),
         "{{META_KEYWORDS}}": gen_meta_keywords(manifests),
         "{{HERO_SUBTITLE}}": gen_hero_subtitle(manifests),
         "{{PLATFORM_CARDS}}": gen_platform_cards(manifests),
-        "{{PACKAGE_CARDS}}": gen_package_cards(manifests),
+        "{{PACKAGE_CARDS}}": gen_package_cards(manifests, slug_mapping),
         "{{INSTALL_TABS}}": gen_install_tabs(manifests),
         "{{DOCS_CALLOUT}}": gen_docs_callout(all_docs),
         "{{FOOTER_PROJECTS}}": gen_footer_projects(manifests),
         "{{FOOTER_LEGAL}}": gen_footer_legal(manifests),
-        "{{PACKAGE_JS_DATA}}": gen_package_js_data(manifests),
+        "{{PACKAGE_JS_DATA}}": gen_package_js_data(slug_mapping),
         "{{DEB_SOURCES}}": gen_deb_sources(manifests),
     }
 
@@ -549,8 +568,14 @@ def generate_docs(manifests):
 
         for doc_entry in m.get("docs", []):
             slug = doc_entry["slug"]
+            if not re.fullmatch(r"[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", slug):
+                print(f"Error: invalid doc slug '{slug}' (must match [a-z0-9-]+)", file=sys.stderr)
+                raise SystemExit(1)
             title_override = doc_entry.get("title", "")
             md_file = doc_entry.get("file", f"{slug}.md")
+            if "/" in md_file or "\\" in md_file or md_file.startswith("."):
+                print(f"Error: invalid doc file path '{md_file}' (no path separators or leading dots)", file=sys.stderr)
+                raise SystemExit(1)
             md_path = docs_dir / md_file
 
             if not md_path.exists():
