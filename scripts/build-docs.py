@@ -221,7 +221,12 @@ def _pkg_slug(name, project_id=""):
 
 
 def gen_package_cards(manifests, slug_mapping):
-    """Generate package card HTML for the packages grid."""
+    """Generate package card HTML for the packages grid.
+
+    Note: packages may carry a ``docs`` field linking to a doc slug.
+    This is not yet wired into the card HTML but is part of the manifest
+    schema for future per-package documentation links.
+    """
     cards = []
     for m in manifests:
         proj = m.get("project", {})
@@ -361,7 +366,9 @@ def gen_install_tabs(manifests):
 
     # Tab buttons — tabs represent package format (RPM vs DEB), not individual distros.
     # All RPM distros share one tab, all DEB distros share another.
-    # When non-Fedora RPM distros are added, generalize the label/icon here.
+    # IDs use "fedora"/"debian" to match the JS switchDistro() in the template.
+    # When non-Fedora RPM distros are added, generalize the IDs and labels here
+    # and update switchDistro() accordingly.
     tabs = []
     first_tab = None
     if rpm_info:
@@ -399,6 +406,9 @@ def gen_install_tabs(manifests):
         install_cmd = rpm_info.get("installCmd", "sudo dnf install")
         repo_setup = rpm_info.get("repoSetup", "")
 
+        # Repo setup is shown only on the primary package card (no `requires`).
+        # Plugin cards omit it because the user must install the base package first,
+        # which already includes the repo setup instructions.
         for pkg in rpm_packages:
             cat = pkg.get("category", "main")
             req = pkg.get("requires")
@@ -443,6 +453,7 @@ def gen_install_tabs(manifests):
         install_cmd = deb_info.get("installCmd", "sudo apt install")
         repo_setup = deb_info.get("repoSetup", "")
 
+        # Same repo-setup logic as RPM — see comment above.
         for pkg in deb_packages:
             cat = pkg.get("category", "main")
             req = pkg.get("requires")
@@ -644,7 +655,11 @@ def generate_docs(manifests):
         for doc_entry in m.get("docs", []):
             slug = doc_entry["slug"]
             if not re.fullmatch(r"[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", slug):
-                print(f"Error: invalid doc slug '{slug}' (must match [a-z0-9-]+)", file=sys.stderr)
+                print(
+                    f"Error: invalid doc slug '{slug}' "
+                    f"(must use lowercase letters, digits, and hyphens, and start/end with a letter or digit)",
+                    file=sys.stderr,
+                )
                 raise SystemExit(1)
             project_id = m.get("project", {}).get("id", "?")
             if slug in seen_slugs and seen_slugs[slug] != project_id:
@@ -711,7 +726,12 @@ def generate_docs(manifests):
 
 
 def generate_docs_index(pages, doc_template_path):
-    """Generate docs/index.html listing all documentation pages."""
+    """Generate docs/index.html listing all documentation pages.
+
+    When no docs exist, nothing is written — this is intentional because
+    gen_docs_callout() also returns empty when there are no docs, so the
+    site never links to /docs/ in that case.
+    """
     if not pages:
         return
 
