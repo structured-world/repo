@@ -72,13 +72,18 @@ _DANGEROUS_VOID_RE = re.compile(
     re.IGNORECASE,
 )
 _EVENT_HANDLER_RE = re.compile(r"\s+on\w+\s*=\s*(?:\"[^\"]*\"|'[^']*'|\S+)", re.IGNORECASE)
+_DANGEROUS_URL_RE = re.compile(
+    r'(href|src|action)\s*=\s*["\']?\s*(javascript|vbscript|data)\s*:',
+    re.IGNORECASE,
+)
 
 
 def sanitize_doc_html(html):
-    """Strip dangerous HTML tags and event handlers from rendered markdown."""
+    """Strip dangerous HTML tags, event handlers, and unsafe URL schemes from rendered markdown."""
     html = _DANGEROUS_TAGS_RE.sub("", html)
     html = _DANGEROUS_VOID_RE.sub("", html)
     html = _EVENT_HANDLER_RE.sub("", html)
+    html = _DANGEROUS_URL_RE.sub(r'\1="#"', html)
     return html
 
 
@@ -341,7 +346,9 @@ def gen_install_tabs(manifests):
 
     parts = []
 
-    # Tab buttons
+    # Tab buttons — tabs represent package format (RPM vs DEB), not individual distros.
+    # All RPM distros share one tab, all DEB distros share another.
+    # When non-Fedora RPM distros are added, generalize the label/icon here.
     tabs = []
     first_tab = None
     if rpm_info:
@@ -514,7 +521,7 @@ def gen_footer_legal(manifests):
         if src:
             hp = proj.get("homepage", "")
             if hp:
-                lines.append(f'<p><strong>Source Availability:</strong> {escape(src.split("github.com")[0])}<a href="{escape(hp)}">{escape(hp.replace("https://", ""))}</a>.</p>')
+                lines.append(f'<p><strong>Source Availability:</strong> {escape(src)} (<a href="{escape(hp)}">{escape(hp.replace("https://", ""))}</a>)</p>')
             else:
                 lines.append(f"<p><strong>Source Availability:</strong> {escape(src)}</p>")
     return "\n                    ".join(lines)
@@ -615,6 +622,7 @@ def generate_docs(manifests):
 
     doc_template = doc_template_path.read_text(encoding="utf-8")
     pages = []
+    seen_slugs = {}  # slug -> project id, detect cross-project collisions
 
     for m in manifests:
         meta_dir = Path(m.get("_meta_dir", ""))
@@ -625,6 +633,11 @@ def generate_docs(manifests):
             if not re.fullmatch(r"[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", slug):
                 print(f"Error: invalid doc slug '{slug}' (must match [a-z0-9-]+)", file=sys.stderr)
                 raise SystemExit(1)
+            project_id = m.get("project", {}).get("id", "?")
+            if slug in seen_slugs and seen_slugs[slug] != project_id:
+                print(f"Error: doc slug '{slug}' used by both '{seen_slugs[slug]}' and '{project_id}'", file=sys.stderr)
+                raise SystemExit(1)
+            seen_slugs[slug] = project_id
             title_override = doc_entry.get("title", "")
             md_file = doc_entry.get("file", f"{slug}.md")
             if "/" in md_file or "\\" in md_file or md_file.startswith("."):
@@ -660,7 +673,9 @@ def generate_docs(manifests):
             canonical = f"{SITE_BASE_URL}/docs/{slug}/"
 
             page_html = doc_template
-            for value in (title, description, canonical, html_body):
+            # Only check title/description/canonical for template markers (not html_body,
+            # which may legitimately contain {{ in code samples or templating docs).
+            for value in (title, description, canonical):
                 if "{{" in value or "}}" in value:
                     raise SystemExit(f"Template marker found in replacement value from {md_path.name}")
             page_html = page_html.replace("{{TITLE}}", escape(title))
