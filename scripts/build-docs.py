@@ -846,8 +846,10 @@ def generate_sitemap(pages):
     else:
         today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
         root_url = f"{SITE_BASE_URL}/"
+        docs_url = f"{SITE_BASE_URL}/docs/"
         urls.append(f"  <url><loc>{escape(root_url)}</loc><lastmod>{today}</lastmod></url>")
-        txt_urls.append(root_url)
+        urls.append(f"  <url><loc>{escape(docs_url)}</loc><lastmod>{today}</lastmod></url>")
+        txt_urls.extend([root_url, docs_url])
 
     sitemap_lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',

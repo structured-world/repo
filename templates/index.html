@@ -959,7 +959,7 @@
                         if (!name || !version) continue;
 
                         if (name in PACKAGE_SLUGS) {
-                            const info = { version, size: size ? formatBytes(parseInt(size)) : null };
+                            const info = { version, size: size ? formatBytes(parseInt(size, 10)) : null };
                             if (compareVersions(version, pkgInfo[name]?.version) > 0) {
                                 pkgInfo[name] = info;
                             }
