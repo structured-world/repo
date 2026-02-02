@@ -137,6 +137,24 @@ COPY_BTN_SVG = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stro
 # ---------------------------------------------------------------------------
 # Load manifests
 # ---------------------------------------------------------------------------
+def _validate_manifest(m):
+    """Validate that required manifest fields are present.
+
+    Catches malformed manifests early with an actionable error message
+    including the manifest path, instead of a cryptic KeyError later.
+    """
+    source = m.get("_meta_dir", "<unknown>")
+    proj = m.get("project")
+    if not isinstance(proj, dict) or not proj.get("id"):
+        raise SystemExit(f"Error: manifest {source} missing required 'project.id'")
+    for i, pkg in enumerate(m.get("packages", [])):
+        for key in ("name", "displayName"):
+            if not pkg.get(key):
+                raise SystemExit(
+                    f"Error: manifest {source} packages[{i}] missing required '{key}'"
+                )
+
+
 def load_manifests():
     """Load manifests from CI artifact dir or committed fallback."""
     manifests = []
@@ -164,6 +182,9 @@ def load_manifests():
     # Fallback: manifests/*/manifest.json (committed snapshot for local dev / GitHub Pages)
     if not manifests:
         manifests = _load_from(ROOT / "manifests")
+
+    for m in manifests:
+        _validate_manifest(m)
     return manifests
 
 
@@ -680,8 +701,8 @@ def generate_docs(manifests):
                 )
                 raise SystemExit(1)
             project_id = m.get("project", {}).get("id", "?")
-            if slug in seen_slugs and seen_slugs[slug] != project_id:
-                print(f"Error: doc slug '{slug}' used by both '{seen_slugs[slug]}' and '{project_id}'", file=sys.stderr)
+            if slug in seen_slugs:
+                print(f"Error: duplicate doc slug '{slug}' (first: {seen_slugs[slug]}, duplicate: {project_id})", file=sys.stderr)
                 raise SystemExit(1)
             title_override = doc_entry.get("title", "")
             md_file = doc_entry.get("file", f"{slug}.md")
