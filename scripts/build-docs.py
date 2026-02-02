@@ -77,14 +77,13 @@ def sanitize_summary(raw):
     return parser.get_clean()
 
 
+_DANGEROUS_TAG_NAMES = r"script|iframe|object|embed|form|input|textarea|button|style|link|meta|base"
 _DANGEROUS_TAGS_RE = re.compile(
-    r"<(script|iframe|object|embed|form|input|textarea|button|style|link|meta|base)"
-    r"[^>]*>.*?</\1>",
+    rf"<(?:{_DANGEROUS_TAG_NAMES})[^>]*>.*?</(?:{_DANGEROUS_TAG_NAMES})\s*>",
     re.DOTALL | re.IGNORECASE,
 )
 _DANGEROUS_VOID_RE = re.compile(
-    r"<(script|iframe|object|embed|form|input|textarea|button|style|link|meta|base)"
-    r"[^>]*/?\s*>",
+    rf"<(?:{_DANGEROUS_TAG_NAMES})[^>]*/?\s*>",
     re.IGNORECASE,
 )
 _EVENT_HANDLER_RE = re.compile(r"\s+on\w+\s*=\s*(?:\"[^\"]*\"|'[^']*'|\S+)", re.IGNORECASE)
@@ -153,6 +152,18 @@ def _validate_manifest(m):
                 raise SystemExit(
                     f"Error: manifest {source} packages[{i}] missing required '{key}'"
                 )
+    for i, doc in enumerate(m.get("docs", [])):
+        if not isinstance(doc, dict) or not doc.get("slug"):
+            raise SystemExit(
+                f"Error: manifest {source} docs[{i}] missing required 'slug'"
+            )
+    for fmt, cfg in m.get("platforms", {}).items():
+        for i, distro in enumerate(cfg.get("distros", []) if isinstance(cfg, dict) else []):
+            for key in ("id", "name"):
+                if not isinstance(distro, dict) or not distro.get(key):
+                    raise SystemExit(
+                        f"Error: manifest {source} platforms['{fmt}'].distros[{i}] missing required '{key}'"
+                    )
 
 
 def load_manifests():
