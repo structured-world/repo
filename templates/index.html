@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Official package repository for Structured World Foundation. Signed RPM and DEB packages for Linux.">
-    <meta name="keywords" content="Linux packages, RPM, DEB, Ubuntu, Fedora, Debian, strongSwan SW, PostgreSQL Plugin, DHCP INFORM Plugin">
+    <meta name="keywords" content="{{META_KEYWORDS}}">
     <meta name="author" content="Structured World Foundation">
     <meta name="robots" content="index, follow">
 
@@ -12,7 +12,7 @@
     <meta property="og:title" content="SW Foundation Package Repository">
     <meta property="og:description" content="Signed RPM and DEB packages for Linux distributions.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://repo.sw.foundation">
+    <meta property="og:url" content="{{SITE_URL}}">
     <meta property="og:image" content="https://avatars.githubusercontent.com/u/228206483?v=4">
 
     <!-- Theme -->
@@ -22,7 +22,7 @@
     <title>SW Foundation — Package Repository</title>
 
     <link rel="icon" type="image/png" href="https://avatars.githubusercontent.com/u/228206483?v=4&s=32">
-    <link rel="canonical" href="https://repo.sw.foundation">
+    <link rel="canonical" href="{{SITE_URL}}">
 
     <style>
         :root {
@@ -775,30 +775,10 @@
             </div>
             <h1>Package Repository</h1>
             <p class="hero-subtitle">
-                Enterprise-grade strongSwan VPN packages with PostgreSQL database support. Production-ready builds for modern Linux distributions.
+                {{HERO_SUBTITLE}}
             </p>
             <div class="platforms-row">
-                <div class="platform-card">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-                    <div class="platform-info">
-                        <h4>Fedora</h4>
-                        <span>39, 40, 41, 42</span>
-                    </div>
-                </div>
-                <div class="platform-card">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
-                    <div class="platform-info">
-                        <h4>Ubuntu</h4>
-                        <span>22.04, 24.04</span>
-                    </div>
-                </div>
-                <div class="platform-card">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                    <div class="platform-info">
-                        <h4>Debian</h4>
-                        <span>12</span>
-                    </div>
-                </div>
+                {{PLATFORM_CARDS}}
             </div>
         </div>
     </section>
@@ -812,77 +792,7 @@
             </div>
 
             <div class="packages-grid">
-                <div class="package-card main">
-                    <div class="package-icon">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
-                    </div>
-                    <h3>strongSwan SW</h3>
-                    <code class="pkg-name">strongswan-sw</code>
-                    <p class="pkg-desc">
-                        Complete strongSwan VPN distribution with all standard plugins. This is the base package required for IKEv2/IPsec VPN server functionality.
-                    </p>
-                    <div class="package-meta">
-                        <span class="meta-badge">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                            GPL-2.0-or-later
-                        </span>
-                        <span class="meta-badge">
-                            Version: <span class="version" id="version-sw">loading...</span>
-                        </span>
-                        <span class="meta-badge" id="size-sw-badge" style="display:none">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-                            <span id="size-sw"></span>
-                        </span>
-                    </div>
-                </div>
-
-                <div class="package-card plugin">
-                    <div class="package-icon">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M20 6H16V4C16 2.9 15.1 2 14 2H10C8.9 2 8 2.9 8 4V6H4C2.9 6 2 6.9 2 8V20C2 21.1 2.9 22 4 22H20C21.1 22 22 21.1 22 20V8C22 6.9 21.1 6 20 6ZM10 4H14V6H10V4ZM12 18C10.34 18 9 16.66 9 15C9 13.34 10.34 12 12 12C13.66 12 15 13.34 15 15C15 16.66 13.66 18 12 18Z"/></svg>
-                    </div>
-                    <h3>PostgreSQL Plugin</h3>
-                    <code class="pkg-name">strongswan-pgsql</code>
-                    <p class="pkg-desc">
-                        PostgreSQL database backend for strongSwan. Enables <code>sql</code> and <code>attr-sql</code> plugins to store credentials, IP pools, and connection attributes.
-                    </p>
-                    <div class="package-meta">
-                        <span class="meta-badge">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                            GPL-2.0-or-later
-                        </span>
-                        <span class="meta-badge">
-                            Version: <span class="version" id="version-pgsql">loading...</span>
-                        </span>
-                        <span class="meta-badge" id="size-pgsql-badge" style="display:none">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-                            <span id="size-pgsql"></span>
-                        </span>
-                    </div>
-                </div>
-
-                <div class="package-card plugin-green">
-                    <div class="package-icon">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-                    </div>
-                    <h3>DHCP INFORM Plugin</h3>
-                    <code class="pkg-name">strongswan-dhcp-inform</code>
-                    <p class="pkg-desc">
-                        Responds to Windows DHCP INFORM requests with split-tunnel routes from PostgreSQL. Delivers classless static routes via DHCP option 121/249.
-                    </p>
-                    <div class="package-meta">
-                        <span class="meta-badge">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                            GPL-2.0-or-later
-                        </span>
-                        <span class="meta-badge">
-                            Version: <span class="version" id="version-dhcp-inform">loading...</span>
-                        </span>
-                        <span class="meta-badge" id="size-dhcp-inform-badge" style="display:none">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-                            <span id="size-dhcp-inform"></span>
-                        </span>
-                    </div>
-                </div>
+                {{PACKAGE_CARDS}}
             </div>
         </div>
     </section>
@@ -895,231 +805,9 @@
                 <p>Add our repository and install packages with your system's package manager.</p>
             </div>
 
-            <div class="distro-tabs">
-                <button class="distro-tab active" onclick="switchDistro('fedora')">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-                    Fedora (RPM)
-                </button><button class="distro-tab" onclick="switchDistro('debian')">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
-                    Ubuntu / Debian (DEB)
-                </button>
-            </div>
+            {{INSTALL_TABS}}
 
-            <div id="distro-fedora" class="distro-content active">
-                <div class="install-grid">
-                    <div class="install-card main">
-                        <div class="install-card-header">
-                            <div class="install-card-title">
-                                <div class="icon">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
-                                </div>
-                                <h4>strongSwan SW</h4>
-                            </div>
-                            <div class="install-card-versions">
-                                <span class="version-badge">fc39</span>
-                                <span class="version-badge">fc40</span>
-                                <span class="version-badge">fc41</span>
-                                <span class="version-badge">fc42</span>
-                            </div>
-                        </div>
-                        <div class="install-card-body">
-                            <p class="supported">Fedora 39, 40, 41, 42 (x86_64)</p>
-                            <div class="code-block">
-                                <div class="code-header">
-                                    <span class="code-lang">bash</span>
-                                    <button class="code-copy" onclick="copyCode(this)">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-                                        Copy
-                                    </button>
-                                </div>
-                                <pre><code><span class="comment"># Add repository</span>
-sudo dnf config-manager --add-repo \
-  https://repo.sw.foundation/rpm/fc$(rpm -E %fedora)/sw.repo
-
-<span class="comment"># Install strongSwan SW</span>
-sudo dnf install <span class="cmd">strongswan-sw</span></code></pre>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="install-card plugin">
-                        <div class="install-card-header">
-                            <div class="install-card-title">
-                                <div class="icon">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M20 6H16V4C16 2.9 15.1 2 14 2H10C8.9 2 8 2.9 8 4V6H4C2.9 6 2 6.9 2 8V20C2 21.1 2.9 22 4 22H20C21.1 22 22 21.1 22 20V8C22 6.9 21.1 6 20 6Z"/></svg>
-                                </div>
-                                <h4>PostgreSQL Plugin</h4>
-                            </div>
-                            <div class="install-card-versions">
-                                <span class="version-badge">fc39</span>
-                                <span class="version-badge">fc40</span>
-                                <span class="version-badge">fc41</span>
-                                <span class="version-badge">fc42</span>
-                            </div>
-                        </div>
-                        <div class="install-card-body">
-                            <p class="supported">Requires strongswan-sw</p>
-                            <div class="code-block">
-                                <div class="code-header">
-                                    <span class="code-lang">bash</span>
-                                    <button class="code-copy" onclick="copyCode(this)">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-                                        Copy
-                                    </button>
-                                </div>
-                                <pre><code><span class="comment"># Install PostgreSQL Plugin</span>
-sudo dnf install <span class="cmd">strongswan-pgsql</span></code></pre>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="install-card plugin-green">
-                        <div class="install-card-header">
-                            <div class="install-card-title">
-                                <div class="icon">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93z"/></svg>
-                                </div>
-                                <h4>DHCP INFORM Plugin</h4>
-                            </div>
-                            <div class="install-card-versions">
-                                <span class="version-badge">fc39</span>
-                                <span class="version-badge">fc40</span>
-                                <span class="version-badge">fc41</span>
-                                <span class="version-badge">fc42</span>
-                            </div>
-                        </div>
-                        <div class="install-card-body">
-                            <p class="supported">Requires strongswan-pgsql</p>
-                            <div class="code-block">
-                                <div class="code-header">
-                                    <span class="code-lang">bash</span>
-                                    <button class="code-copy" onclick="copyCode(this)">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-                                        Copy
-                                    </button>
-                                </div>
-                                <pre><code><span class="comment"># Install DHCP INFORM Plugin</span>
-sudo dnf install <span class="cmd">strongswan-dhcp-inform</span></code></pre>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="distro-debian" class="distro-content">
-                <div class="install-grid">
-                    <div class="install-card main">
-                        <div class="install-card-header">
-                            <div class="install-card-title">
-                                <div class="icon">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
-                                </div>
-                                <h4>strongSwan SW</h4>
-                            </div>
-                            <div class="install-card-versions">
-                                <span class="version-badge">jammy</span>
-                                <span class="version-badge">noble</span>
-                                <span class="version-badge">bookworm</span>
-                            </div>
-                        </div>
-                        <div class="install-card-body">
-                            <p class="supported">Ubuntu 22.04 | Ubuntu 24.04 | Debian 12</p>
-                            <div class="code-block">
-                                <div class="code-header">
-                                    <span class="code-lang">bash</span>
-                                    <button class="code-copy" onclick="copyCode(this)">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-                                        Copy
-                                    </button>
-                                </div>
-                                <pre><code># Add GPG key
-curl -fsSL https://repo.sw.foundation/keys/sw.gpg \
-  | sudo gpg --dearmor -o /etc/apt/keyrings/sw.gpg
-
-# Add repository
-echo &quot;deb [signed-by=/etc/apt/keyrings/sw.gpg] \
-  https://repo.sw.foundation/deb $(lsb_release -cs) main&quot; \
-  | sudo tee /etc/apt/sources.list.d/sw.list
-
-sudo apt update
-
-<span class="comment"># Install strongSwan SW</span>
-sudo apt install <span class="cmd">strongswan-sw</span></code></pre>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="install-card plugin">
-                        <div class="install-card-header">
-                            <div class="install-card-title">
-                                <div class="icon">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M20 6H16V4C16 2.9 15.1 2 14 2H10C8.9 2 8 2.9 8 4V6H4C2.9 6 2 6.9 2 8V20C2 21.1 2.9 22 4 22H20C21.1 22 22 21.1 22 20V8C22 6.9 21.1 6 20 6Z"/></svg>
-                                </div>
-                                <h4>PostgreSQL Plugin</h4>
-                            </div>
-                            <div class="install-card-versions">
-                                <span class="version-badge">jammy</span>
-                                <span class="version-badge">noble</span>
-                                <span class="version-badge">bookworm</span>
-                            </div>
-                        </div>
-                        <div class="install-card-body">
-                            <p class="supported">Requires strongswan-sw</p>
-                            <div class="code-block">
-                                <div class="code-header">
-                                    <span class="code-lang">bash</span>
-                                    <button class="code-copy" onclick="copyCode(this)">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-                                        Copy
-                                    </button>
-                                </div>
-                                <pre><code><span class="comment"># Install PostgreSQL Plugin</span>
-sudo apt install <span class="cmd">strongswan-pgsql</span></code></pre>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="install-card plugin-green">
-                        <div class="install-card-header">
-                            <div class="install-card-title">
-                                <div class="icon">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93z"/></svg>
-                                </div>
-                                <h4>DHCP INFORM Plugin</h4>
-                            </div>
-                            <div class="install-card-versions">
-                                <span class="version-badge">jammy</span>
-                                <span class="version-badge">noble</span>
-                                <span class="version-badge">bookworm</span>
-                            </div>
-                        </div>
-                        <div class="install-card-body">
-                            <p class="supported">Requires strongswan-pgsql</p>
-                            <div class="code-block">
-                                <div class="code-header">
-                                    <span class="code-lang">bash</span>
-                                    <button class="code-copy" onclick="copyCode(this)">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-                                        Copy
-                                    </button>
-                                </div>
-                                <pre><code><span class="comment"># Install DHCP INFORM Plugin</span>
-sudo apt install <span class="cmd">strongswan-dhcp-inform</span></code></pre>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="callout">
-                <div class="callout-icon">&#128218;</div>
-                <div>
-                    <h4 class="callout-title">Documentation</h4>
-                    <p class="callout-text">
-                        See our <a href="/docs/">documentation</a> for setup guides and configuration.
-                    </p>
-                </div>
-            </div>
+            {{DOCS_CALLOUT}}
         </div>
     </section>
 
@@ -1191,22 +879,12 @@ sudo apt install <span class="cmd">strongswan-dhcp-inform</span></code></pre>
                         <li><a href="https://github.com/structured-world/repo">Source Code</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
-                    <h4>strongSwan SW</h4>
-                    <ul>
-                        <li><a href="https://github.com/structured-world/strongswan">strongSwan SW</a></li>
-                        <li><a href="https://github.com/structured-world/strongswan/issues">Issue Tracker</a></li>
-                        <li><a href="https://github.com/structured-world/strongswan/releases">Releases</a></li>
-                        <li><a href="https://www.strongswan.org/">Upstream</a></li>
-                    </ul>
-                </div>
+                {{FOOTER_PROJECTS}}
             </div>
 
             <div class="footer-legal">
                 <div class="legal-text">
-                    <p><strong>License (strongSwan SW):</strong> GPL-2.0-or-later</p>
-                    <p><strong>Trademark Notice:</strong> strongSwan is a registered trademark of Andreas Steffen and the strongSwan project. This is an independent distribution not affiliated with or endorsed by the strongSwan project.</p>
-                    <p><strong>Source Availability:</strong> Complete source code is available at github.com/structured-world/strongswan. (<a href="https://github.com/structured-world/strongswan">github.com/structured-world/strongswan</a>)</p>
+                    {{FOOTER_LEGAL}}
                     <p><strong>No Warranty:</strong> This software is provided "AS IS" without warranty of any kind. See the respective licenses for details.</p>
                 </div>
             </div>
@@ -1258,8 +936,8 @@ sudo apt install <span class="cmd">strongswan-dhcp-inform</span></code></pre>
         }
 
         // Package name → HTML element slug mapping, injected by build-docs.py.
-        const PACKAGE_SLUGS = {"strongswan-sw": "sw", "strongswan-pgsql": "pgsql", "strongswan-dhcp-inform": "dhcp-inform"};
-        const DEB_SOURCES = ["deb/dists/jammy/main/binary-amd64/Packages", "deb/dists/noble/main/binary-amd64/Packages", "deb/dists/bookworm/main/binary-amd64/Packages"];
+        const PACKAGE_SLUGS = {{PACKAGE_JS_DATA}};
+        const DEB_SOURCES = {{DEB_SOURCES}};
 
         // Fetch and display package info dynamically from Packages files
         async function loadPackageInfo() {

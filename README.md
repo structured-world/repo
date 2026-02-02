@@ -1,68 +1,49 @@
 # SW Foundation Package Repository
 
-Package repositories for Structured World Foundation software.
+Package repository for Structured World Foundation software. Hosts signed RPM and DEB packages for modern Linux distributions.
 
-## Available Packages
+**Site:** [repo.sw.foundation](https://repo.sw.foundation)
 
-| Package | Description | Documentation |
-|---------|-------------|---------------|
-| `libstrongswan-pgsql` (DEB) / `strongswan-pgsql` (RPM) | PostgreSQL database backend for strongSwan | [Guide](docs/pgsql-plugin.md) |
+## How It Works
+
+Source projects provide a `manifest.json` describing their packages, platforms, and documentation. CI uploads these as a `repo-meta-<project>` artifact; the publish workflow copies them into `packages/meta/<project>/` where `build-docs.py` discovers and renders them.
+
+```
+source-repo/                           repo (during publish)
+  packaging/                           packages/meta/<project>/
+    manifest.json  ──CI artifact──→      manifest.json
+    docs/                                docs/
+      setup-guide.md                       setup-guide.md
+```
+
+See [manifests/strongswan/manifest.json](manifests/strongswan/manifest.json) for an example (also used as committed fallback).
 
 ## Quick Install
 
-### Ubuntu / Debian
+### Fedora (RPM)
+
+```bash
+sudo dnf config-manager --add-repo \
+  https://repo.sw.foundation/rpm/fc$(rpm -E %fedora)/sw.repo
+
+sudo dnf install <package-name>
+```
+
+### Ubuntu / Debian (DEB)
 
 ```bash
 # Add GPG key
-curl -fsSL https://repo.sw.foundation/keys/sw.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/sw.gpg
+curl -fsSL https://repo.sw.foundation/keys/sw.gpg \
+  | sudo gpg --dearmor -o /etc/apt/keyrings/sw.gpg
 
 # Add repository
-echo "deb [signed-by=/etc/apt/keyrings/sw.gpg] https://repo.sw.foundation/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/sw.list
+echo "deb [signed-by=/etc/apt/keyrings/sw.gpg] \
+  https://repo.sw.foundation/deb $(lsb_release -cs) main" \
+  | sudo tee /etc/apt/sources.list.d/sw.list
 
-# Install
 sudo apt update
-sudo apt install libstrongswan-pgsql
+sudo apt install <package-name>
 ```
-
-**Supported:** Ubuntu 22.04 (jammy), Ubuntu 24.04 (noble)
-
-### Fedora
-
-```bash
-# Add repository
-sudo dnf config-manager --add-repo https://repo.sw.foundation/rpm/fc$(rpm -E %fedora)/sw.repo
-
-# Install
-sudo dnf install strongswan-pgsql
-```
-
-**Supported:** Fedora 40, 41, 42
-
-## After Installation
-
-### Configure PostgreSQL Plugin
-
-1. Enable the plugin in `/etc/strongswan.d/charon/pgsql.conf`:
-   ```
-   pgsql {
-       load = yes
-   }
-   ```
-
-2. Configure database connection in `/etc/strongswan.d/charon/sql.conf`:
-   ```
-   sql {
-       load = yes
-       database = postgresql://user:password@localhost/strongswan
-   }
-   ```
-
-3. Restart strongSwan:
-   ```bash
-   sudo systemctl restart strongswan
-   ```
-
-See [full documentation](docs/pgsql-plugin.md) for database setup and advanced configuration.
 
 ## GPG Key
 
@@ -75,14 +56,21 @@ All packages are signed with our GPG key.
 | Algorithm | Ed25519 |
 
 ```bash
-# Import manually
 curl -fsSL https://repo.sw.foundation/keys/sw.gpg | gpg --import
 ```
 
+## Adding a New Project
+
+1. Create `packaging/manifest.json` in your source repo (see [manifests/strongswan/manifest.json](manifests/strongswan/manifest.json) for the format)
+2. Add optional `packaging/docs/*.md` for documentation pages
+3. Upload `manifest.json` and `docs/` as a `repo-meta-<project>` artifact in your CI workflow (the artifact root should contain `manifest.json` directly, not a `packaging/` subdirectory)
+4. Add a new workflow input and download step in `publish.yml` for the project
+5. Trigger the publish workflow — `build-docs.py` auto-discovers all manifests in `packages/meta/*/`
+
 ## Links
 
-- [strongSwan fork](https://github.com/structured-world/strongswan) - Source code with pgsql plugin
 - [SW Foundation](https://sw.foundation)
+- [Repository Source](https://github.com/structured-world/repo)
 
 ## Maintainer
 

@@ -177,12 +177,18 @@ jobs:
           # so artifacts are already uploaded. Checking run completion would deadlock:
           # publish waits for strongswan run → strongswan release waits for publish.
           mkdir -p packages
-          # NOTE: We intentionally download artifacts from the strongswan workflow run,
-          # not from a release, to avoid a circular dependency (repo publish → strongswan release).
+          # NOTE: Each project requires its own workflow input + download step below.
+          # This is intentional — each source repo has different artifact patterns,
+          # run ID inputs, and validation needs.  build-docs.py auto-discovers all
+          # manifests in packages/meta/*/, so site generation is already agnostic;
+          # only the artifact download is per-project.
+          # We download from the workflow run (not a release) to avoid a circular
+          # dependency (repo publish → source release → repo publish).
           if ! gh run download "$RUN_ID" -R structured-world/strongswan -D packages \
             --pattern "deb-*" \
             --pattern "rpm-fc*" \
-            --pattern "srpm"; then
+            --pattern "srpm" \
+            --pattern "repo-meta-*"; then
             echo "Error: failed to download artifacts for run $RUN_ID" >&2
             exit 1
           fi
@@ -191,9 +197,9 @@ jobs:
             find packages -maxdepth 1 -type f -print >&2
             exit 1
           fi
-          if find packages -mindepth 1 -maxdepth 1 -type d ! -name 'deb-*' ! -name 'rpm-fc*' ! -name 'srpm' | grep -q .; then
+          if find packages -mindepth 1 -maxdepth 1 -type d ! -name 'deb-*' ! -name 'rpm-fc*' ! -name 'srpm' ! -name 'repo-meta-*' | grep -q .; then
             echo "Error: unexpected artifact directories found in packages/" >&2
-            find packages -mindepth 1 -maxdepth 1 -type d ! -name 'deb-*' ! -name 'rpm-fc*' ! -name 'srpm' -print >&2
+            find packages -mindepth 1 -maxdepth 1 -type d ! -name 'deb-*' ! -name 'rpm-fc*' ! -name 'srpm' ! -name 'repo-meta-*' -print >&2
             exit 1
           fi
           ls -la packages
@@ -205,9 +211,10 @@ jobs:
             echo "Error: no RPM/DEB artifacts found in packages/ for run $RUN_ID" >&2
             exit 1
           fi
-          if find packages -type f ! \( -name '*.rpm' -o -name '*.deb' \) | grep -q .; then
-            echo "Error: unexpected artifact types found in packages/ (only .rpm/.deb allowed)" >&2
-            find packages -type f ! \( -name '*.rpm' -o -name '*.deb' \) -print >&2
+          # repo-meta-* may contain .json and .md files; only validate package dirs.
+          if find packages -type f -not -path '*/repo-meta-*/*' ! \( -name '*.rpm' -o -name '*.deb' \) | grep -q .; then
+            echo "Error: unexpected artifact types found in packages/ (only .rpm/.deb allowed outside repo-meta)" >&2
+            find packages -type f -not -path '*/repo-meta-*/*' ! \( -name '*.rpm' -o -name '*.deb' \) -print >&2
             exit 1
           fi
           # Reject any symlinks to avoid path traversal from downloaded artifacts.
@@ -217,11 +224,21 @@ jobs:
             exit 1
           fi
 
-      - name: Build docs
+      - name: Prepare package metadata
         run: |
-          # Pinned until markdown v4 output (toc extension + toc_tokens shape) is validated against docs templates.
-          python3 -m pip install --user "markdown>=3.6,<4"
-          SITE_BASE_URL=https://repo.sw.foundation python3 scripts/build-docs.py
+          # Copy repo-meta-* artifacts into packages/meta/<project>/ for build-docs.py.
+          # Artifact contents are copied as-is; build-docs.py looks for manifest.json inside each dir.
+          # If no repo-meta artifacts exist, build-docs.py falls back to committed manifests/.
+          if ls -d packages/repo-meta-* 2>/dev/null | grep -q .; then
+            mkdir -p packages/meta
+            for meta_dir in packages/repo-meta-*; do
+              [ -d "$meta_dir" ] || continue
+              project="${meta_dir##*/repo-meta-}"
+              mkdir -p "packages/meta/$project"
+              cp -r "$meta_dir"/. "packages/meta/$project/"
+              echo "Prepared metadata for project: $project"
+            done
+          fi
 
       - name: Update package repositories
         env:
@@ -242,6 +259,12 @@ jobs:
             # deb-*/rpm-fc* need flattening because each matrix job creates a separate artifact.
           fi
           scripts/update-repos.sh
+
+      - name: Build docs
+        run: |
+          # Pinned until markdown v4 output (toc extension + toc_tokens shape) is validated against docs templates.
+          python3 -m pip install --user "markdown>=3.6,<4"
+          SITE_BASE_URL=https://repo.sw.foundation python3 scripts/build-docs.py
 
       - name: Cleanup downloaded packages
         run: |
@@ -286,6 +309,9 @@ jobs:
           fi
           if [ -f robots.txt ]; then
             git add robots.txt
+          fi
+          if [ -f index.html ]; then
+            git add index.html
           fi
           git status
 
