@@ -687,28 +687,34 @@ def generate_docs(manifests):
     pages = []
     seen_slugs = {}  # slug -> project id, detect cross-project collisions
 
+    errors = 0
+
     for m in manifests:
         meta_dir = Path(m.get("_meta_dir", ""))
         docs_dir = meta_dir / "docs"
 
         for doc_entry in m.get("docs", []):
-            slug = doc_entry["slug"]
+            slug = doc_entry.get("slug", "")
+            project_id = m.get("project", {}).get("id", "?")
+
             if not re.fullmatch(r"[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", slug):
                 print(
-                    f"Error: invalid doc slug '{slug}' "
+                    f"Warning: skipping invalid doc slug '{slug}' in {project_id} "
                     f"(must use lowercase letters, digits, and hyphens, and start/end with a letter or digit)",
                     file=sys.stderr,
                 )
-                raise SystemExit(1)
-            project_id = m.get("project", {}).get("id", "?")
+                errors += 1
+                continue
             if slug in seen_slugs:
-                print(f"Error: duplicate doc slug '{slug}' (first: {seen_slugs[slug]}, duplicate: {project_id})", file=sys.stderr)
-                raise SystemExit(1)
+                print(f"Warning: skipping duplicate doc slug '{slug}' (first: {seen_slugs[slug]}, duplicate: {project_id})", file=sys.stderr)
+                errors += 1
+                continue
             title_override = doc_entry.get("title", "")
             md_file = doc_entry.get("file", f"{slug}.md")
             if "/" in md_file or "\\" in md_file or md_file.startswith("."):
-                print(f"Error: invalid doc file path '{md_file}' (no path separators or leading dots)", file=sys.stderr)
-                raise SystemExit(1)
+                print(f"Warning: skipping doc '{slug}' — invalid file path '{md_file}' (no path separators or leading dots)", file=sys.stderr)
+                errors += 1
+                continue
             md_path = docs_dir / md_file
 
             if not md_path.exists():
@@ -716,6 +722,7 @@ def generate_docs(manifests):
                 md_path = DOCS_DIR / f"{slug}.md"
             if not md_path.exists():
                 print(f"Warning: doc file not found: {md_path} (slug: {slug})", file=sys.stderr)
+                errors += 1
                 continue
 
             try:
@@ -732,8 +739,9 @@ def generate_docs(manifests):
                     title = slug.replace("-", " ").title()
                 description = f"{title} documentation for SW Foundation."
             except Exception as exc:
-                print(f"Error: failed to render {md_path.name}: {exc}", file=sys.stderr)
-                raise SystemExit(1) from exc
+                print(f"Warning: skipping doc '{slug}' — failed to render {md_path.name}: {exc}", file=sys.stderr)
+                errors += 1
+                continue
 
             out_dir = DOCS_DIR / slug
             out_dir.mkdir(parents=True, exist_ok=True)
@@ -743,9 +751,15 @@ def generate_docs(manifests):
             page_html = doc_template
             # Only check title/description/canonical for template markers (not html_body,
             # which may legitimately contain {{ in code samples or templating docs).
+            marker_found = False
             for value in (title, description, canonical):
                 if "{{" in value or "}}" in value:
-                    raise SystemExit(f"Template marker found in replacement value from {md_path.name}")
+                    print(f"Warning: skipping doc '{slug}' — template marker found in replacement value from {md_path.name}", file=sys.stderr)
+                    marker_found = True
+                    errors += 1
+                    break
+            if marker_found:
+                continue
             page_html = page_html.replace("{{TITLE}}", escape(title))
             page_html = page_html.replace("{{DESCRIPTION}}", escape(description))
             page_html = page_html.replace("{{CANONICAL}}", escape(canonical))
@@ -762,6 +776,9 @@ def generate_docs(manifests):
                 "lastmod": lastmod_dt.strftime("%Y-%m-%d"),
                 "lastmod_dt": lastmod_dt,
             })
+
+    if errors:
+        print(f"Warning: {errors} doc(s) skipped due to errors (see above)", file=sys.stderr)
 
     # Remove stale doc directories that are no longer in any manifest.
     # This prevents previously published docs from lingering after removal/rename.
