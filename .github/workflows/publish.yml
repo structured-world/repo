@@ -270,6 +270,13 @@ jobs:
           fi
           echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
 
+      - name: Validate source run IDs
+        run: |
+          if [ -z "${{ steps.runid.outputs.run_id }}" ] && [ -z "${{ steps.coordinode-runid.outputs.run_id }}" ]; then
+            echo "Error: no source workflow run id was resolved — provide strongswan_run_id or coordinode_run_id" >&2
+            exit 1
+          fi
+
       - name: Download coordinode artifacts
         if: steps.coordinode-runid.outputs.run_id != ''
         env:
@@ -300,6 +307,19 @@ jobs:
           if find packages -type l | grep -q .; then
             echo "Error: unexpected symlinks found in packages/; refusing to proceed" >&2
             find packages -type l -print >&2
+            exit 1
+          fi
+          # Verify at least one coordinode .deb or .rpm was downloaded.
+          if ! find packages -type f \( -name 'coordinode*.deb' -o -name 'coordinode*.rpm' \) | grep -q .; then
+            echo "Error: no coordinode RPM/DEB artifacts found in packages/ for run $RUN_ID" >&2
+            exit 1
+          fi
+          # Reject unexpected file types (only .rpm/.deb allowed outside repo-meta).
+          if find packages -type f -not -path '*/repo-meta-coordinode/*' \
+              ! \( -name '*.rpm' -o -name '*.deb' \) | grep -q .; then
+            echo "Error: unexpected artifact types found in packages/ (only .rpm/.deb allowed outside repo-meta)" >&2
+            find packages -type f -not -path '*/repo-meta-coordinode/*' \
+              ! \( -name '*.rpm' -o -name '*.deb' \) -print >&2
             exit 1
           fi
           ls -la packages
