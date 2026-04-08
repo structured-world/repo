@@ -1,15 +1,19 @@
 name: Publish Repo
-run-name: "Publish Repo (strongswan ${{ inputs.strongswan_run_id || github.event.client_payload.strongswan_run_id }})"
+run-name: "Publish Repo (strongswan ${{ inputs.strongswan_run_id || github.event.client_payload.strongswan_run_id }} coordinode ${{ inputs.coordinode_run_id || github.event.client_payload.coordinode_run_id }})"
 
 on:
   workflow_dispatch:
     inputs:
       strongswan_run_id:
         description: 'strongswan build-packages run id'
-        required: true
+        required: false
+        type: string
+      coordinode_run_id:
+        description: 'coordinode release run id'
+        required: false
         type: string
   repository_dispatch:
-    types: [publish-from-strongswan]
+    types: [publish-from-strongswan, publish-from-coordinode]
 
 permissions:
   contents: write
@@ -123,11 +127,16 @@ jobs:
           if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
             sender=$(jq -r '.sender.login // ""' "$GITHUB_EVENT_PATH")
             action=$(jq -r '.action // ""' "$GITHUB_EVENT_PATH")
-            source_repo=$(jq -r '.client_payload.strongswan_repo // ""' "$GITHUB_EVENT_PATH")
             if [ "$sender" != "sw-release-bot[bot]" ]; then
               echo "Error: unauthorized repository_dispatch sender '$sender'" >&2
               exit 1
             fi
+            if [ "$action" = "publish-from-coordinode" ]; then
+              # This dispatch is for coordinode only; no strongswan run to process.
+              echo "run_id=" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            source_repo=$(jq -r '.client_payload.strongswan_repo // ""' "$GITHUB_EVENT_PATH")
             if [ "$action" != "publish-from-strongswan" ]; then
               echo "Error: unexpected repository_dispatch action '$action'" >&2
               exit 1
@@ -142,8 +151,9 @@ jobs:
           elif [ -n "${{ inputs.strongswan_run_id }}" ]; then
             run_id="${{ inputs.strongswan_run_id }}"
           else
-            echo "Error: strongswan_run_id was not provided" >&2
-            exit 1
+            # No strongswan run id provided — OK if this is a coordinode-only dispatch.
+            echo "run_id=" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
           if [ -z "$run_id" ]; then
             echo "Error: resolved strongswan_run_id is empty" >&2
@@ -156,6 +166,7 @@ jobs:
           echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
 
       - name: Download strongswan artifacts
+        if: steps.runid.outputs.run_id != ''
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
@@ -223,6 +234,75 @@ jobs:
             find packages -type l -print >&2
             exit 1
           fi
+
+      - name: Resolve coordinode run id
+        id: coordinode-runid
+        run: |
+          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            action=$(jq -r '.action // ""' "$GITHUB_EVENT_PATH")
+            if [ "$action" = "publish-from-strongswan" ]; then
+              # This dispatch is for strongswan only; no coordinode run to process.
+              echo "run_id=" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            source_repo=$(jq -r '.client_payload.coordinode_repo // ""' "$GITHUB_EVENT_PATH")
+            if [ "$source_repo" != "structured-world/coordinode" ]; then
+              echo "Error: unexpected coordinode_repo '$source_repo'" >&2
+              exit 1
+            fi
+          fi
+          if [ -n "${{ github.event.client_payload.coordinode_run_id }}" ]; then
+            run_id="${{ github.event.client_payload.coordinode_run_id }}"
+          elif [ -n "${{ inputs.coordinode_run_id }}" ]; then
+            run_id="${{ inputs.coordinode_run_id }}"
+          else
+            # No coordinode run id provided — OK if this is a strongswan-only dispatch.
+            echo "run_id=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [ -z "$run_id" ]; then
+            echo "Error: resolved coordinode_run_id is empty" >&2
+            exit 1
+          fi
+          if ! echo "$run_id" | grep -Eq '^[0-9]+$'; then
+            echo "Error: resolved coordinode_run_id must be numeric, got '$run_id'" >&2
+            exit 1
+          fi
+          echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
+
+      - name: Download coordinode artifacts
+        if: steps.coordinode-runid.outputs.run_id != ''
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          RUN_ID="${{ steps.coordinode-runid.outputs.run_id }}"
+          REPO="structured-world/coordinode"
+          echo "Verifying workflow run $RUN_ID in $REPO..."
+          if ! run_json=$(gh run view "$RUN_ID" -R "$REPO" --json status,headBranch,event,workflowName,createdAt,updatedAt); then
+            echo "Error: unable to view run $RUN_ID in $REPO." >&2
+            exit 1
+          fi
+          jq -r '. as $r | "Status: \($r.status)\nBranch: \($r.headBranch)\nEvent: \($r.event)\nWorkflow: \($r.workflowName)\nCreated: \($r.createdAt)\nUpdated: \($r.updatedAt)"' <<< "$run_json"
+          run_workflow=$(jq -r '.workflowName // ""' <<< "$run_json")
+          if [ "$run_workflow" != "Release" ]; then
+            echo "Error: run $RUN_ID is not from expected workflow (Release), got '$run_workflow'" >&2
+            exit 1
+          fi
+          mkdir -p packages
+          if ! gh run download "$RUN_ID" -R "$REPO" -D packages \
+            --pattern "deb-*" \
+            --pattern "rpm-fc*" \
+            --pattern "repo-meta-coordinode"; then
+            echo "Error: failed to download artifacts for run $RUN_ID" >&2
+            exit 1
+          fi
+          # Reject any symlinks to avoid path traversal from downloaded artifacts.
+          if find packages -type l | grep -q .; then
+            echo "Error: unexpected symlinks found in packages/; refusing to proceed" >&2
+            find packages -type l -print >&2
+            exit 1
+          fi
+          ls -la packages
 
       - name: Prepare package metadata
         run: |
@@ -318,7 +398,10 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "Publish packages from run ${{ steps.runid.outputs.run_id }}"
+            msg="Publish packages"
+            [ -n "${{ steps.runid.outputs.run_id }}" ] && msg="$msg (strongswan ${{ steps.runid.outputs.run_id }})"
+            [ -n "${{ steps.coordinode-runid.outputs.run_id }}" ] && msg="$msg (coordinode ${{ steps.coordinode-runid.outputs.run_id }})"
+            git commit -m "$msg"
             if ! git push; then
               echo "Error: git push failed; manual retry required" >&2
               exit 1
