@@ -314,11 +314,11 @@ jobs:
             echo "Error: no coordinode RPM/DEB artifacts found in packages/ for run $RUN_ID" >&2
             exit 1
           fi
-          # Reject unexpected file types (only .rpm/.deb allowed outside repo-meta).
-          if find packages -type f -not -path '*/repo-meta-coordinode/*' \
+          # Reject unexpected file types (only .rpm/.deb allowed outside repo-meta-*).
+          if find packages -type f -not -path '*/repo-meta-*/*' \
               ! \( -name '*.rpm' -o -name '*.deb' \) | grep -q .; then
             echo "Error: unexpected artifact types found in packages/ (only .rpm/.deb allowed outside repo-meta)" >&2
-            find packages -type f -not -path '*/repo-meta-coordinode/*' \
+            find packages -type f -not -path '*/repo-meta-*/*' \
               ! \( -name '*.rpm' -o -name '*.deb' \) -print >&2
             exit 1
           fi

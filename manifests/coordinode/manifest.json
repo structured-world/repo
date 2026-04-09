@@ -29,7 +29,7 @@
           "arch": "x86_64"
         }
       ],
-      "repoSetup": "sudo curl -fsSL https://repo.sw.foundation/rpm/fc$(rpm -E %fedora)/sw.repo -o /etc/yum.repos.d/sw.repo",
+      "repoSetup": "sudo dnf config-manager --add-repo \\\n  https://repo.sw.foundation/rpm/fc$(rpm -E %fedora)/sw.repo",
       "installCmd": "sudo dnf install"
     },
     "deb": {
@@ -47,8 +47,8 @@
           "versions": ["12"]
         }
       ],
-      "repoSetup": "curl -fsSL https://repo.sw.foundation/keys/sw.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/sw.gpg\necho \"deb [signed-by=/etc/apt/keyrings/sw.gpg] https://repo.sw.foundation/deb $(lsb_release -cs) main\" | sudo tee /etc/apt/sources.list.d/sw.list\nsudo apt-get update",
-      "installCmd": "sudo apt-get install"
+      "repoSetup": "# Add GPG key\ncurl -fsSL https://repo.sw.foundation/keys/sw.gpg \\\n  | sudo gpg --dearmor -o /etc/apt/keyrings/sw.gpg\n\n# Add repository\necho \"deb [signed-by=/etc/apt/keyrings/sw.gpg] \\\n  https://repo.sw.foundation/deb $(lsb_release -cs) main\" \\\n  | sudo tee /etc/apt/sources.list.d/sw.list\n\nsudo apt update",
+      "installCmd": "sudo apt install"
     }
   },
   "docs": []
