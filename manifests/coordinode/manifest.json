@@ -14,8 +14,7 @@
       "summary": "Unified database for AI-native applications",
       "category": "main",
       "icon": "database",
-      "requires": null,
-      "docs": null
+      "requires": null
     }
   ],
   "platforms": {
