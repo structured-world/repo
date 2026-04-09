@@ -176,7 +176,7 @@ jobs:
           REPO="structured-world/strongswan"
           echo "Verifying workflow run $RUN_ID in $REPO..."
           if ! run_json=$(gh run view "$RUN_ID" -R "$REPO" --json status,headBranch,event,workflowName,createdAt,updatedAt); then
-            echo "Error: unable to view run $RUN_ID in $REPO. The run may not exist, or there may be authentication or network connectivity issues." >&2
+            echo "Error: unable to view run $RUN_ID in $REPO. Verify that the run exists, that GH_TOKEN has permission to read workflow runs/artifacts in $REPO, and that there is no GitHub API or network issue." >&2
             exit 1
           fi
           jq -r '. as $r | "Status: \($r.status)\nBranch: \($r.headBranch)\nEvent: \($r.event)\nWorkflow: \($r.workflowName)\nCreated: \($r.createdAt)\nUpdated: \($r.updatedAt)"' <<< "$run_json"
@@ -288,7 +288,7 @@ jobs:
           REPO="structured-world/coordinode"
           echo "Verifying workflow run $RUN_ID in $REPO..."
           if ! run_json=$(gh run view "$RUN_ID" -R "$REPO" --json status,headBranch,event,workflowName,createdAt,updatedAt); then
-            echo "Error: unable to view run $RUN_ID in $REPO." >&2
+            echo "Error: unable to view run $RUN_ID in $REPO. Verify that the run exists, that GH_TOKEN has permission to read workflow runs/artifacts in $REPO, and that there is no GitHub API or network issue." >&2
             exit 1
           fi
           jq -r '. as $r | "Status: \($r.status)\nBranch: \($r.headBranch)\nEvent: \($r.event)\nWorkflow: \($r.workflowName)\nCreated: \($r.createdAt)\nUpdated: \($r.updatedAt)"' <<< "$run_json"
