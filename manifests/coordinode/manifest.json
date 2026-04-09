@@ -1,0 +1,55 @@
+{
+  "project": {
+    "id": "coordinode",
+    "name": "CoordiNode",
+    "description": "Unified database for AI-native applications. Graph + Vector + Full-Text + Document + Time-Series in one engine, one query language (OpenCypher), one transaction.",
+    "homepage": "https://github.com/structured-world/coordinode",
+    "license": "AGPL-3.0-only",
+    "upstream": "https://github.com/structured-world/coordinode"
+  },
+  "packages": [
+    {
+      "name": "coordinode",
+      "displayName": "CoordiNode",
+      "summary": "Unified database for AI-native applications",
+      "category": "main",
+      "icon": "database",
+      "requires": null,
+      "docs": null
+    }
+  ],
+  "platforms": {
+    "rpm": {
+      "distros": [
+        {
+          "id": "fedora",
+          "name": "Fedora",
+          "versions": ["41", "42", "43"],
+          "prefix": "fc",
+          "arch": "x86_64"
+        }
+      ],
+      "repoSetup": "sudo dnf config-manager --add-repo \\\n  https://repo.sw.foundation/rpm/fc$(rpm -E %fedora)/sw.repo",
+      "installCmd": "sudo dnf install"
+    },
+    "deb": {
+      "distros": [
+        {
+          "id": "ubuntu",
+          "name": "Ubuntu",
+          "codenames": ["noble", "jammy"],
+          "versions": ["24.04", "22.04"]
+        },
+        {
+          "id": "debian",
+          "name": "Debian",
+          "codenames": ["bookworm"],
+          "versions": ["12"]
+        }
+      ],
+      "repoSetup": "# Add GPG key\ncurl -fsSL https://repo.sw.foundation/keys/sw.gpg \\\n  | sudo gpg --dearmor -o /etc/apt/keyrings/sw.gpg\n\n# Add repository\necho \"deb [signed-by=/etc/apt/keyrings/sw.gpg] \\\n  https://repo.sw.foundation/deb $(lsb_release -cs) main\" \\\n  | sudo tee /etc/apt/sources.list.d/sw.list\n\nsudo apt update",
+      "installCmd": "sudo apt install"
+    }
+  },
+  "docs": []
+}
