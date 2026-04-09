@@ -19,8 +19,10 @@ permissions:
   contents: write
 
 concurrency:
-  group: publish-${{ github.ref }}-${{ inputs.strongswan_run_id || github.event.client_payload.strongswan_run_id || github.run_id }}
-  # Publishing mutates repository state; avoid canceling mid-run.
+  # All publishes to the same branch are serialized regardless of source project.
+  # A per-run-id group would allow overlapping coordinode/strongswan runs that both
+  # mutate and push the repo, increasing push/rebase failure risk.
+  group: publish-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -309,6 +311,18 @@ jobs:
             find packages -type l -print >&2
             exit 1
           fi
+          if find packages -maxdepth 1 -type f | grep -q .; then
+            echo "Error: unexpected files found at packages/ root; refusing to proceed" >&2
+            find packages -maxdepth 1 -type f -print >&2
+            exit 1
+          fi
+          if find packages -mindepth 1 -maxdepth 1 -type d \
+              ! -name 'deb-*' ! -name 'rpm-fc*' ! -name 'repo-meta-*' | grep -q .; then
+            echo "Error: unexpected artifact directories found in packages/" >&2
+            find packages -mindepth 1 -maxdepth 1 -type d \
+              ! -name 'deb-*' ! -name 'rpm-fc*' ! -name 'repo-meta-*' -print >&2
+            exit 1
+          fi
           # Verify at least one coordinode .deb or .rpm was downloaded.
           if ! find packages -type f \( -name 'coordinode*.deb' -o -name 'coordinode*.rpm' \) | grep -q .; then
             echo "Error: no coordinode RPM/DEB artifacts found in packages/ for run $RUN_ID" >&2
@@ -328,7 +342,6 @@ jobs:
         run: |
           # Copy repo-meta-* artifacts into packages/meta/<project>/ for build-docs.py.
           # Artifact contents are copied as-is; build-docs.py looks for manifest.json inside each dir.
-          # If no repo-meta artifacts exist, build-docs.py falls back to committed manifests/.
           if ls -d packages/repo-meta-* 2>/dev/null | grep -q .; then
             mkdir -p packages/meta
             for meta_dir in packages/repo-meta-*; do
@@ -337,6 +350,21 @@ jobs:
               mkdir -p "packages/meta/$project"
               cp -r "$meta_dir"/. "packages/meta/$project/"
               echo "Prepared metadata for project: $project"
+            done
+          fi
+          # Backfill any project not covered by downloaded artifacts from committed manifests/.
+          # build-docs.py uses packages/meta when non-empty, ignoring manifests/ entirely.
+          # Without backfill, a single-project publish would drop the other project's docs.
+          if [ -d packages/meta ]; then
+            for committed_dir in manifests/*/; do
+              [ -d "$committed_dir" ] || continue
+              project="${committed_dir%/}"
+              project="${project##*/}"
+              if [ ! -d "packages/meta/$project" ]; then
+                mkdir -p "packages/meta/$project"
+                cp -r "$committed_dir". "packages/meta/$project/"
+                echo "Backfilled manifest for project: $project (from committed manifests/)"
+              fi
             done
           fi
 
