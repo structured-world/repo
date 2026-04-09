@@ -317,10 +317,10 @@ jobs:
             exit 1
           fi
           if find packages -mindepth 1 -maxdepth 1 -type d \
-              ! -name 'deb-*' ! -name 'rpm-fc*' ! -name 'repo-meta-*' | grep -q .; then
+              ! -name 'deb-*' ! -name 'rpm-fc*' ! -name 'srpm' ! -name 'repo-meta-*' | grep -q .; then
             echo "Error: unexpected artifact directories found in packages/" >&2
             find packages -mindepth 1 -maxdepth 1 -type d \
-              ! -name 'deb-*' ! -name 'rpm-fc*' ! -name 'repo-meta-*' -print >&2
+              ! -name 'deb-*' ! -name 'rpm-fc*' ! -name 'srpm' ! -name 'repo-meta-*' -print >&2
             exit 1
           fi
           # Verify at least one coordinode .deb or .rpm was downloaded.
@@ -360,9 +360,9 @@ jobs:
               [ -d "$committed_dir" ] || continue
               project="${committed_dir%/}"
               project="${project##*/}"
-              if [ ! -d "packages/meta/$project" ]; then
+              if [ ! -f "packages/meta/$project/manifest.json" ]; then
                 mkdir -p "packages/meta/$project"
-                cp -r "$committed_dir". "packages/meta/$project/"
+                cp -rn "$committed_dir". "packages/meta/$project/"
                 echo "Backfilled manifest for project: $project (from committed manifests/)"
               fi
             done
