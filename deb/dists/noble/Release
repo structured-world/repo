@@ -5,20 +5,20 @@ Codename: noble
 Architectures: amd64
 Components: main
 Description: SW Foundation Package Repository
-Date: Thu, 09 Apr 2026 20:11:16 +0000
+Date: Sat, 11 Apr 2026 18:05:02 +0000
 MD5Sum:
- 75f07ab93234e3e72b2c620424488e41              194 Release
- 955f54cfbba633f6322b963c1def5fd4            71706 main/binary-amd64/Packages
- 05d81f63035c976add65856f397b408c            14661 main/binary-amd64/Packages.gz
+ 199b7f48e51b1f283a7a394a7c0a3bdd              194 Release
+ c278f8fe205854afd3077217fa3f4df5            73352 main/binary-amd64/Packages
+ c9fcc65c0966bc66c8aafc29f3c1498e            15041 main/binary-amd64/Packages.gz
 SHA1:
- f756371dc674693ea385cb1b874a8261bea45710              194 Release
- 23548c79397e75bed6ccd77ab65547fee3bec7f2            71706 main/binary-amd64/Packages
- d6e3ce42dbeef5437cbdf71f07b521a7ecfa9a6b            14661 main/binary-amd64/Packages.gz
+ 7ac9bf6468d92dec5a78b6fd23ddc6b41da19ec0              194 Release
+ 90e5ef93096ebbbe5a4e0abefdc099f3092bf6a1            73352 main/binary-amd64/Packages
+ 720adf9a53fed357c40c202302bc30309e68aa01            15041 main/binary-amd64/Packages.gz
 SHA256:
- e72ded2ffe9d4d4727cd7e1498f27a680872540d18d0eb3e9dea8aac7a0e2bc9              194 Release
- 1c7dcc9b0e116b3d71d4c36235edf4b5fa1b3c32657736ba8b6b118144b918f4            71706 main/binary-amd64/Packages
- 75e5edfff466622289d30794fc510360479c3136852018e8d739d632cfceb9ec            14661 main/binary-amd64/Packages.gz
+ 7d4e00e67b12e28bc8ed6bf88058d72de74716ce28db9c2cc42d951cf9edb920              194 Release
+ 2702372a05aa2a76805c3705eac8aae8302bb732e594bfd915350b31f8bc0f41            73352 main/binary-amd64/Packages
+ 1f16a67a48dbaea3b0a06db78bca9cde8192ad5537182b42e50ad8d58e2d6863            15041 main/binary-amd64/Packages.gz
 SHA512:
- 4f52eef018e36b26c37b07f14fff7c65808bba70ea6dfd284449015502133f9c32522f4e64860905e7a17c89beed164cf8a64b39c6e3ba1a6a1fa83140e2bd50              194 Release
- b88fe1b773b6dc0c8d96cb3e6abb6ea65e860565d02cdd35847f9a21fa5adfcea0d01bd6628660669e227f775b4dc620e1c9ac749a7c734f769d6149789401c2            71706 main/binary-amd64/Packages
- e429780afb0a61f086c6962bbdcab55ea52a635bd0b57ada430d8f8a89d7e4b1b5190a35aff96a283f5c0e0cf023b25d0b25ceb90a9550e4f6ba5051c58029bc            14661 main/binary-amd64/Packages.gz
+ f8b5e94e3590c6946d5543fd898b50244b39a69d8e271189baa922077282609b0ffa15d7c97399d08e291f09f39cef352d37102b2f001b7b4d4122da0d9dafa5              194 Release
+ e665ef5a9a2defc5d16f56e4b2ef18c845fe33baccb45cef5b406eb82f880c6ee9ba986fd478ec5c5fdcee443162deb838e99801ee9eb32b7960a3fed3efca22            73352 main/binary-amd64/Packages
+ 846db04683a376a5d569647f8d550abb1c435b723db8d3c7d9d42faf1e5f2c208fa0bab63b650e0bdd8eb132d61ae1ce93d3b161e9ed7ea415fa1c8c6e27dce2            15041 main/binary-amd64/Packages.gz
