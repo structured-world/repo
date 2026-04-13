@@ -264,6 +264,44 @@ Description: CoordiNode — unified database for AI-native applications.
  one query language (OpenCypher), one transaction.
 License: AGPL-3.0-only
 
+Package: coordinode
+Architecture: amd64
+Version: 0.3.6
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 13341
+Filename: deb/pool/main/c/coordinode/coordinode_0.3.6_amd64.deb
+Size: 5523060
+MD5sum: a9b8c027669c8a8f533e40f948c81be8
+SHA1: 4caf99ff9be8a06cb393ff0f8b5cd33d51bfeddb
+SHA256: 651fc530408e48d6c9089c2d5c2a42f82a6738b9c95343930fe8206cfb52ddcb
+SHA512: 3165ec88b03b4adc3db8dd8ef2caff7706617967a3d2312a835de1a1fb9b13fb3bace5676e83c17092a8a5809ea0be1f2a38c0051dfe064f3626ec6abcb539e9
+Homepage: https://github.com/structured-world/coordinode
+Description: CoordiNode — unified database for AI-native applications.
+ Graph + Vector + Full-Text + Document + Time-Series in one engine,
+ one query language (OpenCypher), one transaction.
+License: AGPL-3.0-only
+
+Package: coordinode
+Architecture: arm64
+Version: 0.3.6
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 10968
+Filename: deb/pool/main/c/coordinode/coordinode_0.3.6_arm64.deb
+Size: 5194378
+MD5sum: 2080f540cf0e68f26f4dceded405eba7
+SHA1: 4f375746b6cf1b3d99227a66cd4e9fdc00bc957e
+SHA256: e58684abbe8d794b827808cb3f0173cd1a0d8336789150e30fab4b5483f7fb31
+SHA512: fcfaae360776afcd64c81d2b8db14eb178b5b53a8660bb0657f2db277424ccbfaeb36509d844d0e1722fae12ae462f22cb48615ea440ca3be3a56e1074a625cf
+Homepage: https://github.com/structured-world/coordinode
+Description: CoordiNode — unified database for AI-native applications.
+ Graph + Vector + Full-Text + Document + Time-Series in one engine,
+ one query language (OpenCypher), one transaction.
+License: AGPL-3.0-only
+
 Package: strongswan-dhcp-inform
 Architecture: amd64
 Version: 6.0.4-sw.10
