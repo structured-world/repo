@@ -8,27 +8,27 @@ Codename: bookworm
 Architectures: amd64
 Components: main
 Description: SW Foundation Package Repository
-Date: Tue, 14 Apr 2026 15:23:50 +0000
+Date: Tue, 14 Apr 2026 17:22:49 +0000
 MD5Sum:
- a43f38e1650febbc34be876f21573ec5              200 Release
- a5fed179fb23142f1213ba3e4b21621a            91470 main/binary-amd64/Packages
- b86eedc2f7883a5183e4de4fa5078579            19235 main/binary-amd64/Packages.gz
+ 8c5e97ce6354e31f8a607c7681e97a5f              200 Release
+ 4b3d5eab2e08339a10358166540c60f9            93120 main/binary-amd64/Packages
+ 5d532842f3cac1a3e61daa6dd4c91af8            19623 main/binary-amd64/Packages.gz
 SHA1:
- 0f190a555bc68628bd54c5244f3c7c7724badc0d              200 Release
- fec3a172edaa5ff0e4dd347930098816bade6678            91470 main/binary-amd64/Packages
- b2b003670a2362087db27f8177e351b6437dc1f4            19235 main/binary-amd64/Packages.gz
+ f2dbbd07a0c9aa3aed1a913c77446f02128c408b              200 Release
+ a6768387d59fe9df6db839fd9b23a9ff12757534            93120 main/binary-amd64/Packages
+ 6533a06b59755f4deadaf2dfb9d58dbe47256706            19623 main/binary-amd64/Packages.gz
 SHA256:
- fec66391a0388da887ec7549eb7b0a7e191628f0ee47f5efd3077ffcd0a9d616              200 Release
- 00f05797364eba2d95b5ba36b8bde926f43bb469f7e35fe0fabe24f75aff947d            91470 main/binary-amd64/Packages
- 973818174a3e01f6e4f025c3d1d3fb3a8d9b01313703dce460c5f5814e9c1a25            19235 main/binary-amd64/Packages.gz
+ 5113027ff20491ab349379b36d881602181eb8fdfa0f7e49103c56832a058e0f              200 Release
+ 357c60edc32b645a55926829dff24e1c61fe7d3ac4a16bf28cbffaa5ae00b3e8            93120 main/binary-amd64/Packages
+ af462aec15ffcdd1ebcd064b3a98caccbe48dfe4989614c256508a3c9a3cd64c            19623 main/binary-amd64/Packages.gz
 SHA512:
- 49f10b715d12159cdfc9b1a875364c0db4e9a7c8877388b11dbc163449aa5643375e3c12226d5a112701ee44c271e6cac43f0f324ee78586a85314ae00ffd1c2              200 Release
- 7746890cf968b64f00c216035c918288054e9942b91d1310e828c24ef9af11a6ed501110b8dec1c9dabc90cd66a9adab7013bfc9104327f42c9e267f9647bc73            91470 main/binary-amd64/Packages
- e540de612fbd5636c9092316f24c5221d1263119528a9c64c097771209eff2ae9bafccb779b7bc9a9efd7c4eb95f4106e240ccf007b06473f639b06132fb5cdd            19235 main/binary-amd64/Packages.gz
+ dc85fac84dbccacbaef38f74e152d867368c3b246ca62c892ed13bf0e2682bb1398ae2138c77aa3e5c0ea7b9dc2eac168cb8337b96e494a8aa173266dc22ff18              200 Release
+ 50dfcd019d866fc90caa8ec983f971a16220351bdc199db08281506764243e12d19ba55b02e7d71f89a14cdcf42fcbb07cc94151d8d822cf390c3578c9267f98            93120 main/binary-amd64/Packages
+ 798abbf50980aa96989ab1494c7370e6b1ac5ef7066da0c1d08cf6b7ef30276069115815403081a8180ebddd15a829d4c176eee1c12570c6e373ccbf8624e9ec            19623 main/binary-amd64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iHUEARYKAB0WIQTR7IhZ5NIvA98/BBz5BTMHetsLWgUCad5cBgAKCRD5BTMHetsL
-WpJvAQCeto7xU93och3QplUk1LFB1/cs9ppzAcaD5Mr+ge0xvgEAq1pKkoHzRGzw
-d/e6j3P9OLZUwCRXcRDqZdFbtVvvQQU=
-=qDyB
+iHUEARYKAB0WIQTR7IhZ5NIvA98/BBz5BTMHetsLWgUCad536QAKCRD5BTMHetsL
+WoY7APwPRIAfiVyk/wjbQbIOEAt+At3EG+kY7Gt1PfaR/ChorAD7BRlSOvjUyhYN
+FCAJvfAjTgy4pdOATSMo9ged/tb9Qw0=
+=pYJu
 -----END PGP SIGNATURE-----
