@@ -8,27 +8,27 @@ Codename: noble
 Architectures: amd64
 Components: main
 Description: SW Foundation Package Repository
-Date: Fri, 17 Apr 2026 16:05:51 +0000
+Date: Sat, 18 Apr 2026 05:13:41 +0000
 MD5Sum:
- e19d098f8651cf0ef3dc5ba3896161de              194 Release
- 2d59e24fc85a1f202ae605dc198b136b           104670 main/binary-amd64/Packages
- 7e9c2b912df601736e4ef4d3f47f54a5            22253 main/binary-amd64/Packages.gz
+ 6546e8bd3b15b9ff28e565cda78df0ec              194 Release
+ 7f27835b7e306e368329f7744e75b5a6           106316 main/binary-amd64/Packages
+ 2160743a579649b9701b9d5e7cc0d86b            22602 main/binary-amd64/Packages.gz
 SHA1:
- 0fc69f3e9a34f66fd8160e0ae717191e58cdd2fc              194 Release
- 1cab4500094f743c8e3cfd85a9d5f4ea93036db3           104670 main/binary-amd64/Packages
- caa933257934d2718531795579c9be305d845e02            22253 main/binary-amd64/Packages.gz
+ 5ea1868d93cb3460b78aaff76cedfd56b01041b2              194 Release
+ 4528b2c4c910a112e5e6e7b2c8aa6320d15ae8c9           106316 main/binary-amd64/Packages
+ c1d0932e10a493866fe54b4c41d779a04d03dad6            22602 main/binary-amd64/Packages.gz
 SHA256:
- 2c0db4282a57aec6af79f01f864752637607d4c1b5a2964173513cd3ed674b0a              194 Release
- 5fb09e480a0eac76897218d90831a54481eac4cda6df3319fca90acd21a2a711           104670 main/binary-amd64/Packages
- 268ed415983d1250529bf76c46eb6fcbe7e6258a81386b9fc65cba3f3e56cfe7            22253 main/binary-amd64/Packages.gz
+ 629b32652a62a90e530a2d566f51a238d671622fed5f1c9bc41f1bc829ae878c              194 Release
+ 0b45057aba45f9eb519b2d61824a0acd8260004727ed17b8385516185843ed81           106316 main/binary-amd64/Packages
+ 38ecdd653593ca0e50501a1bc51aaa32c8c4b745bf24d229bf72c82ee8522dc7            22602 main/binary-amd64/Packages.gz
 SHA512:
- 8fa19306285479db323697d9f8ff9d1ea4c238700f2f74669eb7ac101cecfb3e72f1c7eb4406e1d705293adad91b6e767a26aa41c391fd055e092446dc02be07              194 Release
- 1ddf4e5c7926ae61435af5f68be3de57fedc60228bf636f61d06b9d5770d3cc178e38a41265028ff03913dbc1162916d7c9f99153cd0bc6e0faa707dff01b669           104670 main/binary-amd64/Packages
- fe5fe7c59f5c0bf7067fafdf423fb6b3355cf3a3d28b4a82237f5ea8c4120f32ed31ab61b8d9d58cc33b408ceea68fe262fe1bb0a28f08d573f711ea60b1b3ba            22253 main/binary-amd64/Packages.gz
+ ee9ed3f4fa0b7b0063bd9ccb50959d48e9cfff68444c5c1b0a3056ef82d759ebf02341405f504d00640ef9876cb752e4b3156aa4ff1ccb70eae861f07ca718de              194 Release
+ d7613d2d0cad700dd3ab1228711a19780d7a5a84c9c3e69c0164ce38742cc3013e95a42125acce17db4c169e91c0da882a707dd96a736218519fe3b957c4b42c           106316 main/binary-amd64/Packages
+ 333c6f0b0a7d5c6cc30f77863a26acc2eac164a7799ded54258deeb90b87f5daed800520b76a6571cdf4fe1f7d3a898b49747bfe052fd828d41b946e0d224fb1            22602 main/binary-amd64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iHUEARYKAB0WIQTR7IhZ5NIvA98/BBz5BTMHetsLWgUCaeJaXwAKCRD5BTMHetsL
-WjMvAP9a5CtfCL/gUamY6HuINfk8kmMJHUcFYC3lRrwPFA4BBwEAjxlX62Isc0Ah
-C0JODvfSIXG1+oXjCLZLoeKRuSUVuAA=
-=8La9
+iHUEARYKAB0WIQTR7IhZ5NIvA98/BBz5BTMHetsLWgUCaeMTBQAKCRD5BTMHetsL
+Wtf8AQCZwq2iRfP47sKpf+ooF5wt8gRdRzFb6qP9wj+VR5SRvgEA5JjO3cQIiRds
+jvUKYGPla6UIxJr+UcTO1kxywXNHlgQ=
+=nENC
 -----END PGP SIGNATURE-----
