@@ -5,20 +5,20 @@ Codename: noble
 Architectures: amd64
 Components: main
 Description: SW Foundation Package Repository
-Date: Mon, 11 May 2026 12:39:49 +0000
+Date: Mon, 11 May 2026 12:43:47 +0000
 MD5Sum:
- 4a94dfe27f0839bf227efb571ec47667              194 Release
+ 6e8063a65a87423f69eb328a0222a1d9              194 Release
  ebc86f5d5d5b57a75f242494862beb79           125800 main/binary-amd64/Packages
- a7aa909b1070035217e21c0a1b27e09b            26327 main/binary-amd64/Packages.gz
+ 50f92ee71d19611b07d7d1d0c55b4e52            26327 main/binary-amd64/Packages.gz
 SHA1:
- eeb01e2be95eb58aab1ff524a396e78a59063d0d              194 Release
+ 50f0f43bbc923794e5fa61e1d594ac76ea64ca37              194 Release
  b24b7c28e9e0cd9b32d66b171d2bf116ba953a11           125800 main/binary-amd64/Packages
- be308f2cb740aec7f2158928874880ae261ddd98            26327 main/binary-amd64/Packages.gz
+ 789499b7e03aa555e59ca8b3781554789d96f1d4            26327 main/binary-amd64/Packages.gz
 SHA256:
- ba9fbc840427f59d925abb3474d54f5d4e300ff5a955857860648aed940b1eb6              194 Release
+ bdc4f2298fb5eaa1c631c465651381fea4641d00d4ad350b27094788d2ed3b0e              194 Release
  2d8c5912334b97076c7d599249f3244caf7b3cd08c06131ad4c51bc67e8d68b3           125800 main/binary-amd64/Packages
- 72ed15aafda1e36eb1384df4fb006144dbd90c42b8516d560771bd4c13972a28            26327 main/binary-amd64/Packages.gz
+ da55032ea686a39d8f25cc30b21b28c40d0e2f27231f2108f8b16a9337d946f4            26327 main/binary-amd64/Packages.gz
 SHA512:
- 551af6d9b63383a22dd6b13b83f2fc90684195d73ff675da6f1d3f62d872bcc11929a464410e36b744267cdfdc5c0c69e2d0e4561cd91bfd6f6df18ac2eba7e7              194 Release
+ 852f538f5e118cb4043ef10d7bcd6b86193637d56afc16198c8943e3176d7c3a92ceb1a424540dde19f532222913d10bab8f84d1a30e7cd2074192e256987a6c              194 Release
  252a748d63f8ea7549440bfcc93a5bc43b65ccbc2be11e59827742e0544b90d68b51a86c9f2f2244af650ceb5b01d1c5f9bd773f4208bcf4f1ecd2f279ebb23b           125800 main/binary-amd64/Packages
- 48afc56c25dbd82c661aef58e19d9881c5794e73b0f1a87351bc1825b63a4b767f98b62579e6358839637b0c16c6b9d516b43ab8b80bf2210d429dec440a0f9b            26327 main/binary-amd64/Packages.gz
+ beb61e8f4a8fea41bfb4ce16864581da53862f3fa8016117b0e062bbd91accd7fca0abd2d0176dac0b755d22e88dbe36cb3b8533b3de1272a2bd225175df7494            26327 main/binary-amd64/Packages.gz
