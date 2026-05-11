@@ -910,6 +910,46 @@ Description: CoordiNode — unified database for AI-native applications.
  one query language (OpenCypher), one transaction.
 License: AGPL-3.0-only
 
+Package: coordinode
+Architecture: amd64
+Version: 0.4.2
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 17244
+Depends: systemd, adduser
+Filename: deb/pool/main/c/coordinode/coordinode_0.4.2_amd64.deb
+Size: 4857172
+MD5sum: da13407f01417768fe1447e9971016a1
+SHA1: 83928eaecd27565eb3688669a69695bdcc7f88c7
+SHA256: 39f6bdc2ee839418ee446b632f558b489610eb0b5e7d1d23f5dd49c62a839281
+SHA512: f88c30a6ce3cd1c38d8605bf97fb274f6e05fa2c70fb93d9313a9933c015856977007dfbd7e162a4f4875c0157255a3f4b600291026a515a6382ab7de74e8a44
+Homepage: https://github.com/structured-world/coordinode
+Description: Unified database for AI-native applications
+ CoordiNode is a unified database combining graph, vector, full-text,
+ document and time-series modalities in one engine. Queries use OpenCypher;
+ writes commit atomically across modalities.
+
+Package: coordinode
+Architecture: arm64
+Version: 0.4.2
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 14208
+Depends: systemd, adduser
+Filename: deb/pool/main/c/coordinode/coordinode_0.4.2_arm64.deb
+Size: 4177400
+MD5sum: fecc35f8fa56bf44dfe6909266c10999
+SHA1: 6b0b2b71bd075ccaf342d2d8abc44558922179d0
+SHA256: 4027b531cf160590fc254046f6520dcc71b59902fe8ef9eda76a69b6394a0a96
+SHA512: f5088f566a45076a89cacd5a418e6eeacf97bfa14a5cb7705a013751533bef2c9484e9fae876cb28976ca9fa857457c24372c8010eb7d444557277f613d33be9
+Homepage: https://github.com/structured-world/coordinode
+Description: Unified database for AI-native applications
+ CoordiNode is a unified database combining graph, vector, full-text,
+ document and time-series modalities in one engine. Queries use OpenCypher;
+ writes commit atomically across modalities.
+
 Package: strongswan-dhcp-inform
 Architecture: amd64
 Version: 6.0.4-sw.10
