@@ -8,27 +8,27 @@ Codename: bookworm
 Architectures: amd64
 Components: main
 Description: SW Foundation Package Repository
-Date: Fri, 24 Apr 2026 10:15:23 +0000
+Date: Mon, 11 May 2026 12:38:38 +0000
 MD5Sum:
- 88e348b88428c1e2202502230a340359              200 Release
+ a5c4f2e86eab8f80c6a63f4ad577d417              200 Release
  ebc86f5d5d5b57a75f242494862beb79           125800 main/binary-amd64/Packages
- f349a59450f2c58e0c6a7e6ea7e606c7            26327 main/binary-amd64/Packages.gz
+ cf9b55f547c00af3053c2bf96a9d5986            26327 main/binary-amd64/Packages.gz
 SHA1:
- e1388bea4bf4311a8c7ac45ad1781072507c8676              200 Release
+ 887205bbb75b9fc82b6f21305de939acda2b868c              200 Release
  b24b7c28e9e0cd9b32d66b171d2bf116ba953a11           125800 main/binary-amd64/Packages
- a4d04e07e048bec7d35e39ee91037a2cc2d74b00            26327 main/binary-amd64/Packages.gz
+ f1f1c44ff679497fefa6065d67e10d0218aac3aa            26327 main/binary-amd64/Packages.gz
 SHA256:
- d39180e08d802986be549f926ef2ea0cac552399515b57e14986949fdb69b592              200 Release
+ 66b46f17c518bad9108bd23bd3f75e01d985916f0841eaa0ba725fff022f3053              200 Release
  2d8c5912334b97076c7d599249f3244caf7b3cd08c06131ad4c51bc67e8d68b3           125800 main/binary-amd64/Packages
- eac142c178a18fa56d4e2f732adb4655d86df87ba78a9cc046340f5ba659c0f1            26327 main/binary-amd64/Packages.gz
+ ac54e938ce96d68e6bd06890e6faa19e1229a2b6b1a5e9021919baf3f12fcca7            26327 main/binary-amd64/Packages.gz
 SHA512:
- e44cc0ed462de76acd58f797699954b6180d50ba55351b9116937d5c66f47df09e1b3451a1f9d98654771fee026cc7823bab8bf009486827ae557a4a456e495e              200 Release
+ 8c42ff42b09777ea9f285383bce2b3b01c7c548e248fc656e10de5a90f184f7979694a2cf46221aeca0e8205888416a44177c6953352a52b2a8ae145a8d25300              200 Release
  252a748d63f8ea7549440bfcc93a5bc43b65ccbc2be11e59827742e0544b90d68b51a86c9f2f2244af650ceb5b01d1c5f9bd773f4208bcf4f1ecd2f279ebb23b           125800 main/binary-amd64/Packages
- 4b89844728b3b11a1c9cc273888352c700375e928c388da1624a89ac8da8356c95de34959e72d13761cfc9b60787b76c29b9b376a013086212262a68fa0a8b92            26327 main/binary-amd64/Packages.gz
+ 96d2d8693168117df5dde64ed0e2ae49f6a7a5105bef77a504ce6c3f9e14b1ce8cd5551c0e126a2b4261d877e6363d0438b3e50a61b99c5e1cd91c1c13d96f24            26327 main/binary-amd64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iHUEARYKAB0WIQTR7IhZ5NIvA98/BBz5BTMHetsLWgUCaetCuwAKCRD5BTMHetsL
-WusLAQDh9isxnolmmSgMeiN38iJCLC46IksUGI028TUAqhEouAEA3TmZ161LdY6w
-72U1IQOFEE+5LoyAAdWBbrP6Q7hM6QQ=
-=HfNL
+iHUEARYKAB0WIQTR7IhZ5NIvA98/BBz5BTMHetsLWgUCagHNzgAKCRD5BTMHetsL
+Wq7iAP90V+oBMYItKWpTfpZeLYGH/sYDweqgUZop/ObqKcdc+gD/TJwaM7hl9XzG
+aQifaUroy3NuPY/AmRswhi8UTyGRFw4=
+=Swj1
 -----END PGP SIGNATURE-----
