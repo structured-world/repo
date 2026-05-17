@@ -950,6 +950,46 @@ Description: Unified database for AI-native applications
  document and time-series modalities in one engine. Queries use OpenCypher;
  writes commit atomically across modalities.
 
+Package: coordinode
+Architecture: amd64
+Version: 0.4.3
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 17465
+Depends: systemd, adduser
+Filename: deb/pool/main/c/coordinode/coordinode_0.4.3_amd64.deb
+Size: 4912820
+MD5sum: 8a72997fb100acbba85afaddd46e2ec1
+SHA1: d69e1a838a894fa0418307baa5f39f95a584f7d1
+SHA256: 4058797b58059c11ef7ab00ce0dda84988d4feef33b14f7a62c435954d8a6d9d
+SHA512: 0215f2ff8ef5b8d265357c40d10dbe388f353160424781c11f36df96bbadb2da4c0e01f2e8eca2ee0507e4bba2a0d6e1d864ac29307f70cc0215215a1721b0a7
+Homepage: https://github.com/structured-world/coordinode
+Description: Unified database for AI-native applications
+ CoordiNode is a unified database combining graph, vector, full-text,
+ document and time-series modalities in one engine. Queries use OpenCypher;
+ writes commit atomically across modalities.
+
+Package: coordinode
+Architecture: arm64
+Version: 0.4.3
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 14401
+Depends: systemd, adduser
+Filename: deb/pool/main/c/coordinode/coordinode_0.4.3_arm64.deb
+Size: 4223088
+MD5sum: 73f98e4e0fb103ea86be7f4e933a5192
+SHA1: b43ab0779a5ec1f690246c96708de24dd3e49bfb
+SHA256: 7a30ace0b667d88f7c19b0d4249721ed9161c4fbc44048bcd69d66573143b4f1
+SHA512: b37b44ee4ccbb77a0c8aa7ef11a2c2a7c7667a47235c3bfc08bba01535f5817ff3407ee268ef5a991ce8c07c30bba1f2b313e7ac458878a3c1c8fec7dc4e88d9
+Homepage: https://github.com/structured-world/coordinode
+Description: Unified database for AI-native applications
+ CoordiNode is a unified database combining graph, vector, full-text,
+ document and time-series modalities in one engine. Queries use OpenCypher;
+ writes commit atomically across modalities.
+
 Package: strongswan-dhcp-inform
 Architecture: amd64
 Version: 6.0.4-sw.10
