@@ -1,5 +1,5 @@
 name: Publish Repo
-run-name: "Publish Repo (strongswan ${{ inputs.strongswan_run_id || github.event.client_payload.strongswan_run_id }} coordinode ${{ inputs.coordinode_run_id || github.event.client_payload.coordinode_run_id }})"
+run-name: "Publish Repo (strongswan ${{ inputs.strongswan_run_id || github.event.client_payload.strongswan_run_id }} coordinode ${{ inputs.coordinode_run_id || github.event.client_payload.coordinode_run_id }} structured-proxy ${{ inputs.structured_proxy_run_id || github.event.client_payload.structured_proxy_run_id }})"
 
 on:
   workflow_dispatch:
@@ -12,8 +12,12 @@ on:
         description: 'coordinode release run id'
         required: false
         type: string
+      structured_proxy_run_id:
+        description: 'structured-proxy release run id'
+        required: false
+        type: string
   repository_dispatch:
-    types: [publish-from-strongswan, publish-from-coordinode]
+    types: [publish-from-strongswan, publish-from-coordinode, publish-from-structured-proxy]
 
 permissions:
   contents: write
@@ -133,16 +137,12 @@ jobs:
               echo "Error: unauthorized repository_dispatch sender '$sender'" >&2
               exit 1
             fi
-            if [ "$action" = "publish-from-coordinode" ]; then
-              # This dispatch is for coordinode only; no strongswan run to process.
+            if [ "$action" != "publish-from-strongswan" ]; then
+              # This dispatch targets a different project; no strongswan run to process.
               echo "run_id=" >> "$GITHUB_OUTPUT"
               exit 0
             fi
             source_repo=$(jq -r '.client_payload.strongswan_repo // ""' "$GITHUB_EVENT_PATH")
-            if [ "$action" != "publish-from-strongswan" ]; then
-              echo "Error: unexpected repository_dispatch action '$action'" >&2
-              exit 1
-            fi
             if [ "$source_repo" != "structured-world/strongswan" ]; then
               echo "Error: unexpected strongswan_repo '$source_repo'" >&2
               exit 1
@@ -242,8 +242,8 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
             action=$(jq -r '.action // ""' "$GITHUB_EVENT_PATH")
-            if [ "$action" = "publish-from-strongswan" ]; then
-              # This dispatch is for strongswan only; no coordinode run to process.
+            if [ "$action" != "publish-from-coordinode" ]; then
+              # This dispatch targets a different project; no coordinode run to process.
               echo "run_id=" >> "$GITHUB_OUTPUT"
               exit 0
             fi
@@ -272,10 +272,52 @@ jobs:
           fi
           echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
 
+      - name: Resolve structured-proxy run id
+        id: structured-proxy-runid
+        run: |
+          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            sender=$(jq -r '.sender.login // ""' "$GITHUB_EVENT_PATH")
+            action=$(jq -r '.action // ""' "$GITHUB_EVENT_PATH")
+            if [ "$sender" != "sw-release-bot[bot]" ]; then
+              echo "Error: unauthorized repository_dispatch sender '$sender'" >&2
+              exit 1
+            fi
+            if [ "$action" != "publish-from-structured-proxy" ]; then
+              # This dispatch targets a different project; no structured-proxy run to process.
+              echo "run_id=" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            source_repo=$(jq -r '.client_payload.structured_proxy_repo // ""' "$GITHUB_EVENT_PATH")
+            if [ "$source_repo" != "structured-world/structured-proxy" ]; then
+              echo "Error: unexpected structured_proxy_repo '$source_repo'" >&2
+              exit 1
+            fi
+          fi
+          if [ -n "${{ github.event.client_payload.structured_proxy_run_id }}" ]; then
+            run_id="${{ github.event.client_payload.structured_proxy_run_id }}"
+          elif [ -n "${{ inputs.structured_proxy_run_id }}" ]; then
+            run_id="${{ inputs.structured_proxy_run_id }}"
+          else
+            # No structured-proxy run id provided — OK if this dispatch targets another project.
+            echo "run_id=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [ -z "$run_id" ]; then
+            echo "Error: resolved structured_proxy_run_id is empty" >&2
+            exit 1
+          fi
+          if ! echo "$run_id" | grep -Eq '^[0-9]+$'; then
+            echo "Error: resolved structured_proxy_run_id must be numeric, got '$run_id'" >&2
+            exit 1
+          fi
+          echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
+
       - name: Validate source run IDs
         run: |
-          if [ -z "${{ steps.runid.outputs.run_id }}" ] && [ -z "${{ steps.coordinode-runid.outputs.run_id }}" ]; then
-            echo "Error: no source workflow run id was resolved — provide strongswan_run_id or coordinode_run_id" >&2
+          if [ -z "${{ steps.runid.outputs.run_id }}" ] \
+            && [ -z "${{ steps.coordinode-runid.outputs.run_id }}" ] \
+            && [ -z "${{ steps.structured-proxy-runid.outputs.run_id }}" ]; then
+            echo "Error: no source workflow run id was resolved — provide strongswan_run_id, coordinode_run_id, or structured_proxy_run_id" >&2
             exit 1
           fi
 
@@ -326,6 +368,65 @@ jobs:
           # Verify at least one coordinode .deb or .rpm was downloaded.
           if ! find packages -type f \( -name 'coordinode*.deb' -o -name 'coordinode*.rpm' \) | grep -q .; then
             echo "Error: no coordinode RPM/DEB artifacts found in packages/ for run $RUN_ID" >&2
+            exit 1
+          fi
+          # Reject unexpected file types (only .rpm/.deb allowed outside repo-meta-*).
+          if find packages -type f -not -path '*/repo-meta-*/*' \
+              ! \( -name '*.rpm' -o -name '*.deb' \) | grep -q .; then
+            echo "Error: unexpected artifact types found in packages/ (only .rpm/.deb allowed outside repo-meta)" >&2
+            find packages -type f -not -path '*/repo-meta-*/*' \
+              ! \( -name '*.rpm' -o -name '*.deb' \) -print >&2
+            exit 1
+          fi
+          ls -la packages
+
+      - name: Download structured-proxy artifacts
+        if: steps.structured-proxy-runid.outputs.run_id != ''
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          RUN_ID="${{ steps.structured-proxy-runid.outputs.run_id }}"
+          REPO="structured-world/structured-proxy"
+          echo "Verifying workflow run $RUN_ID in $REPO..."
+          if ! run_json=$(gh run view "$RUN_ID" -R "$REPO" --json status,headBranch,event,workflowName,createdAt,updatedAt); then
+            echo "Error: unable to view run $RUN_ID in $REPO." >&2
+            exit 1
+          fi
+          jq -r '. as $r | "Status: \($r.status)\nBranch: \($r.headBranch)\nEvent: \($r.event)\nWorkflow: \($r.workflowName)\nCreated: \($r.createdAt)\nUpdated: \($r.updatedAt)"' <<< "$run_json"
+          run_workflow=$(jq -r '.workflowName // ""' <<< "$run_json")
+          if [ "$run_workflow" != "Release" ]; then
+            echo "Error: run $RUN_ID is not from expected workflow (Release), got '$run_workflow'" >&2
+            exit 1
+          fi
+          mkdir -p packages
+          if ! gh run download "$RUN_ID" -R "$REPO" -D packages \
+            --pattern "deb-*" \
+            --pattern "rpm-fc*" \
+            --pattern "repo-meta-structured-proxy"; then
+            echo "Error: failed to download artifacts for run $RUN_ID" >&2
+            exit 1
+          fi
+          # Reject any symlinks to avoid path traversal from downloaded artifacts.
+          if find packages -type l | grep -q .; then
+            echo "Error: unexpected symlinks found in packages/; refusing to proceed" >&2
+            find packages -type l -print >&2
+            exit 1
+          fi
+          if find packages -maxdepth 1 -type f | grep -q .; then
+            echo "Error: unexpected files found at packages/ root; refusing to proceed" >&2
+            find packages -maxdepth 1 -type f -print >&2
+            exit 1
+          fi
+          if find packages -mindepth 1 -maxdepth 1 -type d \
+              ! -name 'deb-*' ! -name 'rpm-fc*' ! -name 'srpm' ! -name 'repo-meta-*' | grep -q .; then
+            echo "Error: unexpected artifact directories found in packages/" >&2
+            find packages -mindepth 1 -maxdepth 1 -type d \
+              ! -name 'deb-*' ! -name 'rpm-fc*' ! -name 'srpm' ! -name 'repo-meta-*' -print >&2
+            exit 1
+          fi
+          # Verify at least one structured-proxy .deb or .rpm was downloaded.
+          if ! find packages -type f \( -name 'structured-proxy*.deb' -o -name 'structured-proxy*.rpm' \) | grep -q .; then
+            echo "Error: no structured-proxy RPM/DEB artifacts found in packages/ for run $RUN_ID" >&2
             exit 1
           fi
           # Reject unexpected file types (only .rpm/.deb allowed outside repo-meta-*).
@@ -449,6 +550,7 @@ jobs:
             msg="Publish packages"
             [ -n "${{ steps.runid.outputs.run_id }}" ] && msg="$msg (strongswan ${{ steps.runid.outputs.run_id }})"
             [ -n "${{ steps.coordinode-runid.outputs.run_id }}" ] && msg="$msg (coordinode ${{ steps.coordinode-runid.outputs.run_id }})"
+            [ -n "${{ steps.structured-proxy-runid.outputs.run_id }}" ] && msg="$msg (structured-proxy ${{ steps.structured-proxy-runid.outputs.run_id }})"
             git commit -m "$msg"
             if ! git push; then
               echo "Error: git push failed; manual retry required" >&2
