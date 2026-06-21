@@ -2757,3 +2757,49 @@ Description: strongSwan IPsec (SW fork)
  fix (umask 0660 for Unix sockets). Drop-in replacement for system
  strongswan package.
 
+Package: structured-proxy
+Architecture: amd64
+Version: 2.2.1
+Priority: optional
+Section: net
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 11734
+Depends: systemd, adduser
+Filename: deb/pool/main/s/structured-proxy/structured-proxy_2.2.1_amd64.deb
+Size: 3611552
+MD5sum: d1ac58624b2ae974b0c2e647a30461b1
+SHA1: 5348d16c43338b22e30092e1204ef8f7534ac815
+SHA256: 116316de7f8ca30161d3022a24404d47a0b14cbfc30f47c12909314f9a44e708
+SHA512: ed2a1497862381cf60f887f016fe8e2129fd2785654c13f870497522654d284c92dc0e7f600bbf9742adbb35ee2e022db3b4dc58bffeef16e8afc3336cbf9d15
+Homepage: https://github.com/structured-world/structured-proxy
+Description: Universal gRPC to REST transcoding proxy
+ structured-proxy is a config-driven gRPC to REST transcoding proxy. One
+ binary serves any gRPC service from a proto descriptor set and a YAML config,
+ with no code generation and no custom handlers.
+ .
+ The service ships disabled: set an upstream address and proto descriptors in
+ /etc/structured-proxy/config.yaml, then enable it with systemctl.
+
+Package: structured-proxy
+Architecture: arm64
+Version: 2.2.1
+Priority: optional
+Section: net
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 10158
+Depends: systemd, adduser
+Filename: deb/pool/main/s/structured-proxy/structured-proxy_2.2.1_arm64.deb
+Size: 3141844
+MD5sum: a4e9705eb41683c1b44f74076402f5de
+SHA1: d4124d099bd3d4548e4d7a492964558a715905aa
+SHA256: a794258726f1baec8c78e1781bf2b773f8f2f4c477f8bc1929f033cf3f3221fb
+SHA512: 1ec194a1d4b4d49911e55962c9d6d993c79594c2cfe6ab7183eca30b39cb12a75618a22066ce248fe61500e502c8cf7c5d481b6102daf4fd2d01bf86326f825f
+Homepage: https://github.com/structured-world/structured-proxy
+Description: Universal gRPC to REST transcoding proxy
+ structured-proxy is a config-driven gRPC to REST transcoding proxy. One
+ binary serves any gRPC service from a proto descriptor set and a YAML config,
+ with no code generation and no custom handlers.
+ .
+ The service ships disabled: set an upstream address and proto descriptors in
+ /etc/structured-proxy/config.yaml, then enable it with systemctl.
+

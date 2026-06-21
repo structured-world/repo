@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Official package repository for Structured World Foundation. Signed RPM and DEB packages for Linux.">
-    <meta name="keywords" content="Linux packages, RPM, DEB, Ubuntu, Fedora, Debian, CoordiNode, strongSwan SW, PostgreSQL Plugin, DHCP INFORM Plugin">
+    <meta name="keywords" content="Linux packages, RPM, DEB, Ubuntu, Fedora, Debian, CoordiNode, strongSwan SW, PostgreSQL Plugin, DHCP INFORM Plugin, structured-proxy">
     <meta name="author" content="Structured World Foundation">
     <meta name="robots" content="index, follow">
 
@@ -777,13 +777,14 @@
             <p class="hero-subtitle">
                 Unified database for AI-native applications. Graph + Vector + Full-Text + Document + Time-Series in one engine, one query language (OpenCypher), one transaction.
                 Enterprise-grade strongSwan VPN packages with PostgreSQL database support. Production-ready builds for modern Linux distributions.
+                Universal, config-driven gRPC to REST transcoding proxy. One binary, different YAML configs, different products. Works with any gRPC service via proto descriptor files.
             </p>
             <div class="platforms-row">
                 <div class="platform-card">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
                     <div class="platform-info">
                         <h4>Fedora</h4>
-                        <span>42, 43, 44, 41</span>
+                        <span>41, 42, 43, 44</span>
                     </div>
                 </div>
                 <div class="platform-card">
@@ -908,6 +909,30 @@
                         </span>
                     </div>
                 </div>
+
+                <div class="package-card main">
+                    <div class="package-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                    </div>
+                    <h3>structured-proxy</h3>
+                    <code class="pkg-name">structured-proxy</code>
+                    <p class="pkg-desc">
+                        Universal gRPC to REST transcoding proxy
+                    </p>
+                    <div class="package-meta">
+                        <span class="meta-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            Apache-2.0
+                        </span>
+                        <span class="meta-badge">
+                            Version: <span class="version" id="version-structured-proxy">loading...</span>
+                        </span>
+                        <span class="meta-badge" id="size-structured-proxy-badge" style="display:none">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                            <span id="size-structured-proxy"></span>
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -941,13 +966,13 @@
                                 <h4>CoordiNode</h4>
                             </div>
                             <div class="install-card-versions">
+                                <span class="version-badge">fc41</span>
                                 <span class="version-badge">fc42</span>
                                 <span class="version-badge">fc43</span>
-                                <span class="version-badge">fc44</span>
                             </div>
                         </div>
                         <div class="install-card-body">
-                            <p class="supported">Fedora 42, 43, 44 (x86_64)</p>
+                            <p class="supported">Fedora 41, 42, 43 (x86_64)</p>
                             <div class="code-block">
                                 <div class="code-header">
                                     <span class="code-lang">bash</span>
@@ -957,7 +982,8 @@
                                     </button>
                                 </div>
                                 <pre><code><span class="comment"># Add repository</span>
-sudo curl -fsSL https://repo.sw.foundation/rpm/fc$(rpm -E %fedora)/sw.repo -o /etc/yum.repos.d/sw.repo
+sudo dnf config-manager --add-repo \
+  https://repo.sw.foundation/rpm/fc$(rpm -E %fedora)/sw.repo
 
 <span class="comment"># Install CoordiNode</span>
 sudo dnf install <span class="cmd">coordinode</span></code></pre>
@@ -974,13 +1000,13 @@ sudo dnf install <span class="cmd">coordinode</span></code></pre>
                                 <h4>strongSwan SW</h4>
                             </div>
                             <div class="install-card-versions">
+                                <span class="version-badge">fc41</span>
                                 <span class="version-badge">fc42</span>
                                 <span class="version-badge">fc43</span>
-                                <span class="version-badge">fc44</span>
                             </div>
                         </div>
                         <div class="install-card-body">
-                            <p class="supported">Fedora 42, 43, 44 (x86_64)</p>
+                            <p class="supported">Fedora 41, 42, 43 (x86_64)</p>
                             <div class="code-block">
                                 <div class="code-header">
                                     <span class="code-lang">bash</span>
@@ -990,7 +1016,8 @@ sudo dnf install <span class="cmd">coordinode</span></code></pre>
                                     </button>
                                 </div>
                                 <pre><code><span class="comment"># Add repository</span>
-sudo curl -fsSL https://repo.sw.foundation/rpm/fc$(rpm -E %fedora)/sw.repo -o /etc/yum.repos.d/sw.repo
+sudo dnf config-manager --add-repo \
+  https://repo.sw.foundation/rpm/fc$(rpm -E %fedora)/sw.repo
 
 <span class="comment"># Install strongSwan SW</span>
 sudo dnf install <span class="cmd">strongswan-sw</span></code></pre>
@@ -1007,9 +1034,9 @@ sudo dnf install <span class="cmd">strongswan-sw</span></code></pre>
                                 <h4>PostgreSQL Plugin</h4>
                             </div>
                             <div class="install-card-versions">
+                                <span class="version-badge">fc41</span>
                                 <span class="version-badge">fc42</span>
                                 <span class="version-badge">fc43</span>
-                                <span class="version-badge">fc44</span>
                             </div>
                         </div>
                         <div class="install-card-body">
@@ -1037,9 +1064,9 @@ sudo dnf install <span class="cmd">strongswan-pgsql</span></code></pre>
                                 <h4>DHCP INFORM Plugin</h4>
                             </div>
                             <div class="install-card-versions">
+                                <span class="version-badge">fc41</span>
                                 <span class="version-badge">fc42</span>
                                 <span class="version-badge">fc43</span>
-                                <span class="version-badge">fc44</span>
                             </div>
                         </div>
                         <div class="install-card-body">
@@ -1054,6 +1081,40 @@ sudo dnf install <span class="cmd">strongswan-pgsql</span></code></pre>
                                 </div>
                                 <pre><code><span class="comment"># Install DHCP INFORM Plugin</span>
 sudo dnf install <span class="cmd">strongswan-dhcp-inform</span></code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="install-card main">
+                        <div class="install-card-header">
+                            <div class="install-card-title">
+                                <div class="icon">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+                                </div>
+                                <h4>structured-proxy</h4>
+                            </div>
+                            <div class="install-card-versions">
+                                <span class="version-badge">fc41</span>
+                                <span class="version-badge">fc42</span>
+                                <span class="version-badge">fc43</span>
+                            </div>
+                        </div>
+                        <div class="install-card-body">
+                            <p class="supported">Fedora 41, 42, 43 (x86_64)</p>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-lang">bash</span>
+                                    <button class="code-copy" onclick="copyCode(this)">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                        Copy
+                                    </button>
+                                </div>
+                                <pre><code><span class="comment"># Add repository</span>
+sudo dnf config-manager --add-repo \
+  https://repo.sw.foundation/rpm/fc$(rpm -E %fedora)/sw.repo
+
+<span class="comment"># Install structured-proxy</span>
+sudo dnf install <span class="cmd">structured-proxy</span></code></pre>
                             </div>
                         </div>
                     </div>
@@ -1086,12 +1147,19 @@ sudo dnf install <span class="cmd">strongswan-dhcp-inform</span></code></pre>
                                         Copy
                                     </button>
                                 </div>
-                                <pre><code>curl -fsSL https://repo.sw.foundation/keys/sw.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/sw.gpg
-echo &quot;deb [signed-by=/etc/apt/keyrings/sw.gpg] https://repo.sw.foundation/deb $(lsb_release -cs) main&quot; | sudo tee /etc/apt/sources.list.d/sw.list
-sudo apt-get update
+                                <pre><code># Add GPG key
+curl -fsSL https://repo.sw.foundation/keys/sw.gpg \
+  | sudo gpg --dearmor -o /etc/apt/keyrings/sw.gpg
+
+# Add repository
+echo &quot;deb [signed-by=/etc/apt/keyrings/sw.gpg] \
+  https://repo.sw.foundation/deb $(lsb_release -cs) main&quot; \
+  | sudo tee /etc/apt/sources.list.d/sw.list
+
+sudo apt update
 
 <span class="comment"># Install CoordiNode</span>
-sudo apt-get install <span class="cmd">coordinode</span></code></pre>
+sudo apt install <span class="cmd">coordinode</span></code></pre>
                             </div>
                         </div>
                     </div>
@@ -1120,12 +1188,19 @@ sudo apt-get install <span class="cmd">coordinode</span></code></pre>
                                         Copy
                                     </button>
                                 </div>
-                                <pre><code>curl -fsSL https://repo.sw.foundation/keys/sw.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/sw.gpg
-echo &quot;deb [signed-by=/etc/apt/keyrings/sw.gpg] https://repo.sw.foundation/deb $(lsb_release -cs) main&quot; | sudo tee /etc/apt/sources.list.d/sw.list
-sudo apt-get update
+                                <pre><code># Add GPG key
+curl -fsSL https://repo.sw.foundation/keys/sw.gpg \
+  | sudo gpg --dearmor -o /etc/apt/keyrings/sw.gpg
+
+# Add repository
+echo &quot;deb [signed-by=/etc/apt/keyrings/sw.gpg] \
+  https://repo.sw.foundation/deb $(lsb_release -cs) main&quot; \
+  | sudo tee /etc/apt/sources.list.d/sw.list
+
+sudo apt update
 
 <span class="comment"># Install strongSwan SW</span>
-sudo apt-get install <span class="cmd">strongswan-sw</span></code></pre>
+sudo apt install <span class="cmd">strongswan-sw</span></code></pre>
                             </div>
                         </div>
                     </div>
@@ -1155,7 +1230,7 @@ sudo apt-get install <span class="cmd">strongswan-sw</span></code></pre>
                                     </button>
                                 </div>
                                 <pre><code><span class="comment"># Install PostgreSQL Plugin</span>
-sudo apt-get install <span class="cmd">strongswan-pgsql</span></code></pre>
+sudo apt install <span class="cmd">strongswan-pgsql</span></code></pre>
                             </div>
                         </div>
                     </div>
@@ -1185,7 +1260,48 @@ sudo apt-get install <span class="cmd">strongswan-pgsql</span></code></pre>
                                     </button>
                                 </div>
                                 <pre><code><span class="comment"># Install DHCP INFORM Plugin</span>
-sudo apt-get install <span class="cmd">strongswan-dhcp-inform</span></code></pre>
+sudo apt install <span class="cmd">strongswan-dhcp-inform</span></code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="install-card main">
+                        <div class="install-card-header">
+                            <div class="install-card-title">
+                                <div class="icon">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+                                </div>
+                                <h4>structured-proxy</h4>
+                            </div>
+                            <div class="install-card-versions">
+                                <span class="version-badge">noble</span>
+                                <span class="version-badge">jammy</span>
+                                <span class="version-badge">bookworm</span>
+                            </div>
+                        </div>
+                        <div class="install-card-body">
+                            <p class="supported">Ubuntu 24.04 | Ubuntu 22.04 | Debian 12</p>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-lang">bash</span>
+                                    <button class="code-copy" onclick="copyCode(this)">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                        Copy
+                                    </button>
+                                </div>
+                                <pre><code># Add GPG key
+curl -fsSL https://repo.sw.foundation/keys/sw.gpg \
+  | sudo gpg --dearmor -o /etc/apt/keyrings/sw.gpg
+
+# Add repository
+echo &quot;deb [signed-by=/etc/apt/keyrings/sw.gpg] \
+  https://repo.sw.foundation/deb $(lsb_release -cs) main&quot; \
+  | sudo tee /etc/apt/sources.list.d/sw.list
+
+sudo apt update
+
+<span class="comment"># Install structured-proxy</span>
+sudo apt install <span class="cmd">structured-proxy</span></code></pre>
                             </div>
                         </div>
                     </div>
@@ -1288,6 +1404,13 @@ sudo apt-get install <span class="cmd">strongswan-dhcp-inform</span></code></pre
                         <li><a href="https://www.strongswan.org/">Upstream</a></li>
                     </ul>
                 </div>
+                <div class="footer-section">
+                    <h4>structured-proxy</h4>
+                    <ul>
+                        <li><a href="https://github.com/structured-world/structured-proxy">structured-proxy</a></li>
+                        <li><a href="https://github.com/structured-world/structured-proxy">Upstream</a></li>
+                    </ul>
+                </div>
             </div>
 
             <div class="footer-legal">
@@ -1296,6 +1419,7 @@ sudo apt-get install <span class="cmd">strongswan-dhcp-inform</span></code></pre
                     <p><strong>License (strongSwan SW):</strong> GPL-2.0-or-later</p>
                     <p><strong>Trademark Notice:</strong> strongSwan is a registered trademark of Andreas Steffen and the strongSwan project. This is an independent distribution not affiliated with or endorsed by the strongSwan project.</p>
                     <p><strong>Source Availability:</strong> Complete source code is available at github.com/structured-world/strongswan. (<a href="https://github.com/structured-world/strongswan">github.com/structured-world/strongswan</a>)</p>
+                    <p><strong>License (structured-proxy):</strong> Apache-2.0</p>
                     <p><strong>No Warranty:</strong> This software is provided "AS IS" without warranty of any kind. See the respective licenses for details.</p>
                 </div>
             </div>
@@ -1347,7 +1471,7 @@ sudo apt-get install <span class="cmd">strongswan-dhcp-inform</span></code></pre
         }
 
         // Package name → HTML element slug mapping, injected by build-docs.py.
-        const PACKAGE_SLUGS = {"coordinode": "coordinode", "strongswan-sw": "sw", "strongswan-pgsql": "pgsql", "strongswan-dhcp-inform": "dhcp-inform"};
+        const PACKAGE_SLUGS = {"coordinode": "coordinode", "strongswan-sw": "sw", "strongswan-pgsql": "pgsql", "strongswan-dhcp-inform": "dhcp-inform", "structured-proxy": "structured-proxy"};
         const DEB_SOURCES = ["deb/dists/noble/main/binary-amd64/Packages", "deb/dists/jammy/main/binary-amd64/Packages", "deb/dists/bookworm/main/binary-amd64/Packages"];
 
         // Fetch and display package info dynamically from Packages files
