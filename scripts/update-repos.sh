@@ -9,6 +9,8 @@ umask 022
 DEB_SRC_DIR="${DEB_SRC_DIR:-packages/deb}"
 RPM_SRC_DIR="${RPM_SRC_DIR:-packages/rpm}"
 SRPM_SRC_DIR="${SRPM_SRC_DIR:-packages/srpm}"
+# Binary architectures indexed for every DEB dist.
+DEB_ARCHS="${DEB_ARCHS:-amd64 arm64}"
 
 # GPG signing helper
 GPG_PASSPHRASE="${GPG_PASSPHRASE:-}"
@@ -41,20 +43,21 @@ publish_deb() {
     fi
   done
 
-  if [ ! -d "$DEB_SRC_DIR" ]; then
-    echo "DEB source dir not found: $DEB_SRC_DIR" >&2
-    return 0
-  fi
-
   local nullglob_state
   # shopt -p returns exit code 1 when the option is off; guard with || true.
   nullglob_state=$(shopt -p nullglob || true)
   shopt -s nullglob
   trap 'eval "$nullglob_state"' RETURN
-  local debs=("$DEB_SRC_DIR"/*.deb)
+  local debs=()
+  if [ -d "$DEB_SRC_DIR" ]; then
+    debs=("$DEB_SRC_DIR"/*.deb)
+  else
+    echo "DEB source dir not found: $DEB_SRC_DIR" >&2
+  fi
   if [ ${#debs[@]} -eq 0 ]; then
-    echo "No DEB packages to publish"
-    return 0
+    # No new debs this run — still fall through to index regeneration below,
+    # so index-generation fixes take effect without waiting for new packages.
+    echo "No new DEB packages to copy"
   fi
 
   for deb in "${debs[@]}"; do
@@ -89,46 +92,79 @@ publish_deb() {
 
   local dist_dir dist
   if [ -d deb/dists ]; then
+    # Known dist names — used to tell dist-specific debs (…_noble_amd64.deb)
+    # from dist-agnostic ones (…_amd64.deb, e.g. coordinode) which belong in
+    # every dist's index.
+    local known_dists=""
     for dist_dir in deb/dists/*; do
       [ -d "$dist_dir" ] || continue
       dist="$(basename "$dist_dir")"
-      if ! ls "$dist_dir"/main/binary-* >/dev/null 2>&1; then
-        mkdir -p "$dist_dir/main/binary-amd64"
+      if ! printf '%s' "$dist" | grep -Eq '^[A-Za-z0-9_-]+$'; then
+        echo "Error: invalid dist name '$dist' for deb repository" >&2
+        exit 1
       fi
+      known_dists="${known_dists:+${known_dists}|}${dist}"
+    done
+
+    # Scan the pool ONCE per run, from inside deb/ so Filename comes out as
+    # pool/… — apt resolves package URLs as <sources.list URI>/<Filename> and
+    # the documented URI is https://repo.sw.foundation/deb. Scanning from the
+    # repo root produced deb/pool/… paths, i.e. /deb/deb/… → 404 on fetch.
+    local packages_all
+    packages_all="$(mktemp)"
+    if ! (cd deb && apt-ftparchive packages pool/main) > "$packages_all"; then
+      rm -f "$packages_all"
+      echo "Error: apt-ftparchive packages failed for deb/pool/main" >&2
+      exit 1
+    fi
+
+    for dist_dir in deb/dists/*; do
+      [ -d "$dist_dir" ] || continue
+      dist="$(basename "$dist_dir")"
+
+      # Every dist gets an index for each supported architecture so Release
+      # advertises them and arm64 clients can resolve packages.
+      local arch
+      for arch in $DEB_ARCHS; do
+        mkdir -p "$dist_dir/main/binary-$arch"
+      done
 
       for arch_dir in "$dist_dir"/main/binary-*; do
         [ -d "$arch_dir" ] || continue
-        local arch
         arch="$(basename "$arch_dir" | sed 's/^binary-//')"
-        if ! printf '%s' "$dist" | grep -Eq '^[A-Za-z0-9_-]+$'; then
-          echo "Error: invalid dist name '$dist' for deb repository" >&2
-          exit 1
-        fi
         if ! printf '%s' "$arch" | grep -Eq '^[A-Za-z0-9_-]+$'; then
           echo "Error: invalid arch name '$arch' for deb repository" >&2
           exit 1
         fi
 
-        # Generate Packages file - prefer dist-specific packages; fall back to all if empty.
-        local packages_tmp
-        packages_tmp="$(mktemp)"
-        cleanup_packages_tmp() { rm -f "$packages_tmp"; }
-        if ! apt-ftparchive packages "deb/pool/main" > "$packages_tmp"; then
-          cleanup_packages_tmp
-          echo "Error: apt-ftparchive packages failed for deb/pool/main" >&2
-          exit 1
-        fi
-        if ! awk -v arch="$arch" 'BEGIN { RS=""; ORS="\n\n" } $0 ~ ("Filename: .*_" arch "\\.(deb|ddeb|udeb)$") { print }' \
-          "$packages_tmp" > "$arch_dir/Packages"; then
-          cleanup_packages_tmp
+        # Keep stanzas for this dist+arch only: dist-specific debs carry a
+        # _<dist>_<arch>.deb suffix; dist-agnostic debs carry _<arch>.deb with
+        # no dist token and are published to every dist. The stanza is matched
+        # on the Filename field alone (paragraph mode), never on whole-stanza
+        # regexes — a $-anchored whole-stanza match silently selects nothing
+        # because Filename is not the last field (see #25).
+        if ! awk -v dist="$dist" -v arch="$arch" -v dists="$known_dists" '
+          BEGIN { RS=""; ORS="\n\n" }
+          {
+            fn = ""
+            n = split($0, lines, "\n")
+            for (i = 1; i <= n; i++) {
+              if (lines[i] ~ /^Filename: /) { fn = lines[i]; break }
+            }
+            if (fn == "") next
+            sub(/^Filename: /, "", fn)
+            sub(/^.*\//, "", fn)
+            if (fn ~ ("_" dist "_" arch "\\.(deb|ddeb|udeb)$")) { print; next }
+            if (fn ~ ("_" arch "\\.(deb|ddeb|udeb)$") && fn !~ ("_(" dists ")_")) { print }
+          }' "$packages_all" > "$arch_dir/Packages"; then
+          rm -f "$packages_all"
           echo "Error: filtering Packages failed for dist '$dist' arch '$arch'" >&2
           exit 1
         fi
-        cleanup_packages_tmp
-
-        if [ ! -s "$arch_dir/Packages" ]; then
-          apt-ftparchive packages "deb/pool/main" > "$arch_dir/Packages"
-        fi
+        # An empty Packages file is valid for a dist/arch that has no packages
+        # yet — never fall back to the unfiltered pool here: that republishes
+        # every dist's packages everywhere and lets apt pick a foreign-dist
+        # stanza of the same version (see #25).
 
         gzip -kf "$arch_dir/Packages"
       done
@@ -176,6 +212,7 @@ EOF_RELEASE
 
       echo "Updated DEB repository for ${dist}"
     done
+    rm -f "$packages_all"
   fi
 }
 
