@@ -1,0 +1,725 @@
+Package: coordinode
+Architecture: arm64
+Version: 0.1.0~alpha.1
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 10776
+Filename: pool/main/c/coordinode/coordinode_0.1.0~alpha.1_arm64.deb
+Size: 5115210
+MD5sum: f9e5e022976bbbe7b1d27c2c4b1eb8f3
+SHA1: 873520d73280c44dcf2b24740e501acbdc9d4d3d
+SHA256: 86611807089f567e0f5264f02cb35714b018eea9add4cf64f75ba00dd858bf47
+SHA512: 21364329d933753ce5d0318117b758904029de0ff60be2325f6d3d5d737586ef8c525ce67f4d78745763e10a7be18a25a898f6f34fc2e1df741d37901c3ca44f
+Homepage: https://github.com/structured-world/coordinode
+Description: CoordiNode — unified database for AI-native applications.
+ Graph + Vector + Full-Text + Document + Time-Series in one engine,
+ one query language (OpenCypher), one transaction.
+License: AGPL-3.0-only
+
+Package: coordinode
+Architecture: arm64
+Version: 0.3.0
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 10776
+Filename: pool/main/c/coordinode/coordinode_0.3.0_arm64.deb
+Size: 5115204
+MD5sum: 350cdcdd8f5147132fff2182b2ba370a
+SHA1: f630a55755e1257fd440df9ae8464cdc754c0b75
+SHA256: b8a853f562231afe6d45a658e0e6649266564752b371e7977aada028c8f3e047
+SHA512: 671a74a3613b1330a096714a0bd3c10e0be9e52e29cdcfd36aac106466dc390a2ec42b45775c5e9ada4c44138d2ad2498e37fb656d45a5d3d6bcda6aa74ea926
+Homepage: https://github.com/structured-world/coordinode
+Description: CoordiNode — unified database for AI-native applications.
+ Graph + Vector + Full-Text + Document + Time-Series in one engine,
+ one query language (OpenCypher), one transaction.
+License: AGPL-3.0-only
+
+Package: coordinode
+Architecture: arm64
+Version: 0.3.10
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 11417
+Filename: pool/main/c/coordinode/coordinode_0.3.10_arm64.deb
+Size: 5418836
+MD5sum: d6b6f76bde45bd99a17bc22986860885
+SHA1: dfee60c644bfef75896f8373eaf827eda471e113
+SHA256: ead2bc6a18a2f5687201f7cbbf1a4ae08be45dc665a60705a36171315b66a03b
+SHA512: f3b5462fc67de19ac35a4b52a446e553f4a175d990de60e4347656911f5b1bfa96b9d3fd90806aa8c41abdcffda5808a2eec05f45386b4bb9f6b4dce3cd4b0f2
+Homepage: https://github.com/structured-world/coordinode
+Description: CoordiNode — unified database for AI-native applications.
+ Graph + Vector + Full-Text + Document + Time-Series in one engine,
+ one query language (OpenCypher), one transaction.
+License: AGPL-3.0-only
+
+Package: coordinode
+Architecture: arm64
+Version: 0.3.11
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 11867
+Filename: pool/main/c/coordinode/coordinode_0.3.11_arm64.deb
+Size: 5647176
+MD5sum: a426edcde6e33ab3983ee056202c01d0
+SHA1: 2807341d1642a9a4012ad2e7679d09abecde7793
+SHA256: 0b87c1149b07a8de12ef89a7e69d8331bda96938d847d5b879e4ad11c238eb2c
+SHA512: f637a36b4f9f7c879b07016784923a3dd5ae3df5a8090923827d65dd052b98383c770f2979870b5a46661cb3b7e4f6e1a673aa9b718ad0e30df86ddbe0400390
+Homepage: https://github.com/structured-world/coordinode
+Description: CoordiNode — unified database for AI-native applications.
+ Graph + Vector + Full-Text + Document + Time-Series in one engine,
+ one query language (OpenCypher), one transaction.
+License: AGPL-3.0-only
+
+Package: coordinode
+Architecture: arm64
+Version: 0.3.12
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 11867
+Filename: pool/main/c/coordinode/coordinode_0.3.12_arm64.deb
+Size: 5665950
+MD5sum: 805bb48f628e996b4efaeff1d472d8a3
+SHA1: d8988b7f7caf98736fc64e8ff3d1dd590ee9e77d
+SHA256: 2108a6ce079d54521344d4da0e6cd89519cd89acd925bf6880c91e772f028416
+SHA512: 1ab9080448e1c71e97ca6f05179229e44653fcda9abb33f3aede5b471af0cbd69334be35ea026a28cc8785f2fc6fbce546f07c0c86b2596980cd60e14f4cd145
+Homepage: https://github.com/structured-world/coordinode
+Description: CoordiNode — unified database for AI-native applications.
+ Graph + Vector + Full-Text + Document + Time-Series in one engine,
+ one query language (OpenCypher), one transaction.
+License: AGPL-3.0-only
+
+Package: coordinode
+Architecture: arm64
+Version: 0.3.13
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 11867
+Filename: pool/main/c/coordinode/coordinode_0.3.13_arm64.deb
+Size: 5667620
+MD5sum: c12e063bd4e235944da6880490c62d95
+SHA1: 8866779080f238f3f9b66f26d9c3e86ff6e90fad
+SHA256: dee5ced208a9d0553e5f857312fb85ccc14c575a94da62723a61ba2bad254c44
+SHA512: eb44833cdd2955008226fbf971f60a33ad08dec5215e777e9aa692da8d77cc76fed0c26eddd4f9c58cd0801d764d0cd03828590c14a83aa1205d938ca938e78b
+Homepage: https://github.com/structured-world/coordinode
+Description: CoordiNode — unified database for AI-native applications.
+ Graph + Vector + Full-Text + Document + Time-Series in one engine,
+ one query language (OpenCypher), one transaction.
+License: AGPL-3.0-only
+
+Package: coordinode
+Architecture: arm64
+Version: 0.3.14
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 11867
+Filename: pool/main/c/coordinode/coordinode_0.3.14_arm64.deb
+Size: 5667926
+MD5sum: 5d1dbcaf6a26e1ec1b23787f348c8c00
+SHA1: de314a14067c2951a170f239eeb82b063790e238
+SHA256: 12b7d9e29723230d14cf538f747eb7ad647669e51b6125dbec390482a0152e50
+SHA512: 5da6a381650c34bb8108cd43d0cb3e6b9a81dc7f1f2192389d4eb9bb886ac96306007d51354147b63321dcea636963966f0f91155a6470b54d8d6e69923fd0fa
+Homepage: https://github.com/structured-world/coordinode
+Description: CoordiNode — unified database for AI-native applications.
+ Graph + Vector + Full-Text + Document + Time-Series in one engine,
+ one query language (OpenCypher), one transaction.
+License: AGPL-3.0-only
+
+Package: coordinode
+Architecture: arm64
+Version: 0.3.15
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 11867
+Filename: pool/main/c/coordinode/coordinode_0.3.15_arm64.deb
+Size: 5669526
+MD5sum: db09697c79613108a846f37b4fce0559
+SHA1: 357960ce9a5af12597d0930b34fea3b805594e7f
+SHA256: b3f68400e39fd01e7cd6d19a1134854aba5ae306739fcd83392c4550eda65ed3
+SHA512: b40d882c9fab10c50ca3ecc85d44bad7f4f249dccb150dacdbd01db4abf3d1e8b430d447762c16c6f78440b8fd79ecb39a6f8d56d7d05b354de681f9fed5c20a
+Homepage: https://github.com/structured-world/coordinode
+Description: CoordiNode — unified database for AI-native applications.
+ Graph + Vector + Full-Text + Document + Time-Series in one engine,
+ one query language (OpenCypher), one transaction.
+License: AGPL-3.0-only
+
+Package: coordinode
+Architecture: arm64
+Version: 0.3.16
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 13788
+Filename: pool/main/c/coordinode/coordinode_0.3.16_arm64.deb
+Size: 6605702
+MD5sum: 0ff619e7fa4807c0b358947e16b0e897
+SHA1: 55beaab397d194e7a17fadb4755852064df18e08
+SHA256: c6579bb5fb51c7ea00c6ba47bc0133d598ed1081b310e769e009a202f04ccd7a
+SHA512: ea9efb68c3daa0f303d6329eee6379246eb13c7aad43c8d92b79e5e09ce32b91c040e32254d5457585c2ead8f301a5c0d6dc42def6dc8564619274fcc23cb748
+Homepage: https://github.com/structured-world/coordinode
+Description: CoordiNode — unified database for AI-native applications.
+ Graph + Vector + Full-Text + Document + Time-Series in one engine,
+ one query language (OpenCypher), one transaction.
+License: AGPL-3.0-only
+
+Package: coordinode
+Architecture: arm64
+Version: 0.3.17
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 13724
+Filename: pool/main/c/coordinode/coordinode_0.3.17_arm64.deb
+Size: 6573644
+MD5sum: f0713302f637e49d148437e339776a66
+SHA1: c2d46e5b6778d3d4471e937ee1df6bbeb2fa1866
+SHA256: 19f7b5c76790f46c587f613a6888b5caa2e68a1d125515d7c69958845feafc1b
+SHA512: e534a44a5df73991b2af19775b314be54040a372731cabe62b9ac074192a6ce0c9a4a82f9c3bc3f52db74f3ee872c781667228f8f64ad509eb3e9237ecd2a43b
+Homepage: https://github.com/structured-world/coordinode
+Description: CoordiNode — unified database for AI-native applications.
+ Graph + Vector + Full-Text + Document + Time-Series in one engine,
+ one query language (OpenCypher), one transaction.
+License: AGPL-3.0-only
+
+Package: coordinode
+Architecture: arm64
+Version: 0.3.18
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 14302
+Filename: pool/main/c/coordinode/coordinode_0.3.18_arm64.deb
+Size: 6806050
+MD5sum: 34a6ee88eed8988cbf4da3d919f1fda0
+SHA1: 80fd8f108b97e56d12e1f444f303af9f3b1fb516
+SHA256: 985f292c1d5f26d702b3ca10db522197177b9ef98c62d39976a146adc5c8579e
+SHA512: ef3497b86f20153b120849ac0d5070c073cad84d994da214a2fa642cec6da7c96ae76d42f83428063656ddb870ea22b82eb2e03ce9bb652ab0560719513b82ad
+Homepage: https://github.com/structured-world/coordinode
+Description: CoordiNode — unified database for AI-native applications.
+ Graph + Vector + Full-Text + Document + Time-Series in one engine,
+ one query language (OpenCypher), one transaction.
+License: AGPL-3.0-only
+
+Package: coordinode
+Architecture: arm64
+Version: 0.3.19
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 14366
+Filename: pool/main/c/coordinode/coordinode_0.3.19_arm64.deb
+Size: 6784938
+MD5sum: 97bb3363b79ff49c573b55cfd24934cf
+SHA1: 6c3dfa35b2af3e029be7f795e6ad4ed6d46ad17a
+SHA256: 4e81b82ddb53c7e773f860429100552eb1c2e61c493d1eac756e3ea48d04808b
+SHA512: 2362845cbd07add98da66067e90706bbad82e8ca2172a01560ee10d11e40f6fa98172e5cfa349a607f688f33d143ed533e0b6aef0cd6ef6580eada1776aac46b
+Homepage: https://github.com/structured-world/coordinode
+Description: CoordiNode — unified database for AI-native applications.
+ Graph + Vector + Full-Text + Document + Time-Series in one engine,
+ one query language (OpenCypher), one transaction.
+License: AGPL-3.0-only
+
+Package: coordinode
+Architecture: arm64
+Version: 0.3.1
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 10776
+Filename: pool/main/c/coordinode/coordinode_0.3.1_arm64.deb
+Size: 5117366
+MD5sum: c18eea584e8fe19d03645ca61ce35d2b
+SHA1: dfa088c6ecae455f4826f57a53691cd25a3a9117
+SHA256: 763f011c88de32cf328d9ebb7d75297487c0fcd024c726b22d89a4402446a954
+SHA512: d96cf2fc08c92526357395186a9d563f34f1682f63bebfef54066999e4805eda9451c2b5c7441810e74441e7e715b408966f7651f022ca57f05bd6e1825ab850
+Homepage: https://github.com/structured-world/coordinode
+Description: CoordiNode — unified database for AI-native applications.
+ Graph + Vector + Full-Text + Document + Time-Series in one engine,
+ one query language (OpenCypher), one transaction.
+License: AGPL-3.0-only
+
+Package: coordinode
+Architecture: arm64
+Version: 0.3.20
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 14430
+Filename: pool/main/c/coordinode/coordinode_0.3.20_arm64.deb
+Size: 6820210
+MD5sum: c7fcd4de24d419b88c85b0475bafa9f9
+SHA1: 18aad44b40844f563891126e3b8608c9ae7c3850
+SHA256: a52c5509fa43f18f5da54534c02e2fcbd0384e729c36d3b46b6b7b34716d188e
+SHA512: 8631f179ca94cc2fff9f456e4db18df029de01cc5c8bfdfcbbe608fb3e98588984b4296582f9f5a76f4469f5d27124d7c0d6e8edc9adfaeae52a8c828a042878
+Homepage: https://github.com/structured-world/coordinode
+Description: CoordiNode — unified database for AI-native applications.
+ Graph + Vector + Full-Text + Document + Time-Series in one engine,
+ one query language (OpenCypher), one transaction.
+License: AGPL-3.0-only
+
+Package: coordinode
+Architecture: arm64
+Version: 0.3.2
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 10840
+Filename: pool/main/c/coordinode/coordinode_0.3.2_arm64.deb
+Size: 5128054
+MD5sum: 81002d0d6ef9b93fa6b7e82ca377a9bc
+SHA1: 8234f707e6503377f136131c8efdd161041064f6
+SHA256: 384f20aa1e102462a12ce3500289d3a5413963fba78c851bfe9c87bed04e77d1
+SHA512: 9b848e3a493e1ef5ca62526bad159db5837daf8c0996e7d7bf17018039e96b5dd88345d7a17f49a7736fdde4543dcd00ab2e3eda8185030b3bc3363ef5315865
+Homepage: https://github.com/structured-world/coordinode
+Description: CoordiNode — unified database for AI-native applications.
+ Graph + Vector + Full-Text + Document + Time-Series in one engine,
+ one query language (OpenCypher), one transaction.
+License: AGPL-3.0-only
+
+Package: coordinode
+Architecture: arm64
+Version: 0.3.3
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 10840
+Filename: pool/main/c/coordinode/coordinode_0.3.3_arm64.deb
+Size: 5142804
+MD5sum: 4a4c9a9cdaf6badbd10671bc13538221
+SHA1: 1f97ce52c0f3caae95806dc6fb8fe7b7698407bc
+SHA256: a2f8106d764f1baa64b55d14d4018cb7f7455dd9bd63afaeb1fad44a4b7c40f6
+SHA512: 4fe2d36d32c60242546e515d8d01e9dde35b55808247f1918a95c54dfa9e42ea6901cb61f8459136d9cc3b1ed126299bfc108a8ce690f27be068420a608a1c35
+Homepage: https://github.com/structured-world/coordinode
+Description: CoordiNode — unified database for AI-native applications.
+ Graph + Vector + Full-Text + Document + Time-Series in one engine,
+ one query language (OpenCypher), one transaction.
+License: AGPL-3.0-only
+
+Package: coordinode
+Architecture: arm64
+Version: 0.3.4
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 10904
+Filename: pool/main/c/coordinode/coordinode_0.3.4_arm64.deb
+Size: 5166188
+MD5sum: 5938eeb2a41500f0ae52508a13c61eb4
+SHA1: 0ed93bdffafdda616f69484297f5bafc1d556245
+SHA256: 88034f339e20b5a9894c4fafe0af99d47fc356578a669fc9e4bb4f6764c3ff21
+SHA512: 9005db16913545dd6943d1f119ee0525dd7133e57de4f4ab3ef2e3190ca528416a494ee581b6ebc7b9df33c09e446fec8c7bdaa31f2bf25240340bdcbd350979
+Homepage: https://github.com/structured-world/coordinode
+Description: CoordiNode — unified database for AI-native applications.
+ Graph + Vector + Full-Text + Document + Time-Series in one engine,
+ one query language (OpenCypher), one transaction.
+License: AGPL-3.0-only
+
+Package: coordinode
+Architecture: arm64
+Version: 0.3.5
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 10904
+Filename: pool/main/c/coordinode/coordinode_0.3.5_arm64.deb
+Size: 5183366
+MD5sum: f365f7226a290bc29fcd062e955acd08
+SHA1: 64742d172ceb15772c54aca3bbc5d5463b406807
+SHA256: 584f9a1ce530c3aee6e504856c041d5392a8771f6814b140ba4f6d1e36bf8707
+SHA512: d6894c488a231cee26a88d6396171440093b56226e47a844bfad43e270989182bb2482cddc43700c16ac51a76015ceca2d6425ce0f0f7b19be53a4a181297d49
+Homepage: https://github.com/structured-world/coordinode
+Description: CoordiNode — unified database for AI-native applications.
+ Graph + Vector + Full-Text + Document + Time-Series in one engine,
+ one query language (OpenCypher), one transaction.
+License: AGPL-3.0-only
+
+Package: coordinode
+Architecture: arm64
+Version: 0.3.6
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 10968
+Filename: pool/main/c/coordinode/coordinode_0.3.6_arm64.deb
+Size: 5194378
+MD5sum: 2080f540cf0e68f26f4dceded405eba7
+SHA1: 4f375746b6cf1b3d99227a66cd4e9fdc00bc957e
+SHA256: e58684abbe8d794b827808cb3f0173cd1a0d8336789150e30fab4b5483f7fb31
+SHA512: fcfaae360776afcd64c81d2b8db14eb178b5b53a8660bb0657f2db277424ccbfaeb36509d844d0e1722fae12ae462f22cb48615ea440ca3be3a56e1074a625cf
+Homepage: https://github.com/structured-world/coordinode
+Description: CoordiNode — unified database for AI-native applications.
+ Graph + Vector + Full-Text + Document + Time-Series in one engine,
+ one query language (OpenCypher), one transaction.
+License: AGPL-3.0-only
+
+Package: coordinode
+Architecture: arm64
+Version: 0.3.7
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 10968
+Filename: pool/main/c/coordinode/coordinode_0.3.7_arm64.deb
+Size: 5193676
+MD5sum: e1ab643adea5d8e6ef2c055a29cd6b52
+SHA1: 2404120c037e81d23cf87022c1d9f56d9f66c6e5
+SHA256: 448ea7bcacd53b96235570e1b853003995ff207faaaa7d311e6992ea347019e8
+SHA512: 8f9543118908ae13abddb882c1dc92e2c4081925958fb1cd72ccd6c7be98a2fe27470a38504aae3771fd48a84a5dddb50de04c11d21ab5be761ae672aa00c177
+Homepage: https://github.com/structured-world/coordinode
+Description: CoordiNode — unified database for AI-native applications.
+ Graph + Vector + Full-Text + Document + Time-Series in one engine,
+ one query language (OpenCypher), one transaction.
+License: AGPL-3.0-only
+
+Package: coordinode
+Architecture: arm64
+Version: 0.3.8
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 10968
+Filename: pool/main/c/coordinode/coordinode_0.3.8_arm64.deb
+Size: 5217310
+MD5sum: 784162c6b4599c6840709cf26f960267
+SHA1: 4be10231f1d539922bbf69b96a2c3f24cfe95035
+SHA256: edafd74cdde3e43eba9ae7e7a3a155ff8a822a466c56fef68c589a207eabfe07
+SHA512: 10450a857ecb502e2b7e5030cbcfd6b2491699253ab07565b75e60bb1c9f1fde49fef1b59d7615d5bcfdd55e912d44230cae8edf1aba41346fdb1d97bebf9533
+Homepage: https://github.com/structured-world/coordinode
+Description: CoordiNode — unified database for AI-native applications.
+ Graph + Vector + Full-Text + Document + Time-Series in one engine,
+ one query language (OpenCypher), one transaction.
+License: AGPL-3.0-only
+
+Package: coordinode
+Architecture: arm64
+Version: 0.3.9
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 11353
+Filename: pool/main/c/coordinode/coordinode_0.3.9_arm64.deb
+Size: 5393238
+MD5sum: 5429a3a5da07407c735a937f2cc2380e
+SHA1: 6fe18009657affe94bd788305136a807d3eda636
+SHA256: 623d90b0b5af4dee29e94788d5c53436bcbe70033bf9acdb2dcb7d8b3804e3b8
+SHA512: 38a765c88572938a0539c0d304c49b15eeb69311ac7615a441f1c6481c6733e64f764f602fe8fd8b05578690767d23a43be49a8a38f4788693627e5c5fa2aa0e
+Homepage: https://github.com/structured-world/coordinode
+Description: CoordiNode — unified database for AI-native applications.
+ Graph + Vector + Full-Text + Document + Time-Series in one engine,
+ one query language (OpenCypher), one transaction.
+License: AGPL-3.0-only
+
+Package: coordinode
+Architecture: arm64
+Version: 0.4.0
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 14430
+Filename: pool/main/c/coordinode/coordinode_0.4.0_arm64.deb
+Size: 6843010
+MD5sum: c7993fe29012599750c417779c967897
+SHA1: 1a3daf3012ac964e8ed6246e02504d2c1ea5efa9
+SHA256: 5826307bf16ba5bcd1c18f3551a375c9fe913e144bdb4f4244d68df81a3b14d5
+SHA512: 9f79425426e05823813e1d8e1c05ee2da7ffe330602a8775043bc548da41291c0eaf400ced01020e47c20d1cf3fef5624c9597d86049c21bf1be79db450a0f20
+Homepage: https://github.com/structured-world/coordinode
+Description: CoordiNode — unified database for AI-native applications.
+ Graph + Vector + Full-Text + Document + Time-Series in one engine,
+ one query language (OpenCypher), one transaction.
+License: AGPL-3.0-only
+
+Package: coordinode
+Architecture: arm64
+Version: 0.4.1
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 14494
+Filename: pool/main/c/coordinode/coordinode_0.4.1_arm64.deb
+Size: 6855226
+MD5sum: 1336b7493e8596a6de12089305e9c133
+SHA1: 8c102f9424a3bb22c42b6cd78ef4725c2e423a98
+SHA256: 0931c5e576e7f78cf58e790c4288c585f8f31d82c32f238370b9b0c811f2aced
+SHA512: 69e24fe93eb23974055a3fd02aa6ef6469259394b4df9683a493ac37168a8f4ff0b33d5c09532dbe0ff5b6643585fd1ef86f9bb3e07d5517dffac4fedcabfdcc
+Homepage: https://github.com/structured-world/coordinode
+Description: CoordiNode — unified database for AI-native applications.
+ Graph + Vector + Full-Text + Document + Time-Series in one engine,
+ one query language (OpenCypher), one transaction.
+License: AGPL-3.0-only
+
+Package: coordinode
+Architecture: arm64
+Version: 0.4.2
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 14208
+Depends: systemd, adduser
+Filename: pool/main/c/coordinode/coordinode_0.4.2_arm64.deb
+Size: 4177400
+MD5sum: fecc35f8fa56bf44dfe6909266c10999
+SHA1: 6b0b2b71bd075ccaf342d2d8abc44558922179d0
+SHA256: 4027b531cf160590fc254046f6520dcc71b59902fe8ef9eda76a69b6394a0a96
+SHA512: f5088f566a45076a89cacd5a418e6eeacf97bfa14a5cb7705a013751533bef2c9484e9fae876cb28976ca9fa857457c24372c8010eb7d444557277f613d33be9
+Homepage: https://github.com/structured-world/coordinode
+Description: Unified database for AI-native applications
+ CoordiNode is a unified database combining graph, vector, full-text,
+ document and time-series modalities in one engine. Queries use OpenCypher;
+ writes commit atomically across modalities.
+
+Package: coordinode
+Architecture: arm64
+Version: 0.4.3
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 14401
+Depends: systemd, adduser
+Filename: pool/main/c/coordinode/coordinode_0.4.3_arm64.deb
+Size: 4223088
+MD5sum: 73f98e4e0fb103ea86be7f4e933a5192
+SHA1: b43ab0779a5ec1f690246c96708de24dd3e49bfb
+SHA256: 7a30ace0b667d88f7c19b0d4249721ed9161c4fbc44048bcd69d66573143b4f1
+SHA512: b37b44ee4ccbb77a0c8aa7ef11a2c2a7c7667a47235c3bfc08bba01535f5817ff3407ee268ef5a991ce8c07c30bba1f2b313e7ac458878a3c1c8fec7dc4e88d9
+Homepage: https://github.com/structured-world/coordinode
+Description: Unified database for AI-native applications
+ CoordiNode is a unified database combining graph, vector, full-text,
+ document and time-series modalities in one engine. Queries use OpenCypher;
+ writes commit atomically across modalities.
+
+Package: strongswan-dhcp-inform
+Architecture: arm64
+Version: 6.0.4-sw.13
+Priority: optional
+Section: net
+Maintainer: Structured World Foundation <dev@sw.foundation>
+Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
+Filename: pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.4-sw.13_noble_arm64.deb
+Size: 140822
+MD5sum: 9dc185e2a51ac666cb22419e02e49310
+SHA1: 3b43873ddcfd60a554ec5dbbcb3188303c78e465
+SHA256: 4e8aa68c10705c36122bf60a9253a5fc231da269e0224371f01a26360b731a55
+SHA512: c4c623a7fbf89574ba92df4a81ebc53c5d75964b8c13c83f217bbc8195e93a4ee80cbe8633512b72d9c48413cf5aa977272b08446a7ec322e7fe3c82f788cfa8
+Homepage: https://github.com/structured-world/strongswan
+Description: DHCP INFORM responder plugin for strongSwan
+ Responds to Windows DHCPINFORM requests with split-tunnel routes
+ from PostgreSQL database. Delivers routes via DHCP option 121/249.
+ Works with system strongswan (>= 6.0) or strongswan-sw.
+
+Package: strongswan-dhcp-inform
+Architecture: arm64
+Version: 6.0.6-sw.1
+Priority: optional
+Section: net
+Maintainer: Structured World Foundation <dev@sw.foundation>
+Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
+Filename: pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.6-sw.1_noble_arm64.deb
+Size: 141100
+MD5sum: 97c6c651c9b5d87cd8741887f69090ec
+SHA1: 1c53a82eba815d2a3677263ebb3fca0a1eb4ac44
+SHA256: b2732e600e98bca6b46c970bf66e91dcf9b168dedf9eac710956b83c25a46b74
+SHA512: b07e70567479416c0c9e024e3e7c90151be10e1ec3366cec9a86eceb558eca611f4de26a87c77519979e54e8865243f225ad6d5c7d25bdf365300caaacaf0c98
+Homepage: https://github.com/structured-world/strongswan
+Description: DHCP INFORM responder plugin for strongSwan
+ Responds to Windows DHCPINFORM requests with split-tunnel routes
+ from PostgreSQL database. Delivers routes via DHCP option 121/249.
+ Works with system strongswan (>= 6.0) or strongswan-sw.
+
+Package: strongswan-dhcp-inform
+Architecture: arm64
+Version: 6.0.7-sw.1
+Priority: optional
+Section: net
+Maintainer: Structured World Foundation <dev@sw.foundation>
+Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
+Filename: pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.7-sw.1_noble_arm64.deb
+Size: 141010
+MD5sum: 9a289e94d60f80995255a8da85b43126
+SHA1: a056c01a561c6e0d5090f2245f21bf4f1f3f1bc0
+SHA256: 7b59e6ca751745c7becf386c1afff29491d0ee5f79fb5a7658f955c3eb4fbfa9
+SHA512: 29c5f8a409fc0e0237e5c404b82e96cc3b74f350cf4090d6d279d1ba2338a2356d8168b1a4b6e4587c4d47d642f4cc1bd1b0ae0efbdd4aebecbe92271743f918
+Homepage: https://github.com/structured-world/strongswan
+Description: DHCP INFORM responder plugin for strongSwan
+ Responds to Windows DHCPINFORM requests with split-tunnel routes
+ from PostgreSQL database. Delivers routes via DHCP option 121/249.
+ Works with system strongswan (>= 6.0) or strongswan-sw.
+
+Package: strongswan-pgsql
+Architecture: arm64
+Version: 6.0.4-sw.13
+Priority: optional
+Section: net
+Maintainer: Structured World Foundation <dev@sw.foundation>
+Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
+Filename: pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.13_noble_arm64.deb
+Size: 34848
+MD5sum: b41a60b4892c53e4cecbe24571a13f95
+SHA1: 20c4b5e4ef673a764b004cd3dada0dedc6445ef0
+SHA256: d2b9a7edd5b3109a4f9a6bb5bc2700ae95d8af8b6fdef637973667e968fae678
+SHA512: cec5909fa8c3e5f48866ed5765920dc9b8a0b46080af8f204cc82baaafc4e351a535fd91264aba8e4465b0afe06f03ef56f1d39dda7149c91f653fef6f256b95
+Homepage: https://github.com/structured-world/strongswan
+Description: PostgreSQL plugin for strongSwan
+ PostgreSQL database backend for strongSwan SQL plugin.
+ Enables storing VPN user credentials and configuration in PostgreSQL.
+ Works with system strongswan (>= 6.0) or strongswan-sw.
+
+Package: strongswan-pgsql
+Architecture: arm64
+Version: 6.0.6-sw.1
+Priority: optional
+Section: net
+Maintainer: Structured World Foundation <dev@sw.foundation>
+Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
+Filename: pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.6-sw.1_noble_arm64.deb
+Size: 34846
+MD5sum: 1d6ab8bacdeabfe7f9d5cc8b6e5632e2
+SHA1: 9c1c252aa9625e151e5d9e59a74650d3c16b9c84
+SHA256: 9eed8136a98e8c5cb6810c89a466a3dfbe13eaca99e2f17b125dd06beab67e21
+SHA512: af1c036626b6c3d2c6fd8273506f520839de429952a43545a584331c0c8e7d891117dfbbfbc8688c649f62f1471826a5da100146f0fffc3034a2c5ba5573b64f
+Homepage: https://github.com/structured-world/strongswan
+Description: PostgreSQL plugin for strongSwan
+ PostgreSQL database backend for strongSwan SQL plugin.
+ Enables storing VPN user credentials and configuration in PostgreSQL.
+ Works with system strongswan (>= 6.0) or strongswan-sw.
+
+Package: strongswan-pgsql
+Architecture: arm64
+Version: 6.0.7-sw.1
+Priority: optional
+Section: net
+Maintainer: Structured World Foundation <dev@sw.foundation>
+Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
+Filename: pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.7-sw.1_noble_arm64.deb
+Size: 34844
+MD5sum: 7c68b289e41d67db5031ec8f4c86ec2d
+SHA1: 5ea36f2027c3e96559d33bb82fef9ed7897a531e
+SHA256: a062a56ebff39e418b00566185d0204cdd950fe907ee9e3969b9378338c0c92b
+SHA512: 6cf30ae7cbe8f4d5488ceabe3ac0fa66a43801085283cb80effae8ee6f01d53dd25589ac452055ddb99c60698336d0136c76efd6df36b452830dcfb8bee4ef26
+Homepage: https://github.com/structured-world/strongswan
+Description: PostgreSQL plugin for strongSwan
+ PostgreSQL database backend for strongSwan SQL plugin.
+ Enables storing VPN user credentials and configuration in PostgreSQL.
+ Works with system strongswan (>= 6.0) or strongswan-sw.
+
+Package: strongswan-sw
+Architecture: arm64
+Version: 6.0.4-sw.13
+Priority: optional
+Section: net
+Maintainer: Structured World Foundation <dev@sw.foundation>
+Provides: strongswan (= 6.0.4-sw.13)
+Depends: libgmp10, libssl3t64, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
+Conflicts: strongswan, strongswan-charon, strongswan-starter
+Replaces: strongswan, strongswan-charon, strongswan-starter
+Filename: pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.13_noble_arm64.deb
+Size: 6394760
+MD5sum: d3c5feaa5272ea49b8384b212bf4f212
+SHA1: 09d72aaa9a353e452cb2aa1c4ebe0eef2d53874c
+SHA256: 77516d37c08316f52d6e160968a2828668aea00d68b57ece1e0a0156e958012e
+SHA512: 1dc60911ab9a9c3123eb97d4da8019447a7a4ad5e3cff9c476d9361e346e21cdbdbe77811b5d9dd5cade04c8f559e8f3a089b5ada470c6ce916a5d7caa855644
+Homepage: https://github.com/structured-world/strongswan
+Description: strongSwan IPsec (SW fork)
+ strongSwan is a complete IPsec implementation for Linux.
+ This is the Structured World Foundation fork with socket permissions
+ fix (umask 0660 for Unix sockets). Drop-in replacement for system
+ strongswan package.
+
+Package: strongswan-sw
+Architecture: arm64
+Version: 6.0.6-sw.1
+Priority: optional
+Section: net
+Maintainer: Structured World Foundation <dev@sw.foundation>
+Provides: strongswan (= 6.0.6-sw.1)
+Depends: libgmp10, libssl3t64, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
+Conflicts: strongswan, strongswan-charon, strongswan-starter
+Replaces: strongswan, strongswan-charon, strongswan-starter
+Filename: pool/main/s/strongswan-sw/strongswan-sw_6.0.6-sw.1_noble_arm64.deb
+Size: 6403602
+MD5sum: 783965f0e96ebb3b76f2d28bf907b896
+SHA1: c37ed349d8c9bec95240e62b2a0054434f88221d
+SHA256: b1b65af04bf871d9a1d48b4dd65981382813a18e740e654fefd1b0142380d749
+SHA512: 2ae926e1d353758d845fb695d4ddb1107cfdae50bfa24051d8736d7b2dbbea007f3e10a136df190d91189a8f6bf3d1fa7ac1742305b8ba5557417bb0ba7359c5
+Homepage: https://github.com/structured-world/strongswan
+Description: strongSwan IPsec (SW fork)
+ strongSwan is a complete IPsec implementation for Linux.
+ This is the Structured World Foundation fork with socket permissions
+ fix (umask 0660 for Unix sockets). Drop-in replacement for system
+ strongswan package.
+
+Package: strongswan-sw
+Architecture: arm64
+Version: 6.0.7-sw.1
+Priority: optional
+Section: net
+Maintainer: Structured World Foundation <dev@sw.foundation>
+Provides: strongswan (= 6.0.7-sw.1)
+Depends: libgmp10, libssl3t64, libcurl4, libsystemd0, libcap2, libpam0g, libldap2, libsqlite3-0, libgcrypt20
+Conflicts: strongswan, strongswan-charon, strongswan-starter
+Replaces: strongswan, strongswan-charon, strongswan-starter
+Filename: pool/main/s/strongswan-sw/strongswan-sw_6.0.7-sw.1_noble_arm64.deb
+Size: 6405586
+MD5sum: 9bd170fa046eaad38742b55f9199cddf
+SHA1: 00a5ba9267f68f49f7b644de40f218120f79c1d5
+SHA256: 3827c9fe8c205fd53b321687747e703bb61f7ccc9e61fcbf4bd856b9a88a722a
+SHA512: 5668fabad2fd26677af27943cdd4451c54c0b370bf12af49004b6b2b9efcfc35767cc669203f5c9a04aa6587c5a0a56690fc3341edab71c998903c6cb9555225
+Homepage: https://github.com/structured-world/strongswan
+Description: strongSwan IPsec (SW fork)
+ strongSwan is a complete IPsec implementation for Linux.
+ This is the Structured World Foundation fork with socket permissions
+ fix (umask 0660 for Unix sockets). Drop-in replacement for system
+ strongswan package.
+
+Package: structured-proxy
+Architecture: arm64
+Version: 2.2.1
+Priority: optional
+Section: net
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 10158
+Depends: systemd, adduser
+Filename: pool/main/s/structured-proxy/structured-proxy_2.2.1_arm64.deb
+Size: 3141844
+MD5sum: a4e9705eb41683c1b44f74076402f5de
+SHA1: d4124d099bd3d4548e4d7a492964558a715905aa
+SHA256: a794258726f1baec8c78e1781bf2b773f8f2f4c477f8bc1929f033cf3f3221fb
+SHA512: 1ec194a1d4b4d49911e55962c9d6d993c79594c2cfe6ab7183eca30b39cb12a75618a22066ce248fe61500e502c8cf7c5d481b6102daf4fd2d01bf86326f825f
+Homepage: https://github.com/structured-world/structured-proxy
+Description: Universal gRPC to REST transcoding proxy
+ structured-proxy is a config-driven gRPC to REST transcoding proxy. One
+ binary serves any gRPC service from a proto descriptor set and a YAML config,
+ with no code generation and no custom handlers.
+ .
+ The service ships disabled: set an upstream address and proto descriptors in
+ /etc/structured-proxy/config.yaml, then enable it with systemctl.
+
+Package: structured-proxy
+Architecture: arm64
+Version: 3.0.0
+Priority: optional
+Section: net
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 10737
+Depends: systemd, adduser
+Filename: pool/main/s/structured-proxy/structured-proxy_3.0.0_arm64.deb
+Size: 3283448
+MD5sum: f60f7af0a8872a533221d753633b370d
+SHA1: f168db536e446b594f05cefe894fbce9bbc393c2
+SHA256: feece0bd75a4f4b459e3c2dc4c226e3eb41be7eb9c8133488bcef29ac0539481
+SHA512: 92697f5d678c99173ea26b52ae7db71918532ca55331444dbf671a7898b33713134d37c089cfcc1469a3c6d106aefbb41d3f46525426d6f63a5c42b89f3ae182
+Homepage: https://github.com/structured-world/structured-proxy
+Description: Universal gRPC to REST transcoding proxy
+ structured-proxy is a config-driven gRPC to REST transcoding proxy. One
+ binary serves any gRPC service from a proto descriptor set and a YAML config,
+ with no code generation and no custom handlers.
+ .
+ The service ships disabled: set an upstream address and proto descriptors in
+ /etc/structured-proxy/config.yaml, then enable it with systemctl.
+

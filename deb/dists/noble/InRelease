@@ -5,30 +5,38 @@ Origin: SW Foundation
 Label: SW Foundation
 Suite: noble
 Codename: noble
-Architectures: amd64
+Architectures: amd64 arm64
 Components: main
 Description: SW Foundation Package Repository
-Date: Wed, 22 Jul 2026 11:15:59 +0000
+Date: Mon, 10 Aug 2026 19:09:41 +0000
 MD5Sum:
- 8e76cbc13e4faae989bd36bfe79ebf2e              194 Release
- c0b5151c22e5156591ce83d1eeb1879d           133552 main/binary-amd64/Packages
- d9ce33153cf47b239494d7aa65fd5020            28346 main/binary-amd64/Packages.gz
+ 46950c515543355d8bcb9171185fa4b3              200 Release
+ ff1c2c4ac3e2be074a31be25ccb25c81            49197 main/binary-amd64/Packages
+ 37863828d9bf65f23d612a8bbac3002b            11790 main/binary-amd64/Packages.gz
+ 5f31914577670b942d962418b90f52aa            32436 main/binary-arm64/Packages
+ 83ae4a2c01ae7b9a3b30e2dda4779b3d             8402 main/binary-arm64/Packages.gz
 SHA1:
- c1efe0466e210476be0cb31dde9635386d6f848d              194 Release
- e95febf53e084ad7f05444b39fd9fcbec9c5ff18           133552 main/binary-amd64/Packages
- 46b34570d3ad8e9da651f9cdef75e4a8268f3c4e            28346 main/binary-amd64/Packages.gz
+ 83e1d10dda4a6c6bebc3ce024d36fd5fe7db4aaa              200 Release
+ 4bf7c7516c1ba915183cdea8f7c1af646e030a40            49197 main/binary-amd64/Packages
+ d5ac1e4caa4b48c04815b22d95c09fdb936b1cbd            11790 main/binary-amd64/Packages.gz
+ 8f38364dbd4e4a8818edf20ae42a5f4c40e8dbdf            32436 main/binary-arm64/Packages
+ c6ca71902fd79f390cf7cf2fa2b1abfde7706a57             8402 main/binary-arm64/Packages.gz
 SHA256:
- 2a24b6cba354875598e68bc14bc53589ad357091cc4c050d2ac4cacee12528ce              194 Release
- 092f2eab960dc66962e2ffc2154d16600eae7aadb87abc475953bbdaa245f129           133552 main/binary-amd64/Packages
- 4a5515793d81c352b3430fb8ed4a5e53f326da859f28aef68d44fe50085d5bb5            28346 main/binary-amd64/Packages.gz
+ 76f22dad7b44d5da1ff16a550c71d94ce0a638ea5ff1183ed821350f63fdcfd3              200 Release
+ c90879debde2168f922f95053e1432a7c8992029358af52611abbfbbfd4a5d1f            49197 main/binary-amd64/Packages
+ 9d75ea2a8fa679d4d79af4332443a839565ed1be52dbed9b47fe49927586dec8            11790 main/binary-amd64/Packages.gz
+ d2e92fd6f63c0198ba36859fd9cac9015a027877c81c0013218cbf265f6e56d0            32436 main/binary-arm64/Packages
+ 8da63a408eecc49d51f6b41b8b59ce8d72aa5af7507f2ef1eb033a3f99a1c434             8402 main/binary-arm64/Packages.gz
 SHA512:
- 51ac8548e19819ce4a8f6919cdad22e88e0ff4f609f9419ed68dc679ecd9586a1a898ace94236a62a7e13d13e29072ab34d1d43dd072dcb6e031280bdc62458b              194 Release
- d141febc4b79b0bedace331bc7f4e8c2a885426bc7bffe0ee3c0f84bdbfff6d0d055ec0de77b07509d7a837f9c44563cbaaa8648ef69061ead34a15e07ef8257           133552 main/binary-amd64/Packages
- 06ed07b1a24019a8b2fcf6f114779d67be32fc4c3feeb4b828c41deb932f55590815cf43393ab539b0c4501bc6159e514295acd589e2a4667cb065789866a072            28346 main/binary-amd64/Packages.gz
+ 6ef8894ea9c127acbd540cc925aef8dcfe7f3c8a0d6f60ac33b9479c942cf8e85ab35d4333041bfb4f54dd05034f73440b341b434ac89e054ff0cd294ad64f3d              200 Release
+ 9ff2cac7ca303b9dde1fb56e7b762f9cade8a085f619a98d31a44afdac20aa26d0ad18e87cc52c27512a1c7e33cd8f81c6392ecb015ae1de9b5f57c3dc197736            49197 main/binary-amd64/Packages
+ 351d496bdd56740f92ff8f8cc4fc8ad764135b13beb64754972a2b69ce57de863c8832b1fcfd18b3e764f80b48f04293a2a475bd8631d7a33391e7458cce7134            11790 main/binary-amd64/Packages.gz
+ a5911f61c947379770513a0fe903139804e2e06db90987e3eeaa79d797a509ddc535a3c7039e774becd358ce7c8cdde7387e90b3f3eef068600e3214d60be6b9            32436 main/binary-arm64/Packages
+ d1ea5ba4f717f139da98ee3065c0506f3b81af2f1cd2fc5167e3a1a357cd4f752566e374bcf42f4c1972fb51ef52f01b1ade342de322c162bf5200a947726f95             8402 main/binary-arm64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iHUEARYKAB0WIQTR7IhZ5NIvA98/BBz5BTMHetsLWgUCamCmbwAKCRD5BTMHetsL
-WpXxAQDV6NZVmirPerQ7tQkq57j7oz2aViu4s6uQHCql65yUjAEAmgaSNiVqFG+5
-fH3gHTgFVysV1OqgtaRs+YBqWRDL1QU=
-=IIcC
+iHUEARYKAB0WIQTR7IhZ5NIvA98/BBz5BTMHetsLWgUCanoh9QAKCRD5BTMHetsL
+Wv60AP9NJ0csx7/zxejrWuaW2kPZuHBMo6ptUhR+Enj+syJn6wEAwOq7LI4f6a/z
+S2EE7Cy6wgX3pDkDeUt9THsD5LLh7gM=
+=Kcy6
 -----END PGP SIGNATURE-----

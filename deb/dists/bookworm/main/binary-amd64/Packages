@@ -5,31 +5,12 @@ Priority: optional
 Section: database
 Maintainer: Structured World Foundation <oss@sw.foundation>
 Installed-Size: 13145
-Filename: deb/pool/main/c/coordinode/coordinode_0.1.0~alpha.1_amd64.deb
+Filename: pool/main/c/coordinode/coordinode_0.1.0~alpha.1_amd64.deb
 Size: 5437734
 MD5sum: cbd15332d6fa91d051c269e6ec13ca78
 SHA1: d6aeaa3d92b35e8bf19578e37689ca629ac09359
 SHA256: f01427de616c43a25ee971a034f5d0c84d8590aae333337c0364706f5c40a108
 SHA512: 7e2fefb2af0526db5a9f8928720d3d3e9b68b2c779894adcb45d4a9e554b69dc246f8b41ea672bbaf03336346956f0019cc7e74096031831f4648cb64d7b81a5
-Homepage: https://github.com/structured-world/coordinode
-Description: CoordiNode — unified database for AI-native applications.
- Graph + Vector + Full-Text + Document + Time-Series in one engine,
- one query language (OpenCypher), one transaction.
-License: AGPL-3.0-only
-
-Package: coordinode
-Architecture: arm64
-Version: 0.1.0~alpha.1
-Priority: optional
-Section: database
-Maintainer: Structured World Foundation <oss@sw.foundation>
-Installed-Size: 10776
-Filename: deb/pool/main/c/coordinode/coordinode_0.1.0~alpha.1_arm64.deb
-Size: 5115210
-MD5sum: f9e5e022976bbbe7b1d27c2c4b1eb8f3
-SHA1: 873520d73280c44dcf2b24740e501acbdc9d4d3d
-SHA256: 86611807089f567e0f5264f02cb35714b018eea9add4cf64f75ba00dd858bf47
-SHA512: 21364329d933753ce5d0318117b758904029de0ff60be2325f6d3d5d737586ef8c525ce67f4d78745763e10a7be18a25a898f6f34fc2e1df741d37901c3ca44f
 Homepage: https://github.com/structured-world/coordinode
 Description: CoordiNode — unified database for AI-native applications.
  Graph + Vector + Full-Text + Document + Time-Series in one engine,
@@ -43,31 +24,12 @@ Priority: optional
 Section: database
 Maintainer: Structured World Foundation <oss@sw.foundation>
 Installed-Size: 13145
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.0_amd64.deb
+Filename: pool/main/c/coordinode/coordinode_0.3.0_amd64.deb
 Size: 5437726
 MD5sum: 2c963eee93bf30b4ae2fa7fa5c3b0aad
 SHA1: fe41e76cbe41e6e497449ed6414815bc582a63e0
 SHA256: 2fd12cf0cb06e87b8d68038d3f88bc04861213eb4c927acbebf911b640c86cf3
 SHA512: 085141fe90b67723a1f51ea2739bfcc02dc763564b5acf0b973473804f6b473a7ded4d264743de2ab82c6eb37fbb575ec67a2bf5cdb20b6e69e5bd96001b5e3b
-Homepage: https://github.com/structured-world/coordinode
-Description: CoordiNode — unified database for AI-native applications.
- Graph + Vector + Full-Text + Document + Time-Series in one engine,
- one query language (OpenCypher), one transaction.
-License: AGPL-3.0-only
-
-Package: coordinode
-Architecture: arm64
-Version: 0.3.0
-Priority: optional
-Section: database
-Maintainer: Structured World Foundation <oss@sw.foundation>
-Installed-Size: 10776
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.0_arm64.deb
-Size: 5115204
-MD5sum: 350cdcdd8f5147132fff2182b2ba370a
-SHA1: f630a55755e1257fd440df9ae8464cdc754c0b75
-SHA256: b8a853f562231afe6d45a658e0e6649266564752b371e7977aada028c8f3e047
-SHA512: 671a74a3613b1330a096714a0bd3c10e0be9e52e29cdcfd36aac106466dc390a2ec42b45775c5e9ada4c44138d2ad2498e37fb656d45a5d3d6bcda6aa74ea926
 Homepage: https://github.com/structured-world/coordinode
 Description: CoordiNode — unified database for AI-native applications.
  Graph + Vector + Full-Text + Document + Time-Series in one engine,
@@ -81,31 +43,12 @@ Priority: optional
 Section: database
 Maintainer: Structured World Foundation <oss@sw.foundation>
 Installed-Size: 13878
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.10_amd64.deb
+Filename: pool/main/c/coordinode/coordinode_0.3.10_amd64.deb
 Size: 5767202
 MD5sum: d35b7dd2a318643d3eae219d8eb0c88c
 SHA1: f75588157569d9122f0e462391822b3045e4a31b
 SHA256: 602106695840b08c9ec47207b096a8ee03e0e76938bebfbac5103a4c5140e582
 SHA512: a70672a593455ef35306895ad7990bec0de5046b505bdaf642872546ada155cf64f20fd88f914d43be397a446fbfcaad55374fc0b50167e8997ba103d0664c8b
-Homepage: https://github.com/structured-world/coordinode
-Description: CoordiNode — unified database for AI-native applications.
- Graph + Vector + Full-Text + Document + Time-Series in one engine,
- one query language (OpenCypher), one transaction.
-License: AGPL-3.0-only
-
-Package: coordinode
-Architecture: arm64
-Version: 0.3.10
-Priority: optional
-Section: database
-Maintainer: Structured World Foundation <oss@sw.foundation>
-Installed-Size: 11417
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.10_arm64.deb
-Size: 5418836
-MD5sum: d6b6f76bde45bd99a17bc22986860885
-SHA1: dfee60c644bfef75896f8373eaf827eda471e113
-SHA256: ead2bc6a18a2f5687201f7cbbf1a4ae08be45dc665a60705a36171315b66a03b
-SHA512: f3b5462fc67de19ac35a4b52a446e553f4a175d990de60e4347656911f5b1bfa96b9d3fd90806aa8c41abdcffda5808a2eec05f45386b4bb9f6b4dce3cd4b0f2
 Homepage: https://github.com/structured-world/coordinode
 Description: CoordiNode — unified database for AI-native applications.
  Graph + Vector + Full-Text + Document + Time-Series in one engine,
@@ -119,31 +62,12 @@ Priority: optional
 Section: database
 Maintainer: Structured World Foundation <oss@sw.foundation>
 Installed-Size: 14448
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.11_amd64.deb
+Filename: pool/main/c/coordinode/coordinode_0.3.11_amd64.deb
 Size: 6016516
 MD5sum: 3e2f2b307cc31e8ea06eb73152f88047
 SHA1: 47cc4d5145437e74ada84450af364c2ee65a4586
 SHA256: 4658b14cb4ed8542899fadc62b530826409584d32cdf266c1c782ae102fa119d
 SHA512: 048a3e4d1183031a3dfa103cbceb506c9614e6c7c616258051fd78bd9cf9b362457658ca9b1025985bc7ff84fa24b5eeaad44319c3b0ecfdf9e84fbbf9415d0e
-Homepage: https://github.com/structured-world/coordinode
-Description: CoordiNode — unified database for AI-native applications.
- Graph + Vector + Full-Text + Document + Time-Series in one engine,
- one query language (OpenCypher), one transaction.
-License: AGPL-3.0-only
-
-Package: coordinode
-Architecture: arm64
-Version: 0.3.11
-Priority: optional
-Section: database
-Maintainer: Structured World Foundation <oss@sw.foundation>
-Installed-Size: 11867
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.11_arm64.deb
-Size: 5647176
-MD5sum: a426edcde6e33ab3983ee056202c01d0
-SHA1: 2807341d1642a9a4012ad2e7679d09abecde7793
-SHA256: 0b87c1149b07a8de12ef89a7e69d8331bda96938d847d5b879e4ad11c238eb2c
-SHA512: f637a36b4f9f7c879b07016784923a3dd5ae3df5a8090923827d65dd052b98383c770f2979870b5a46661cb3b7e4f6e1a673aa9b718ad0e30df86ddbe0400390
 Homepage: https://github.com/structured-world/coordinode
 Description: CoordiNode — unified database for AI-native applications.
  Graph + Vector + Full-Text + Document + Time-Series in one engine,
@@ -157,7 +81,7 @@ Priority: optional
 Section: database
 Maintainer: Structured World Foundation <oss@sw.foundation>
 Installed-Size: 14496
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.12_amd64.deb
+Filename: pool/main/c/coordinode/coordinode_0.3.12_amd64.deb
 Size: 6039318
 MD5sum: 898551844b8026fc710bb910fed5f78d
 SHA1: bf5232cbd0651a156b80fd0b69506d0fcd21278b
@@ -170,32 +94,13 @@ Description: CoordiNode — unified database for AI-native applications.
 License: AGPL-3.0-only
 
 Package: coordinode
-Architecture: arm64
-Version: 0.3.12
-Priority: optional
-Section: database
-Maintainer: Structured World Foundation <oss@sw.foundation>
-Installed-Size: 11867
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.12_arm64.deb
-Size: 5665950
-MD5sum: 805bb48f628e996b4efaeff1d472d8a3
-SHA1: d8988b7f7caf98736fc64e8ff3d1dd590ee9e77d
-SHA256: 2108a6ce079d54521344d4da0e6cd89519cd89acd925bf6880c91e772f028416
-SHA512: 1ab9080448e1c71e97ca6f05179229e44653fcda9abb33f3aede5b471af0cbd69334be35ea026a28cc8785f2fc6fbce546f07c0c86b2596980cd60e14f4cd145
-Homepage: https://github.com/structured-world/coordinode
-Description: CoordiNode — unified database for AI-native applications.
- Graph + Vector + Full-Text + Document + Time-Series in one engine,
- one query language (OpenCypher), one transaction.
-License: AGPL-3.0-only
-
-Package: coordinode
 Architecture: amd64
 Version: 0.3.13
 Priority: optional
 Section: database
 Maintainer: Structured World Foundation <oss@sw.foundation>
 Installed-Size: 14500
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.13_amd64.deb
+Filename: pool/main/c/coordinode/coordinode_0.3.13_amd64.deb
 Size: 6040574
 MD5sum: f9a811cf9b0ba63bb865bcf047b726a8
 SHA1: dfdd093b8067ca50598857dc717180e15a94f69a
@@ -208,56 +113,18 @@ Description: CoordiNode — unified database for AI-native applications.
 License: AGPL-3.0-only
 
 Package: coordinode
-Architecture: arm64
-Version: 0.3.13
-Priority: optional
-Section: database
-Maintainer: Structured World Foundation <oss@sw.foundation>
-Installed-Size: 11867
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.13_arm64.deb
-Size: 5667620
-MD5sum: c12e063bd4e235944da6880490c62d95
-SHA1: 8866779080f238f3f9b66f26d9c3e86ff6e90fad
-SHA256: dee5ced208a9d0553e5f857312fb85ccc14c575a94da62723a61ba2bad254c44
-SHA512: eb44833cdd2955008226fbf971f60a33ad08dec5215e777e9aa692da8d77cc76fed0c26eddd4f9c58cd0801d764d0cd03828590c14a83aa1205d938ca938e78b
-Homepage: https://github.com/structured-world/coordinode
-Description: CoordiNode — unified database for AI-native applications.
- Graph + Vector + Full-Text + Document + Time-Series in one engine,
- one query language (OpenCypher), one transaction.
-License: AGPL-3.0-only
-
-Package: coordinode
 Architecture: amd64
 Version: 0.3.14
 Priority: optional
 Section: database
 Maintainer: Structured World Foundation <oss@sw.foundation>
 Installed-Size: 14500
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.14_amd64.deb
+Filename: pool/main/c/coordinode/coordinode_0.3.14_amd64.deb
 Size: 6040298
 MD5sum: 911125c19094f06c5737340cafea1d57
 SHA1: 3f7c41a9aa9e05c488cb016d896c71079c1385f3
 SHA256: 16b6f6fd5e60bc83e70b2d7c38f6fac57fec17027db238f4a953edff0e252b6b
 SHA512: 2974e0b924783a4f1f97af465665d75c1d7d6cd93d2979995cbc8e6e719a09b7d45a32d4c8f001d6a4d2657bfdc462a660d4840832ed57750f708da144a8ac73
-Homepage: https://github.com/structured-world/coordinode
-Description: CoordiNode — unified database for AI-native applications.
- Graph + Vector + Full-Text + Document + Time-Series in one engine,
- one query language (OpenCypher), one transaction.
-License: AGPL-3.0-only
-
-Package: coordinode
-Architecture: arm64
-Version: 0.3.14
-Priority: optional
-Section: database
-Maintainer: Structured World Foundation <oss@sw.foundation>
-Installed-Size: 11867
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.14_arm64.deb
-Size: 5667926
-MD5sum: 5d1dbcaf6a26e1ec1b23787f348c8c00
-SHA1: de314a14067c2951a170f239eeb82b063790e238
-SHA256: 12b7d9e29723230d14cf538f747eb7ad647669e51b6125dbec390482a0152e50
-SHA512: 5da6a381650c34bb8108cd43d0cb3e6b9a81dc7f1f2192389d4eb9bb886ac96306007d51354147b63321dcea636963966f0f91155a6470b54d8d6e69923fd0fa
 Homepage: https://github.com/structured-world/coordinode
 Description: CoordiNode — unified database for AI-native applications.
  Graph + Vector + Full-Text + Document + Time-Series in one engine,
@@ -271,31 +138,12 @@ Priority: optional
 Section: database
 Maintainer: Structured World Foundation <oss@sw.foundation>
 Installed-Size: 14512
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.15_amd64.deb
+Filename: pool/main/c/coordinode/coordinode_0.3.15_amd64.deb
 Size: 6041826
 MD5sum: eef46dca6303cf8fe86bc9cfdd5f4244
 SHA1: dd51eada70a5ebff5292a678e1adbdeecf6d767c
 SHA256: 1e5a8f205438f756b27c160e7676d7d4364b9d8cdab9912cbc7d3fbed96eab1d
 SHA512: 890c526c244eee1faff1e0738f94a4a451a20916e12e3f53564e2b771db99d54cd620a827b5bfff7195b594b2a3c8497da50fa0148d18de74ceb59d19cadfa30
-Homepage: https://github.com/structured-world/coordinode
-Description: CoordiNode — unified database for AI-native applications.
- Graph + Vector + Full-Text + Document + Time-Series in one engine,
- one query language (OpenCypher), one transaction.
-License: AGPL-3.0-only
-
-Package: coordinode
-Architecture: arm64
-Version: 0.3.15
-Priority: optional
-Section: database
-Maintainer: Structured World Foundation <oss@sw.foundation>
-Installed-Size: 11867
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.15_arm64.deb
-Size: 5669526
-MD5sum: db09697c79613108a846f37b4fce0559
-SHA1: 357960ce9a5af12597d0930b34fea3b805594e7f
-SHA256: b3f68400e39fd01e7cd6d19a1134854aba5ae306739fcd83392c4550eda65ed3
-SHA512: b40d882c9fab10c50ca3ecc85d44bad7f4f249dccb150dacdbd01db4abf3d1e8b430d447762c16c6f78440b8fd79ecb39a6f8d56d7d05b354de681f9fed5c20a
 Homepage: https://github.com/structured-world/coordinode
 Description: CoordiNode — unified database for AI-native applications.
  Graph + Vector + Full-Text + Document + Time-Series in one engine,
@@ -309,31 +157,12 @@ Priority: optional
 Section: database
 Maintainer: Structured World Foundation <oss@sw.foundation>
 Installed-Size: 16821
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.16_amd64.deb
+Filename: pool/main/c/coordinode/coordinode_0.3.16_amd64.deb
 Size: 7045374
 MD5sum: b2792371feabc365789af3579e42dc40
 SHA1: 49b4fc27634e0b0fc3d45ab80ae41cdb9536d87c
 SHA256: 0611a5a34a50162faf7157f8efbe8f0da27fac518420c761caa5dc39b22d35a6
 SHA512: c73e18a34383eaa2458d344d4f4ba703aaa961fa3410791d37f1da9ee7864fcd3612c5032d686a9fa223a293bb6919f3be84f05afc4f336ad24ee43c2e59370c
-Homepage: https://github.com/structured-world/coordinode
-Description: CoordiNode — unified database for AI-native applications.
- Graph + Vector + Full-Text + Document + Time-Series in one engine,
- one query language (OpenCypher), one transaction.
-License: AGPL-3.0-only
-
-Package: coordinode
-Architecture: arm64
-Version: 0.3.16
-Priority: optional
-Section: database
-Maintainer: Structured World Foundation <oss@sw.foundation>
-Installed-Size: 13788
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.16_arm64.deb
-Size: 6605702
-MD5sum: 0ff619e7fa4807c0b358947e16b0e897
-SHA1: 55beaab397d194e7a17fadb4755852064df18e08
-SHA256: c6579bb5fb51c7ea00c6ba47bc0133d598ed1081b310e769e009a202f04ccd7a
-SHA512: ea9efb68c3daa0f303d6329eee6379246eb13c7aad43c8d92b79e5e09ce32b91c040e32254d5457585c2ead8f301a5c0d6dc42def6dc8564619274fcc23cb748
 Homepage: https://github.com/structured-world/coordinode
 Description: CoordiNode — unified database for AI-native applications.
  Graph + Vector + Full-Text + Document + Time-Series in one engine,
@@ -347,31 +176,12 @@ Priority: optional
 Section: database
 Maintainer: Structured World Foundation <oss@sw.foundation>
 Installed-Size: 16733
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.17_amd64.deb
+Filename: pool/main/c/coordinode/coordinode_0.3.17_amd64.deb
 Size: 7013146
 MD5sum: a59bfeb58eab5266fc0a53ad9e84ff21
 SHA1: 9a2b1aa97a0ae4de7241d3593012308ac2e822c2
 SHA256: 41c58c6f1855bf800d150122d81702ba90494b9c15afc2e39006d1745a3abfdd
 SHA512: 8724dd5dec8883ea9a3435f4b55e0436ca716c5d45ada5e30615280754b6f7b78f043978613ce352afa6922e0337c5b244e3ed67bd54ce9dd666ea7cfa64576b
-Homepage: https://github.com/structured-world/coordinode
-Description: CoordiNode — unified database for AI-native applications.
- Graph + Vector + Full-Text + Document + Time-Series in one engine,
- one query language (OpenCypher), one transaction.
-License: AGPL-3.0-only
-
-Package: coordinode
-Architecture: arm64
-Version: 0.3.17
-Priority: optional
-Section: database
-Maintainer: Structured World Foundation <oss@sw.foundation>
-Installed-Size: 13724
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.17_arm64.deb
-Size: 6573644
-MD5sum: f0713302f637e49d148437e339776a66
-SHA1: c2d46e5b6778d3d4471e937ee1df6bbeb2fa1866
-SHA256: 19f7b5c76790f46c587f613a6888b5caa2e68a1d125515d7c69958845feafc1b
-SHA512: e534a44a5df73991b2af19775b314be54040a372731cabe62b9ac074192a6ce0c9a4a82f9c3bc3f52db74f3ee872c781667228f8f64ad509eb3e9237ecd2a43b
 Homepage: https://github.com/structured-world/coordinode
 Description: CoordiNode — unified database for AI-native applications.
  Graph + Vector + Full-Text + Document + Time-Series in one engine,
@@ -385,31 +195,12 @@ Priority: optional
 Section: database
 Maintainer: Structured World Foundation <oss@sw.foundation>
 Installed-Size: 17438
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.18_amd64.deb
+Filename: pool/main/c/coordinode/coordinode_0.3.18_amd64.deb
 Size: 7259596
 MD5sum: 865550ef85f51186e23f3633e7c741f2
 SHA1: 9e25e96630a398d4efd6267f94007eff6a7d3a3a
 SHA256: 413be86916944bf82e2537a01cb6d5ca829997a1c0bbcf2152cd23e808b5b08b
 SHA512: 1bfca9dc123fa62484564002a8c9c7c4831a2998a48a79e12ea67cf79c3601332cc9a9d2c69ebba25044ded87fee47fc0fb3bfe774aecd003613a644f4aaf0d0
-Homepage: https://github.com/structured-world/coordinode
-Description: CoordiNode — unified database for AI-native applications.
- Graph + Vector + Full-Text + Document + Time-Series in one engine,
- one query language (OpenCypher), one transaction.
-License: AGPL-3.0-only
-
-Package: coordinode
-Architecture: arm64
-Version: 0.3.18
-Priority: optional
-Section: database
-Maintainer: Structured World Foundation <oss@sw.foundation>
-Installed-Size: 14302
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.18_arm64.deb
-Size: 6806050
-MD5sum: 34a6ee88eed8988cbf4da3d919f1fda0
-SHA1: 80fd8f108b97e56d12e1f444f303af9f3b1fb516
-SHA256: 985f292c1d5f26d702b3ca10db522197177b9ef98c62d39976a146adc5c8579e
-SHA512: ef3497b86f20153b120849ac0d5070c073cad84d994da214a2fa642cec6da7c96ae76d42f83428063656ddb870ea22b82eb2e03ce9bb652ab0560719513b82ad
 Homepage: https://github.com/structured-world/coordinode
 Description: CoordiNode — unified database for AI-native applications.
  Graph + Vector + Full-Text + Document + Time-Series in one engine,
@@ -423,31 +214,12 @@ Priority: optional
 Section: database
 Maintainer: Structured World Foundation <oss@sw.foundation>
 Installed-Size: 17390
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.19_amd64.deb
+Filename: pool/main/c/coordinode/coordinode_0.3.19_amd64.deb
 Size: 7217372
 MD5sum: 3a615add1377258a40ddd34860f0a381
 SHA1: 1a852e00e66a32ae17f18b2a41db1940317e3c5e
 SHA256: 801ca8cd0f65eb24ae41d70e719cee8695d707f0c4eca7ab39e502b9d5dd6379
 SHA512: 87949c2e19b8ba39fd09cc30d8561d47deeafeae9ff73a49ab90c85c4c18804951cd44a041f826fe5353282e8e78d87b938008ef61852e39d33998746cca45c6
-Homepage: https://github.com/structured-world/coordinode
-Description: CoordiNode — unified database for AI-native applications.
- Graph + Vector + Full-Text + Document + Time-Series in one engine,
- one query language (OpenCypher), one transaction.
-License: AGPL-3.0-only
-
-Package: coordinode
-Architecture: arm64
-Version: 0.3.19
-Priority: optional
-Section: database
-Maintainer: Structured World Foundation <oss@sw.foundation>
-Installed-Size: 14366
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.19_arm64.deb
-Size: 6784938
-MD5sum: 97bb3363b79ff49c573b55cfd24934cf
-SHA1: 6c3dfa35b2af3e029be7f795e6ad4ed6d46ad17a
-SHA256: 4e81b82ddb53c7e773f860429100552eb1c2e61c493d1eac756e3ea48d04808b
-SHA512: 2362845cbd07add98da66067e90706bbad82e8ca2172a01560ee10d11e40f6fa98172e5cfa349a607f688f33d143ed533e0b6aef0cd6ef6580eada1776aac46b
 Homepage: https://github.com/structured-world/coordinode
 Description: CoordiNode — unified database for AI-native applications.
  Graph + Vector + Full-Text + Document + Time-Series in one engine,
@@ -461,31 +233,12 @@ Priority: optional
 Section: database
 Maintainer: Structured World Foundation <oss@sw.foundation>
 Installed-Size: 13153
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.1_amd64.deb
+Filename: pool/main/c/coordinode/coordinode_0.3.1_amd64.deb
 Size: 5443070
 MD5sum: f8f916f725a20d4d3d9c3a531d429fce
 SHA1: 2e705a5d5001751c6f39a8d8756c8683b49f2447
 SHA256: b549aafcd41865669ce123cacf0ba1127c542f63e9251d4501734f784827d3a9
 SHA512: f13b44fe5a7a591a69a85dc3588ebe47c5c6ee49bcd89a5070f486b76dc081ab5585b8a894d5cf3216159b364f0d5445dc14f441e3c8568322e8967e119924fc
-Homepage: https://github.com/structured-world/coordinode
-Description: CoordiNode — unified database for AI-native applications.
- Graph + Vector + Full-Text + Document + Time-Series in one engine,
- one query language (OpenCypher), one transaction.
-License: AGPL-3.0-only
-
-Package: coordinode
-Architecture: arm64
-Version: 0.3.1
-Priority: optional
-Section: database
-Maintainer: Structured World Foundation <oss@sw.foundation>
-Installed-Size: 10776
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.1_arm64.deb
-Size: 5117366
-MD5sum: c18eea584e8fe19d03645ca61ce35d2b
-SHA1: dfa088c6ecae455f4826f57a53691cd25a3a9117
-SHA256: 763f011c88de32cf328d9ebb7d75297487c0fcd024c726b22d89a4402446a954
-SHA512: d96cf2fc08c92526357395186a9d563f34f1682f63bebfef54066999e4805eda9451c2b5c7441810e74441e7e715b408966f7651f022ca57f05bd6e1825ab850
 Homepage: https://github.com/structured-world/coordinode
 Description: CoordiNode — unified database for AI-native applications.
  Graph + Vector + Full-Text + Document + Time-Series in one engine,
@@ -499,31 +252,12 @@ Priority: optional
 Section: database
 Maintainer: Structured World Foundation <oss@sw.foundation>
 Installed-Size: 17494
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.20_amd64.deb
+Filename: pool/main/c/coordinode/coordinode_0.3.20_amd64.deb
 Size: 7254302
 MD5sum: 1812c816dccb50623e95f528d93fb733
 SHA1: 93a6957744e83465d02fc602d152f690989e95c8
 SHA256: f607c93ba009c9dbb197be84c1b1d3a137afdf2d074197320e2c3aa7ac40215d
 SHA512: f74b26f98dfd88e20a1296a0afed0305af047de64dc94759181f5d187b70de867bfb86137716e0da4d7fd4c9f9a727386f88f2bf583e2a1fbf75f156da588034
-Homepage: https://github.com/structured-world/coordinode
-Description: CoordiNode — unified database for AI-native applications.
- Graph + Vector + Full-Text + Document + Time-Series in one engine,
- one query language (OpenCypher), one transaction.
-License: AGPL-3.0-only
-
-Package: coordinode
-Architecture: arm64
-Version: 0.3.20
-Priority: optional
-Section: database
-Maintainer: Structured World Foundation <oss@sw.foundation>
-Installed-Size: 14430
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.20_arm64.deb
-Size: 6820210
-MD5sum: c7fcd4de24d419b88c85b0475bafa9f9
-SHA1: 18aad44b40844f563891126e3b8608c9ae7c3850
-SHA256: a52c5509fa43f18f5da54534c02e2fcbd0384e729c36d3b46b6b7b34716d188e
-SHA512: 8631f179ca94cc2fff9f456e4db18df029de01cc5c8bfdfcbbe608fb3e98588984b4296582f9f5a76f4469f5d27124d7c0d6e8edc9adfaeae52a8c828a042878
 Homepage: https://github.com/structured-world/coordinode
 Description: CoordiNode — unified database for AI-native applications.
  Graph + Vector + Full-Text + Document + Time-Series in one engine,
@@ -537,31 +271,12 @@ Priority: optional
 Section: database
 Maintainer: Structured World Foundation <oss@sw.foundation>
 Installed-Size: 13177
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.2_amd64.deb
+Filename: pool/main/c/coordinode/coordinode_0.3.2_amd64.deb
 Size: 5453672
 MD5sum: 87c48c9c96fc063069fc73ebbc3681f7
 SHA1: bc48f4d3081ba76a208575b17bfca39a514bd971
 SHA256: a747b6917d3207a723417c79867c9722a028244a9b106ba519b9f36b1816e4ba
 SHA512: cbab129bf3158d6d53e840b04341559fc8f7b7bc00270dce8ba1999560949b14adffea3cd80e06d079389db778441fce2085e89179a13b4c037b0f8afb0bb9e5
-Homepage: https://github.com/structured-world/coordinode
-Description: CoordiNode — unified database for AI-native applications.
- Graph + Vector + Full-Text + Document + Time-Series in one engine,
- one query language (OpenCypher), one transaction.
-License: AGPL-3.0-only
-
-Package: coordinode
-Architecture: arm64
-Version: 0.3.2
-Priority: optional
-Section: database
-Maintainer: Structured World Foundation <oss@sw.foundation>
-Installed-Size: 10840
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.2_arm64.deb
-Size: 5128054
-MD5sum: 81002d0d6ef9b93fa6b7e82ca377a9bc
-SHA1: 8234f707e6503377f136131c8efdd161041064f6
-SHA256: 384f20aa1e102462a12ce3500289d3a5413963fba78c851bfe9c87bed04e77d1
-SHA512: 9b848e3a493e1ef5ca62526bad159db5837daf8c0996e7d7bf17018039e96b5dd88345d7a17f49a7736fdde4543dcd00ab2e3eda8185030b3bc3363ef5315865
 Homepage: https://github.com/structured-world/coordinode
 Description: CoordiNode — unified database for AI-native applications.
  Graph + Vector + Full-Text + Document + Time-Series in one engine,
@@ -575,31 +290,12 @@ Priority: optional
 Section: database
 Maintainer: Structured World Foundation <oss@sw.foundation>
 Installed-Size: 13205
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.3_amd64.deb
+Filename: pool/main/c/coordinode/coordinode_0.3.3_amd64.deb
 Size: 5469126
 MD5sum: 23a8c615e837ea0c70ed8e3f341883bc
 SHA1: 99b236fdb8eebcc182c04c539e2bed0c4df28a2b
 SHA256: e9feb1d489a3e44db78e8ea37a1191651b4109dd3d60c9bb8369dc4a4c9f4a5b
 SHA512: 5f4ec688500b1f706791baba7d07f8e5192f25a950ca6adec8754cae8b16669a70514cb7b0cafc409d3d024c2f5cd3d25ee7cdef20312c898ec04a281e678399
-Homepage: https://github.com/structured-world/coordinode
-Description: CoordiNode — unified database for AI-native applications.
- Graph + Vector + Full-Text + Document + Time-Series in one engine,
- one query language (OpenCypher), one transaction.
-License: AGPL-3.0-only
-
-Package: coordinode
-Architecture: arm64
-Version: 0.3.3
-Priority: optional
-Section: database
-Maintainer: Structured World Foundation <oss@sw.foundation>
-Installed-Size: 10840
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.3_arm64.deb
-Size: 5142804
-MD5sum: 4a4c9a9cdaf6badbd10671bc13538221
-SHA1: 1f97ce52c0f3caae95806dc6fb8fe7b7698407bc
-SHA256: a2f8106d764f1baa64b55d14d4018cb7f7455dd9bd63afaeb1fad44a4b7c40f6
-SHA512: 4fe2d36d32c60242546e515d8d01e9dde35b55808247f1918a95c54dfa9e42ea6901cb61f8459136d9cc3b1ed126299bfc108a8ce690f27be068420a608a1c35
 Homepage: https://github.com/structured-world/coordinode
 Description: CoordiNode — unified database for AI-native applications.
  Graph + Vector + Full-Text + Document + Time-Series in one engine,
@@ -613,31 +309,12 @@ Priority: optional
 Section: database
 Maintainer: Structured World Foundation <oss@sw.foundation>
 Installed-Size: 13265
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.4_amd64.deb
+Filename: pool/main/c/coordinode/coordinode_0.3.4_amd64.deb
 Size: 5495102
 MD5sum: 563e937c7a2e3c1b9ffba96c5167feea
 SHA1: 1f75762462eb107ed3adc90c7dcae6b3006b6939
 SHA256: 937168e8bfa5eeca3e4b4d9644a7cb703412dc39c0325964810941cbfe3eddab
 SHA512: 2e8bee5aab7606442305f3e5c99a6076007b77d7199ac7815afe603a253bf95992f1bc5c0aa7bbb646ffb64611843fa7716b582df548866a0d1acb8a28c480e8
-Homepage: https://github.com/structured-world/coordinode
-Description: CoordiNode — unified database for AI-native applications.
- Graph + Vector + Full-Text + Document + Time-Series in one engine,
- one query language (OpenCypher), one transaction.
-License: AGPL-3.0-only
-
-Package: coordinode
-Architecture: arm64
-Version: 0.3.4
-Priority: optional
-Section: database
-Maintainer: Structured World Foundation <oss@sw.foundation>
-Installed-Size: 10904
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.4_arm64.deb
-Size: 5166188
-MD5sum: 5938eeb2a41500f0ae52508a13c61eb4
-SHA1: 0ed93bdffafdda616f69484297f5bafc1d556245
-SHA256: 88034f339e20b5a9894c4fafe0af99d47fc356578a669fc9e4bb4f6764c3ff21
-SHA512: 9005db16913545dd6943d1f119ee0525dd7133e57de4f4ab3ef2e3190ca528416a494ee581b6ebc7b9df33c09e446fec8c7bdaa31f2bf25240340bdcbd350979
 Homepage: https://github.com/structured-world/coordinode
 Description: CoordiNode — unified database for AI-native applications.
  Graph + Vector + Full-Text + Document + Time-Series in one engine,
@@ -651,7 +328,7 @@ Priority: optional
 Section: database
 Maintainer: Structured World Foundation <oss@sw.foundation>
 Installed-Size: 13305
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.5_amd64.deb
+Filename: pool/main/c/coordinode/coordinode_0.3.5_amd64.deb
 Size: 5508876
 MD5sum: edffaf23bff1b1e71cd854304b02704c
 SHA1: 7acd3577cf61a8402f765e5012e9f632d02df833
@@ -664,32 +341,13 @@ Description: CoordiNode — unified database for AI-native applications.
 License: AGPL-3.0-only
 
 Package: coordinode
-Architecture: arm64
-Version: 0.3.5
-Priority: optional
-Section: database
-Maintainer: Structured World Foundation <oss@sw.foundation>
-Installed-Size: 10904
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.5_arm64.deb
-Size: 5183366
-MD5sum: f365f7226a290bc29fcd062e955acd08
-SHA1: 64742d172ceb15772c54aca3bbc5d5463b406807
-SHA256: 584f9a1ce530c3aee6e504856c041d5392a8771f6814b140ba4f6d1e36bf8707
-SHA512: d6894c488a231cee26a88d6396171440093b56226e47a844bfad43e270989182bb2482cddc43700c16ac51a76015ceca2d6425ce0f0f7b19be53a4a181297d49
-Homepage: https://github.com/structured-world/coordinode
-Description: CoordiNode — unified database for AI-native applications.
- Graph + Vector + Full-Text + Document + Time-Series in one engine,
- one query language (OpenCypher), one transaction.
-License: AGPL-3.0-only
-
-Package: coordinode
 Architecture: amd64
 Version: 0.3.6
 Priority: optional
 Section: database
 Maintainer: Structured World Foundation <oss@sw.foundation>
 Installed-Size: 13341
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.6_amd64.deb
+Filename: pool/main/c/coordinode/coordinode_0.3.6_amd64.deb
 Size: 5523060
 MD5sum: a9b8c027669c8a8f533e40f948c81be8
 SHA1: 4caf99ff9be8a06cb393ff0f8b5cd33d51bfeddb
@@ -702,56 +360,18 @@ Description: CoordiNode — unified database for AI-native applications.
 License: AGPL-3.0-only
 
 Package: coordinode
-Architecture: arm64
-Version: 0.3.6
-Priority: optional
-Section: database
-Maintainer: Structured World Foundation <oss@sw.foundation>
-Installed-Size: 10968
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.6_arm64.deb
-Size: 5194378
-MD5sum: 2080f540cf0e68f26f4dceded405eba7
-SHA1: 4f375746b6cf1b3d99227a66cd4e9fdc00bc957e
-SHA256: e58684abbe8d794b827808cb3f0173cd1a0d8336789150e30fab4b5483f7fb31
-SHA512: fcfaae360776afcd64c81d2b8db14eb178b5b53a8660bb0657f2db277424ccbfaeb36509d844d0e1722fae12ae462f22cb48615ea440ca3be3a56e1074a625cf
-Homepage: https://github.com/structured-world/coordinode
-Description: CoordiNode — unified database for AI-native applications.
- Graph + Vector + Full-Text + Document + Time-Series in one engine,
- one query language (OpenCypher), one transaction.
-License: AGPL-3.0-only
-
-Package: coordinode
 Architecture: amd64
 Version: 0.3.7
 Priority: optional
 Section: database
 Maintainer: Structured World Foundation <oss@sw.foundation>
 Installed-Size: 13341
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.7_amd64.deb
+Filename: pool/main/c/coordinode/coordinode_0.3.7_amd64.deb
 Size: 5522912
 MD5sum: 542036d286eb6649091ab55d1ac5c141
 SHA1: 6f277ff5d022e168541fe6c3ef363fb2c6ce475d
 SHA256: 322ca2d103ab51d75fe6aa18a355ec95da6079a4dabefaba012e3b652be6f327
 SHA512: b84685bce0b84eb77613bbb5c309e984be061f24f36451624fd0b45b55df3a3fee40d042355f15124aa8d182b361ce028dcc6674c8184c2aca109f96bab3512f
-Homepage: https://github.com/structured-world/coordinode
-Description: CoordiNode — unified database for AI-native applications.
- Graph + Vector + Full-Text + Document + Time-Series in one engine,
- one query language (OpenCypher), one transaction.
-License: AGPL-3.0-only
-
-Package: coordinode
-Architecture: arm64
-Version: 0.3.7
-Priority: optional
-Section: database
-Maintainer: Structured World Foundation <oss@sw.foundation>
-Installed-Size: 10968
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.7_arm64.deb
-Size: 5193676
-MD5sum: e1ab643adea5d8e6ef2c055a29cd6b52
-SHA1: 2404120c037e81d23cf87022c1d9f56d9f66c6e5
-SHA256: 448ea7bcacd53b96235570e1b853003995ff207faaaa7d311e6992ea347019e8
-SHA512: 8f9543118908ae13abddb882c1dc92e2c4081925958fb1cd72ccd6c7be98a2fe27470a38504aae3771fd48a84a5dddb50de04c11d21ab5be761ae672aa00c177
 Homepage: https://github.com/structured-world/coordinode
 Description: CoordiNode — unified database for AI-native applications.
  Graph + Vector + Full-Text + Document + Time-Series in one engine,
@@ -765,31 +385,12 @@ Priority: optional
 Section: database
 Maintainer: Structured World Foundation <oss@sw.foundation>
 Installed-Size: 13397
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.8_amd64.deb
+Filename: pool/main/c/coordinode/coordinode_0.3.8_amd64.deb
 Size: 5549384
 MD5sum: aff52562b43562e0fde9b3a06180fc69
 SHA1: b22a8e1412575e78f06339d302326e8bb6438c1e
 SHA256: 38346b3710f596ce9f2dd27e24ce0e442e489e25e6e04b4654ec7d69b77d36a1
 SHA512: 5487953e8fafa1694b2a1905d940f1892fae093c2a9571333e7435a3cfa7fe392a0ca85b3bb98d1a65743359c53ab189b6c05552a1c8e0b492a143583d8b99cf
-Homepage: https://github.com/structured-world/coordinode
-Description: CoordiNode — unified database for AI-native applications.
- Graph + Vector + Full-Text + Document + Time-Series in one engine,
- one query language (OpenCypher), one transaction.
-License: AGPL-3.0-only
-
-Package: coordinode
-Architecture: arm64
-Version: 0.3.8
-Priority: optional
-Section: database
-Maintainer: Structured World Foundation <oss@sw.foundation>
-Installed-Size: 10968
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.8_arm64.deb
-Size: 5217310
-MD5sum: 784162c6b4599c6840709cf26f960267
-SHA1: 4be10231f1d539922bbf69b96a2c3f24cfe95035
-SHA256: edafd74cdde3e43eba9ae7e7a3a155ff8a822a466c56fef68c589a207eabfe07
-SHA512: 10450a857ecb502e2b7e5030cbcfd6b2491699253ab07565b75e60bb1c9f1fde49fef1b59d7615d5bcfdd55e912d44230cae8edf1aba41346fdb1d97bebf9533
 Homepage: https://github.com/structured-world/coordinode
 Description: CoordiNode — unified database for AI-native applications.
  Graph + Vector + Full-Text + Document + Time-Series in one engine,
@@ -803,31 +404,12 @@ Priority: optional
 Section: database
 Maintainer: Structured World Foundation <oss@sw.foundation>
 Installed-Size: 13810
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.9_amd64.deb
+Filename: pool/main/c/coordinode/coordinode_0.3.9_amd64.deb
 Size: 5743690
 MD5sum: 56e7b942260ae2d9bf87eb28bcf16a5d
 SHA1: 015f8d96b25214b925fe0a6582c04371e00385ba
 SHA256: 805bb589f4c1dc83aee852568dd7454f551e9452d088bd7148264ce45a78f28a
 SHA512: cc43d34db6cedf346fef0cd1f6b06d3d33ca5f60294612a36e10b45f03576ee2e72b04b15f475faeea7715765109db3f34295683a17a9a94c536e8e590db913d
-Homepage: https://github.com/structured-world/coordinode
-Description: CoordiNode — unified database for AI-native applications.
- Graph + Vector + Full-Text + Document + Time-Series in one engine,
- one query language (OpenCypher), one transaction.
-License: AGPL-3.0-only
-
-Package: coordinode
-Architecture: arm64
-Version: 0.3.9
-Priority: optional
-Section: database
-Maintainer: Structured World Foundation <oss@sw.foundation>
-Installed-Size: 11353
-Filename: deb/pool/main/c/coordinode/coordinode_0.3.9_arm64.deb
-Size: 5393238
-MD5sum: 5429a3a5da07407c735a937f2cc2380e
-SHA1: 6fe18009657affe94bd788305136a807d3eda636
-SHA256: 623d90b0b5af4dee29e94788d5c53436bcbe70033bf9acdb2dcb7d8b3804e3b8
-SHA512: 38a765c88572938a0539c0d304c49b15eeb69311ac7615a441f1c6481c6733e64f764f602fe8fd8b05578690767d23a43be49a8a38f4788693627e5c5fa2aa0e
 Homepage: https://github.com/structured-world/coordinode
 Description: CoordiNode — unified database for AI-native applications.
  Graph + Vector + Full-Text + Document + Time-Series in one engine,
@@ -841,31 +423,12 @@ Priority: optional
 Section: database
 Maintainer: Structured World Foundation <oss@sw.foundation>
 Installed-Size: 17530
-Filename: deb/pool/main/c/coordinode/coordinode_0.4.0_amd64.deb
+Filename: pool/main/c/coordinode/coordinode_0.4.0_amd64.deb
 Size: 7271974
 MD5sum: 6304ec0c155e94777aba7de7bafaeb4c
 SHA1: 1134a431f994f0cc80487fde66690ccfd609c792
 SHA256: fb828d7bcebdfb26c1245b513cd221286e7335e8c281b6b6db7858fffe70db01
 SHA512: 4d10e5f06d4ed6a59949768387aa543e3a99f0e41f19b132830f3c140f9680002fc5dcb0f91d31f117aed5e34333c7c26933448f0585dc1dc1642740fcd2b04d
-Homepage: https://github.com/structured-world/coordinode
-Description: CoordiNode — unified database for AI-native applications.
- Graph + Vector + Full-Text + Document + Time-Series in one engine,
- one query language (OpenCypher), one transaction.
-License: AGPL-3.0-only
-
-Package: coordinode
-Architecture: arm64
-Version: 0.4.0
-Priority: optional
-Section: database
-Maintainer: Structured World Foundation <oss@sw.foundation>
-Installed-Size: 14430
-Filename: deb/pool/main/c/coordinode/coordinode_0.4.0_arm64.deb
-Size: 6843010
-MD5sum: c7993fe29012599750c417779c967897
-SHA1: 1a3daf3012ac964e8ed6246e02504d2c1ea5efa9
-SHA256: 5826307bf16ba5bcd1c18f3551a375c9fe913e144bdb4f4244d68df81a3b14d5
-SHA512: 9f79425426e05823813e1d8e1c05ee2da7ffe330602a8775043bc548da41291c0eaf400ced01020e47c20d1cf3fef5624c9597d86049c21bf1be79db450a0f20
 Homepage: https://github.com/structured-world/coordinode
 Description: CoordiNode — unified database for AI-native applications.
  Graph + Vector + Full-Text + Document + Time-Series in one engine,
@@ -879,31 +442,12 @@ Priority: optional
 Section: database
 Maintainer: Structured World Foundation <oss@sw.foundation>
 Installed-Size: 17546
-Filename: deb/pool/main/c/coordinode/coordinode_0.4.1_amd64.deb
+Filename: pool/main/c/coordinode/coordinode_0.4.1_amd64.deb
 Size: 7290546
 MD5sum: 18937308fc1a8c15a3f62bcc54844acc
 SHA1: 4d136711203bcc219da89deef87b9ef41facb7cd
 SHA256: 9933b090f2f064631725b3164324e0fcdd53af5f600a1e8db2b1bae4f164a807
 SHA512: 8a3abf799a029db09c088e0e5d2a1060d8f7bba155acb24f876b8201c2b6136f7405edb5ebc3e2d8444155e7b88904bb6b1a1c29d42798381eb3f72903486364
-Homepage: https://github.com/structured-world/coordinode
-Description: CoordiNode — unified database for AI-native applications.
- Graph + Vector + Full-Text + Document + Time-Series in one engine,
- one query language (OpenCypher), one transaction.
-License: AGPL-3.0-only
-
-Package: coordinode
-Architecture: arm64
-Version: 0.4.1
-Priority: optional
-Section: database
-Maintainer: Structured World Foundation <oss@sw.foundation>
-Installed-Size: 14494
-Filename: deb/pool/main/c/coordinode/coordinode_0.4.1_arm64.deb
-Size: 6855226
-MD5sum: 1336b7493e8596a6de12089305e9c133
-SHA1: 8c102f9424a3bb22c42b6cd78ef4725c2e423a98
-SHA256: 0931c5e576e7f78cf58e790c4288c585f8f31d82c32f238370b9b0c811f2aced
-SHA512: 69e24fe93eb23974055a3fd02aa6ef6469259394b4df9683a493ac37168a8f4ff0b33d5c09532dbe0ff5b6643585fd1ef86f9bb3e07d5517dffac4fedcabfdcc
 Homepage: https://github.com/structured-world/coordinode
 Description: CoordiNode — unified database for AI-native applications.
  Graph + Vector + Full-Text + Document + Time-Series in one engine,
@@ -918,32 +462,12 @@ Section: database
 Maintainer: Structured World Foundation <oss@sw.foundation>
 Installed-Size: 17244
 Depends: systemd, adduser
-Filename: deb/pool/main/c/coordinode/coordinode_0.4.2_amd64.deb
+Filename: pool/main/c/coordinode/coordinode_0.4.2_amd64.deb
 Size: 4857172
 MD5sum: da13407f01417768fe1447e9971016a1
 SHA1: 83928eaecd27565eb3688669a69695bdcc7f88c7
 SHA256: 39f6bdc2ee839418ee446b632f558b489610eb0b5e7d1d23f5dd49c62a839281
 SHA512: f88c30a6ce3cd1c38d8605bf97fb274f6e05fa2c70fb93d9313a9933c015856977007dfbd7e162a4f4875c0157255a3f4b600291026a515a6382ab7de74e8a44
-Homepage: https://github.com/structured-world/coordinode
-Description: Unified database for AI-native applications
- CoordiNode is a unified database combining graph, vector, full-text,
- document and time-series modalities in one engine. Queries use OpenCypher;
- writes commit atomically across modalities.
-
-Package: coordinode
-Architecture: arm64
-Version: 0.4.2
-Priority: optional
-Section: database
-Maintainer: Structured World Foundation <oss@sw.foundation>
-Installed-Size: 14208
-Depends: systemd, adduser
-Filename: deb/pool/main/c/coordinode/coordinode_0.4.2_arm64.deb
-Size: 4177400
-MD5sum: fecc35f8fa56bf44dfe6909266c10999
-SHA1: 6b0b2b71bd075ccaf342d2d8abc44558922179d0
-SHA256: 4027b531cf160590fc254046f6520dcc71b59902fe8ef9eda76a69b6394a0a96
-SHA512: f5088f566a45076a89cacd5a418e6eeacf97bfa14a5cb7705a013751533bef2c9484e9fae876cb28976ca9fa857457c24372c8010eb7d444557277f613d33be9
 Homepage: https://github.com/structured-world/coordinode
 Description: Unified database for AI-native applications
  CoordiNode is a unified database combining graph, vector, full-text,
@@ -958,32 +482,12 @@ Section: database
 Maintainer: Structured World Foundation <oss@sw.foundation>
 Installed-Size: 17465
 Depends: systemd, adduser
-Filename: deb/pool/main/c/coordinode/coordinode_0.4.3_amd64.deb
+Filename: pool/main/c/coordinode/coordinode_0.4.3_amd64.deb
 Size: 4912820
 MD5sum: 8a72997fb100acbba85afaddd46e2ec1
 SHA1: d69e1a838a894fa0418307baa5f39f95a584f7d1
 SHA256: 4058797b58059c11ef7ab00ce0dda84988d4feef33b14f7a62c435954d8a6d9d
 SHA512: 0215f2ff8ef5b8d265357c40d10dbe388f353160424781c11f36df96bbadb2da4c0e01f2e8eca2ee0507e4bba2a0d6e1d864ac29307f70cc0215215a1721b0a7
-Homepage: https://github.com/structured-world/coordinode
-Description: Unified database for AI-native applications
- CoordiNode is a unified database combining graph, vector, full-text,
- document and time-series modalities in one engine. Queries use OpenCypher;
- writes commit atomically across modalities.
-
-Package: coordinode
-Architecture: arm64
-Version: 0.4.3
-Priority: optional
-Section: database
-Maintainer: Structured World Foundation <oss@sw.foundation>
-Installed-Size: 14401
-Depends: systemd, adduser
-Filename: deb/pool/main/c/coordinode/coordinode_0.4.3_arm64.deb
-Size: 4223088
-MD5sum: 73f98e4e0fb103ea86be7f4e933a5192
-SHA1: b43ab0779a5ec1f690246c96708de24dd3e49bfb
-SHA256: 7a30ace0b667d88f7c19b0d4249721ed9161c4fbc44048bcd69d66573143b4f1
-SHA512: b37b44ee4ccbb77a0c8aa7ef11a2c2a7c7667a47235c3bfc08bba01535f5817ff3407ee268ef5a991ce8c07c30bba1f2b313e7ac458878a3c1c8fec7dc4e88d9
 Homepage: https://github.com/structured-world/coordinode
 Description: Unified database for AI-native applications
  CoordiNode is a unified database combining graph, vector, full-text,
@@ -997,7 +501,7 @@ Priority: optional
 Section: net
 Maintainer: Structured World Foundation <dev@sw.foundation>
 Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
-Filename: deb/pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.4-sw.10_bookworm_amd64.deb
+Filename: pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.4-sw.10_bookworm_amd64.deb
 Size: 143140
 MD5sum: 9a5373d219caa48aa4b4f7d733d20cd8
 SHA1: 1e26c9916c0679a8612d5ab49516df98754821ad
@@ -1011,50 +515,12 @@ Description: DHCP INFORM responder plugin for strongSwan
 
 Package: strongswan-dhcp-inform
 Architecture: amd64
-Version: 6.0.4-sw.10
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
-Filename: deb/pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.4-sw.10_jammy_amd64.deb
-Size: 143184
-MD5sum: e1f3266b5eed35e2bc2fb297af093a43
-SHA1: 1489348db5409019ac1ab4b366018dc6b39ffa56
-SHA256: 8ea9f3e9efbf40a92d5ce622eaf4bde173f538e45993d80af05d1b7a25d2e220
-SHA512: 2a359367042424ff56d16fd81d08ae6ee690350924611fa9bf19663f58ab023a300017f44a76488c7d6a14aa7a5afef9d39f1e2624475888fd93eae1eb98dc92
-Homepage: https://github.com/structured-world/strongswan
-Description: DHCP INFORM responder plugin for strongSwan
- Responds to Windows DHCPINFORM requests with split-tunnel routes
- from PostgreSQL database. Delivers routes via DHCP option 121/249.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-dhcp-inform
-Architecture: amd64
-Version: 6.0.4-sw.10
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
-Filename: deb/pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.4-sw.10_noble_amd64.deb
-Size: 139808
-MD5sum: 3a3649740e3cc9d5fd30becf96213c57
-SHA1: 4689e6382603db6ab3b961e16b38ed630c2a1216
-SHA256: 53b6e97216858f3bde0bc34341210f5ec90785a0a05d106faebc81f09194c8f5
-SHA512: a2c3b1a250dac5df9999e88b8a2fb9af09d288c10119c9f9765904d512eb270edbb10040caefb1f0553ca7fac126f0ae1af78677bddcc3768b392218a0c76858
-Homepage: https://github.com/structured-world/strongswan
-Description: DHCP INFORM responder plugin for strongSwan
- Responds to Windows DHCPINFORM requests with split-tunnel routes
- from PostgreSQL database. Delivers routes via DHCP option 121/249.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-dhcp-inform
-Architecture: amd64
 Version: 6.0.4-sw.11
 Priority: optional
 Section: net
 Maintainer: Structured World Foundation <dev@sw.foundation>
 Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
-Filename: deb/pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.4-sw.11_bookworm_amd64.deb
+Filename: pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.4-sw.11_bookworm_amd64.deb
 Size: 143906
 MD5sum: d353cce3e8947e9450072efc7c5880e3
 SHA1: 5373a901cef2a7b44d869b6251d34674b464a567
@@ -1068,50 +534,12 @@ Description: DHCP INFORM responder plugin for strongSwan
 
 Package: strongswan-dhcp-inform
 Architecture: amd64
-Version: 6.0.4-sw.11
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
-Filename: deb/pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.4-sw.11_jammy_amd64.deb
-Size: 143870
-MD5sum: 36ed4ed2877aed03c0814ab4361b8e48
-SHA1: 6ef1089d29a94fc5b3eeed9c093c41e088fa1b78
-SHA256: 864ba80474e99097e799008b95f1c46ba3141fd86614e0e1699143683362a37b
-SHA512: 33a63f3856a130411f92135cd03467a3ec0c0e0bd761abfc938d780a27f3fb6b8e2e770ab3efd7e316fad0eb062509b639a1a0ba983d06686f29e90e491f82ad
-Homepage: https://github.com/structured-world/strongswan
-Description: DHCP INFORM responder plugin for strongSwan
- Responds to Windows DHCPINFORM requests with split-tunnel routes
- from PostgreSQL database. Delivers routes via DHCP option 121/249.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-dhcp-inform
-Architecture: amd64
-Version: 6.0.4-sw.11
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
-Filename: deb/pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.4-sw.11_noble_amd64.deb
-Size: 140526
-MD5sum: 6e0cd6b200759bed16aede7be439193c
-SHA1: 4bbd8533f78bcadba15ab2baeaaca76a01b420bf
-SHA256: 5789c0746310a9722fa04e95cba897e5bda9d4dc05c64a5cb96a4af7084b8464
-SHA512: c1cfd77b7eba99d93abdd45506f2ca0c44506e50c0e7f51dd141db99c837a499de8e37b5646b332692b0edb4d093f489c405cecbe39f63e85a8413347dd0dcfb
-Homepage: https://github.com/structured-world/strongswan
-Description: DHCP INFORM responder plugin for strongSwan
- Responds to Windows DHCPINFORM requests with split-tunnel routes
- from PostgreSQL database. Delivers routes via DHCP option 121/249.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-dhcp-inform
-Architecture: amd64
 Version: 6.0.4-sw.12
 Priority: optional
 Section: net
 Maintainer: Structured World Foundation <dev@sw.foundation>
 Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
-Filename: deb/pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.4-sw.12_bookworm_amd64.deb
+Filename: pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.4-sw.12_bookworm_amd64.deb
 Size: 143888
 MD5sum: 6499fdd7b0bc659fc20cff80a1b1ca78
 SHA1: 102b46319adc47b14c44390900affdc3e0de2e8b
@@ -1125,150 +553,17 @@ Description: DHCP INFORM responder plugin for strongSwan
 
 Package: strongswan-dhcp-inform
 Architecture: amd64
-Version: 6.0.4-sw.12
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
-Filename: deb/pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.4-sw.12_jammy_amd64.deb
-Size: 143820
-MD5sum: 2a5571f3989f940c2582b043331ec633
-SHA1: 220bf3c6af5724fbeadcf1a6ed92aeb6902c376e
-SHA256: 1dc5f5c7f16a4d58db6371a99061646131cca841c9687b0a14b9bb89c2236412
-SHA512: 824232173a3dfefe9edf5916daceb905b7c40ce5dce3fd35b7d1c6f92406a9300ae8b9d2eaf4d448acdb9bd5ddcfeb9b00c379b5dd093f401fe85cc698ca4e6e
-Homepage: https://github.com/structured-world/strongswan
-Description: DHCP INFORM responder plugin for strongSwan
- Responds to Windows DHCPINFORM requests with split-tunnel routes
- from PostgreSQL database. Delivers routes via DHCP option 121/249.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-dhcp-inform
-Architecture: amd64
-Version: 6.0.4-sw.12
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
-Filename: deb/pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.4-sw.12_noble_amd64.deb
-Size: 140430
-MD5sum: a8c4dc7e7e0aa41f80a048dcca0b15f9
-SHA1: dfb137eb84afbe4707f9038fad2df1bc4b4d210a
-SHA256: 55a103e6af9d53408cd5a83451192e6dd58696199ccd44a36174f8b4db2ba9e0
-SHA512: 817b6e8580a7229c1bb86a5b31da93bbf719a56c64641612a02108ec0a203efa72432c7a347a35a3b45967e0864930ea3b95e5af2ba85237a62f0079985a450c
-Homepage: https://github.com/structured-world/strongswan
-Description: DHCP INFORM responder plugin for strongSwan
- Responds to Windows DHCPINFORM requests with split-tunnel routes
- from PostgreSQL database. Delivers routes via DHCP option 121/249.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-dhcp-inform
-Architecture: amd64
 Version: 6.0.4-sw.13
 Priority: optional
 Section: net
 Maintainer: Structured World Foundation <dev@sw.foundation>
 Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
-Filename: deb/pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.4-sw.13_bookworm_amd64.deb
+Filename: pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.4-sw.13_bookworm_amd64.deb
 Size: 143894
 MD5sum: 0681551f160a11d0f23d469511401152
 SHA1: 9cb1ee19bc108968b05a3ea125bd5088d8dc61aa
 SHA256: b20401fcc4991634e233088feebcdad2dee99b2540de5f49b61a100c8379eaaf
 SHA512: 938a1fcdca0050bf9ebb1d6e333ff2e387f2f96879fb245b59dcdebdcd5d62b5ca5b3fa07c721a3a3cf7760b62b41a610956b66fe6d26bfd9c5804612ed52a74
-Homepage: https://github.com/structured-world/strongswan
-Description: DHCP INFORM responder plugin for strongSwan
- Responds to Windows DHCPINFORM requests with split-tunnel routes
- from PostgreSQL database. Delivers routes via DHCP option 121/249.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-dhcp-inform
-Architecture: arm64
-Version: 6.0.4-sw.13
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
-Filename: deb/pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.4-sw.13_bookworm_arm64.deb
-Size: 145326
-MD5sum: e80a391f73d91646399640ae3ecf334d
-SHA1: 63b98e8b33a241a6c4f706a3097ee4d67aecf171
-SHA256: 258679644dee483bb7f9a8d7fc63844bfc3d11cf10fbd3e157411f95532644f8
-SHA512: 7f07d7403e5f7baddf2d3053c8a2b26cb104824635ee297d43e7f3e512a6cf2169014f656ab527755925f457d77e0577defdc1bc1e080539ecf792303b5849d1
-Homepage: https://github.com/structured-world/strongswan
-Description: DHCP INFORM responder plugin for strongSwan
- Responds to Windows DHCPINFORM requests with split-tunnel routes
- from PostgreSQL database. Delivers routes via DHCP option 121/249.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-dhcp-inform
-Architecture: amd64
-Version: 6.0.4-sw.13
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
-Filename: deb/pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.4-sw.13_jammy_amd64.deb
-Size: 143946
-MD5sum: abcc2662ee680a1f01f00b5c040c2ad0
-SHA1: f9c7e3f8e7116e9a9f42b7f8c91d666365ae174f
-SHA256: 08f6ad361d1c312895dcb2f1eccab37b7c03c08d7b8967727b41727d66162653
-SHA512: c617d6244965d8767e56c847c865b1aee22ea7fc7ece0dc6f1619fb3134507c48d2bea2017da2e90fdae7cf28a1cfec47e1f0959f3c377f77430c9edd1327c27
-Homepage: https://github.com/structured-world/strongswan
-Description: DHCP INFORM responder plugin for strongSwan
- Responds to Windows DHCPINFORM requests with split-tunnel routes
- from PostgreSQL database. Delivers routes via DHCP option 121/249.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-dhcp-inform
-Architecture: arm64
-Version: 6.0.4-sw.13
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
-Filename: deb/pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.4-sw.13_jammy_arm64.deb
-Size: 145326
-MD5sum: 2ab9bf640b533b91a9bcad87cb9fc355
-SHA1: 06e2e4b938f1189ab163adbd5866912b6a5347ab
-SHA256: 033a7a452964e542196031d114158281f57510ec7fd52d19e935defbcc876652
-SHA512: 64d8b24153b496c9be045569cbe5a211010af36676c92d7b17b094a3028d25c63a23f188fbae85dc1705120249ce2c2ced99df836779e3f1e85d5d113896432c
-Homepage: https://github.com/structured-world/strongswan
-Description: DHCP INFORM responder plugin for strongSwan
- Responds to Windows DHCPINFORM requests with split-tunnel routes
- from PostgreSQL database. Delivers routes via DHCP option 121/249.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-dhcp-inform
-Architecture: amd64
-Version: 6.0.4-sw.13
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
-Filename: deb/pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.4-sw.13_noble_amd64.deb
-Size: 140564
-MD5sum: 1d3bcc230024ea8835eda6a1f8b42930
-SHA1: d987fd1ac53a6d2414ba040a3cd4c6dce994e39b
-SHA256: c921772a68c0c34c3ab32c83f6fdfe368282827301624579fce087e4dfa9a6e5
-SHA512: 29004a13140b3c80a9a0e38e3ae2360daa12adf7d5e6345b3f10cfc04b4e753a4f9c205220fde17b9eeb384dbc8df9d9102c434c5cb9a98c973ef1c94f598ccc
-Homepage: https://github.com/structured-world/strongswan
-Description: DHCP INFORM responder plugin for strongSwan
- Responds to Windows DHCPINFORM requests with split-tunnel routes
- from PostgreSQL database. Delivers routes via DHCP option 121/249.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-dhcp-inform
-Architecture: arm64
-Version: 6.0.4-sw.13
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
-Filename: deb/pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.4-sw.13_noble_arm64.deb
-Size: 140822
-MD5sum: 9dc185e2a51ac666cb22419e02e49310
-SHA1: 3b43873ddcfd60a554ec5dbbcb3188303c78e465
-SHA256: 4e8aa68c10705c36122bf60a9253a5fc231da269e0224371f01a26360b731a55
-SHA512: c4c623a7fbf89574ba92df4a81ebc53c5d75964b8c13c83f217bbc8195e93a4ee80cbe8633512b72d9c48413cf5aa977272b08446a7ec322e7fe3c82f788cfa8
 Homepage: https://github.com/structured-world/strongswan
 Description: DHCP INFORM responder plugin for strongSwan
  Responds to Windows DHCPINFORM requests with split-tunnel routes
@@ -1282,7 +577,7 @@ Priority: optional
 Section: net
 Maintainer: Structured World Foundation <dev@sw.foundation>
 Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
-Filename: deb/pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.4-sw.8_bookworm_amd64.deb
+Filename: pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.4-sw.8_bookworm_amd64.deb
 Size: 79910
 MD5sum: 4f36637d42b944f99b46cbfa5cd83905
 SHA1: 7e1c8d0920d573f7cf628e9c90a69580ae971bb3
@@ -1296,50 +591,12 @@ Description: DHCP INFORM responder plugin for strongSwan
 
 Package: strongswan-dhcp-inform
 Architecture: amd64
-Version: 6.0.4-sw.8
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
-Filename: deb/pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.4-sw.8_jammy_amd64.deb
-Size: 79910
-MD5sum: 839c359c49614a087fd64d3af01d4ecb
-SHA1: db3ee7147558e50cd8ae234beb71e93becfb7f3f
-SHA256: 4c9933d6cea5878500e3bd7dd04eee179a18a86a4478c8095dec4145f7d7a66a
-SHA512: 0d202ccfa7bdb5c352d426944a4fa3df0774d33fcef9aa8299081d1a7705f15691a8803507ece0972ad05f056a49b21036c2176a192255078ea2f9d9564b9c3b
-Homepage: https://github.com/structured-world/strongswan
-Description: DHCP INFORM responder plugin for strongSwan
- Responds to Windows DHCPINFORM requests with split-tunnel routes
- from PostgreSQL database. Delivers routes via DHCP option 121/249.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-dhcp-inform
-Architecture: amd64
-Version: 6.0.4-sw.8
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
-Filename: deb/pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.4-sw.8_noble_amd64.deb
-Size: 79130
-MD5sum: c2eefd23b8c4808a70a71134404c6a71
-SHA1: 60d22d063b331119864c871b9a874d7f6e73e7cc
-SHA256: 94c4997220e11917e87e6c5b51f377dc4a073c5b1116ad761bb5c784fab3b3aa
-SHA512: f2d8b1a763c72e6d8fbc0a1c0700ed2edb802c0a57e7a216ac4ddfcdee821d2c7ae7ffc01234d54af0c113348e5e242f36838632c3ff5b4432dbbaddc3a76a06
-Homepage: https://github.com/structured-world/strongswan
-Description: DHCP INFORM responder plugin for strongSwan
- Responds to Windows DHCPINFORM requests with split-tunnel routes
- from PostgreSQL database. Delivers routes via DHCP option 121/249.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-dhcp-inform
-Architecture: amd64
 Version: 6.0.4-sw.9
 Priority: optional
 Section: net
 Maintainer: Structured World Foundation <dev@sw.foundation>
 Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
-Filename: deb/pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.4-sw.9_bookworm_amd64.deb
+Filename: pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.4-sw.9_bookworm_amd64.deb
 Size: 79906
 MD5sum: 61b3a58f2d6d0abf770f166fef0fcbe7
 SHA1: ff7b37e3954de10fdc9b1ebe0aa05b091f7dac5b
@@ -1353,50 +610,12 @@ Description: DHCP INFORM responder plugin for strongSwan
 
 Package: strongswan-dhcp-inform
 Architecture: amd64
-Version: 6.0.4-sw.9
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
-Filename: deb/pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.4-sw.9_jammy_amd64.deb
-Size: 79904
-MD5sum: 5a09e1e22281f60935338b3451c2656a
-SHA1: bd5b1aeffda39db00291a2d85410de7bedcc75c4
-SHA256: 4045996e0334890b84f11d3cc461a0fe8303e41e83503eb000241db4ba11cb1d
-SHA512: 5e16b8c8de7848c7ea91596ac9016b8917f99066b37e20b8cb9cacf8d56a36b96d55bda49e7ac4cc7407e615a7588fb4c7dd4c202ed272878de517ddf76a8c4c
-Homepage: https://github.com/structured-world/strongswan
-Description: DHCP INFORM responder plugin for strongSwan
- Responds to Windows DHCPINFORM requests with split-tunnel routes
- from PostgreSQL database. Delivers routes via DHCP option 121/249.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-dhcp-inform
-Architecture: amd64
-Version: 6.0.4-sw.9
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
-Filename: deb/pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.4-sw.9_noble_amd64.deb
-Size: 79138
-MD5sum: b1c51af2025a4f18f2bac37f187d6b80
-SHA1: 5c15dbf7f7c67fc7998904e7ce0c66e76b0c29f1
-SHA256: 963538c55ea9e15ab8b148650352ea3701b925d6f4ad079ec18d364199dd6615
-SHA512: 20a74dbee7ab21d583893c86bb3895593d54d2b07530673f3ebcfe67e3d3b9744bd312e0bd42ccf287aa1c5309957f6052b8e5900f238708de04dae94afcb314
-Homepage: https://github.com/structured-world/strongswan
-Description: DHCP INFORM responder plugin for strongSwan
- Responds to Windows DHCPINFORM requests with split-tunnel routes
- from PostgreSQL database. Delivers routes via DHCP option 121/249.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-dhcp-inform
-Architecture: amd64
 Version: 6.0.6-sw.1
 Priority: optional
 Section: net
 Maintainer: Structured World Foundation <dev@sw.foundation>
 Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
-Filename: deb/pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.6-sw.1_bookworm_amd64.deb
+Filename: pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.6-sw.1_bookworm_amd64.deb
 Size: 143780
 MD5sum: 432948bc01f14664f86190d596c75c18
 SHA1: 432fa52ec9c938980f4633706a4f3f40a0fd6de5
@@ -1409,94 +628,18 @@ Description: DHCP INFORM responder plugin for strongSwan
  Works with system strongswan (>= 6.0) or strongswan-sw.
 
 Package: strongswan-dhcp-inform
-Architecture: arm64
-Version: 6.0.6-sw.1
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
-Filename: deb/pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.6-sw.1_bookworm_arm64.deb
-Size: 145258
-MD5sum: a487dc4ae103f9df9523e0b5212d229a
-SHA1: d4a1f7875e18fa5407510b0f7f905fa353e9c93c
-SHA256: c6bf4ed0df0cddb053728a93e9569ed47d26071c7af7e9066acd1528c9f92b2c
-SHA512: 00e4407b02ed4b46965cbfbdfea2c0242b820d0ef976ad8df9af96b99958b9300349a28283c5ba9db41cd6012d8df4b5a59afc46485e5b40a178f292809ab6e0
-Homepage: https://github.com/structured-world/strongswan
-Description: DHCP INFORM responder plugin for strongSwan
- Responds to Windows DHCPINFORM requests with split-tunnel routes
- from PostgreSQL database. Delivers routes via DHCP option 121/249.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-dhcp-inform
 Architecture: amd64
-Version: 6.0.6-sw.1
+Version: 6.0.7-sw.1
 Priority: optional
 Section: net
 Maintainer: Structured World Foundation <dev@sw.foundation>
 Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
-Filename: deb/pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.6-sw.1_jammy_amd64.deb
-Size: 143790
-MD5sum: ec840808cb6a966f619ec2959f50d02f
-SHA1: 9b64d3a41ed4ac3120f3fbc319819e7459537145
-SHA256: 49198d03f6dafd94aa1b69ff3f8c3b0a1f3fc311781a23ca1287cce2d387b06f
-SHA512: e7652c51700bfeea35b2594aa9f1df819aeeeebfeb70a1cd2bfb4a9cbef6da4c33aed3955465a4ffd45e7f6f89fdc86316567ecb901c202424c0a04ff236dfcd
-Homepage: https://github.com/structured-world/strongswan
-Description: DHCP INFORM responder plugin for strongSwan
- Responds to Windows DHCPINFORM requests with split-tunnel routes
- from PostgreSQL database. Delivers routes via DHCP option 121/249.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-dhcp-inform
-Architecture: arm64
-Version: 6.0.6-sw.1
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
-Filename: deb/pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.6-sw.1_jammy_arm64.deb
-Size: 145238
-MD5sum: afdc9b2de8d56f951283dc149357d5cf
-SHA1: f585fa763a2ffd1c663f9a8ffa77ac45358c5fbb
-SHA256: dc712bd49f6a7c30398cd772a0a1c013b872c182533509390dec92cc97ff10dd
-SHA512: b509089fd6710e7da7098593485c0d44b6243dd11ba29a625a38ec3d952194ba1ad8fdbffdbbd930d0c13b9b083e061e2757b3cd471bcd28a28171e244987f13
-Homepage: https://github.com/structured-world/strongswan
-Description: DHCP INFORM responder plugin for strongSwan
- Responds to Windows DHCPINFORM requests with split-tunnel routes
- from PostgreSQL database. Delivers routes via DHCP option 121/249.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-dhcp-inform
-Architecture: amd64
-Version: 6.0.6-sw.1
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
-Filename: deb/pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.6-sw.1_noble_amd64.deb
-Size: 140596
-MD5sum: dbdbfdadaa34410cfa37b50f172e729c
-SHA1: 6b595f6188c0f021232436da72b6fda85595f6f2
-SHA256: 3c4efa370a66b53f78dec330cee64f97cb0a7a3b1e9dc8e74b38717306be4199
-SHA512: 9bf1dd75e159eacb16f234ae07b430e374d387aa2884502d13f6c9eda24b835fa5fcc5caf5f55feef2ac680a78e4716a9e4f2d7c3e05b19fb217c9f3fae39def
-Homepage: https://github.com/structured-world/strongswan
-Description: DHCP INFORM responder plugin for strongSwan
- Responds to Windows DHCPINFORM requests with split-tunnel routes
- from PostgreSQL database. Delivers routes via DHCP option 121/249.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-dhcp-inform
-Architecture: arm64
-Version: 6.0.6-sw.1
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, strongswan-pgsql
-Filename: deb/pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.6-sw.1_noble_arm64.deb
-Size: 141100
-MD5sum: 97c6c651c9b5d87cd8741887f69090ec
-SHA1: 1c53a82eba815d2a3677263ebb3fca0a1eb4ac44
-SHA256: b2732e600e98bca6b46c970bf66e91dcf9b168dedf9eac710956b83c25a46b74
-SHA512: b07e70567479416c0c9e024e3e7c90151be10e1ec3366cec9a86eceb558eca611f4de26a87c77519979e54e8865243f225ad6d5c7d25bdf365300caaacaf0c98
+Filename: pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.7-sw.1_bookworm_amd64.deb
+Size: 143820
+MD5sum: 433bdc4db54943ccea283c3928eddae5
+SHA1: c202d5d3529207e30f8991f1c682d6f360273596
+SHA256: 65d2e331e34cf8b0e9169053f256bcc4f39e29eaf34c81542263ab17d2456d1a
+SHA512: 274aac1e98576583cfabd7650297eae1bf14080c4be20307a40b1ffcc00b6315cacec0aadfbb084c232a2856f8402c2170c8d0587cfcd31d7d002243236f549f
 Homepage: https://github.com/structured-world/strongswan
 Description: DHCP INFORM responder plugin for strongSwan
  Responds to Windows DHCPINFORM requests with split-tunnel routes
@@ -1510,7 +653,7 @@ Priority: optional
 Section: net
 Maintainer: Structured World Foundation <dev@sw.foundation>
 Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.10_bookworm_amd64.deb
+Filename: pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.10_bookworm_amd64.deb
 Size: 34210
 MD5sum: 555af63736d8b8db6fbdb5741c0dcd17
 SHA1: aac7ae6d8e3f98afdc989dfcbc7a483ff186c29f
@@ -1524,50 +667,12 @@ Description: PostgreSQL plugin for strongSwan
 
 Package: strongswan-pgsql
 Architecture: amd64
-Version: 6.0.4-sw.10
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.10_jammy_amd64.deb
-Size: 34080
-MD5sum: 75eea91827339b11ec46399442b29dcf
-SHA1: 91ba4c1d109f2dbd15bdaab7a2872f3dbf162ccc
-SHA256: d3b4225fac5f5d2ee136cdb02faa30066e62f88d6ebbf8f696058d91800b1d3b
-SHA512: c5fc5db16c7d1e82c77ef39764bb204b21bba1441650f8bc3c8f8e86f73bf75f56d1bad1bd17148ec22f13add5023a06937c57aab0eee78761fe345add59f1e3
-Homepage: https://github.com/structured-world/strongswan
-Description: PostgreSQL plugin for strongSwan
- PostgreSQL database backend for strongSwan SQL plugin.
- Enables storing VPN user credentials and configuration in PostgreSQL.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-pgsql
-Architecture: amd64
-Version: 6.0.4-sw.10
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.10_noble_amd64.deb
-Size: 33532
-MD5sum: 8c71b6537dcb0f48d1255088583c844b
-SHA1: 0b16c8b57d34d74ef1fa10a9244253eda002c1ae
-SHA256: fc8201682f4900dac6c05be61b678d4ef74cc01f034cf916adce8f5a52489596
-SHA512: 6ed535bcaaa75ee0980a786706e4db2da748ac09eee926380b40040b2a0d6ad1ee5f827e12df0233b7c29b3955b326fa73464d33717476ea5425fe0f976a5b8d
-Homepage: https://github.com/structured-world/strongswan
-Description: PostgreSQL plugin for strongSwan
- PostgreSQL database backend for strongSwan SQL plugin.
- Enables storing VPN user credentials and configuration in PostgreSQL.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-pgsql
-Architecture: amd64
 Version: 6.0.4-sw.11
 Priority: optional
 Section: net
 Maintainer: Structured World Foundation <dev@sw.foundation>
 Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.11_bookworm_amd64.deb
+Filename: pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.11_bookworm_amd64.deb
 Size: 34938
 MD5sum: ca6c437510fde03d18e0364d91df8722
 SHA1: 60ce358dd7a9a2af3b55506cffa1ec675a51cf33
@@ -1581,50 +686,12 @@ Description: PostgreSQL plugin for strongSwan
 
 Package: strongswan-pgsql
 Architecture: amd64
-Version: 6.0.4-sw.11
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.11_jammy_amd64.deb
-Size: 34792
-MD5sum: 78e574bca59e7a5129685e3f09b1cbc5
-SHA1: cd83b31488df874fea40dcbce51fb0aba6e02476
-SHA256: d86ee0635f824f2800ce3bb460b4b81a6c7407dd5ca7107ebf75f099d47499e5
-SHA512: ddaeead26918ea728bffab29dfaf4c1822676ba750872b6cdb44c0df267f30eab47cc8e47244eeff64342b2b1a343113062e8e1d0c2cfd41624b6aba071f8e50
-Homepage: https://github.com/structured-world/strongswan
-Description: PostgreSQL plugin for strongSwan
- PostgreSQL database backend for strongSwan SQL plugin.
- Enables storing VPN user credentials and configuration in PostgreSQL.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-pgsql
-Architecture: amd64
-Version: 6.0.4-sw.11
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.11_noble_amd64.deb
-Size: 34260
-MD5sum: 379854a82f4df9c013f28e31637ec6ae
-SHA1: c0d6726c96789e738ee7f0351278cd2c579a6958
-SHA256: 49b2d094c051c497eac6120f37f4fd685a3cd262f7783cd4740fc96491b0e13b
-SHA512: 3d4fd442c7d4b9de256caac9f862140ede1e3d1bb9acc6cae179b61d3c9d24b023081f9cd97019a023f6126cbfe166170e063e5de0c0deec002664d10c2396ff
-Homepage: https://github.com/structured-world/strongswan
-Description: PostgreSQL plugin for strongSwan
- PostgreSQL database backend for strongSwan SQL plugin.
- Enables storing VPN user credentials and configuration in PostgreSQL.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-pgsql
-Architecture: amd64
 Version: 6.0.4-sw.12
 Priority: optional
 Section: net
 Maintainer: Structured World Foundation <dev@sw.foundation>
 Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.12_bookworm_amd64.deb
+Filename: pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.12_bookworm_amd64.deb
 Size: 34804
 MD5sum: ac309856ff7f4321647b495349ecb36b
 SHA1: 1313786a58b29464daea58702d332ef457d2f514
@@ -1638,50 +705,12 @@ Description: PostgreSQL plugin for strongSwan
 
 Package: strongswan-pgsql
 Architecture: amd64
-Version: 6.0.4-sw.12
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.12_jammy_amd64.deb
-Size: 34802
-MD5sum: 47cac5964126e424d54269559a93d51b
-SHA1: 94e82f44172d6302779e57c3ee641034c524bd67
-SHA256: 258fa56b6b2a38826e382751a81a6f14eb2c3cce6c55ff8450264072323ffda1
-SHA512: 0f925d3e329dc842ed1eeade21a2e093216dd35b590806569857e08394078fa769a77ed97dfbe2fc1a4a14e9cadc3e6f2c97b7fa3d11842e68249f4d530522b5
-Homepage: https://github.com/structured-world/strongswan
-Description: PostgreSQL plugin for strongSwan
- PostgreSQL database backend for strongSwan SQL plugin.
- Enables storing VPN user credentials and configuration in PostgreSQL.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-pgsql
-Architecture: amd64
-Version: 6.0.4-sw.12
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.12_noble_amd64.deb
-Size: 34272
-MD5sum: 418cf945afc0241c1874051a71296551
-SHA1: 6d4c49c8cba0323914982aac13007b33922fba2c
-SHA256: 30001796adfac6731070f6de65408ac526324a18861b4529b1080f0ee8915ef8
-SHA512: d14f2a2549367cdbf718a6e6994d062f70a0c93536ed3bdcf05c4c3ba9ac49919a84ea6cfd2000b1daa7d36685ab73105156f16075a578c81c041b4a230dbefb
-Homepage: https://github.com/structured-world/strongswan
-Description: PostgreSQL plugin for strongSwan
- PostgreSQL database backend for strongSwan SQL plugin.
- Enables storing VPN user credentials and configuration in PostgreSQL.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-pgsql
-Architecture: amd64
 Version: 6.0.4-sw.13
 Priority: optional
 Section: net
 Maintainer: Structured World Foundation <dev@sw.foundation>
 Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.13_bookworm_amd64.deb
+Filename: pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.13_bookworm_amd64.deb
 Size: 34802
 MD5sum: f2d3f9b64582b81cafb7422e9b48de39
 SHA1: 1fc55c41d10f0e3f73abef53487a8cd4aa7150e4
@@ -1694,108 +723,13 @@ Description: PostgreSQL plugin for strongSwan
  Works with system strongswan (>= 6.0) or strongswan-sw.
 
 Package: strongswan-pgsql
-Architecture: arm64
-Version: 6.0.4-sw.13
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.13_bookworm_arm64.deb
-Size: 35458
-MD5sum: a699cbc1bb6e5edc2838eb00b5209093
-SHA1: 5d6cae9504449ca6e7ebb8321f9c38bb0599d9d3
-SHA256: 7aef53fb5bf131fb79c15d38550fa93f4d3eaef431d460b496ba3cbf1b2eff45
-SHA512: 77e0894cf49957ea38e7818bb38603dcc9a0964c2e02704a44fd23a264caceffebc2c26f6c2a8fe5c89c40003b433449b0f1918abc24acabc3310d4397dfea6b
-Homepage: https://github.com/structured-world/strongswan
-Description: PostgreSQL plugin for strongSwan
- PostgreSQL database backend for strongSwan SQL plugin.
- Enables storing VPN user credentials and configuration in PostgreSQL.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-pgsql
-Architecture: amd64
-Version: 6.0.4-sw.13
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.13_jammy_amd64.deb
-Size: 34932
-MD5sum: efb045cdd5e6c42f4d451bad3755b822
-SHA1: ef528b01b1586d6c321899c7302b3415c3df8719
-SHA256: 7ceaa9210a89ee189773bd77a7f85756bf49d0358c1c9c96cac3ab3fb687dcdd
-SHA512: c37523771e4538a9e0a87081475ccd174f798b65ab69f8b1a782cde8b1cdabf533c43236dfd37425aa6a2820d8a6282041843b303e5e86102333286c80434ec0
-Homepage: https://github.com/structured-world/strongswan
-Description: PostgreSQL plugin for strongSwan
- PostgreSQL database backend for strongSwan SQL plugin.
- Enables storing VPN user credentials and configuration in PostgreSQL.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-pgsql
-Architecture: arm64
-Version: 6.0.4-sw.13
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.13_jammy_arm64.deb
-Size: 35448
-MD5sum: 7eb2adc9878996a151085189389f62b9
-SHA1: 395a36cd2efe0ef7da1444c57c938b510e95952d
-SHA256: c1a0534be17a508e95c99f92fe4c244ec5a6c9617d2af0539ac2f8de581c7f05
-SHA512: 7db74feb1c2a26ed99dde8d1c7a22681198080474bc76a805202e63bdf12d6e9c2d439620e4d1b3388c67985d92adc96c055bb622d66cc2d3aad604407089707
-Homepage: https://github.com/structured-world/strongswan
-Description: PostgreSQL plugin for strongSwan
- PostgreSQL database backend for strongSwan SQL plugin.
- Enables storing VPN user credentials and configuration in PostgreSQL.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-pgsql
-Architecture: amd64
-Version: 6.0.4-sw.13
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.13_noble_amd64.deb
-Size: 34262
-MD5sum: 5d184e3272e74c5f8065b0abf17fc1af
-SHA1: 3c0bdedbcd42db7aa494965bc8ef0da9ad682d3f
-SHA256: df948737b8f3644e10f96aefab698674a0ab667a86e2b57575176890f8c5c965
-SHA512: e0878644fce524f422d6bd15cb485ce617ab9ce8d039cdb2ee0dc310ab6bbbf6fdbaec0e813444c3637f12d5ff3603097514c7f2f06fe85d16bad1cd385e3c48
-Homepage: https://github.com/structured-world/strongswan
-Description: PostgreSQL plugin for strongSwan
- PostgreSQL database backend for strongSwan SQL plugin.
- Enables storing VPN user credentials and configuration in PostgreSQL.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-pgsql
-Architecture: arm64
-Version: 6.0.4-sw.13
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.13_noble_arm64.deb
-Size: 34848
-MD5sum: b41a60b4892c53e4cecbe24571a13f95
-SHA1: 20c4b5e4ef673a764b004cd3dada0dedc6445ef0
-SHA256: d2b9a7edd5b3109a4f9a6bb5bc2700ae95d8af8b6fdef637973667e968fae678
-SHA512: cec5909fa8c3e5f48866ed5765920dc9b8a0b46080af8f204cc82baaafc4e351a535fd91264aba8e4465b0afe06f03ef56f1d39dda7149c91f653fef6f256b95
-Homepage: https://github.com/structured-world/strongswan
-Description: PostgreSQL plugin for strongSwan
- PostgreSQL database backend for strongSwan SQL plugin.
- Enables storing VPN user credentials and configuration in PostgreSQL.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-pgsql
 Architecture: amd64
 Version: 6.0.4-sw.1
 Priority: optional
 Section: net
 Maintainer: Structured World Foundation <dev@sw.foundation>
 Depends: strongswan-sw (= 6.0.4-sw.1), libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.1_bookworm_amd64.deb
+Filename: pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.1_bookworm_amd64.deb
 Size: 34054
 MD5sum: a06630c564a97b6a07aa29dc8948515a
 SHA1: 2d2af837e2cff5b2abf2abe0806e1581e0667103
@@ -1808,48 +742,12 @@ Description: PostgreSQL plugin for strongSwan (SW fork)
 
 Package: strongswan-pgsql
 Architecture: amd64
-Version: 6.0.4-sw.1
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan-sw (= 6.0.4-sw.1), libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.1_jammy_amd64.deb
-Size: 34042
-MD5sum: 22b2a944e8f1831b8a94cb54972fbe96
-SHA1: 18cc591bc627407e47b6c1dcc4de2fa023905c83
-SHA256: 5271a7d24272170bc63c47d9035b1598683084e12966b6be5f1be603bc9d6b3d
-SHA512: 1cc5492bc368d2ed8bf38a8dcddc68d9b3199b4615ef529ada5a458d23ed0f360b4e0b42fe3b5afb3d68bd458f09387205b25d1548c0b9c45cc2f49f0450a952
-Homepage: https://github.com/structured-world/strongswan
-Description: PostgreSQL plugin for strongSwan (SW fork)
- PostgreSQL database backend for strongSwan SQL plugin.
- Enables storing VPN user credentials and configuration in PostgreSQL.
-
-Package: strongswan-pgsql
-Architecture: amd64
-Version: 6.0.4-sw.1
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan-sw (= 6.0.4-sw.1), libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.1_noble_amd64.deb
-Size: 33516
-MD5sum: 06bce19505a6ad1692e1c16e7de75a77
-SHA1: cc4ccb842e3021ae4b4d68ddb920af433c2f00ba
-SHA256: be11a7d3536a88612de568761a1cb09a7d1c3b1e457d52d284779cc9934d5b11
-SHA512: 600107736352c9fbc6baa77691ade0e193fb12a35447b0aed658420b9a0f01680db1a53fa4be0150455f6922730980190eb48760f545aacde9692889b19f73bc
-Homepage: https://github.com/structured-world/strongswan
-Description: PostgreSQL plugin for strongSwan (SW fork)
- PostgreSQL database backend for strongSwan SQL plugin.
- Enables storing VPN user credentials and configuration in PostgreSQL.
-
-Package: strongswan-pgsql
-Architecture: amd64
 Version: 6.0.4-sw.8
 Priority: optional
 Section: net
 Maintainer: Structured World Foundation <dev@sw.foundation>
 Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.8_bookworm_amd64.deb
+Filename: pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.8_bookworm_amd64.deb
 Size: 34076
 MD5sum: 136ab637079f974773db0f0ec2c0e028
 SHA1: 718421878dd76f22fb40903864a1795b6e03bf88
@@ -1863,50 +761,12 @@ Description: PostgreSQL plugin for strongSwan
 
 Package: strongswan-pgsql
 Architecture: amd64
-Version: 6.0.4-sw.8
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.8_jammy_amd64.deb
-Size: 34072
-MD5sum: ae2c74a95a892c0b66457a9697711a5a
-SHA1: 118e5d743e7ed085d2c84ae3038d398345c9788c
-SHA256: 9b387387b7a68757d7f2b5c44e5c7f1b95087569a4ce650a0420f1be3ef556ca
-SHA512: 80a325ef483c7543b9329d19d8e602b130f87c504b8b36872cfb11a3d0a0251f4a97cdcd9fc1f8ebd704d0a6628fc45bebdfd1fbce550b9b7197293234a3ad84
-Homepage: https://github.com/structured-world/strongswan
-Description: PostgreSQL plugin for strongSwan
- PostgreSQL database backend for strongSwan SQL plugin.
- Enables storing VPN user credentials and configuration in PostgreSQL.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-pgsql
-Architecture: amd64
-Version: 6.0.4-sw.8
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.8_noble_amd64.deb
-Size: 33548
-MD5sum: a0c848be978794f30e7ddaf88de2a66b
-SHA1: 7202f9ee817a6d5f20aad6b479097ed47c1e5044
-SHA256: 3e4d50d3adccf7769ab5760b3e1a7f50d2951d9668fca05e1b3a85654fa261db
-SHA512: 15097b7669e14944c67c951baffe65d2caa5da5ad53ffeba0ffaaa857339608779e1ca6a47c916ffa01c0c7cc5b1d0ef2fc1caf429d477ee5779307b17a1fe91
-Homepage: https://github.com/structured-world/strongswan
-Description: PostgreSQL plugin for strongSwan
- PostgreSQL database backend for strongSwan SQL plugin.
- Enables storing VPN user credentials and configuration in PostgreSQL.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-pgsql
-Architecture: amd64
 Version: 6.0.4-sw.9
 Priority: optional
 Section: net
 Maintainer: Structured World Foundation <dev@sw.foundation>
 Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.9_bookworm_amd64.deb
+Filename: pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.9_bookworm_amd64.deb
 Size: 34076
 MD5sum: b116e1180cf39b5f5f475d97925c5936
 SHA1: 34c2372325a6b7b15f5ca4003b9bd585c48354ce
@@ -1920,50 +780,12 @@ Description: PostgreSQL plugin for strongSwan
 
 Package: strongswan-pgsql
 Architecture: amd64
-Version: 6.0.4-sw.9
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.9_jammy_amd64.deb
-Size: 34078
-MD5sum: b4c0df90bf09deee774eb0d7bc157a07
-SHA1: 3ad37d915639462fd9ae3a52813bcd7742ec37ba
-SHA256: f63bb9342f28c329e908e671ce75c2caa382f91ad0a639d06a0ac1f72dd364d7
-SHA512: 2bad0ef252850758bb21fef73b1917b620e3a4f56dd067eeb191e26d32330b8054c5560a4705d561400bbfdd71c6425fa96d0257e8c9600e936ab5ee8407bcba
-Homepage: https://github.com/structured-world/strongswan
-Description: PostgreSQL plugin for strongSwan
- PostgreSQL database backend for strongSwan SQL plugin.
- Enables storing VPN user credentials and configuration in PostgreSQL.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-pgsql
-Architecture: amd64
-Version: 6.0.4-sw.9
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.4-sw.9_noble_amd64.deb
-Size: 33534
-MD5sum: ecc80ce20300ad8adb9d755215ed4095
-SHA1: 04c27ba1d54682bd14a52da581d951c8e4cf0473
-SHA256: 5421cea411de08e4ce22efef30c8f07865feac07d9a7e281556779f59845cc46
-SHA512: 1811637518a51980586e881ad40b52f63022cdabd15902a64ed18c1e489616feba4e231837e150a9c22ed4372fd9ca87eb9359615cdc3d2a30de83efc3fd0015
-Homepage: https://github.com/structured-world/strongswan
-Description: PostgreSQL plugin for strongSwan
- PostgreSQL database backend for strongSwan SQL plugin.
- Enables storing VPN user credentials and configuration in PostgreSQL.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-pgsql
-Architecture: amd64
 Version: 6.0.6-sw.1
 Priority: optional
 Section: net
 Maintainer: Structured World Foundation <dev@sw.foundation>
 Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.6-sw.1_bookworm_amd64.deb
+Filename: pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.6-sw.1_bookworm_amd64.deb
 Size: 34804
 MD5sum: fdc9551255ec6cf74207e51b38d2e5b1
 SHA1: 21f3167d08f41cda8ec25da909e531fc72fc2c6d
@@ -1976,94 +798,18 @@ Description: PostgreSQL plugin for strongSwan
  Works with system strongswan (>= 6.0) or strongswan-sw.
 
 Package: strongswan-pgsql
-Architecture: arm64
-Version: 6.0.6-sw.1
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.6-sw.1_bookworm_arm64.deb
-Size: 35456
-MD5sum: 4f0704014ba3db2345572e5821762238
-SHA1: 0c16129def25b881ed0239473aada49b9768f23f
-SHA256: 60a24b67d9bc8ca488297a9a67edea03f8aab11097d6b5638ee6c69bc5bece3f
-SHA512: 60813c3637653c80835a2fb239c9a44c3b6baff1c0ffcbd41b8c82ef6cf0b6aadaa23cfae5d41d9c38607d0b2bd6ee7dd5e763eacd7f3d98a5fd97ecbaaecb58
-Homepage: https://github.com/structured-world/strongswan
-Description: PostgreSQL plugin for strongSwan
- PostgreSQL database backend for strongSwan SQL plugin.
- Enables storing VPN user credentials and configuration in PostgreSQL.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-pgsql
 Architecture: amd64
-Version: 6.0.6-sw.1
+Version: 6.0.7-sw.1
 Priority: optional
 Section: net
 Maintainer: Structured World Foundation <dev@sw.foundation>
 Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.6-sw.1_jammy_amd64.deb
-Size: 34794
-MD5sum: 08e2f0b520d01d81f6bae8d83801f1fa
-SHA1: 2269927371dedc23ed5266f0cd6253c7003cad06
-SHA256: e42346a3ead6bd1411fd6c955207290e3361502ea6fb1988157c4179bdbb83fe
-SHA512: df207798be3b834eb2bdc3479cb3a648c66ca2fbdf29ec0c44817014089393303a2e75adc090a8dbd69a30c2cae34f9159a674db21073ac5461c8e1b195d74a2
-Homepage: https://github.com/structured-world/strongswan
-Description: PostgreSQL plugin for strongSwan
- PostgreSQL database backend for strongSwan SQL plugin.
- Enables storing VPN user credentials and configuration in PostgreSQL.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-pgsql
-Architecture: arm64
-Version: 6.0.6-sw.1
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.6-sw.1_jammy_arm64.deb
-Size: 35442
-MD5sum: e1bb7a6c8d9a33c94d7d91cb31cb80c7
-SHA1: 44233850ba13904ff994b742a1788788dca1e0b2
-SHA256: 2ead75ddb66409dbe3172d29debf16aa3bd3545b3ddf4e8bb465ce57b586bfcd
-SHA512: 0448f930804c4670503ea892134359188e9918264285054566d12c027a681b5fdea91e3a48471311ac12e5a0d23e5efe07ec8bb7d406eb9ef6523079ca3163ab
-Homepage: https://github.com/structured-world/strongswan
-Description: PostgreSQL plugin for strongSwan
- PostgreSQL database backend for strongSwan SQL plugin.
- Enables storing VPN user credentials and configuration in PostgreSQL.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-pgsql
-Architecture: amd64
-Version: 6.0.6-sw.1
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.6-sw.1_noble_amd64.deb
-Size: 34262
-MD5sum: d744cfcc9dae7902697c90508f5f8969
-SHA1: ac88afec891b4fe0ad02f77582970643d8ca2617
-SHA256: b4f853d84771ea40f7af0ae0d773c383ecb58119504be006a91d25d5d4060160
-SHA512: e49e45eae32646fb320a68ae8c861b9a42bf5a8060501e2e232222918736706de522b992671b757340856196198c1ec0ce83a521f0a9d553e00c9748f9a2a3a9
-Homepage: https://github.com/structured-world/strongswan
-Description: PostgreSQL plugin for strongSwan
- PostgreSQL database backend for strongSwan SQL plugin.
- Enables storing VPN user credentials and configuration in PostgreSQL.
- Works with system strongswan (>= 6.0) or strongswan-sw.
-
-Package: strongswan-pgsql
-Architecture: arm64
-Version: 6.0.6-sw.1
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: strongswan (>= 6.0) | strongswan-sw, libpq5
-Filename: deb/pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.6-sw.1_noble_arm64.deb
-Size: 34846
-MD5sum: 1d6ab8bacdeabfe7f9d5cc8b6e5632e2
-SHA1: 9c1c252aa9625e151e5d9e59a74650d3c16b9c84
-SHA256: 9eed8136a98e8c5cb6810c89a466a3dfbe13eaca99e2f17b125dd06beab67e21
-SHA512: af1c036626b6c3d2c6fd8273506f520839de429952a43545a584331c0c8e7d891117dfbbfbc8688c649f62f1471826a5da100146f0fffc3034a2c5ba5573b64f
+Filename: pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.7-sw.1_bookworm_amd64.deb
+Size: 34800
+MD5sum: a69f7290d1266c429d04334397ae666b
+SHA1: 8bed488003917bdb3e53bc9a9a3fe474c8180674
+SHA256: 2d00d9e48d88da285155569f3dd889594a83134319379db154363ec69d4f6278
+SHA512: 5c10b8568c416b0ee012acd902e16bc0957801e0b5598b0e4e0048b6b9e24774e413103db7687627646171018412f291b59327e9f0ae7517edcd108eb6bad778
 Homepage: https://github.com/structured-world/strongswan
 Description: PostgreSQL plugin for strongSwan
  PostgreSQL database backend for strongSwan SQL plugin.
@@ -2080,7 +826,7 @@ Provides: strongswan (= 6.0.4-sw.10)
 Depends: libgmp10, libssl3, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
 Conflicts: strongswan, strongswan-charon, strongswan-starter
 Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.10_bookworm_amd64.deb
+Filename: pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.10_bookworm_amd64.deb
 Size: 6495730
 MD5sum: f319330dd1d8e732d7da298af6ae7638
 SHA1: fe29259e155a903b03109cdd586338c9a7ec0646
@@ -2095,52 +841,6 @@ Description: strongSwan IPsec (SW fork)
 
 Package: strongswan-sw
 Architecture: amd64
-Version: 6.0.4-sw.10
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Provides: strongswan (= 6.0.4-sw.10)
-Depends: libgmp10, libssl3, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
-Conflicts: strongswan, strongswan-charon, strongswan-starter
-Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.10_jammy_amd64.deb
-Size: 6496026
-MD5sum: 438340b557192a66c012fe89c7c86856
-SHA1: 9d393ace399168231ea6830f2fb6f76e6ad32ad8
-SHA256: 56126c6b26795ce34427e1a8ccd519cd9dd425f46fdc5964ddb120bc7a2b6b1c
-SHA512: f3e10ea59111eeaccbc18b632a49a63312269f60ea77ab4dd3530fdd37af2ba2cb973538921e683b597ec37b4b2abec8384b7e0503ae846f0136217506718af1
-Homepage: https://github.com/structured-world/strongswan
-Description: strongSwan IPsec (SW fork)
- strongSwan is a complete IPsec implementation for Linux.
- This is the Structured World Foundation fork with socket permissions
- fix (umask 0660 for Unix sockets). Drop-in replacement for system
- strongswan package.
-
-Package: strongswan-sw
-Architecture: amd64
-Version: 6.0.4-sw.10
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Provides: strongswan (= 6.0.4-sw.10)
-Depends: libgmp10, libssl3t64, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
-Conflicts: strongswan, strongswan-charon, strongswan-starter
-Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.10_noble_amd64.deb
-Size: 6402486
-MD5sum: 2e1e74f3ec21ad7e9bd6d7bc12cd095b
-SHA1: 1b6190caa0d2ed4402a59b7cdc7e5c2df9787d02
-SHA256: 62499a31843abcf8e77c382426fbba6ee7731190af39f12432f12375a6ad0511
-SHA512: 334b6bab46f563ce2cc57a6bb5f98971de8e67f0f734b9a43538cdc8980d23457129f454257bff3b667dea215105655bfb094132252bc9d9b111e2216e1253d1
-Homepage: https://github.com/structured-world/strongswan
-Description: strongSwan IPsec (SW fork)
- strongSwan is a complete IPsec implementation for Linux.
- This is the Structured World Foundation fork with socket permissions
- fix (umask 0660 for Unix sockets). Drop-in replacement for system
- strongswan package.
-
-Package: strongswan-sw
-Architecture: amd64
 Version: 6.0.4-sw.11
 Priority: optional
 Section: net
@@ -2149,7 +849,7 @@ Provides: strongswan (= 6.0.4-sw.11)
 Depends: libgmp10, libssl3, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
 Conflicts: strongswan, strongswan-charon, strongswan-starter
 Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.11_bookworm_amd64.deb
+Filename: pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.11_bookworm_amd64.deb
 Size: 6496544
 MD5sum: 972f19deb2f85fdf2e21b6a270d894a7
 SHA1: d51e34067c875a34c4ad17961cea5591bf9045c9
@@ -2164,52 +864,6 @@ Description: strongSwan IPsec (SW fork)
 
 Package: strongswan-sw
 Architecture: amd64
-Version: 6.0.4-sw.11
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Provides: strongswan (= 6.0.4-sw.11)
-Depends: libgmp10, libssl3, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
-Conflicts: strongswan, strongswan-charon, strongswan-starter
-Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.11_jammy_amd64.deb
-Size: 6496112
-MD5sum: 8c7abd4a11b5a6eadfc5d410055170aa
-SHA1: 63ceba2f11b2bacfeb49a72c718882cc226d3393
-SHA256: 6aaa0839703ccd1ce8219230f809c0f3f50e81fc0a00d4735ebb2dc67bac6eaf
-SHA512: 2bef114db72b4b6f50ae281cc40653c41a61e906dfea2e27a94aa6e73e0940ee67f491005fd0efcaf37c01ece0d04dc5387b522752b363385a45f20377f51499
-Homepage: https://github.com/structured-world/strongswan
-Description: strongSwan IPsec (SW fork)
- strongSwan is a complete IPsec implementation for Linux.
- This is the Structured World Foundation fork with socket permissions
- fix (umask 0660 for Unix sockets). Drop-in replacement for system
- strongswan package.
-
-Package: strongswan-sw
-Architecture: amd64
-Version: 6.0.4-sw.11
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Provides: strongswan (= 6.0.4-sw.11)
-Depends: libgmp10, libssl3t64, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
-Conflicts: strongswan, strongswan-charon, strongswan-starter
-Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.11_noble_amd64.deb
-Size: 6403470
-MD5sum: c385ae6b4a7eab11cc00e57e05116c42
-SHA1: 7febf7e24da65fae2dfb189881115898bae0d3d3
-SHA256: 954423b5ac3d34845e7041b26a87fc763b76920e48b3b3ee90e5671fad9336b8
-SHA512: 7ddaf520eddab242018ebaf7f442590ce65248322e87cc237a96d1e3df76787fcd51da6a7521b8601d9de0251acc67b4f39a8fe295c692ed20c36a7e61751730
-Homepage: https://github.com/structured-world/strongswan
-Description: strongSwan IPsec (SW fork)
- strongSwan is a complete IPsec implementation for Linux.
- This is the Structured World Foundation fork with socket permissions
- fix (umask 0660 for Unix sockets). Drop-in replacement for system
- strongswan package.
-
-Package: strongswan-sw
-Architecture: amd64
 Version: 6.0.4-sw.12
 Priority: optional
 Section: net
@@ -2218,7 +872,7 @@ Provides: strongswan (= 6.0.4-sw.12)
 Depends: libgmp10, libssl3, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
 Conflicts: strongswan, strongswan-charon, strongswan-starter
 Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.12_bookworm_amd64.deb
+Filename: pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.12_bookworm_amd64.deb
 Size: 6496536
 MD5sum: 96450676bbe6e5cac04f09fb5a9f0208
 SHA1: 411b4914e2b177f4f1cb604ccc7d6479880db9ba
@@ -2233,52 +887,6 @@ Description: strongSwan IPsec (SW fork)
 
 Package: strongswan-sw
 Architecture: amd64
-Version: 6.0.4-sw.12
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Provides: strongswan (= 6.0.4-sw.12)
-Depends: libgmp10, libssl3, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
-Conflicts: strongswan, strongswan-charon, strongswan-starter
-Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.12_jammy_amd64.deb
-Size: 6496806
-MD5sum: cc915340999e10e43d3aea468f2721cb
-SHA1: 0586d9cd630d3c3b9757381d7f75375cf7aa74a8
-SHA256: 66d915d8e77337f77bd88bcc79ffac936479be9937e6b5d68e0733ea435e43f0
-SHA512: 296aae1a239f65790633a681c44a2d2276d02fb87f9a30798ac92a4977a045d3d2c52a84b4e6802087e3c9ee2ad8eaf443cc77d2603fc8d134dc005d77472fcd
-Homepage: https://github.com/structured-world/strongswan
-Description: strongSwan IPsec (SW fork)
- strongSwan is a complete IPsec implementation for Linux.
- This is the Structured World Foundation fork with socket permissions
- fix (umask 0660 for Unix sockets). Drop-in replacement for system
- strongswan package.
-
-Package: strongswan-sw
-Architecture: amd64
-Version: 6.0.4-sw.12
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Provides: strongswan (= 6.0.4-sw.12)
-Depends: libgmp10, libssl3t64, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
-Conflicts: strongswan, strongswan-charon, strongswan-starter
-Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.12_noble_amd64.deb
-Size: 6403504
-MD5sum: f3ccd79192566049b228d904ce343292
-SHA1: 44c3473c8c5d5c59b125e5eeca87af14344d6d81
-SHA256: 872928c711f08e70f85ebc30750605852e1b317dc66008fa596621acc7c91916
-SHA512: b96d9230c2244dce26c893799064dc3ae8bb374edf289b8af1c4fc1cce3156e4d039140dcb41bd4378b1a6d3f5ebf6041034a8c8853fed3f16687faa244cb767
-Homepage: https://github.com/structured-world/strongswan
-Description: strongSwan IPsec (SW fork)
- strongSwan is a complete IPsec implementation for Linux.
- This is the Structured World Foundation fork with socket permissions
- fix (umask 0660 for Unix sockets). Drop-in replacement for system
- strongswan package.
-
-Package: strongswan-sw
-Architecture: amd64
 Version: 6.0.4-sw.13
 Priority: optional
 Section: net
@@ -2287,127 +895,12 @@ Provides: strongswan (= 6.0.4-sw.13)
 Depends: libgmp10, libssl3, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
 Conflicts: strongswan, strongswan-charon, strongswan-starter
 Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.13_bookworm_amd64.deb
+Filename: pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.13_bookworm_amd64.deb
 Size: 6496482
 MD5sum: 6420f72e974e2e32830800ba67083926
 SHA1: a3b05aa3e6a978401c3d749922ebdc07120f0bd4
 SHA256: cd6b4fc457bb366d4fb9a67342008a25a12cd6f06ace502f709ace95729aad53
 SHA512: f70ffc3912ccb3263f49a029e5ebbb5d39abdde411e5dcbb254bdb1144e34a50e2a1062925cb55ebc02381053e40b8caafe556c25b802de44955e37632b825e1
-Homepage: https://github.com/structured-world/strongswan
-Description: strongSwan IPsec (SW fork)
- strongSwan is a complete IPsec implementation for Linux.
- This is the Structured World Foundation fork with socket permissions
- fix (umask 0660 for Unix sockets). Drop-in replacement for system
- strongswan package.
-
-Package: strongswan-sw
-Architecture: arm64
-Version: 6.0.4-sw.13
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Provides: strongswan (= 6.0.4-sw.13)
-Depends: libgmp10, libssl3, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
-Conflicts: strongswan, strongswan-charon, strongswan-starter
-Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.13_bookworm_arm64.deb
-Size: 6463720
-MD5sum: d5937ac1ee3b99de2356f6fe89444ed3
-SHA1: d99fc772de3e1cf828fcf4aaa7c9bb92c4f4dff7
-SHA256: f064fbc070086fa6fad860a4c0312a94e095db4aa804329c9e8b9e03d118c77a
-SHA512: c666cd90b41dc8a3776a72add1e51310cd78719fe821f87df57609e4f8e714bcc4f60645bb8319d8b0b2644490dba2b245702163db6d05deba2c15aaed91f9ac
-Homepage: https://github.com/structured-world/strongswan
-Description: strongSwan IPsec (SW fork)
- strongSwan is a complete IPsec implementation for Linux.
- This is the Structured World Foundation fork with socket permissions
- fix (umask 0660 for Unix sockets). Drop-in replacement for system
- strongswan package.
-
-Package: strongswan-sw
-Architecture: amd64
-Version: 6.0.4-sw.13
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Provides: strongswan (= 6.0.4-sw.13)
-Depends: libgmp10, libssl3, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
-Conflicts: strongswan, strongswan-charon, strongswan-starter
-Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.13_jammy_amd64.deb
-Size: 6496540
-MD5sum: 12c3cc4068628d37018d15abd1145d67
-SHA1: 2b0d6e1bf19e6f62cf851e0f60512b948286ff4b
-SHA256: c6b07d33bb9948b3f68a3b9bec4eb9f480b51719f9fbf0a7ef195b39c99de449
-SHA512: 2cba00f962f9dff23d523c3b979ccc7c7ef2d4dbcc090b8039887dc7e70e9b527364ec08620bf9714bbcd5b44c170f1b8046fb17c9e489ca119921114334d995
-Homepage: https://github.com/structured-world/strongswan
-Description: strongSwan IPsec (SW fork)
- strongSwan is a complete IPsec implementation for Linux.
- This is the Structured World Foundation fork with socket permissions
- fix (umask 0660 for Unix sockets). Drop-in replacement for system
- strongswan package.
-
-Package: strongswan-sw
-Architecture: arm64
-Version: 6.0.4-sw.13
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Provides: strongswan (= 6.0.4-sw.13)
-Depends: libgmp10, libssl3, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
-Conflicts: strongswan, strongswan-charon, strongswan-starter
-Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.13_jammy_arm64.deb
-Size: 6463898
-MD5sum: d20d80cc83427f8b2feabd74d25c8da2
-SHA1: 692843e7969fd30ae8e8cebf9451e3b92633dc8f
-SHA256: a33365dcad5668e29ab26e96ce20bdde5776e702193122f162f79cace866befd
-SHA512: 4468c77bc444464a48ae64e3445c2563bfcf827cda30ebca3d22ecf09cb4630e3580e8c819f6f822293d76dc4a4b5000d4869bd675c11e2abbc34ec1aa0ff954
-Homepage: https://github.com/structured-world/strongswan
-Description: strongSwan IPsec (SW fork)
- strongSwan is a complete IPsec implementation for Linux.
- This is the Structured World Foundation fork with socket permissions
- fix (umask 0660 for Unix sockets). Drop-in replacement for system
- strongswan package.
-
-Package: strongswan-sw
-Architecture: amd64
-Version: 6.0.4-sw.13
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Provides: strongswan (= 6.0.4-sw.13)
-Depends: libgmp10, libssl3t64, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
-Conflicts: strongswan, strongswan-charon, strongswan-starter
-Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.13_noble_amd64.deb
-Size: 6403444
-MD5sum: 5d4a96027c7db810add8aa07576b994c
-SHA1: 62680cf848bc1224d6547028780b7e935453cafc
-SHA256: c7e2aecc7d833803f2de3ca8cbb4ff37bd3704325e5cb26f75079f3ab3e2a371
-SHA512: a40dd4aacf2adbb6a83b5d6fea5a7bb29b5bf9eca5010d8d1cf49d6e818d16e131b3e9b57ba12e1070cebc97702bad75aa6d062eb3eebe3b4d6261cc44e15a6f
-Homepage: https://github.com/structured-world/strongswan
-Description: strongSwan IPsec (SW fork)
- strongSwan is a complete IPsec implementation for Linux.
- This is the Structured World Foundation fork with socket permissions
- fix (umask 0660 for Unix sockets). Drop-in replacement for system
- strongswan package.
-
-Package: strongswan-sw
-Architecture: arm64
-Version: 6.0.4-sw.13
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Provides: strongswan (= 6.0.4-sw.13)
-Depends: libgmp10, libssl3t64, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
-Conflicts: strongswan, strongswan-charon, strongswan-starter
-Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.13_noble_arm64.deb
-Size: 6394760
-MD5sum: d3c5feaa5272ea49b8384b212bf4f212
-SHA1: 09d72aaa9a353e452cb2aa1c4ebe0eef2d53874c
-SHA256: 77516d37c08316f52d6e160968a2828668aea00d68b57ece1e0a0156e958012e
-SHA512: 1dc60911ab9a9c3123eb97d4da8019447a7a4ad5e3cff9c476d9361e346e21cdbdbe77811b5d9dd5cade04c8f559e8f3a089b5ada470c6ce916a5d7caa855644
 Homepage: https://github.com/structured-world/strongswan
 Description: strongSwan IPsec (SW fork)
  strongSwan is a complete IPsec implementation for Linux.
@@ -2424,7 +917,7 @@ Maintainer: Structured World Foundation <dev@sw.foundation>
 Depends: libgmp10, libssl3, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
 Conflicts: strongswan, strongswan-charon, strongswan-starter
 Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.1_bookworm_amd64.deb
+Filename: pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.1_bookworm_amd64.deb
 Size: 6318426
 MD5sum: bde396f8de0bd570eec2116b7163b96b
 SHA1: 68b044e5a6c4ce979a2c45ac51bb93e64fc1ef6a
@@ -2439,50 +932,6 @@ Description: strongSwan IPsec (SW fork with pgsql support)
 
 Package: strongswan-sw
 Architecture: amd64
-Version: 6.0.4-sw.1
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: libgmp10, libssl3, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
-Conflicts: strongswan, strongswan-charon, strongswan-starter
-Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.1_jammy_amd64.deb
-Size: 6318458
-MD5sum: 8ec3d39002c8cb0a7414c8956ea03492
-SHA1: c0740e3d66da69ce0c20f710a73dff1370f0ab7c
-SHA256: 125bffd13b70de0f5b542acfee994bc175d5ba930f9e02cc200af0d9c9809522
-SHA512: 9b188e668ec8719654f55060ea344ef3fa23a479e56b0e7bd2005d7b6630521a77f02f27ddad1ac7ab29ebe9fd111ee7cc5aed1c3ce83d0502d101718698fbc3
-Homepage: https://github.com/structured-world/strongswan
-Description: strongSwan IPsec (SW fork with pgsql support)
- strongSwan is a complete IPsec implementation for Linux.
- This is the Structured World fork with:
- - Socket permissions fix (umask 0660 for Unix sockets)
- - PostgreSQL database plugin for SQL authentication
-
-Package: strongswan-sw
-Architecture: amd64
-Version: 6.0.4-sw.1
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Depends: libgmp10, libssl3t64, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
-Conflicts: strongswan, strongswan-charon, strongswan-starter
-Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.1_noble_amd64.deb
-Size: 6226656
-MD5sum: b6eb52dbaa399682072576e216bebe7a
-SHA1: ef81eb26fdb6fc3e906acb7bdb666652d5c4a4ff
-SHA256: 2ab8742d0606ea1d36fb1c50a2870ae9c7c51b693c21ffb34630cede42b42df3
-SHA512: 73e71d645a90ebd9a74f735674c57da401ec64acb804a16ac9f3cc5c541976c0fd2f83183394c7f23ec88f202fef3ae9a6b6e795e163394e3e6d582a2cdaa658
-Homepage: https://github.com/structured-world/strongswan
-Description: strongSwan IPsec (SW fork with pgsql support)
- strongSwan is a complete IPsec implementation for Linux.
- This is the Structured World fork with:
- - Socket permissions fix (umask 0660 for Unix sockets)
- - PostgreSQL database plugin for SQL authentication
-
-Package: strongswan-sw
-Architecture: amd64
 Version: 6.0.4-sw.8
 Priority: optional
 Section: net
@@ -2491,7 +940,7 @@ Provides: strongswan (= 6.0.4-sw.8)
 Depends: libgmp10, libssl3, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
 Conflicts: strongswan, strongswan-charon, strongswan-starter
 Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.8_bookworm_amd64.deb
+Filename: pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.8_bookworm_amd64.deb
 Size: 6434074
 MD5sum: 266101860189e5e6e1586149951a5ddb
 SHA1: 0105aaf3f89cfd704e53cfbdc335a5a9af101bde
@@ -2506,52 +955,6 @@ Description: strongSwan IPsec (SW fork)
 
 Package: strongswan-sw
 Architecture: amd64
-Version: 6.0.4-sw.8
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Provides: strongswan (= 6.0.4-sw.8)
-Depends: libgmp10, libssl3, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
-Conflicts: strongswan, strongswan-charon, strongswan-starter
-Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.8_jammy_amd64.deb
-Size: 6434038
-MD5sum: 67531f3aa11b1b63f18ce115cfceec69
-SHA1: 30f1a0f2f43704c0cf921e10063d70b78a53e1f7
-SHA256: 654138d84bd3b47f7491fbd1a13cf4675932551108806605875ed06c436d0f47
-SHA512: 45b732a14b042ec51c82e8e3ca9b541db6ccc14b02f0e430877693a68e7cf949d99c0f940c73e922523d1e626b5464cc79c05279feb0049ebe2fa5579c062afc
-Homepage: https://github.com/structured-world/strongswan
-Description: strongSwan IPsec (SW fork)
- strongSwan is a complete IPsec implementation for Linux.
- This is the Structured World Foundation fork with socket permissions
- fix (umask 0660 for Unix sockets). Drop-in replacement for system
- strongswan package.
-
-Package: strongswan-sw
-Architecture: amd64
-Version: 6.0.4-sw.8
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Provides: strongswan (= 6.0.4-sw.8)
-Depends: libgmp10, libssl3t64, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
-Conflicts: strongswan, strongswan-charon, strongswan-starter
-Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.8_noble_amd64.deb
-Size: 6344288
-MD5sum: 0626649bab6bdcf4b1184aba67c4b914
-SHA1: fc7c7ae382c329e4de3400a427228812c97306bc
-SHA256: 16a3be4db49bf94de56a690a9432a161e65b6e5ab0a2721704f2a0e216b840a2
-SHA512: ab21a4df342932dd06fbbb8dc2157a7bc7b274e42797ff78225ba964cc002e61002678fcd12bd7d14a4c01137cf1d2d34ce05267af2f5bab805558152b4911a8
-Homepage: https://github.com/structured-world/strongswan
-Description: strongSwan IPsec (SW fork)
- strongSwan is a complete IPsec implementation for Linux.
- This is the Structured World Foundation fork with socket permissions
- fix (umask 0660 for Unix sockets). Drop-in replacement for system
- strongswan package.
-
-Package: strongswan-sw
-Architecture: amd64
 Version: 6.0.4-sw.9
 Priority: optional
 Section: net
@@ -2560,7 +963,7 @@ Provides: strongswan (= 6.0.4-sw.9)
 Depends: libgmp10, libssl3, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
 Conflicts: strongswan, strongswan-charon, strongswan-starter
 Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.9_bookworm_amd64.deb
+Filename: pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.9_bookworm_amd64.deb
 Size: 6434132
 MD5sum: a19b3997bb80a8d0da5c6c1ae548e6b2
 SHA1: b55b8f6d71171b714d9eaba80d52448ff3a29656
@@ -2575,52 +978,6 @@ Description: strongSwan IPsec (SW fork)
 
 Package: strongswan-sw
 Architecture: amd64
-Version: 6.0.4-sw.9
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Provides: strongswan (= 6.0.4-sw.9)
-Depends: libgmp10, libssl3, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
-Conflicts: strongswan, strongswan-charon, strongswan-starter
-Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.9_jammy_amd64.deb
-Size: 6434302
-MD5sum: 67ab42fda39c1f77368c80d375eb466f
-SHA1: 3f35d9dcd0da8fe496a70826be7a57632f812538
-SHA256: 725bfda497657c369e87351aa5d3bc5c3a008a1de4ba70bcc079b588950d0a25
-SHA512: 2ed83a504b74a704b68c21f0175fa08a4a0dfb539996485180e4c95e7fc5b34d7671a8373a3cde785717f4934c66c8a6e8b0fe9c89d3343ef1c207075d9566ce
-Homepage: https://github.com/structured-world/strongswan
-Description: strongSwan IPsec (SW fork)
- strongSwan is a complete IPsec implementation for Linux.
- This is the Structured World Foundation fork with socket permissions
- fix (umask 0660 for Unix sockets). Drop-in replacement for system
- strongswan package.
-
-Package: strongswan-sw
-Architecture: amd64
-Version: 6.0.4-sw.9
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Provides: strongswan (= 6.0.4-sw.9)
-Depends: libgmp10, libssl3t64, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
-Conflicts: strongswan, strongswan-charon, strongswan-starter
-Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.4-sw.9_noble_amd64.deb
-Size: 6343754
-MD5sum: 0332936de8c290862fbc43d6e6b0c2bf
-SHA1: d6d8043ee13d74052ba94dc6efc83152a00ee756
-SHA256: 7d503e2896337de11e4cbd3a673f805172cef9843944e7ce9e62e41eefb39ad8
-SHA512: 2b345b4b7fc8ec94c74140f3f51e1caccd5fee6324b78cd08739bfe0cc5b8c9dc684d1e8cea9b906051857af2249cb54c06e9211ea7de6a7466d0fb7bebacdd7
-Homepage: https://github.com/structured-world/strongswan
-Description: strongSwan IPsec (SW fork)
- strongSwan is a complete IPsec implementation for Linux.
- This is the Structured World Foundation fork with socket permissions
- fix (umask 0660 for Unix sockets). Drop-in replacement for system
- strongswan package.
-
-Package: strongswan-sw
-Architecture: amd64
 Version: 6.0.6-sw.1
 Priority: optional
 Section: net
@@ -2629,7 +986,7 @@ Provides: strongswan (= 6.0.6-sw.1)
 Depends: libgmp10, libssl3, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
 Conflicts: strongswan, strongswan-charon, strongswan-starter
 Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.6-sw.1_bookworm_amd64.deb
+Filename: pool/main/s/strongswan-sw/strongswan-sw_6.0.6-sw.1_bookworm_amd64.deb
 Size: 6509306
 MD5sum: 35d317167f9a52f917cb8da518411441
 SHA1: f27a76651d266715db715dc535a27a4d4d9775c7
@@ -2643,113 +1000,21 @@ Description: strongSwan IPsec (SW fork)
  strongswan package.
 
 Package: strongswan-sw
-Architecture: arm64
-Version: 6.0.6-sw.1
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Provides: strongswan (= 6.0.6-sw.1)
-Depends: libgmp10, libssl3, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
-Conflicts: strongswan, strongswan-charon, strongswan-starter
-Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.6-sw.1_bookworm_arm64.deb
-Size: 6473784
-MD5sum: 240423b65fd1752ce19400fafb8e8107
-SHA1: 09bb4d7f52837192e5290cc25ffb896f822c8b25
-SHA256: 6eeaf980659639073d6148227acee386c0220632359ed1ea6b89dba51b5925d3
-SHA512: 60e162bb376e74427f24d70cfc61731f22e47ee8ef50eca0401fa2f15ba06fb48f88399c1b7bc621c8c2963cd5227703490cc254807fa8b6e3c840dbf3c50d96
-Homepage: https://github.com/structured-world/strongswan
-Description: strongSwan IPsec (SW fork)
- strongSwan is a complete IPsec implementation for Linux.
- This is the Structured World Foundation fork with socket permissions
- fix (umask 0660 for Unix sockets). Drop-in replacement for system
- strongswan package.
-
-Package: strongswan-sw
 Architecture: amd64
-Version: 6.0.6-sw.1
+Version: 6.0.7-sw.1
 Priority: optional
 Section: net
 Maintainer: Structured World Foundation <dev@sw.foundation>
-Provides: strongswan (= 6.0.6-sw.1)
+Provides: strongswan (= 6.0.7-sw.1)
 Depends: libgmp10, libssl3, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
 Conflicts: strongswan, strongswan-charon, strongswan-starter
 Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.6-sw.1_jammy_amd64.deb
-Size: 6509440
-MD5sum: 605a48da8cb91dea4647b9f4733cdd61
-SHA1: eb9b7749c97b66019d470e46bb11be6d56634127
-SHA256: 0aae48dbf4ba0c29e4aaaa6a2119e0d284b4b6fd0b239d34efd54917d489ac30
-SHA512: 7cff84de10551ce8141c5a0d0f1ea1dd00422a2142a6e726b00641c54ddf0b4804a99030b2a4c6e868ad7d1cdc683f51800f05d253f0444466724b1928231502
-Homepage: https://github.com/structured-world/strongswan
-Description: strongSwan IPsec (SW fork)
- strongSwan is a complete IPsec implementation for Linux.
- This is the Structured World Foundation fork with socket permissions
- fix (umask 0660 for Unix sockets). Drop-in replacement for system
- strongswan package.
-
-Package: strongswan-sw
-Architecture: arm64
-Version: 6.0.6-sw.1
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Provides: strongswan (= 6.0.6-sw.1)
-Depends: libgmp10, libssl3, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
-Conflicts: strongswan, strongswan-charon, strongswan-starter
-Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.6-sw.1_jammy_arm64.deb
-Size: 6473666
-MD5sum: de0e7d4de1ffa0bcd62c38398d5609c4
-SHA1: 2f512f857e8751f3af65d45d6e5f83ad0dbbd27a
-SHA256: 2dedfe0de18642e9ff602f41dc36bf1896071e9f98c2501492125327b03349c4
-SHA512: cf59fc756290997559ec2e593c47e0b4cec32b3af1ef71f177d6d64231fd7293434230211f6a63e617ead158635ef8b06ccd7fdcba3dcd82bc170ac6f3dfbcf5
-Homepage: https://github.com/structured-world/strongswan
-Description: strongSwan IPsec (SW fork)
- strongSwan is a complete IPsec implementation for Linux.
- This is the Structured World Foundation fork with socket permissions
- fix (umask 0660 for Unix sockets). Drop-in replacement for system
- strongswan package.
-
-Package: strongswan-sw
-Architecture: amd64
-Version: 6.0.6-sw.1
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Provides: strongswan (= 6.0.6-sw.1)
-Depends: libgmp10, libssl3t64, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
-Conflicts: strongswan, strongswan-charon, strongswan-starter
-Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.6-sw.1_noble_amd64.deb
-Size: 6413818
-MD5sum: 0ab56376aac1245cf0d22e094328d779
-SHA1: c407aeb7ff89a1ba3611b9e5d4de03235a05031b
-SHA256: db91b3eeb9ef41c767cb201860cae4321c6179a8fcde4ea70afae5aa45e162b6
-SHA512: ea1c9d6561a62f25d886413a4cac9466894fc0782c42d47c9397b675461befbd351a09f5f41de41e098b5f4d87f8063f277e78d6c80721de513f0e350943924f
-Homepage: https://github.com/structured-world/strongswan
-Description: strongSwan IPsec (SW fork)
- strongSwan is a complete IPsec implementation for Linux.
- This is the Structured World Foundation fork with socket permissions
- fix (umask 0660 for Unix sockets). Drop-in replacement for system
- strongswan package.
-
-Package: strongswan-sw
-Architecture: arm64
-Version: 6.0.6-sw.1
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <dev@sw.foundation>
-Provides: strongswan (= 6.0.6-sw.1)
-Depends: libgmp10, libssl3t64, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
-Conflicts: strongswan, strongswan-charon, strongswan-starter
-Replaces: strongswan, strongswan-charon, strongswan-starter
-Filename: deb/pool/main/s/strongswan-sw/strongswan-sw_6.0.6-sw.1_noble_arm64.deb
-Size: 6403602
-MD5sum: 783965f0e96ebb3b76f2d28bf907b896
-SHA1: c37ed349d8c9bec95240e62b2a0054434f88221d
-SHA256: b1b65af04bf871d9a1d48b4dd65981382813a18e740e654fefd1b0142380d749
-SHA512: 2ae926e1d353758d845fb695d4ddb1107cfdae50bfa24051d8736d7b2dbbea007f3e10a136df190d91189a8f6bf3d1fa7ac1742305b8ba5557417bb0ba7359c5
+Filename: pool/main/s/strongswan-sw/strongswan-sw_6.0.7-sw.1_bookworm_amd64.deb
+Size: 6508906
+MD5sum: ffa7899b733424a1de43d55ad292d4a0
+SHA1: 0da6eda8da73eebbb95efb4065bec24ae72a39dc
+SHA256: ea7654603f72bec4e2711198bc0155d6a1b7590495ab1a428038a42bb97f1fa8
+SHA512: 060ffdf791ffaee49d81e2867a8eff82a64c138f6ceaa6c0f4dfa3adb39beeb00b90722b2ba71167fe26944c657ef5007cdd4824143a703cd12440464fc67855
 Homepage: https://github.com/structured-world/strongswan
 Description: strongSwan IPsec (SW fork)
  strongSwan is a complete IPsec implementation for Linux.
@@ -2765,35 +1030,12 @@ Section: net
 Maintainer: Structured World Foundation <oss@sw.foundation>
 Installed-Size: 11734
 Depends: systemd, adduser
-Filename: deb/pool/main/s/structured-proxy/structured-proxy_2.2.1_amd64.deb
+Filename: pool/main/s/structured-proxy/structured-proxy_2.2.1_amd64.deb
 Size: 3611552
 MD5sum: d1ac58624b2ae974b0c2e647a30461b1
 SHA1: 5348d16c43338b22e30092e1204ef8f7534ac815
 SHA256: 116316de7f8ca30161d3022a24404d47a0b14cbfc30f47c12909314f9a44e708
 SHA512: ed2a1497862381cf60f887f016fe8e2129fd2785654c13f870497522654d284c92dc0e7f600bbf9742adbb35ee2e022db3b4dc58bffeef16e8afc3336cbf9d15
-Homepage: https://github.com/structured-world/structured-proxy
-Description: Universal gRPC to REST transcoding proxy
- structured-proxy is a config-driven gRPC to REST transcoding proxy. One
- binary serves any gRPC service from a proto descriptor set and a YAML config,
- with no code generation and no custom handlers.
- .
- The service ships disabled: set an upstream address and proto descriptors in
- /etc/structured-proxy/config.yaml, then enable it with systemctl.
-
-Package: structured-proxy
-Architecture: arm64
-Version: 2.2.1
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <oss@sw.foundation>
-Installed-Size: 10158
-Depends: systemd, adduser
-Filename: deb/pool/main/s/structured-proxy/structured-proxy_2.2.1_arm64.deb
-Size: 3141844
-MD5sum: a4e9705eb41683c1b44f74076402f5de
-SHA1: d4124d099bd3d4548e4d7a492964558a715905aa
-SHA256: a794258726f1baec8c78e1781bf2b773f8f2f4c477f8bc1929f033cf3f3221fb
-SHA512: 1ec194a1d4b4d49911e55962c9d6d993c79594c2cfe6ab7183eca30b39cb12a75618a22066ce248fe61500e502c8cf7c5d481b6102daf4fd2d01bf86326f825f
 Homepage: https://github.com/structured-world/structured-proxy
 Description: Universal gRPC to REST transcoding proxy
  structured-proxy is a config-driven gRPC to REST transcoding proxy. One
@@ -2811,35 +1053,12 @@ Section: net
 Maintainer: Structured World Foundation <oss@sw.foundation>
 Installed-Size: 12369
 Depends: systemd, adduser
-Filename: deb/pool/main/s/structured-proxy/structured-proxy_3.0.0_amd64.deb
+Filename: pool/main/s/structured-proxy/structured-proxy_3.0.0_amd64.deb
 Size: 3765740
 MD5sum: dc7070bff6eaba2cd5b9b2265be05478
 SHA1: 91af6ffcee2ee8bd9104e94a9f82bee9fc05bf2b
 SHA256: dc13f2b27424b4674fb573b80efe9882d56aedba281c5994964a40091cf73114
 SHA512: 87962a13830f07219e01aaa1207849766ba459d8abf21017974660af2de820d0eae1f6b870666e333bc41ffce35b11fcc780d6a9c3149b7bfa4bd92d7292af48
-Homepage: https://github.com/structured-world/structured-proxy
-Description: Universal gRPC to REST transcoding proxy
- structured-proxy is a config-driven gRPC to REST transcoding proxy. One
- binary serves any gRPC service from a proto descriptor set and a YAML config,
- with no code generation and no custom handlers.
- .
- The service ships disabled: set an upstream address and proto descriptors in
- /etc/structured-proxy/config.yaml, then enable it with systemctl.
-
-Package: structured-proxy
-Architecture: arm64
-Version: 3.0.0
-Priority: optional
-Section: net
-Maintainer: Structured World Foundation <oss@sw.foundation>
-Installed-Size: 10737
-Depends: systemd, adduser
-Filename: deb/pool/main/s/structured-proxy/structured-proxy_3.0.0_arm64.deb
-Size: 3283448
-MD5sum: f60f7af0a8872a533221d753633b370d
-SHA1: f168db536e446b594f05cefe894fbce9bbc393c2
-SHA256: feece0bd75a4f4b459e3c2dc4c226e3eb41be7eb9c8133488bcef29ac0539481
-SHA512: 92697f5d678c99173ea26b52ae7db71918532ca55331444dbf671a7898b33713134d37c089cfcc1469a3c6d106aefbb41d3f46525426d6f63a5c42b89f3ae182
 Homepage: https://github.com/structured-world/structured-proxy
 Description: Universal gRPC to REST transcoding proxy
  structured-proxy is a config-driven gRPC to REST transcoding proxy. One
