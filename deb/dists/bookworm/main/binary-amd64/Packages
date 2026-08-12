@@ -723,6 +723,26 @@ Description: DHCP INFORM responder plugin for strongSwan
  Requires the strongswan-sw base package of the same build (the
  plugin is ABI-coupled to it) and strongswan-pgsql.
 
+Package: strongswan-dhcp-inform
+Architecture: amd64
+Version: 6.0.7-sw.21
+Priority: optional
+Section: net
+Maintainer: Structured World Foundation <dev@sw.foundation>
+Depends: strongswan-sw (= 6.0.7-sw.21), strongswan-pgsql (= 6.0.7-sw.21)
+Filename: pool/main/s/strongswan-dhcp-inform/strongswan-dhcp-inform_6.0.7-sw.21_bookworm_amd64.deb
+Size: 144510
+MD5sum: 6c1338a490a353a08e87e6cfd83179a0
+SHA1: 722cf6db3f5f77734ef6e18ed4725ad3179d87fb
+SHA256: e20537c03f35b4a25ddfd3b44d6ffad251858d4743b7fbfd2a54a96d01f910a6
+SHA512: 14e807ac6e44003ddbc8c5c379d21e9d3093bc19cb90461e08484fb1cb5113971b14aee51dc5e855aaab32d54d15f55f366fe515f02295a2034021f602ffe0b8
+Homepage: https://github.com/structured-world/strongswan
+Description: DHCP INFORM responder plugin for strongSwan
+ Responds to Windows DHCPINFORM requests with split-tunnel routes
+ from PostgreSQL database. Delivers routes via DHCP option 121/249.
+ Requires the strongswan-sw base package of the same build (the
+ plugin is ABI-coupled to it) and strongswan-pgsql.
+
 Package: strongswan-pgsql
 Architecture: amd64
 Version: 6.0.4-sw.10
@@ -963,6 +983,27 @@ MD5sum: d33552bb2be3a23247dbc7ae37e98571
 SHA1: 8520672d37502345697ee746e6d4959f77d18d73
 SHA256: ece3642cdb9f484847d29d7ac7c7cefbfd45e867f86b1c98dcc4aa3815066456
 SHA512: 38ca823a7fe00ef06a35ba4bc376ab66483e1890b51e04a3b2a839973a1972577955bb214ad18819c0c2d27cb68dbc387ac89f256ab225ca5d616edfb3b68b2c
+Homepage: https://github.com/structured-world/strongswan
+Description: PostgreSQL plugin for strongSwan
+ PostgreSQL database backend for strongSwan SQL plugin.
+ Enables storing VPN user credentials and configuration in PostgreSQL.
+ Requires the strongswan-sw base package of the same build: the
+ plugin is ABI-coupled to it, and the dialect-aware sql plugin
+ that emits PostgreSQL statements ships there.
+
+Package: strongswan-pgsql
+Architecture: amd64
+Version: 6.0.7-sw.21
+Priority: optional
+Section: net
+Maintainer: Structured World Foundation <dev@sw.foundation>
+Depends: strongswan-sw (= 6.0.7-sw.21), libpq5
+Filename: pool/main/s/strongswan-pgsql/strongswan-pgsql_6.0.7-sw.21_bookworm_amd64.deb
+Size: 37600
+MD5sum: 563eb2b79e8903e6e92f163846246408
+SHA1: 1c2b9f52f7f3b1327eab396ca4124febd6f32ea9
+SHA256: 03501497e33e70f15ba72f1cc1fa58e0135d407dc3b4dd5a779b33feb9938f6a
+SHA512: f53cc3295e3568829323139297e4ac586fb37f001fb21479857b0f2cc076603819b4be497e8d5e33f71a6b10c68a0fe1ba93361bbbd271040e94bf4b8c8862c2
 Homepage: https://github.com/structured-world/strongswan
 Description: PostgreSQL plugin for strongSwan
  PostgreSQL database backend for strongSwan SQL plugin.
@@ -1262,6 +1303,29 @@ MD5sum: 74239a95e1060c05d577839059d8ae0a
 SHA1: f392b508a76da343f392f2c8b5ebceadce3341e3
 SHA256: 857b4e38ddb0932d5e571db4b6fca6eb3f6ed61509d1708fac36cfe24d0f227f
 SHA512: 87830f1855e6b9d40481ff50dd7bbfc32059e533aadd3e68e3737be33efa291fc7c459415d4c3b8e92db89de947c2fdb24302c2f0e0ffd12d849aee6d4aa2bb9
+Homepage: https://github.com/structured-world/strongswan
+Description: strongSwan IPsec (SW fork)
+ strongSwan is a complete IPsec implementation for Linux.
+ This is the Structured World Foundation fork with socket permissions
+ fix (umask 0660 for Unix sockets). Drop-in replacement for system
+ strongswan package.
+
+Package: strongswan-sw
+Architecture: amd64
+Version: 6.0.7-sw.21
+Priority: optional
+Section: net
+Maintainer: Structured World Foundation <dev@sw.foundation>
+Provides: strongswan (= 6.0.7-sw.21)
+Depends: libgmp10, libssl3, libcurl4, libsystemd0, libcap2, libpam0g, libldap-2.5-0, libsqlite3-0, libgcrypt20
+Conflicts: strongswan, strongswan-charon, strongswan-starter
+Replaces: strongswan, strongswan-charon, strongswan-starter
+Filename: pool/main/s/strongswan-sw/strongswan-sw_6.0.7-sw.21_bookworm_amd64.deb
+Size: 6381650
+MD5sum: d77123d89a4993e271a690dac86fa571
+SHA1: bfdeb0fe3f327bc8f0c09d246dc86b5d19d759cf
+SHA256: 881da2f89ec60d2c81d6f46e7546a0acdd963cb04ab71553b5d3b78a3fec0058
+SHA512: 5cff63c43d93cd30effdb7ea9004df5ffafce7cd1a72daf56a7abae33412b341ee9e1dd808da5c63602d2767b7b5a9af4a9f47a2357f2cae169a6d85d7cb4d47
 Homepage: https://github.com/structured-world/strongswan
 Description: strongSwan IPsec (SW fork)
  strongSwan is a complete IPsec implementation for Linux.
