@@ -34,7 +34,7 @@ sudo dnf install <package-name>
 ```bash
 # Add GPG key
 curl -fsSL https://repo.sw.foundation/keys/sw.gpg \
-  | sudo gpg --dearmor -o /etc/apt/keyrings/sw.gpg
+  | sudo tee /etc/apt/keyrings/sw.gpg >/dev/null
 
 # Add repository
 echo "deb [signed-by=/etc/apt/keyrings/sw.gpg] \
@@ -56,7 +56,7 @@ All packages are signed with our GPG key.
 | Algorithm | Ed25519 |
 
 ```bash
-curl -fsSL https://repo.sw.foundation/keys/sw.gpg | gpg --import
+curl -fsSL https://repo.sw.foundation/keys/sw.asc | gpg --import
 ```
 
 ## Adding a New Project
