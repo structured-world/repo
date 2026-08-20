@@ -1149,7 +1149,7 @@ sudo dnf install <span class="cmd">structured-proxy</span></code></pre>
                                 </div>
                                 <pre><code># Add GPG key
 curl -fsSL https://repo.sw.foundation/keys/sw.gpg \
-  | sudo gpg --dearmor -o /etc/apt/keyrings/sw.gpg
+  | sudo tee /etc/apt/keyrings/sw.gpg &gt;/dev/null
 
 # Add repository
 echo &quot;deb [signed-by=/etc/apt/keyrings/sw.gpg] \
@@ -1190,7 +1190,7 @@ sudo apt install <span class="cmd">coordinode</span></code></pre>
                                 </div>
                                 <pre><code># Add GPG key
 curl -fsSL https://repo.sw.foundation/keys/sw.gpg \
-  | sudo gpg --dearmor -o /etc/apt/keyrings/sw.gpg
+  | sudo tee /etc/apt/keyrings/sw.gpg &gt;/dev/null
 
 # Add repository
 echo &quot;deb [signed-by=/etc/apt/keyrings/sw.gpg] \
@@ -1291,7 +1291,7 @@ sudo apt install <span class="cmd">strongswan-dhcp-inform</span></code></pre>
                                 </div>
                                 <pre><code># Add GPG key
 curl -fsSL https://repo.sw.foundation/keys/sw.gpg \
-  | sudo gpg --dearmor -o /etc/apt/keyrings/sw.gpg
+  | sudo tee /etc/apt/keyrings/sw.gpg &gt;/dev/null
 
 # Add repository
 echo &quot;deb [signed-by=/etc/apt/keyrings/sw.gpg] \
@@ -1365,7 +1365,7 @@ sudo apt install <span class="cmd">structured-proxy</span></code></pre>
                     <pre><code>4AC4 06DA 15C9 BE4D C1A0 2343 A187 D55B 5A04 3632</code></pre>
                 </div>
                 <p class="hint">
-                    Import manually: <code>curl -fsSL https://repo.sw.foundation/keys/sw.gpg | gpg --import</code>
+                    Import manually: <code>curl -fsSL https://repo.sw.foundation/keys/sw.asc | gpg --import</code>
                 </p>
             </div>
         </div>
