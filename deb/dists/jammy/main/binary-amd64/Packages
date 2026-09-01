@@ -614,6 +614,26 @@ Description: Unified database for AI-native applications
  document and time-series modalities in one engine. Queries use OpenCypher;
  writes commit atomically across modalities.
 
+Package: coordinode
+Architecture: amd64
+Version: 0.5.7
+Priority: optional
+Section: database
+Maintainer: Structured World Foundation <oss@sw.foundation>
+Installed-Size: 28656
+Depends: systemd, adduser
+Filename: pool/main/c/coordinode/coordinode_0.5.7_amd64.deb
+Size: 8297720
+MD5sum: d1b4a85f41322b9db21e48b08a4227ea
+SHA1: 859934614c22d482aa47b2be189ceba3e3f4cd7b
+SHA256: 8aff35cac3dc7f2881515550e1fe26569684f5364d0a7dee8daec10a0bb194f1
+SHA512: 2551a7fa1b379486a3fc9f33549884de7aacb948e7cf8b7f146f3bb4ee55cee0804e13266324b10bf736bce00375c47f002a7dcefcf9790af93d9567eacf2914
+Homepage: https://github.com/structured-world/coordinode
+Description: Unified database for AI-native applications
+ CoordiNode is a unified database combining graph, vector, full-text,
+ document and time-series modalities in one engine. Queries use OpenCypher;
+ writes commit atomically across modalities.
+
 Package: strongswan-dhcp-inform
 Architecture: amd64
 Version: 6.0.4-sw.10
