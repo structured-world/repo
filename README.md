@@ -1,6 +1,6 @@
-# SW Foundation Package Repository
+# sw.foundation Package Repository
 
-Package repository for Structured World Foundation software. Hosts signed RPM and DEB packages for modern Linux distributions.
+Package repository for software maintained by Dmitry Prudnikov and contributors. Hosts signed RPM and DEB packages for modern Linux distributions.
 
 **Site:** [repo.sw.foundation](https://repo.sw.foundation)
 
@@ -69,7 +69,7 @@ curl -fsSL https://repo.sw.foundation/keys/sw.asc | gpg --import
 
 ## Links
 
-- [SW Foundation](https://sw.foundation)
+- [sw.foundation](https://sw.foundation)
 - [Repository Source](https://github.com/structured-world/repo)
 
 ## Maintainer
