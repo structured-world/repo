@@ -189,13 +189,13 @@ publish_deb() {
         arches="amd64"
       fi
       cat > "$dist_dir/Release" << EOF_RELEASE
-Origin: SW Foundation
-Label: SW Foundation
+Origin: sw.foundation
+Label: sw.foundation
 Suite: ${dist}
 Codename: ${dist}
 Architectures: ${arches}
 Components: main
-Description: SW Foundation Package Repository
+Description: sw.foundation Package Repository
 EOF_RELEASE
 
       apt-ftparchive release "$dist_dir" >> "$dist_dir/Release"
