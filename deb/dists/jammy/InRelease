@@ -8,35 +8,35 @@ Codename: jammy
 Architectures: amd64 arm64
 Components: main
 Description: sw.foundation Package Repository
-Date: Sat, 05 Sep 2026 18:43:04 +0000
+Date: Sat, 05 Sep 2026 18:45:44 +0000
 MD5Sum:
- 86c55d749076db0df19d808b524ad0b4              200 Release
+ 9d3d46af951c4e9272da6c89a2e82c7c              200 Release
  8d954596fe3feb623eef1ed8b45d1b99             4129 main/binary-amd64/Packages
- 86645d37d67c00a423960bf8211609a8             1818 main/binary-amd64/Packages.gz
+ 5741c8ef48a92c665799321866bfadeb             1818 main/binary-amd64/Packages.gz
  534692ba7e7788b500994d6aa4f2e301             4129 main/binary-arm64/Packages
- 5e55e3ad0654cf7dc2969c16f7253eed             1819 main/binary-arm64/Packages.gz
+ 3eca6017265be4bc0004897a37e938e4             1819 main/binary-arm64/Packages.gz
 SHA1:
- 01c2f55d0bb6ba255fff27749090b9243f9c3c76              200 Release
+ 56b064293410de734d5be6d693fee4a8947782c2              200 Release
  ca5b143a5eccbc05c4cb7187dcc9528636acd2da             4129 main/binary-amd64/Packages
- 48e6af40950274152f85112eae3b911621e52fa4             1818 main/binary-amd64/Packages.gz
+ 934a06680f0bbb50b8542b2e5a7126649a587e11             1818 main/binary-amd64/Packages.gz
  352655dcdf6600aa4ca08c97bd08baf312b28657             4129 main/binary-arm64/Packages
- 5c4d39ff0d96f003e456a155685105dfd617e2dc             1819 main/binary-arm64/Packages.gz
+ 5e117ef392b28d5cab2e03884265fbcf1f0ae1db             1819 main/binary-arm64/Packages.gz
 SHA256:
- a3558c4e7e8f86359a0388061956d88b6040c479d4e1e93a3eed5d6177632c01              200 Release
+ 3a0ebf9413170cc7cbd86f97765099efc846bd1c17c21bc18df7a60900a24ff5              200 Release
  d08b78f03075f2148bb79629a8368b7912c8516ef2edb2e3b3767e55ae65e9a3             4129 main/binary-amd64/Packages
- 01bd3faf6cf3d68991a13124baa1cc3142869afefa7279e48eff2fc79ba43fa8             1818 main/binary-amd64/Packages.gz
+ 7f4ce34911ead964675783564155d796524a63be30e1dc011e91ebe7d0d7f7d4             1818 main/binary-amd64/Packages.gz
  447b71f042bb572aa021af5a14430445fa68e9d19d9d6b102e1a4782dc4f6eb4             4129 main/binary-arm64/Packages
- 06f00ee21b50d80db6366a29de9ef348c63dd37633ab0520172ff2d9414e3d26             1819 main/binary-arm64/Packages.gz
+ d62024807abb0a90ccb0ec081d717c7179522fe7e03ac9f2f060efa852db2c80             1819 main/binary-arm64/Packages.gz
 SHA512:
- 238ccce80cb277a8d425e5d13a28f764fca96a987ca7ac7003c624900be437f05b076de01743b35a2e48b3c57905c84c76218b378ab9436ba3dd039dc8e3540f              200 Release
+ 0c38243a807b922b2d460588e0ee1eb255fe20f16b0ac72275171a2cd156d341d6d9ad5db2dcd5d0066e5ef421f0ebafe9e63eca2a936021a608e1c45f86f7f2              200 Release
  bc620ab7c72e8152732a0c87dd83492f5c918f6e2e4f3dbbf3646700cd64e6d2b42b4ce9dbb8b20775a811f6797182fd9990d719eb6798fee040d1e2ed66c0fc             4129 main/binary-amd64/Packages
- 45932e34813c318092d1b0a362c02ebeefbfc256573ff064070fc87e6cd8488fc60b362f062664445731be591124a8fc0bf43a712a720982d9f6b25f0832b1de             1818 main/binary-amd64/Packages.gz
+ 947ca84bf84245972b588b7e220b90d95edac3faa6fc170c8173f912a6e5489ef47be1b658867ada2ff73e971865e1270750e4af86a19c504af2e2f7bf606fdc             1818 main/binary-amd64/Packages.gz
  cb7f549323d2e72c8e0ef65b9eb4cac4ab4a8aa2e880653bdaf017325bb4cc2cc205c1d6631ce3e17b33522f3de653933fec8216e597bcbe74cc50d3ba260eb6             4129 main/binary-arm64/Packages
- f0484dc7caa95703d00db6f003397cc2f77bf7867652498f16f2267b472fd5f74b18a8d280ebf26b6128b030975c833d483fdf64a92c2a4a89eae3f090e6f23b             1819 main/binary-arm64/Packages.gz
+ d2c79651b6d43eb6937fecd73458031b5bcb26044132990325131a680b42cedefa5d478faab3da977e3d10d3f411bd728f1afc88746450ae6dd042d3324b59b7             1819 main/binary-arm64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iHUEARYKAB0WIQQlqlqDucvSXr4YO6qM+wv8fZ30oAUCapxiuAAKCRCM+wv8fZ30
-oHIBAQCgeG2vhgeXJw6f8TrhSIvLY43/Bk7cK4YRHAiVbn6URAD/XBm4Rey9NDOG
-T9MwM6RvxfcwB93yNPn69BE4zfFMGws=
-=4WT9
+iHUEARYKAB0WIQQlqlqDucvSXr4YO6qM+wv8fZ30oAUCapxjWAAKCRCM+wv8fZ30
+oMkgAQCj78pQFbWFaNujU5qJOXlFYw6SHqVdE9CyVIR2u2M4AAEAuPqnkrKE2q0s
+NOHtK7jA28i7YNdo8Ai0AIL+uYxzdw0=
+=qczG
 -----END PGP SIGNATURE-----
