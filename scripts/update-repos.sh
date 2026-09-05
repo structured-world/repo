@@ -95,7 +95,16 @@ publish_deb() {
   done
 
   local dist_dir dist
-  for dist in $DEB_DISTS; do
+  local -a configured_dists
+  # read -a splits on whitespace without glob expansion (nullglob is on).
+  read -r -a configured_dists <<< "$DEB_DISTS"
+  for dist in "${configured_dists[@]}"; do
+    # Same rule as the on-disk scan below; rejects separators and traversal
+    # before the name is ever used as a path component.
+    if ! printf '%s' "$dist" | grep -Eq '^[A-Za-z0-9_-]+$'; then
+      echo "Error: invalid dist name '$dist' in DEB_DISTS" >&2
+      exit 1
+    fi
     mkdir -p "deb/dists/$dist"
   done
   # apt-ftparchive fails on a missing pool; an empty one yields empty indexes.
