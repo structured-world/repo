@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index, follow">
+  <meta name="description" content="PostgreSQL Plugin Setup documentation, sw.foundation package repository.">
+  <link rel="canonical" href="https://repo.sw.foundation/docs/pgsql-plugin/">
+  <title>PostgreSQL Plugin Setup | sw.foundation Docs</title>
+  <style>
+    /* Inline styles keep docs self-contained and cache-free for static HTML publishing. */
+    :root {
+      --bg: #0b0b0d;
+      --panel: #141418;
+      --text: #f5f5f5;
+      --muted: #a1a1aa;
+      --accent: #3b82f6;
+      --border: #232329;
+      --code-bg: #0b1220;
+      --code-text: #e2e8f0;
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f8fafc;
+        --panel: #ffffff;
+        --text: #0f172a;
+        --muted: #4b5563;
+        --accent: #2563eb;
+        --border: #e5e7eb;
+        --code-bg: #f1f5f9;
+        --code-text: #0f172a;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6;
+    }
+    .wrap {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+    }
+    .topbar a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .topbar-title {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    article {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+    }
+    h1, h2, h3, h4 {
+      line-height: 1.25;
+      margin-top: 1.2em;
+    }
+    h1 { margin-top: 0; }
+    p { color: var(--muted); }
+    a { color: var(--accent); }
+    pre {
+      background: var(--code-bg);
+      color: var(--code-text);
+      padding: 14px 16px;
+      border-radius: 10px;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+    }
+    code {
+      font-family: "SF Mono", Menlo, Consolas, monospace;
+      font-size: 0.95em;
+    }
+    pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+    }
+    p code, li code, td code {
+      background: var(--code-bg);
+      color: var(--code-text);
+      padding: 1px 4px;
+      border-radius: 4px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.95em;
+    }
+    th { color: var(--text); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <a href="/">
+        <span aria-hidden="true">←</span> Back to repository
+      </a>
+      <div class="topbar-title">sw.foundation Docs</div>
+    </div>
+    <article>
+      <h1 id="strongswan-postgresql-plugin">strongSwan PostgreSQL Plugin</h1>
+<p>This plugin provides PostgreSQL database connectivity for strongSwan, enabling the <code>sql</code> and <code>attr-sql</code> plugins to store and retrieve VPN configuration from a PostgreSQL database.</p>
+<h2 id="installation">Installation</h2>
+<h3 id="ubuntu-debian">Ubuntu / Debian</h3>
+<pre><code class="language-bash"># Add GPG key
+curl -fsSL https://repo.sw.foundation/keys/sw.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/sw.gpg
+
+# Add repository
+echo &quot;deb [signed-by=/etc/apt/keyrings/sw.gpg] https://repo.sw.foundation/deb $(lsb_release -cs) main&quot; | sudo tee /etc/apt/sources.list.d/sw.list
+
+# Install
+sudo apt update
+sudo apt install libstrongswan-pgsql
+</code></pre>
+<p><strong>Supported versions:</strong> Ubuntu 22.04 (jammy), Ubuntu 24.04 (noble)</p>
+<h3 id="fedora">Fedora</h3>
+<pre><code class="language-bash"># Add repository
+sudo dnf config-manager --add-repo https://repo.sw.foundation/rpm/fc$(rpm -E %fedora)/sw.repo
+
+# Install
+sudo dnf install strongswan-pgsql
+</code></pre>
+<p><strong>Supported versions:</strong> Fedora 40, 41, 42</p>
+<h2 id="configuration">Configuration</h2>
+<h3 id="1-create-postgresql-database">1. Create PostgreSQL Database</h3>
+<pre><code class="language-sql">-- Create database and user
+CREATE USER strongswan WITH PASSWORD 'your_secure_password';
+CREATE DATABASE strongswan OWNER strongswan;
+
+-- Connect to the database
+\c strongswan
+
+-- Grant permissions
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO strongswan;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO strongswan;
+</code></pre>
+<h3 id="2-initialize-database-schema">2. Initialize Database Schema</h3>
+<p>The SQL schema for strongSwan is included in the strongSwan source. You can find it at:
+- <code>/usr/share/strongswan/templates/database/sql/tables.sql</code> (if available)
+- Or download from <a href="https://github.com/strongswan/strongswan/tree/master/src/pool/sql">strongSwan GitHub</a></p>
+<p>Example schema initialization:</p>
+<pre><code class="language-bash">psql -U strongswan -d strongswan -f /path/to/tables.sql
+</code></pre>
+<h3 id="3-configure-strongswan">3. Configure strongSwan</h3>
+<p>Edit <code>/etc/strongswan.d/charon/pgsql.conf</code>:</p>
+<pre><code>pgsql {
+    load = yes
+}
+</code></pre>
+<p>Edit <code>/etc/strongswan.d/charon/sql.conf</code> (create if doesn't exist):</p>
+<pre><code>sql {
+    load = yes
+    database = postgresql://strongswan:your_secure_password@localhost/strongswan
+}
+</code></pre>
+<h3 id="4-enable-sql-plugin">4. Enable SQL Plugin</h3>
+<p>Edit <code>/etc/strongswan.conf</code> or <code>/etc/strongswan.d/charon.conf</code>:</p>
+<pre><code>charon {
+    plugins {
+        sql {
+            database = postgresql://strongswan:password@localhost/strongswan
+        }
+    }
+}
+</code></pre>
+<h3 id="5-restart-strongswan">5. Restart strongSwan</h3>
+<pre><code class="language-bash">sudo systemctl restart strongswan
+# or
+sudo ipsec restart
+</code></pre>
+<h2 id="database-connection-string-format">Database Connection String Format</h2>
+<pre><code>postgresql://[user]:[password]@[host]:[port]/[database]
+</code></pre>
+<p>Examples:
+- <code>postgresql://strongswan:password@localhost/strongswan</code>
+- <code>postgresql://vpn_user:secret@db.example.com:5432/vpn_db</code></p>
+<h2 id="using-with-attr-sql-plugin">Using with attr-sql Plugin</h2>
+<p>The <code>attr-sql</code> plugin allows assigning attributes (like DNS servers, split tunneling) from the database.</p>
+<pre><code class="language-sql">-- Example: Assign DNS server to clients
+INSERT INTO attributes (type, value) VALUES (
+    25, -- INTERNAL_IP4_DNS
+    '10.0.0.1'
+);
+
+-- Example: Assign virtual IP pool
+INSERT INTO addresses (pool_id, address) VALUES (
+    1,
+    '10.10.10.1'
+);
+</code></pre>
+<h2 id="using-with-sql-plugin">Using with sql Plugin</h2>
+<p>The <code>sql</code> plugin stores IKE credentials in the database.</p>
+<pre><code class="language-sql">-- Example: Add EAP user
+INSERT INTO identities (type, data) VALUES (
+    2, -- ID_RFC822_ADDR (email)
+    'user@example.com'
+);
+
+INSERT INTO shared_secrets (type, data) VALUES (
+    1, -- EAP
+    'user_password'
+);
+
+INSERT INTO shared_secret_identity (shared_secret, identity) VALUES (
+    1, 1
+);
+</code></pre>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="check-plugin-loading">Check Plugin Loading</h3>
+<pre><code class="language-bash">sudo ipsec statusall | grep -i pgsql
+# or
+sudo swanctl --stats
+</code></pre>
+<h3 id="enable-debug-logging">Enable Debug Logging</h3>
+<p>Edit <code>/etc/strongswan.d/charon-logging.conf</code>:</p>
+<pre><code>charon {
+    filelog {
+        /var/log/charon.log {
+            default = 2
+            sql = 3
+            lib = 2
+        }
+    }
+}
+</code></pre>
+<h3 id="common-issues">Common Issues</h3>
+<ol>
+<li>
+<p><strong>Plugin not found</strong>: Ensure the package is installed and <code>/etc/strongswan.d/charon/pgsql.conf</code> has <code>load = yes</code></p>
+</li>
+<li>
+<p><strong>Database connection failed</strong>: Check PostgreSQL is running and credentials are correct:
+   <code>bash
+   psql -U strongswan -h localhost -d strongswan</code></p>
+</li>
+<li>
+<p><strong>Permission denied</strong>: Ensure the strongswan user has proper database permissions:
+   <code>sql
+   GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO strongswan;</code></p>
+</li>
+</ol>
+<h2 id="security-recommendations">Security Recommendations</h2>
+<ol>
+<li><strong>Use strong passwords</strong> for database authentication</li>
+<li><strong>Restrict database access</strong> to localhost or specific IPs</li>
+<li><strong>Use SSL/TLS</strong> for remote database connections</li>
+<li><strong>Regular backups</strong> of the VPN database</li>
+<li><strong>Audit logging</strong> enabled in PostgreSQL</li>
+</ol>
+<h2 id="links">Links</h2>
+<ul>
+<li><a href="https://docs.strongswan.org/">strongSwan Documentation</a></li>
+<li><a href="https://docs.strongswan.org/docs/5.9/plugins/sql.html">SQL Plugin Documentation</a></li>
+<li><a href="https://docs.strongswan.org/docs/5.9/plugins/attr-sql.html">attr-sql Plugin Documentation</a></li>
+<li><a href="https://github.com/structured-world/strongswan">SW Foundation GitHub</a></li>
+</ul>
+<h2 id="support">Support</h2>
+<p>For issues and feature requests, please use:
+- <a href="https://github.com/structured-world/strongswan/issues">GitHub Issues</a></p>
+    </article>
+  </div>
+</body>
+</html>

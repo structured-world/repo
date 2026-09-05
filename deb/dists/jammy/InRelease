@@ -1,0 +1,42 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Origin: sw.foundation
+Label: sw.foundation
+Suite: jammy
+Codename: jammy
+Architectures: amd64 arm64
+Components: main
+Description: sw.foundation Package Repository
+Date: Sat, 05 Sep 2026 17:52:11 +0000
+MD5Sum:
+ bf1e4a65651aa35a231eb8549cfc1301              200 Release
+ fd647b3d932caff907035c6229fac3aa             1038 main/binary-amd64/Packages
+ 14cd55b304b7059efd8145eae4fb90a7              658 main/binary-amd64/Packages.gz
+ 7d7dfd07081c8fdfbc2738c833489b2e             1038 main/binary-arm64/Packages
+ 9628f408840820a62ba9e35781b55ee2              658 main/binary-arm64/Packages.gz
+SHA1:
+ 552a85da120b8530976fe2572e52cfafa71e2b8e              200 Release
+ b0e331637eefadf640362cc69d141ec67ae9dc69             1038 main/binary-amd64/Packages
+ 18665508689b05b086ea08f37fad8233606dbb4f              658 main/binary-amd64/Packages.gz
+ a03299c1cbfb7e1008d1cca49674818c9818f7d0             1038 main/binary-arm64/Packages
+ 46d887009107e55d3c38dfdc67f61af5eb7ea6fd              658 main/binary-arm64/Packages.gz
+SHA256:
+ b7e84fc43bc25f46b540fe4f68ea0bc9557191fd6260dfcfbf1eb64718db3c3a              200 Release
+ 26243e34333781942b954f207750cdf211f117c4205f63d16b8f3811c5a9bb77             1038 main/binary-amd64/Packages
+ 4534f4165c6352b673e39ef4db1aae1b548d27870343352b057f6a487549e541              658 main/binary-amd64/Packages.gz
+ fc141bde3b67dfdf9ade4d2ed9ad9f65369f2da9c10f7d8a64de67203a28b5a5             1038 main/binary-arm64/Packages
+ ab885a52d18e3fc63ad2c1c0c7a03d55506faed5aa820f63d2092620ec269d7b              658 main/binary-arm64/Packages.gz
+SHA512:
+ f4f44d101ad23958b4e2838726a732c1a99877aed62f0feed17bbaeb46bf50b54559c567e5dc51a67451e8a06314a9324a0899047800e37ba5db739c798013a5              200 Release
+ 73757b99baa98206cb563e2f69c44058480766b64e89bb5ba26b1594c2692ab1f1b29e4ac3f1140fb4ca05b50241e37d17ea90e20617c90a216dc5a5728764f7             1038 main/binary-amd64/Packages
+ 5701c178b657be7dc2054c7af60f29ff0716c982ccec5fb5029664c7dc1c2a4da7b66ceae1a929158d609ec1917235d49b8b774de849155b093b36127a4a93ab              658 main/binary-amd64/Packages.gz
+ f0e96725201e3732daa80e989486d83fa562b640b62a2ba29a6dca713dc3f89c8b9d4a71ca09a7d202d2ddf7389fa991fa734d92beb8729d39c057a8d044a443             1038 main/binary-arm64/Packages
+ 18ee96c681d74d7e97c4a867b097ed67ebbde67d1181e5f0292ec815bd99974b8f256829ffa38c1bbd4ebf18633c004b60af15e683f5c03019b8fa90e8ac94c5              658 main/binary-arm64/Packages.gz
+-----BEGIN PGP SIGNATURE-----
+
+iHUEARYKAB0WIQQlqlqDucvSXr4YO6qM+wv8fZ30oAUCapxWywAKCRCM+wv8fZ30
+oBu8AP9ILBypPsJkjBPjqCWerY1PV/MmF+zWlJb2ARPLXViGiAEAr/xI7wuHwR5w
+377ZlRsvQfOgS4juYfj7NzE+f2mrOAc=
+=d+r7
+-----END PGP SIGNATURE-----
