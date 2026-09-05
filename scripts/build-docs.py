@@ -748,7 +748,7 @@ def generate_docs(manifests):
                     title = md.toc_tokens[0].get("name", "") or slug.replace("-", " ").title()
                 else:
                     title = slug.replace("-", " ").title()
-                description = f"{title} documentation for SW Foundation."
+                description = f"{title} documentation, sw.foundation package repository."
             except Exception as exc:
                 print(f"Warning: skipping doc '{slug}' — failed to render {md_path.name}: {exc}", file=sys.stderr)
                 errors += 1
@@ -813,12 +813,12 @@ def generate_docs_index(pages, doc_template_path):
         items = "\n".join([
             f'<li><a href="{escape(p["url"])}">{escape(p["title"])}</a></li>' for p in pages
         ])
-        content = f'<h1>Documentation</h1><p>Guides for SW Foundation packages.</p><ul>{items}</ul>'
+        content = f'<h1>Documentation</h1><p>Guides for the packages in this repository.</p><ul>{items}</ul>'
     else:
         content = '<h1>Documentation</h1><p>No documentation available yet.</p>'
     index_html = doc_template
     index_html = index_html.replace("{{TITLE}}", "Documentation")
-    index_html = index_html.replace("{{DESCRIPTION}}", "SW Foundation documentation index.")
+    index_html = index_html.replace("{{DESCRIPTION}}", "Documentation index of the sw.foundation package repository.")
     index_html = index_html.replace("{{CANONICAL}}", f"{SITE_BASE_URL}/docs/")
     index_html = index_html.replace("{{CONTENT}}", content)
     (DOCS_DIR / "index.html").write_text(index_html, encoding="utf-8")
