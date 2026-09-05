@@ -11,6 +11,10 @@ RPM_SRC_DIR="${RPM_SRC_DIR:-packages/rpm}"
 SRPM_SRC_DIR="${SRPM_SRC_DIR:-packages/srpm}"
 # Binary architectures indexed for every DEB dist.
 DEB_ARCHS="${DEB_ARCHS:-amd64 arm64}"
+# Dists the repository serves. Their directories are created on demand, so a
+# fresh tree (or one cleared for a key rotation) is indexed without any dist
+# directory pre-existing; dists still on disk from earlier runs are kept.
+DEB_DISTS="${DEB_DISTS:-bookworm jammy noble}"
 
 # GPG signing helper
 GPG_PASSPHRASE="${GPG_PASSPHRASE:-}"
@@ -91,6 +95,20 @@ publish_deb() {
   done
 
   local dist_dir dist
+  local -a configured_dists
+  # read -a splits on whitespace without glob expansion (nullglob is on).
+  read -r -a configured_dists <<< "$DEB_DISTS"
+  for dist in "${configured_dists[@]}"; do
+    # Same rule as the on-disk scan below; rejects separators and traversal
+    # before the name is ever used as a path component.
+    if ! printf '%s' "$dist" | grep -Eq '^[A-Za-z0-9_-]+$'; then
+      echo "Error: invalid dist name '$dist' in DEB_DISTS" >&2
+      exit 1
+    fi
+    mkdir -p "deb/dists/$dist"
+  done
+  # apt-ftparchive fails on a missing pool; an empty one yields empty indexes.
+  mkdir -p deb/pool/main
   if [ -d deb/dists ]; then
     # Known dist names — used to tell dist-specific debs (…_noble_amd64.deb)
     # from dist-agnostic ones (…_amd64.deb, e.g. coordinode) which belong in
