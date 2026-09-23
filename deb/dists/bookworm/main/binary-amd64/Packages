@@ -1,3 +1,23 @@
+Package: coordinode
+Architecture: amd64
+Version: 0.6.0
+Priority: optional
+Section: database
+Maintainer: Dmitry Prudnikov <mail@polaz.com>
+Installed-Size: 31783
+Depends: systemd, adduser
+Filename: pool/main/c/coordinode/coordinode_0.6.0_amd64.deb
+Size: 9237520
+MD5sum: fa8bc6c80330f39a17112507e7ef6caa
+SHA1: d6d32d53cb158f6ccbe4294d6d5280f4230bb46d
+SHA256: 801d525bba768612ceee61eff498ce0642f6003d96cf48531cb9a2075c25bbd9
+SHA512: fdb11865078181af69e005a4262b46f530e7e6ecbd59034bb9651ce952a45e59e841e3610809e2d70d070fb306f6a022a37dff11e62ff7c6903aa36a4950b20f
+Homepage: https://github.com/structured-world/coordinode
+Description: Unified database for AI-native applications
+ CoordiNode is a unified database combining graph, vector, full-text,
+ document and time-series modalities in one engine. Queries use OpenCypher;
+ writes commit atomically across modalities.
+
 Package: strongswan-dhcp-inform
 Architecture: amd64
 Version: 6.0.7-sw.26
