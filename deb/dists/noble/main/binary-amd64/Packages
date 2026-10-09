@@ -327,3 +327,26 @@ Description: Universal gRPC to REST transcoding proxy
  The service ships disabled: set an upstream address and proto descriptors in
  /etc/structured-proxy/config.yaml, then enable it with systemctl.
 
+Package: structured-proxy
+Architecture: amd64
+Version: 8.1.1
+Priority: optional
+Section: net
+Maintainer: Dmitry Prudnikov <mail@polaz.com>
+Installed-Size: 14562
+Depends: systemd, adduser
+Filename: pool/main/s/structured-proxy/structured-proxy_8.1.1_amd64.deb
+Size: 4150408
+MD5sum: 134dcc0e73914cf33c2fd68dc15a47c9
+SHA1: 62f42dcfbe0a1666f34c9252fc1e49166cb97a2e
+SHA256: 557a128f9399c71f1a7efc0338d90d92ec00e657ccfa55546322cbbcb91c227a
+SHA512: 5530f4956225fdd7a94cac1a7ce5cfc8b63ee94e308113f7de505eff43853d74e06f631302f43530a8cd4e3dad8ffb309458acfbf0b46c49664af8e774cd4b6e
+Homepage: https://github.com/structured-world/structured-proxy
+Description: Universal gRPC to REST transcoding proxy
+ structured-proxy is a config-driven gRPC to REST transcoding proxy. One
+ binary serves any gRPC service from a proto descriptor set and a YAML config,
+ with no code generation and no custom handlers.
+ .
+ The service ships disabled: set an upstream address and proto descriptors in
+ /etc/structured-proxy/config.yaml, then enable it with systemctl.
+
