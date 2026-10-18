@@ -62,7 +62,7 @@ assert_dist_indexed() {
 CASE="empty-input"
 fresh_repo "$CASE"
 (cd "$REPO" && scripts/update-repos.sh)
-for dist in bookworm jammy noble; do
+for dist in bookworm jammy noble resolute; do
   assert_dist_indexed "$dist"
   [ ! -s "$REPO/deb/dists/$dist/main/binary-amd64/Packages" ] \
     || fail "$CASE: Packages for $dist is not empty"
@@ -74,7 +74,7 @@ fresh_repo "$CASE"
 mkdeb agnostic 1.0 amd64
 mkdeb noblonly 1.0 amd64 noble
 (cd "$REPO" && scripts/update-repos.sh)
-for dist in bookworm jammy noble; do
+for dist in bookworm jammy noble resolute; do
   assert_dist_indexed "$dist"
   grep -q '^Package: agnostic$' "$REPO/deb/dists/$dist/main/binary-amd64/Packages" \
     || fail "$CASE: dist-agnostic package missing from $dist"

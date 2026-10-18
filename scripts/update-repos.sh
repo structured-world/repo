@@ -14,7 +14,7 @@ DEB_ARCHS="${DEB_ARCHS:-amd64 arm64}"
 # Dists the repository serves. Their directories are created on demand, so a
 # fresh tree (or one cleared for a key rotation) is indexed without any dist
 # directory pre-existing; dists still on disk from earlier runs are kept.
-DEB_DISTS="${DEB_DISTS:-bookworm jammy noble}"
+DEB_DISTS="${DEB_DISTS:-bookworm jammy noble resolute}"
 
 # GPG signing helper
 GPG_PASSPHRASE="${GPG_PASSPHRASE:-}"
