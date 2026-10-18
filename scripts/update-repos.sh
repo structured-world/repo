@@ -15,6 +15,8 @@ DEB_ARCHS="${DEB_ARCHS:-amd64 arm64}"
 # fresh tree (or one cleared for a key rotation) is indexed without any dist
 # directory pre-existing; dists still on disk from earlier runs are kept.
 DEB_DISTS="${DEB_DISTS:-bookworm jammy noble resolute}"
+# Where the repository is served; the dnf repository files point there.
+REPO_BASE_URL="${REPO_BASE_URL:-https://repo.sw.foundation}"
 
 # GPG signing helper
 GPG_PASSPHRASE="${GPG_PASSPHRASE:-}"
@@ -234,6 +236,23 @@ EOF_RELEASE
   fi
 }
 
+# The repository file `dnf config-manager --add-repo` takes, one per Fedora
+# release directory: it names that directory and requires both package and
+# metadata signatures, against the published key.
+write_dnf_repo_file() {
+  local fc_dir="$1" release
+  release="$(basename "$fc_dir")"
+  cat > "$fc_dir/sw.repo" << EOF_REPO
+[sw-foundation]
+name=sw.foundation packages (${release})
+baseurl=${REPO_BASE_URL}/rpm/${release}/
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=${REPO_BASE_URL}/keys/sw.asc
+EOF_REPO
+}
+
 publish_rpm() {
   for bin in createrepo_c gpg rpm rpmsign; do
     if ! command -v "$bin" >/dev/null 2>&1; then
@@ -393,6 +412,7 @@ publish_rpm() {
         echo "Error: Failed to create valid GPG signature for $fc_dir repodata" >&2
         exit 1
       fi
+      write_dnf_repo_file "$fc_dir"
       echo "Updated RPM repository for $(basename "$fc_dir")"
     fi
   done

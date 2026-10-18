@@ -7,6 +7,7 @@
 #   2. default dists with a dist-agnostic and a dist-specific deb
 #   3. custom DEB_DISTS plus a dist already on disk (must be retained)
 #   4. a traversal token in DEB_DISTS (must be rejected before any mkdir)
+#   5. an RPM release directory: signed metadata and its dnf repository file
 #
 # Requires: apt-ftparchive, dpkg-deb, gnupg, gzip, createrepo_c, rpm, rpmsign.
 set -euo pipefail
@@ -111,4 +112,41 @@ fi
 [ ! -e "$REPO/deb/staging" ] || fail "$CASE: traversal dist created deb/staging"
 [ ! -e "$REPO/deb/dists" ] || fail "$CASE: directories were created before validation"
 
-echo "update-repos.sh: empty-tree publish OK (4 cases)"
+# --- case 5: an RPM release directory gets its signed metadata and dnf file -
+CASE="rpm-repo-file"
+fresh_repo "$CASE"
+fpr="$(gpg --batch --with-colons --list-secret-keys | awk -F: '/^fpr:/ {print $10; exit}')"
+export HOME="$WORK/home-$CASE"
+mkdir -p "$HOME/rpmbuild/SPECS" "$REPO/packages/rpm"
+# The same signing macros the publish workflow writes, against the test key.
+printf '%%_signature gpg\n%%_gpg_name %s\n%%_gpg_path %s\n%%__gpg /usr/bin/gpg\n' \
+  "$fpr" "$GNUPGHOME" > "$HOME/.rpmmacros"
+cat > "$HOME/rpmbuild/SPECS/probe.spec" << 'EOF_SPEC'
+Name: probe
+Version: 1.0
+Release: 1.fc44
+Summary: test
+License: MIT
+BuildArch: noarch
+%description
+test
+%files
+EOF_SPEC
+rpmbuild -bb --define "_topdir $HOME/rpmbuild" "$HOME/rpmbuild/SPECS/probe.spec" >/dev/null 2>&1 \
+  || fail "$CASE: could not build the probe RPM"
+cp "$HOME"/rpmbuild/RPMS/noarch/probe-1.0-1.fc44.noarch.rpm "$REPO/packages/rpm/"
+gpg --batch --armor --export "$fpr" > "$WORK/probe-key.asc"
+rpm --import "$WORK/probe-key.asc" 2>/dev/null || true
+(cd "$REPO" && scripts/update-repos.sh) || fail "$CASE: publish failed"
+repo_file="$REPO/rpm/fc44/sw.repo"
+[ -f "$repo_file" ] || fail "$CASE: no sw.repo for fc44"
+grep -qx 'baseurl=https://repo.sw.foundation/rpm/fc44/' "$repo_file" \
+  || fail "$CASE: sw.repo does not name the fc44 directory"
+grep -qx 'gpgcheck=1' "$repo_file" || fail "$CASE: package signatures not required"
+grep -qx 'repo_gpgcheck=1' "$repo_file" || fail "$CASE: metadata signature not required"
+grep -qx 'gpgkey=https://repo.sw.foundation/keys/sw.asc' "$repo_file" \
+  || fail "$CASE: sw.repo does not name the published key"
+gpg --verify "$REPO/rpm/fc44/repodata/repomd.xml.asc" "$REPO/rpm/fc44/repodata/repomd.xml" >/dev/null 2>&1 \
+  || fail "$CASE: repomd.xml signature invalid"
+
+echo "update-repos.sh: empty-tree publish OK (5 cases)"
