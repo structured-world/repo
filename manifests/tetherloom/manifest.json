@@ -1,0 +1,48 @@
+{
+  "project": {
+    "id": "tetherloom",
+    "name": "Tetherloom",
+    "description": "Self-hosted secure overlay network. The management server is one process with embedded storage, a local control socket and an HTTPS endpoint for setup and sign-in.",
+    "homepage": "https://tetherloom.com",
+    "license": "AGPL-3.0-only",
+    "upstream": "https://tetherloom.com"
+  },
+  "packages": [
+    {
+      "name": "tetherloom-server",
+      "displayName": "Tetherloom management server",
+      "summary": "Tetherloom management server",
+      "category": "main",
+      "icon": "network",
+      "requires": null
+    }
+  ],
+  "platforms": {
+    "rpm": {
+      "distros": [
+        {
+          "id": "fedora",
+          "name": "Fedora",
+          "versions": ["43", "44", "45"],
+          "prefix": "fc",
+          "arch": "x86_64, aarch64"
+        }
+      ],
+      "repoSetup": "sudo curl -fsSL https://repo.sw.foundation/rpm/fc$(rpm -E %fedora)/sw.repo -o /etc/yum.repos.d/sw.repo",
+      "installCmd": "sudo dnf install"
+    },
+    "deb": {
+      "distros": [
+        {
+          "id": "ubuntu",
+          "name": "Ubuntu",
+          "codenames": ["resolute", "noble", "jammy"],
+          "versions": ["26.04", "24.04", "22.04"]
+        }
+      ],
+      "repoSetup": "curl -fsSL https://repo.sw.foundation/keys/sw.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/sw.gpg\necho \"deb [signed-by=/etc/apt/keyrings/sw.gpg] https://repo.sw.foundation/deb $(lsb_release -cs) main\" | sudo tee /etc/apt/sources.list.d/sw.list\nsudo apt-get update",
+      "installCmd": "sudo apt-get install"
+    }
+  },
+  "docs": []
+}

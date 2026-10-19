@@ -133,6 +133,11 @@ jobs:
 
       - name: Resolve strongswan run id
         id: runid
+        # The run ids reach the shell as variables, never as text pasted into
+        # the script, so a crafted value is checked before anything runs it.
+        env:
+          PAYLOAD_RUN_ID: ${{ github.event.client_payload.strongswan_run_id }}
+          INPUT_RUN_ID: ${{ inputs.strongswan_run_id }}
         run: |
           if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
             sender=$(jq -r '.sender.login // ""' "$GITHUB_EVENT_PATH")
@@ -152,10 +157,10 @@ jobs:
               exit 1
             fi
           fi
-          if [ -n "${{ github.event.client_payload.strongswan_run_id }}" ]; then
-            run_id="${{ github.event.client_payload.strongswan_run_id }}"
-          elif [ -n "${{ inputs.strongswan_run_id }}" ]; then
-            run_id="${{ inputs.strongswan_run_id }}"
+          if [ -n "$PAYLOAD_RUN_ID" ]; then
+            run_id="$PAYLOAD_RUN_ID"
+          elif [ -n "$INPUT_RUN_ID" ]; then
+            run_id="$INPUT_RUN_ID"
           else
             # No strongswan run id provided — OK if this is a coordinode-only dispatch.
             echo "run_id=" >> "$GITHUB_OUTPUT"
@@ -243,6 +248,9 @@ jobs:
 
       - name: Resolve coordinode run id
         id: coordinode-runid
+        env:
+          PAYLOAD_RUN_ID: ${{ github.event.client_payload.coordinode_run_id }}
+          INPUT_RUN_ID: ${{ inputs.coordinode_run_id }}
         run: |
           if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
             action=$(jq -r '.action // ""' "$GITHUB_EVENT_PATH")
@@ -257,10 +265,10 @@ jobs:
               exit 1
             fi
           fi
-          if [ -n "${{ github.event.client_payload.coordinode_run_id }}" ]; then
-            run_id="${{ github.event.client_payload.coordinode_run_id }}"
-          elif [ -n "${{ inputs.coordinode_run_id }}" ]; then
-            run_id="${{ inputs.coordinode_run_id }}"
+          if [ -n "$PAYLOAD_RUN_ID" ]; then
+            run_id="$PAYLOAD_RUN_ID"
+          elif [ -n "$INPUT_RUN_ID" ]; then
+            run_id="$INPUT_RUN_ID"
           else
             # No coordinode run id provided — OK if this is a strongswan-only dispatch.
             echo "run_id=" >> "$GITHUB_OUTPUT"
@@ -278,6 +286,9 @@ jobs:
 
       - name: Resolve structured-proxy run id
         id: structured-proxy-runid
+        env:
+          PAYLOAD_RUN_ID: ${{ github.event.client_payload.structured_proxy_run_id }}
+          INPUT_RUN_ID: ${{ inputs.structured_proxy_run_id }}
         run: |
           if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
             sender=$(jq -r '.sender.login // ""' "$GITHUB_EVENT_PATH")
@@ -297,10 +308,10 @@ jobs:
               exit 1
             fi
           fi
-          if [ -n "${{ github.event.client_payload.structured_proxy_run_id }}" ]; then
-            run_id="${{ github.event.client_payload.structured_proxy_run_id }}"
-          elif [ -n "${{ inputs.structured_proxy_run_id }}" ]; then
-            run_id="${{ inputs.structured_proxy_run_id }}"
+          if [ -n "$PAYLOAD_RUN_ID" ]; then
+            run_id="$PAYLOAD_RUN_ID"
+          elif [ -n "$INPUT_RUN_ID" ]; then
+            run_id="$INPUT_RUN_ID"
           else
             # No structured-proxy run id provided — OK if this dispatch targets another project.
             echo "run_id=" >> "$GITHUB_OUTPUT"
@@ -318,6 +329,9 @@ jobs:
 
       - name: Resolve tetherloom run id
         id: tetherloom-runid
+        env:
+          PAYLOAD_RUN_ID: ${{ github.event.client_payload.tetherloom_run_id }}
+          INPUT_RUN_ID: ${{ inputs.tetherloom_run_id }}
         run: |
           if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
             sender=$(jq -r '.sender.login // ""' "$GITHUB_EVENT_PATH")
@@ -337,10 +351,10 @@ jobs:
               exit 1
             fi
           fi
-          if [ -n "${{ github.event.client_payload.tetherloom_run_id }}" ]; then
-            run_id="${{ github.event.client_payload.tetherloom_run_id }}"
-          elif [ -n "${{ inputs.tetherloom_run_id }}" ]; then
-            run_id="${{ inputs.tetherloom_run_id }}"
+          if [ -n "$PAYLOAD_RUN_ID" ]; then
+            run_id="$PAYLOAD_RUN_ID"
+          elif [ -n "$INPUT_RUN_ID" ]; then
+            run_id="$INPUT_RUN_ID"
           else
             # No tetherloom run id provided — OK if this dispatch targets another project.
             echo "run_id=" >> "$GITHUB_OUTPUT"
@@ -492,23 +506,32 @@ jobs:
           RUN_ID="${{ steps.tetherloom-runid.outputs.run_id }}"
           REPO="structured-world/tetherloom"
           echo "Verifying workflow run $RUN_ID in $REPO..."
-          if ! run_json=$(gh run view "$RUN_ID" -R "$REPO" --json status,headBranch,event,workflowName,createdAt,updatedAt); then
+          if ! run_json=$(gh run view "$RUN_ID" -R "$REPO" --json status,conclusion,headBranch,event,workflowName,createdAt,updatedAt); then
             echo "Error: unable to view run $RUN_ID in $REPO." >&2
             exit 1
           fi
-          jq -r '. as $r | "Status: \($r.status)\nBranch: \($r.headBranch)\nEvent: \($r.event)\nWorkflow: \($r.workflowName)\nCreated: \($r.createdAt)\nUpdated: \($r.updatedAt)"' <<< "$run_json"
+          jq -r '. as $r | "Status: \($r.status)\nConclusion: \($r.conclusion)\nBranch: \($r.headBranch)\nEvent: \($r.event)\nWorkflow: \($r.workflowName)\nCreated: \($r.createdAt)\nUpdated: \($r.updatedAt)"' <<< "$run_json"
           run_workflow=$(jq -r '.workflowName // ""' <<< "$run_json")
           if [ "$run_workflow" != "Release" ]; then
             echo "Error: run $RUN_ID is not from expected workflow (Release), got '$run_workflow'" >&2
             exit 1
           fi
-          # Only a public release build: the Release workflow started by a
-          # release tag, or run again by a maintainer from main for an existing
-          # tag. Pull request builds run another workflow and carry lab versions.
+          # The dispatch comes from the run's last job while the run is still
+          # in progress; a run that already finished must have succeeded, so a
+          # failed or cancelled run's uploaded artifacts are never published.
+          run_status=$(jq -r '.status // ""' <<< "$run_json")
+          run_conclusion=$(jq -r '.conclusion // ""' <<< "$run_json")
+          if [ "$run_status" = "completed" ] && [ "$run_conclusion" != "success" ]; then
+            echo "Error: run $RUN_ID finished with conclusion '$run_conclusion'; refusing to publish" >&2
+            exit 1
+          fi
+          # Only a public release build: the Release workflow started by the
+          # release of a vX.Y.Z tag. Publishing a release again is a re-run of
+          # that same run, which keeps its event and tag. Pull request builds
+          # run another workflow and carry lab versions.
           run_event=$(jq -r '.event // ""' <<< "$run_json")
           run_branch=$(jq -r '.headBranch // ""' <<< "$run_json")
-          if ! { [ "$run_event" = "release" ] && echo "$run_branch" | grep -Eq '^v[0-9]+\.[0-9]+\.[0-9]+$'; } \
-             && ! { [ "$run_event" = "workflow_dispatch" ] && [ "$run_branch" = "main" ]; }; then
+          if [ "$run_event" != "release" ] || ! echo "$run_branch" | grep -Eq '^v[0-9]+\.[0-9]+\.[0-9]+$'; then
             echo "Error: run $RUN_ID is not a release build (event '$run_event', ref '$run_branch')" >&2
             exit 1
           fi
@@ -539,14 +562,15 @@ jobs:
             exit 1
           fi
           # Verify at least one tetherloom .deb or .rpm was downloaded.
-          if ! find packages -type f \( -name 'tetherloom-*.deb' -o -name 'tetherloom-*.rpm' \) | grep -q .; then
+          if ! find packages -type f \( -name 'tetherloom*.deb' -o -name 'tetherloom*.rpm' \) | grep -q .; then
             echo "Error: no tetherloom RPM/DEB artifacts found in packages/ for run $RUN_ID" >&2
             exit 1
           fi
-          # A lab version is never published, whatever run it came from.
-          if find packages -type f -name '*lab*' | grep -q .; then
+          # A lab version is never published, whatever run it came from. Only
+          # package names carry a version; metadata files are not checked.
+          if find packages -type f \( -name '*lab*.deb' -o -name '*lab*.rpm' \) | grep -q .; then
             echo "Error: lab packages found in run $RUN_ID; refusing to publish" >&2
-            find packages -type f -name '*lab*' -print >&2
+            find packages -type f \( -name '*lab*.deb' -o -name '*lab*.rpm' \) -print >&2
             exit 1
           fi
           # Reject unexpected file types (only .rpm/.deb allowed outside repo-meta-*).

@@ -318,20 +318,22 @@ publish_rpm() {
     fi
   }
 
-  if [ ! -d "$RPM_SRC_DIR" ]; then
-    echo "RPM source dir not found: $RPM_SRC_DIR" >&2
-    return 0
-  fi
-
   local nullglob_state
   # shopt -p returns exit code 1 when the option is off; guard with || true.
   nullglob_state=$(shopt -p nullglob || true)
   shopt -s nullglob
   trap 'eval "$nullglob_state"' RETURN
-  local rpms=("$RPM_SRC_DIR"/*.rpm)
+  local rpms=()
+  if [ -d "$RPM_SRC_DIR" ]; then
+    rpms=("$RPM_SRC_DIR"/*.rpm)
+  else
+    echo "RPM source dir not found: $RPM_SRC_DIR" >&2
+  fi
   if [ ${#rpms[@]} -eq 0 ]; then
-    echo "No RPM packages to publish"
-    return 0
+    # No new RPMs this run: still fall through to the metadata update below,
+    # so the release directories already served keep complete metadata and
+    # their repository file, as the DEB side does.
+    echo "No new RPM packages to copy"
   fi
   for rpm in "${rpms[@]}"; do
     local filename fc_ver dest_dir

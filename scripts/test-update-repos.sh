@@ -8,6 +8,7 @@
 #   3. custom DEB_DISTS plus a dist already on disk (must be retained)
 #   4. a traversal token in DEB_DISTS (must be rejected before any mkdir)
 #   5. an RPM release directory: signed metadata and its dnf repository file
+#   6. a publish with no incoming RPMs still writes it for existing directories
 #
 # Requires: apt-ftparchive, dpkg-deb, gnupg, gzip, createrepo_c, rpm, rpmsign.
 set -euo pipefail
@@ -121,6 +122,11 @@ mkdir -p "$HOME/rpmbuild/SPECS" "$REPO/packages/rpm"
 # The same signing macros the publish workflow writes, against the test key.
 printf '%%_signature gpg\n%%_gpg_name %s\n%%_gpg_path %s\n%%__gpg /usr/bin/gpg\n' \
   "$fpr" "$GNUPGHOME" > "$HOME/.rpmmacros"
+# A private RPM database, so the test key never enters the machine's trust
+# store; the script under test reads the same macros for its checksig.
+printf '%%_dbpath %s\n' "$WORK/rpmdb" >> "$HOME/.rpmmacros"
+mkdir -p "$WORK/rpmdb"
+rpm --initdb || fail "$CASE: could not create the private RPM database"
 cat > "$HOME/rpmbuild/SPECS/probe.spec" << 'EOF_SPEC'
 Name: probe
 Version: 1.0
@@ -136,7 +142,7 @@ rpmbuild -bb --define "_topdir $HOME/rpmbuild" "$HOME/rpmbuild/SPECS/probe.spec"
   || fail "$CASE: could not build the probe RPM"
 cp "$HOME"/rpmbuild/RPMS/noarch/probe-1.0-1.fc44.noarch.rpm "$REPO/packages/rpm/"
 gpg --batch --armor --export "$fpr" > "$WORK/probe-key.asc"
-rpm --import "$WORK/probe-key.asc" 2>/dev/null || true
+rpm --import "$WORK/probe-key.asc" || fail "$CASE: could not import the probe key"
 (cd "$REPO" && scripts/update-repos.sh) || fail "$CASE: publish failed"
 repo_file="$REPO/rpm/fc44/sw.repo"
 [ -f "$repo_file" ] || fail "$CASE: no sw.repo for fc44"
@@ -149,4 +155,17 @@ grep -qx 'gpgkey=https://repo.sw.foundation/keys/sw.asc' "$repo_file" \
 gpg --verify "$REPO/rpm/fc44/repodata/repomd.xml.asc" "$REPO/rpm/fc44/repodata/repomd.xml" >/dev/null 2>&1 \
   || fail "$CASE: repomd.xml signature invalid"
 
-echo "update-repos.sh: empty-tree publish OK (5 cases)"
+# --- case 6: a publish without RPMs still serves existing release dirs -----
+# A DEB-only publish leaves packages/rpm empty; the release directories
+# already on disk must still get their dnf repository file.
+CASE="rpm-repo-file-no-incoming"
+previous="$REPO"
+fresh_repo "$CASE"
+mkdir -p "$REPO/rpm/fc44" "$REPO/packages/rpm"
+cp "$previous"/rpm/fc44/*.rpm "$REPO/rpm/fc44/"
+(cd "$REPO" && scripts/update-repos.sh) || fail "$CASE: publish failed"
+[ -f "$REPO/rpm/fc44/sw.repo" ] || fail "$CASE: no sw.repo for the existing fc44 directory"
+gpg --verify "$REPO/rpm/fc44/repodata/repomd.xml.asc" "$REPO/rpm/fc44/repodata/repomd.xml" >/dev/null 2>&1 \
+  || fail "$CASE: repomd.xml signature invalid"
+
+echo "update-repos.sh: empty-tree publish OK (6 cases)"
