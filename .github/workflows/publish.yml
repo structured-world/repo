@@ -170,7 +170,9 @@ jobs:
             echo "Error: resolved strongswan_run_id is empty" >&2
             exit 1
           fi
-          if ! echo "$run_id" | grep -Eq '^[0-9]+$'; then
+          # The whole value must be digits: a line-wise grep would accept a
+          # multiline value and let its later lines into GITHUB_OUTPUT.
+          if ! [[ "$run_id" =~ ^[0-9]+$ ]]; then
             echo "Error: resolved strongswan_run_id must be numeric, got '$run_id'" >&2
             exit 1
           fi
@@ -278,7 +280,8 @@ jobs:
             echo "Error: resolved coordinode_run_id is empty" >&2
             exit 1
           fi
-          if ! echo "$run_id" | grep -Eq '^[0-9]+$'; then
+          # The whole value must be digits (see the strongswan resolver).
+          if ! [[ "$run_id" =~ ^[0-9]+$ ]]; then
             echo "Error: resolved coordinode_run_id must be numeric, got '$run_id'" >&2
             exit 1
           fi
@@ -321,7 +324,8 @@ jobs:
             echo "Error: resolved structured_proxy_run_id is empty" >&2
             exit 1
           fi
-          if ! echo "$run_id" | grep -Eq '^[0-9]+$'; then
+          # The whole value must be digits (see the strongswan resolver).
+          if ! [[ "$run_id" =~ ^[0-9]+$ ]]; then
             echo "Error: resolved structured_proxy_run_id must be numeric, got '$run_id'" >&2
             exit 1
           fi
@@ -364,7 +368,8 @@ jobs:
             echo "Error: resolved tetherloom_run_id is empty" >&2
             exit 1
           fi
-          if ! echo "$run_id" | grep -Eq '^[0-9]+$'; then
+          # The whole value must be digits (see the strongswan resolver).
+          if ! [[ "$run_id" =~ ^[0-9]+$ ]]; then
             echo "Error: resolved tetherloom_run_id must be numeric, got '$run_id'" >&2
             exit 1
           fi
