@@ -146,8 +146,10 @@ rpm --import "$WORK/probe-key.asc" || fail "$CASE: could not import the probe ke
 (cd "$REPO" && scripts/update-repos.sh) || fail "$CASE: publish failed"
 repo_file="$REPO/rpm/fc44/sw.repo"
 [ -f "$repo_file" ] || fail "$CASE: no sw.repo for fc44"
-grep -qx 'baseurl=https://repo.sw.foundation/rpm/fc44/' "$repo_file" \
-  || fail "$CASE: sw.repo does not name the fc44 directory"
+# dnf's own $releasever, so a host upgraded to the next Fedora release
+# follows that release's directory instead of the one it was set up on.
+grep -qx 'baseurl=https://repo.sw.foundation/rpm/fc$releasever/' "$repo_file" \
+  || fail "$CASE: sw.repo does not follow the host's Fedora release"
 grep -qx 'gpgcheck=1' "$repo_file" || fail "$CASE: package signatures not required"
 grep -qx 'repo_gpgcheck=1' "$repo_file" || fail "$CASE: metadata signature not required"
 grep -qx 'gpgkey=https://repo.sw.foundation/keys/sw.asc' "$repo_file" \

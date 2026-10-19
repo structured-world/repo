@@ -236,16 +236,16 @@ EOF_RELEASE
   fi
 }
 
-# The repository file `dnf config-manager --add-repo` takes, one per Fedora
-# release directory: it names that directory and requires both package and
-# metadata signatures, against the published key.
+# The repository file the documented setup installs, served from each Fedora
+# release directory. Its baseurl keeps dnf's literal $releasever, so a host
+# upgraded to the next Fedora release follows that release's directory; it
+# requires both package and metadata signatures, against the published key.
 write_dnf_repo_file() {
-  local fc_dir="$1" release
-  release="$(basename "$fc_dir")"
+  local fc_dir="$1"
   cat > "$fc_dir/sw.repo" << EOF_REPO
 [sw-foundation]
-name=sw.foundation packages (${release})
-baseurl=${REPO_BASE_URL}/rpm/${release}/
+name=sw.foundation packages (Fedora \$releasever)
+baseurl=${REPO_BASE_URL}/rpm/fc\$releasever/
 enabled=1
 gpgcheck=1
 repo_gpgcheck=1
