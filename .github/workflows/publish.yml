@@ -502,6 +502,7 @@ jobs:
         if: steps.tetherloom-runid.outputs.run_id != ''
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          EVENT_NAME: ${{ github.event_name }}
         run: |
           RUN_ID="${{ steps.tetherloom-runid.outputs.run_id }}"
           REPO="structured-world/tetherloom"
@@ -516,13 +517,21 @@ jobs:
             echo "Error: run $RUN_ID is not from expected workflow (Release), got '$run_workflow'" >&2
             exit 1
           fi
-          # The dispatch comes from the run's last job while the run is still
-          # in progress; a run that already finished must have succeeded, so a
-          # failed or cancelled run's uploaded artifacts are never published.
+          # The release bot's dispatch comes from the run's last job, after
+          # every build and check passed, while the run is still in progress.
+          # Any other publish of a run (a manual one) needs the run finished
+          # with success, and a finished run must have succeeded either way,
+          # so a failed or cancelled run's uploaded artifacts are never
+          # published.
           run_status=$(jq -r '.status // ""' <<< "$run_json")
           run_conclusion=$(jq -r '.conclusion // ""' <<< "$run_json")
-          if [ "$run_status" = "completed" ] && [ "$run_conclusion" != "success" ]; then
-            echo "Error: run $RUN_ID finished with conclusion '$run_conclusion'; refusing to publish" >&2
+          if [ "$run_status" = "completed" ]; then
+            if [ "$run_conclusion" != "success" ]; then
+              echo "Error: run $RUN_ID finished with conclusion '$run_conclusion'; refusing to publish" >&2
+              exit 1
+            fi
+          elif [ "$EVENT_NAME" != "repository_dispatch" ]; then
+            echo "Error: run $RUN_ID has not finished (status '$run_status'); a manual publish needs a finished, successful run" >&2
             exit 1
           fi
           # Only a public release build: the Release workflow started by the
