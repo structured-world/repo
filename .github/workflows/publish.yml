@@ -1,5 +1,5 @@
 name: Publish Repo
-run-name: "Publish Repo (strongswan ${{ inputs.strongswan_run_id || github.event.client_payload.strongswan_run_id }} coordinode ${{ inputs.coordinode_run_id || github.event.client_payload.coordinode_run_id }} structured-proxy ${{ inputs.structured_proxy_run_id || github.event.client_payload.structured_proxy_run_id }})"
+run-name: "Publish Repo (strongswan ${{ inputs.strongswan_run_id || github.event.client_payload.strongswan_run_id }} coordinode ${{ inputs.coordinode_run_id || github.event.client_payload.coordinode_run_id }} structured-proxy ${{ inputs.structured_proxy_run_id || github.event.client_payload.structured_proxy_run_id }} tetherloom ${{ inputs.tetherloom_run_id || github.event.client_payload.tetherloom_run_id }})"
 
 on:
   workflow_dispatch:
@@ -16,8 +16,12 @@ on:
         description: 'structured-proxy release run id'
         required: false
         type: string
+      tetherloom_run_id:
+        description: 'tetherloom release run id'
+        required: false
+        type: string
   repository_dispatch:
-    types: [publish-from-strongswan, publish-from-coordinode, publish-from-structured-proxy]
+    types: [publish-from-strongswan, publish-from-coordinode, publish-from-structured-proxy, publish-from-tetherloom]
 
 permissions:
   contents: write
@@ -129,6 +133,11 @@ jobs:
 
       - name: Resolve strongswan run id
         id: runid
+        # The run ids reach the shell as variables, never as text pasted into
+        # the script, so a crafted value is checked before anything runs it.
+        env:
+          PAYLOAD_RUN_ID: ${{ github.event.client_payload.strongswan_run_id }}
+          INPUT_RUN_ID: ${{ inputs.strongswan_run_id }}
         run: |
           if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
             sender=$(jq -r '.sender.login // ""' "$GITHUB_EVENT_PATH")
@@ -148,10 +157,10 @@ jobs:
               exit 1
             fi
           fi
-          if [ -n "${{ github.event.client_payload.strongswan_run_id }}" ]; then
-            run_id="${{ github.event.client_payload.strongswan_run_id }}"
-          elif [ -n "${{ inputs.strongswan_run_id }}" ]; then
-            run_id="${{ inputs.strongswan_run_id }}"
+          if [ -n "$PAYLOAD_RUN_ID" ]; then
+            run_id="$PAYLOAD_RUN_ID"
+          elif [ -n "$INPUT_RUN_ID" ]; then
+            run_id="$INPUT_RUN_ID"
           else
             # No strongswan run id provided — OK if this is a coordinode-only dispatch.
             echo "run_id=" >> "$GITHUB_OUTPUT"
@@ -161,7 +170,9 @@ jobs:
             echo "Error: resolved strongswan_run_id is empty" >&2
             exit 1
           fi
-          if ! echo "$run_id" | grep -Eq '^[0-9]+$'; then
+          # The whole value must be digits: a line-wise grep would accept a
+          # multiline value and let its later lines into GITHUB_OUTPUT.
+          if ! [[ "$run_id" =~ ^[0-9]+$ ]]; then
             echo "Error: resolved strongswan_run_id must be numeric, got '$run_id'" >&2
             exit 1
           fi
@@ -239,6 +250,9 @@ jobs:
 
       - name: Resolve coordinode run id
         id: coordinode-runid
+        env:
+          PAYLOAD_RUN_ID: ${{ github.event.client_payload.coordinode_run_id }}
+          INPUT_RUN_ID: ${{ inputs.coordinode_run_id }}
         run: |
           if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
             action=$(jq -r '.action // ""' "$GITHUB_EVENT_PATH")
@@ -253,10 +267,10 @@ jobs:
               exit 1
             fi
           fi
-          if [ -n "${{ github.event.client_payload.coordinode_run_id }}" ]; then
-            run_id="${{ github.event.client_payload.coordinode_run_id }}"
-          elif [ -n "${{ inputs.coordinode_run_id }}" ]; then
-            run_id="${{ inputs.coordinode_run_id }}"
+          if [ -n "$PAYLOAD_RUN_ID" ]; then
+            run_id="$PAYLOAD_RUN_ID"
+          elif [ -n "$INPUT_RUN_ID" ]; then
+            run_id="$INPUT_RUN_ID"
           else
             # No coordinode run id provided — OK if this is a strongswan-only dispatch.
             echo "run_id=" >> "$GITHUB_OUTPUT"
@@ -266,7 +280,8 @@ jobs:
             echo "Error: resolved coordinode_run_id is empty" >&2
             exit 1
           fi
-          if ! echo "$run_id" | grep -Eq '^[0-9]+$'; then
+          # The whole value must be digits (see the strongswan resolver).
+          if ! [[ "$run_id" =~ ^[0-9]+$ ]]; then
             echo "Error: resolved coordinode_run_id must be numeric, got '$run_id'" >&2
             exit 1
           fi
@@ -274,6 +289,9 @@ jobs:
 
       - name: Resolve structured-proxy run id
         id: structured-proxy-runid
+        env:
+          PAYLOAD_RUN_ID: ${{ github.event.client_payload.structured_proxy_run_id }}
+          INPUT_RUN_ID: ${{ inputs.structured_proxy_run_id }}
         run: |
           if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
             sender=$(jq -r '.sender.login // ""' "$GITHUB_EVENT_PATH")
@@ -293,10 +311,10 @@ jobs:
               exit 1
             fi
           fi
-          if [ -n "${{ github.event.client_payload.structured_proxy_run_id }}" ]; then
-            run_id="${{ github.event.client_payload.structured_proxy_run_id }}"
-          elif [ -n "${{ inputs.structured_proxy_run_id }}" ]; then
-            run_id="${{ inputs.structured_proxy_run_id }}"
+          if [ -n "$PAYLOAD_RUN_ID" ]; then
+            run_id="$PAYLOAD_RUN_ID"
+          elif [ -n "$INPUT_RUN_ID" ]; then
+            run_id="$INPUT_RUN_ID"
           else
             # No structured-proxy run id provided — OK if this dispatch targets another project.
             echo "run_id=" >> "$GITHUB_OUTPUT"
@@ -306,8 +324,53 @@ jobs:
             echo "Error: resolved structured_proxy_run_id is empty" >&2
             exit 1
           fi
-          if ! echo "$run_id" | grep -Eq '^[0-9]+$'; then
+          # The whole value must be digits (see the strongswan resolver).
+          if ! [[ "$run_id" =~ ^[0-9]+$ ]]; then
             echo "Error: resolved structured_proxy_run_id must be numeric, got '$run_id'" >&2
+            exit 1
+          fi
+          echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
+
+      - name: Resolve tetherloom run id
+        id: tetherloom-runid
+        env:
+          PAYLOAD_RUN_ID: ${{ github.event.client_payload.tetherloom_run_id }}
+          INPUT_RUN_ID: ${{ inputs.tetherloom_run_id }}
+        run: |
+          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            sender=$(jq -r '.sender.login // ""' "$GITHUB_EVENT_PATH")
+            action=$(jq -r '.action // ""' "$GITHUB_EVENT_PATH")
+            if [ "$sender" != "sw-release-bot[bot]" ]; then
+              echo "Error: unauthorized repository_dispatch sender '$sender'" >&2
+              exit 1
+            fi
+            if [ "$action" != "publish-from-tetherloom" ]; then
+              # This dispatch targets a different project; no tetherloom run to process.
+              echo "run_id=" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            source_repo=$(jq -r '.client_payload.tetherloom_repo // ""' "$GITHUB_EVENT_PATH")
+            if [ "$source_repo" != "structured-world/tetherloom" ]; then
+              echo "Error: unexpected tetherloom_repo '$source_repo'" >&2
+              exit 1
+            fi
+          fi
+          if [ -n "$PAYLOAD_RUN_ID" ]; then
+            run_id="$PAYLOAD_RUN_ID"
+          elif [ -n "$INPUT_RUN_ID" ]; then
+            run_id="$INPUT_RUN_ID"
+          else
+            # No tetherloom run id provided — OK if this dispatch targets another project.
+            echo "run_id=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [ -z "$run_id" ]; then
+            echo "Error: resolved tetherloom_run_id is empty" >&2
+            exit 1
+          fi
+          # The whole value must be digits (see the strongswan resolver).
+          if ! [[ "$run_id" =~ ^[0-9]+$ ]]; then
+            echo "Error: resolved tetherloom_run_id must be numeric, got '$run_id'" >&2
             exit 1
           fi
           echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
@@ -316,8 +379,9 @@ jobs:
         run: |
           if [ -z "${{ steps.runid.outputs.run_id }}" ] \
             && [ -z "${{ steps.coordinode-runid.outputs.run_id }}" ] \
-            && [ -z "${{ steps.structured-proxy-runid.outputs.run_id }}" ]; then
-            echo "Error: no source workflow run id was resolved — provide strongswan_run_id, coordinode_run_id, or structured_proxy_run_id" >&2
+            && [ -z "${{ steps.structured-proxy-runid.outputs.run_id }}" ] \
+            && [ -z "${{ steps.tetherloom-runid.outputs.run_id }}" ]; then
+            echo "Error: no source workflow run id was resolved — provide strongswan_run_id, coordinode_run_id, structured_proxy_run_id, or tetherloom_run_id" >&2
             exit 1
           fi
 
@@ -439,11 +503,105 @@ jobs:
           fi
           ls -la packages
 
+      - name: Download tetherloom artifacts
+        if: steps.tetherloom-runid.outputs.run_id != ''
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          RUN_ID="${{ steps.tetherloom-runid.outputs.run_id }}"
+          REPO="structured-world/tetherloom"
+          echo "Verifying workflow run $RUN_ID in $REPO..."
+          if ! run_json=$(gh run view "$RUN_ID" -R "$REPO" --json status,conclusion,headBranch,event,workflowName,createdAt,updatedAt); then
+            echo "Error: unable to view run $RUN_ID in $REPO." >&2
+            exit 1
+          fi
+          jq -r '. as $r | "Status: \($r.status)\nConclusion: \($r.conclusion)\nBranch: \($r.headBranch)\nEvent: \($r.event)\nWorkflow: \($r.workflowName)\nCreated: \($r.createdAt)\nUpdated: \($r.updatedAt)"' <<< "$run_json"
+          run_workflow=$(jq -r '.workflowName // ""' <<< "$run_json")
+          if [ "$run_workflow" != "Release" ]; then
+            echo "Error: run $RUN_ID is not from expected workflow (Release), got '$run_workflow'" >&2
+            exit 1
+          fi
+          # The release bot's dispatch comes from the run's last job, after
+          # every build and check passed, while the run is still in progress.
+          # Any other publish of a run (a manual one) needs the run finished
+          # with success, and a finished run must have succeeded either way,
+          # so a failed or cancelled run's uploaded artifacts are never
+          # published.
+          run_status=$(jq -r '.status // ""' <<< "$run_json")
+          run_conclusion=$(jq -r '.conclusion // ""' <<< "$run_json")
+          if [ "$run_status" = "completed" ]; then
+            if [ "$run_conclusion" != "success" ]; then
+              echo "Error: run $RUN_ID finished with conclusion '$run_conclusion'; refusing to publish" >&2
+              exit 1
+            fi
+          elif [ "$EVENT_NAME" != "repository_dispatch" ]; then
+            echo "Error: run $RUN_ID has not finished (status '$run_status'); a manual publish needs a finished, successful run" >&2
+            exit 1
+          fi
+          # Only a public release build: the Release workflow started by the
+          # release of a vX.Y.Z tag. Publishing a release again is a re-run of
+          # that same run, which keeps its event and tag. Pull request builds
+          # run another workflow and carry lab versions.
+          run_event=$(jq -r '.event // ""' <<< "$run_json")
+          run_branch=$(jq -r '.headBranch // ""' <<< "$run_json")
+          if [ "$run_event" != "release" ] || ! echo "$run_branch" | grep -Eq '^v[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "Error: run $RUN_ID is not a release build (event '$run_event', ref '$run_branch')" >&2
+            exit 1
+          fi
+          mkdir -p packages
+          if ! gh run download "$RUN_ID" -R "$REPO" -D packages \
+            --pattern "deb-*" \
+            --pattern "rpm-fc*" \
+            --pattern "repo-meta-tetherloom"; then
+            echo "Error: failed to download artifacts for run $RUN_ID" >&2
+            exit 1
+          fi
+          # Reject any symlinks to avoid path traversal from downloaded artifacts.
+          if find packages -type l | grep -q .; then
+            echo "Error: unexpected symlinks found in packages/; refusing to proceed" >&2
+            find packages -type l -print >&2
+            exit 1
+          fi
+          if find packages -maxdepth 1 -type f | grep -q .; then
+            echo "Error: unexpected files found at packages/ root; refusing to proceed" >&2
+            find packages -maxdepth 1 -type f -print >&2
+            exit 1
+          fi
+          if find packages -mindepth 1 -maxdepth 1 -type d \
+              ! -name 'deb-*' ! -name 'rpm-fc*' ! -name 'srpm' ! -name 'repo-meta-*' | grep -q .; then
+            echo "Error: unexpected artifact directories found in packages/" >&2
+            find packages -mindepth 1 -maxdepth 1 -type d \
+              ! -name 'deb-*' ! -name 'rpm-fc*' ! -name 'srpm' ! -name 'repo-meta-*' -print >&2
+            exit 1
+          fi
+          # Verify at least one tetherloom .deb or .rpm was downloaded.
+          if ! find packages -type f \( -name 'tetherloom*.deb' -o -name 'tetherloom*.rpm' \) | grep -q .; then
+            echo "Error: no tetherloom RPM/DEB artifacts found in packages/ for run $RUN_ID" >&2
+            exit 1
+          fi
+          # A lab version is never published, whatever run it came from. Only
+          # package names carry a version; metadata files are not checked.
+          if find packages -type f \( -name '*lab*.deb' -o -name '*lab*.rpm' \) | grep -q .; then
+            echo "Error: lab packages found in run $RUN_ID; refusing to publish" >&2
+            find packages -type f \( -name '*lab*.deb' -o -name '*lab*.rpm' \) -print >&2
+            exit 1
+          fi
+          # Reject unexpected file types (only .rpm/.deb allowed outside repo-meta-*).
+          if find packages -type f -not -path '*/repo-meta-*/*' \
+              ! \( -name '*.rpm' -o -name '*.deb' \) | grep -q .; then
+            echo "Error: unexpected artifact types found in packages/ (only .rpm/.deb allowed outside repo-meta)" >&2
+            find packages -type f -not -path '*/repo-meta-*/*' \
+              ! \( -name '*.rpm' -o -name '*.deb' \) -print >&2
+            exit 1
+          fi
+          ls -la packages
+
       - name: Prepare package metadata
         run: |
           # Copy repo-meta-* artifacts into packages/meta/<project>/ for build-docs.py.
           # Artifact contents are copied as-is; build-docs.py looks for manifest.json inside each dir.
-          if ls -d packages/repo-meta-* 2>/dev/null | grep -q .; then
+          if compgen -G 'packages/repo-meta-*' >/dev/null; then
             mkdir -p packages/meta
             for meta_dir in packages/repo-meta-*; do
               [ -d "$meta_dir" ] || continue
@@ -551,6 +709,7 @@ jobs:
             [ -n "${{ steps.runid.outputs.run_id }}" ] && msg="$msg (strongswan ${{ steps.runid.outputs.run_id }})"
             [ -n "${{ steps.coordinode-runid.outputs.run_id }}" ] && msg="$msg (coordinode ${{ steps.coordinode-runid.outputs.run_id }})"
             [ -n "${{ steps.structured-proxy-runid.outputs.run_id }}" ] && msg="$msg (structured-proxy ${{ steps.structured-proxy-runid.outputs.run_id }})"
+            [ -n "${{ steps.tetherloom-runid.outputs.run_id }}" ] && msg="$msg (tetherloom ${{ steps.tetherloom-runid.outputs.run_id }})"
             git commit -m "$msg"
             if ! git push; then
               echo "Error: git push failed; manual retry required" >&2

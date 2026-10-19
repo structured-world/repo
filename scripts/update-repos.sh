@@ -14,7 +14,9 @@ DEB_ARCHS="${DEB_ARCHS:-amd64 arm64}"
 # Dists the repository serves. Their directories are created on demand, so a
 # fresh tree (or one cleared for a key rotation) is indexed without any dist
 # directory pre-existing; dists still on disk from earlier runs are kept.
-DEB_DISTS="${DEB_DISTS:-bookworm jammy noble}"
+DEB_DISTS="${DEB_DISTS:-bookworm jammy noble resolute}"
+# Where the repository is served; the dnf repository files point there.
+REPO_BASE_URL="${REPO_BASE_URL:-https://repo.sw.foundation}"
 
 # GPG signing helper
 GPG_PASSPHRASE="${GPG_PASSPHRASE:-}"
@@ -234,6 +236,23 @@ EOF_RELEASE
   fi
 }
 
+# The repository file the documented setup installs, served from each Fedora
+# release directory. Its baseurl keeps dnf's literal $releasever, so a host
+# upgraded to the next Fedora release follows that release's directory; it
+# requires both package and metadata signatures, against the published key.
+write_dnf_repo_file() {
+  local fc_dir="$1"
+  cat > "$fc_dir/sw.repo" << EOF_REPO
+[sw-foundation]
+name=sw.foundation packages (Fedora \$releasever)
+baseurl=${REPO_BASE_URL}/rpm/fc\$releasever/
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=${REPO_BASE_URL}/keys/sw.asc
+EOF_REPO
+}
+
 publish_rpm() {
   for bin in createrepo_c gpg rpm rpmsign; do
     if ! command -v "$bin" >/dev/null 2>&1; then
@@ -299,20 +318,22 @@ publish_rpm() {
     fi
   }
 
-  if [ ! -d "$RPM_SRC_DIR" ]; then
-    echo "RPM source dir not found: $RPM_SRC_DIR" >&2
-    return 0
-  fi
-
   local nullglob_state
   # shopt -p returns exit code 1 when the option is off; guard with || true.
   nullglob_state=$(shopt -p nullglob || true)
   shopt -s nullglob
   trap 'eval "$nullglob_state"' RETURN
-  local rpms=("$RPM_SRC_DIR"/*.rpm)
+  local rpms=()
+  if [ -d "$RPM_SRC_DIR" ]; then
+    rpms=("$RPM_SRC_DIR"/*.rpm)
+  else
+    echo "RPM source dir not found: $RPM_SRC_DIR" >&2
+  fi
   if [ ${#rpms[@]} -eq 0 ]; then
-    echo "No RPM packages to publish"
-    return 0
+    # No new RPMs this run: still fall through to the metadata update below,
+    # so the release directories already served keep complete metadata and
+    # their repository file, as the DEB side does.
+    echo "No new RPM packages to copy"
   fi
   for rpm in "${rpms[@]}"; do
     local filename fc_ver dest_dir
@@ -393,6 +414,7 @@ publish_rpm() {
         echo "Error: Failed to create valid GPG signature for $fc_dir repodata" >&2
         exit 1
       fi
+      write_dnf_repo_file "$fc_dir"
       echo "Updated RPM repository for $(basename "$fc_dir")"
     fi
   done

@@ -370,43 +370,19 @@ def _install_card(pkg, category, icon_key, version_badges, supported_text, insta
 
 def gen_install_tabs(manifests):
     """Generate the full install tabs section (RPM + DEB)."""
-    # Collect packages per format — a package only appears in the RPM tab if
-    # its manifest declares platforms.rpm, and likewise for DEB.  This avoids
-    # showing incorrect install instructions for projects that publish only
-    # one package format.
+    # Collect packages per format, each with the platform section of the
+    # manifest that declared it: a package only appears in the RPM tab if its
+    # manifest declares platforms.rpm (likewise for DEB), and its card shows
+    # that project's releases, architectures and commands, never another's.
     rpm_packages = []
     deb_packages = []
-    rpm_info = {}
-    deb_info = {}
     for m in manifests:
         platforms = m.get("platforms", {})
         pkgs = m.get("packages", [])
         if "rpm" in platforms:
-            rpm_packages.extend(pkgs)
+            rpm_packages.extend((pkg, platforms["rpm"]) for pkg in pkgs)
         if "deb" in platforms:
-            deb_packages.extend(pkgs)
-
-        if "rpm" in platforms:
-            if not rpm_info:
-                rpm_info = dict(platforms["rpm"])
-                rpm_info["distros"] = list(platforms["rpm"].get("distros", []))
-            else:
-                # Merge distros from additional manifests.
-                existing_ids = {d["id"] for d in rpm_info["distros"]}
-                for d in platforms["rpm"].get("distros", []):
-                    if d["id"] not in existing_ids:
-                        rpm_info["distros"].append(d)
-                        existing_ids.add(d["id"])
-        if "deb" in platforms:
-            if not deb_info:
-                deb_info = dict(platforms["deb"])
-                deb_info["distros"] = list(platforms["deb"].get("distros", []))
-            else:
-                existing_ids = {d["id"] for d in deb_info["distros"]}
-                for d in platforms["deb"].get("distros", []):
-                    if d["id"] not in existing_ids:
-                        deb_info["distros"].append(d)
-                        existing_ids.add(d["id"])
+            deb_packages.extend((pkg, platforms["deb"]) for pkg in pkgs)
 
     if not rpm_packages and not deb_packages:
         return ""
@@ -421,7 +397,7 @@ def gen_install_tabs(manifests):
     # labels, and icons here should be generalized (along with switchDistro()).
     tabs = []
     first_tab = None
-    if rpm_info:
+    if rpm_packages:
         first_tab = first_tab or "fedora"
         tabs.append(
             f'<button class="distro-tab{" active" if first_tab == "fedora" else ""}" onclick="switchDistro(\'fedora\')">\n'
@@ -429,7 +405,7 @@ def gen_install_tabs(manifests):
             f"                    Fedora (RPM)\n"
             f"                </button>"
         )
-    if deb_info:
+    if deb_packages:
         first_tab = first_tab or "debian"
         tabs.append(
             f'<button class="distro-tab{" active" if first_tab == "debian" else ""}" onclick="switchDistro(\'debian\')">\n'
@@ -442,24 +418,24 @@ def gen_install_tabs(manifests):
         parts.append(f'<div class="distro-tabs">\n                {"".join(tabs)}\n            </div>')
 
     # RPM content
-    if rpm_info:
+    if rpm_packages:
         rpm_cards = []
-        distros = rpm_info.get("distros", [])
-        all_versions = []
-        for d in distros:
-            prefix = d.get("prefix", "fc")
-            for v in d.get("versions", []):
-                all_versions.append(f"{prefix}{v}")
-        supported_all = ", ".join(f'{d["name"]} {", ".join(d.get("versions", []))}' for d in distros)
-        arch = distros[0].get("arch", "x86_64") if distros else "x86_64"
-        supported_all += f" ({arch})" if supported_all else ""
-        install_cmd = rpm_info.get("installCmd", "sudo dnf install")
-        repo_setup = rpm_info.get("repoSetup", "")
 
         # Repo setup is shown only on the primary package card (no `requires`).
         # Plugin cards omit it because the user must install the base package first,
         # which already includes the repo setup instructions.
-        for pkg in rpm_packages:
+        for pkg, rpm_info in rpm_packages:
+            distros = rpm_info.get("distros", [])
+            all_versions = []
+            for d in distros:
+                prefix = d.get("prefix", "fc")
+                for v in d.get("versions", []):
+                    all_versions.append(f"{prefix}{v}")
+            supported_all = ", ".join(f'{d["name"]} {", ".join(d.get("versions", []))}' for d in distros)
+            arch = distros[0].get("arch", "x86_64") if distros else "x86_64"
+            supported_all += f" ({arch})" if supported_all else ""
+            install_cmd = rpm_info.get("installCmd", "sudo dnf install")
+            repo_setup = rpm_info.get("repoSetup", "")
             cat = pkg.get("category", "main")
             req = pkg.get("requires")
             if req:
@@ -489,22 +465,22 @@ def gen_install_tabs(manifests):
         )
 
     # DEB content
-    if deb_info:
+    if deb_packages:
         deb_cards = []
-        distros = deb_info.get("distros", [])
-        all_codenames = []
-        for d in distros:
-            all_codenames.extend(d.get("codenames", []))
-        supported_parts = []
-        for d in distros:
-            names = [f'{d["name"]} {v}' for v in d.get("versions", [])]
-            supported_parts.append(" | ".join(names) if names else d["name"])
-        supported_all = " | ".join(supported_parts)
-        install_cmd = deb_info.get("installCmd", "sudo apt install")
-        repo_setup = deb_info.get("repoSetup", "")
 
         # Same repo-setup logic as RPM — see comment above.
-        for pkg in deb_packages:
+        for pkg, deb_info in deb_packages:
+            distros = deb_info.get("distros", [])
+            all_codenames = []
+            for d in distros:
+                all_codenames.extend(d.get("codenames", []))
+            supported_parts = []
+            for d in distros:
+                names = [f'{d["name"]} {v}' for v in d.get("versions", [])]
+                supported_parts.append(" | ".join(names) if names else d["name"])
+            supported_all = " | ".join(supported_parts)
+            install_cmd = deb_info.get("installCmd", "sudo apt install")
+            repo_setup = deb_info.get("repoSetup", "")
             cat = pkg.get("category", "main")
             req = pkg.get("requires")
             if req:
