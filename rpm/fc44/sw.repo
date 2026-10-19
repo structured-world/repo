@@ -1,0 +1,7 @@
+[sw-foundation]
+name=sw.foundation packages (Fedora $releasever)
+baseurl=https://repo.sw.foundation/rpm/fc$releasever/
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://repo.sw.foundation/keys/sw.asc

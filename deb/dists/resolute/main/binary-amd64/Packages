@@ -1,0 +1,330 @@
+Package: coordinode
+Architecture: amd64
+Version: 0.6.0
+Priority: optional
+Section: database
+Maintainer: Dmitry Prudnikov <mail@polaz.com>
+Installed-Size: 31783
+Depends: systemd, adduser
+Filename: pool/main/c/coordinode/coordinode_0.6.0_amd64.deb
+Size: 9237520
+MD5sum: fa8bc6c80330f39a17112507e7ef6caa
+SHA1: d6d32d53cb158f6ccbe4294d6d5280f4230bb46d
+SHA256: 801d525bba768612ceee61eff498ce0642f6003d96cf48531cb9a2075c25bbd9
+SHA512: fdb11865078181af69e005a4262b46f530e7e6ecbd59034bb9651ce952a45e59e841e3610809e2d70d070fb306f6a022a37dff11e62ff7c6903aa36a4950b20f
+Homepage: https://github.com/structured-world/coordinode
+Description: Unified database for AI-native applications
+ CoordiNode is a unified database combining graph, vector, full-text,
+ document and time-series modalities in one engine. Queries use OpenCypher;
+ writes commit atomically across modalities.
+
+Package: coordinode
+Architecture: amd64
+Version: 0.7.0
+Priority: optional
+Section: database
+Maintainer: Dmitry Prudnikov <mail@polaz.com>
+Installed-Size: 35414
+Depends: systemd, adduser
+Filename: pool/main/c/coordinode/coordinode_0.7.0_amd64.deb
+Size: 10141912
+MD5sum: 529f52daeb1c79dc267764aabc04935c
+SHA1: 4dd218555be17f1915ae08bb69eabdcd1030409b
+SHA256: af9c1b7155cb29c995ca9276f415f34d6e52385037b3cd2560a643d47cdaa19f
+SHA512: 10e28b2740d92a200e18371510a276176b48bd729fb2925216dc13e131871c965e095274254a7b68f7aad1c06382bab7bc4c76f57a4a83a8fa42745835cd1a45
+Homepage: https://github.com/structured-world/coordinode
+Description: Unified database for AI-native applications
+ CoordiNode is a unified database combining graph, vector, full-text,
+ document and time-series modalities in one engine. Queries use OpenCypher;
+ writes commit atomically across modalities.
+
+Package: coordinode
+Architecture: amd64
+Version: 0.7.1
+Priority: optional
+Section: database
+Maintainer: Dmitry Prudnikov <mail@polaz.com>
+Installed-Size: 38426
+Depends: systemd, adduser
+Filename: pool/main/c/coordinode/coordinode_0.7.1_amd64.deb
+Size: 11036048
+MD5sum: 7bf7073c8eac3375ba7ad23922ae1ad2
+SHA1: c0a98cbe14a24f5ff286b31f96036c1a7907cb5d
+SHA256: a6c29f57d704005af5e7cdd25a055cf8bcde944bd40032f26b1f153c27f33adb
+SHA512: d6fb6db0eb31e5deb0cc0c04bf30e71c005c9025d3dfab02ead0e0d327090efd430e1ba48b573868a4529c338c11e9f47863d6343f5677f91ec043dbe218be01
+Homepage: https://github.com/structured-world/coordinode
+Description: Unified database for AI-native applications
+ CoordiNode is a unified database combining graph, vector, full-text,
+ document and time-series modalities in one engine. Queries use OpenCypher;
+ writes commit atomically across modalities.
+
+Package: coordinode
+Architecture: amd64
+Version: 0.7.2
+Priority: optional
+Section: database
+Maintainer: Dmitry Prudnikov <mail@polaz.com>
+Installed-Size: 39516
+Depends: systemd, adduser
+Filename: pool/main/c/coordinode/coordinode_0.7.2_amd64.deb
+Size: 11303328
+MD5sum: 24ec7f5136e3eef4c3ddc85ad192f56e
+SHA1: bac816fe43a5a8d3ac762059b06622357037702e
+SHA256: f32e7adcaef969a79147f48fadefeae89bbbf46ddf65e06daf19a271fd1526a3
+SHA512: 0e54917aac8a7908e030c73d7ab0ed881dec0ceee26f5f6049bece49b8787dba93ce3f6f0e958fe12921f7747f75a525299dcdcc7c53ac9ebd7d6ab396952f07
+Homepage: https://github.com/structured-world/coordinode
+Description: Unified database for AI-native applications
+ CoordiNode is a unified database combining graph, vector, full-text,
+ document and time-series modalities in one engine. Queries use OpenCypher;
+ writes commit atomically across modalities.
+
+Package: coordinode
+Architecture: amd64
+Version: 0.7.3
+Priority: optional
+Section: database
+Maintainer: Dmitry Prudnikov <mail@polaz.com>
+Installed-Size: 39954
+Depends: systemd, adduser
+Filename: pool/main/c/coordinode/coordinode_0.7.3_amd64.deb
+Size: 11392044
+MD5sum: 342a4e4f8cb6e10db5b34a7233ff7f7f
+SHA1: 268640ec9521d8087e651f646f12f97ce2236955
+SHA256: 424ccb99160662c5b61e3a04217572faa2f5e8d65e9228ccfb386830d3aaa778
+SHA512: ca1ad4a94ef23808e9841ca120f454a2c2ba2035cd86a1d5f474429f2489d803e0f3ec5463f78718b215c5288f3c25dcb9d14c94859c836116f774f4ec867365
+Homepage: https://github.com/structured-world/coordinode
+Description: Unified database for AI-native applications
+ CoordiNode is a unified database combining graph, vector, full-text,
+ document and time-series modalities in one engine. Queries use OpenCypher;
+ writes commit atomically across modalities.
+
+Package: structured-proxy
+Architecture: amd64
+Version: 3.0.2
+Priority: optional
+Section: net
+Maintainer: Dmitry Prudnikov <mail@polaz.com>
+Installed-Size: 12473
+Depends: systemd, adduser
+Filename: pool/main/s/structured-proxy/structured-proxy_3.0.2_amd64.deb
+Size: 3785768
+MD5sum: 27f787a6d01efa771dba3eb5be26f92f
+SHA1: 82a6da8a3cfcd86ba86c164b1901a4e57eda1e13
+SHA256: b02f73fa1a057bdb197c369cfc99e1664ac6ae0ecf9f3ec4b3ac480cbaeae82a
+SHA512: 8db21b6e20fd751821652dcf0258c183d71f0194ef38e8fc222f085b811bbe54da91682a3e27e035bf23f1450552a33824d5cd3dd35ee874a1f82b8cb77a4e5a
+Homepage: https://github.com/structured-world/structured-proxy
+Description: Universal gRPC to REST transcoding proxy
+ structured-proxy is a config-driven gRPC to REST transcoding proxy. One
+ binary serves any gRPC service from a proto descriptor set and a YAML config,
+ with no code generation and no custom handlers.
+ .
+ The service ships disabled: set an upstream address and proto descriptors in
+ /etc/structured-proxy/config.yaml, then enable it with systemctl.
+
+Package: structured-proxy
+Architecture: amd64
+Version: 4.1.0
+Priority: optional
+Section: net
+Maintainer: Dmitry Prudnikov <mail@polaz.com>
+Installed-Size: 12727
+Depends: systemd, adduser
+Filename: pool/main/s/structured-proxy/structured-proxy_4.1.0_amd64.deb
+Size: 3866488
+MD5sum: 74385fa0dbdaace1c91dadce8b437413
+SHA1: 752cad2338c80717d6be9085bb04f74ea0478745
+SHA256: 5a916bc23b6b61d44a0f063a98feff92f8c09ecca1926778ace679ea657dde27
+SHA512: 2011b422e47391f9f4921ef6f63fd0c87b95596eae246e64b4e50f8b731ef8f08f38e7cf71782b7c1db76d0f955987ae20c404514f80815348d70b3f0206ac61
+Homepage: https://github.com/structured-world/structured-proxy
+Description: Universal gRPC to REST transcoding proxy
+ structured-proxy is a config-driven gRPC to REST transcoding proxy. One
+ binary serves any gRPC service from a proto descriptor set and a YAML config,
+ with no code generation and no custom handlers.
+ .
+ The service ships disabled: set an upstream address and proto descriptors in
+ /etc/structured-proxy/config.yaml, then enable it with systemctl.
+
+Package: structured-proxy
+Architecture: amd64
+Version: 4.2.0
+Priority: optional
+Section: net
+Maintainer: Dmitry Prudnikov <mail@polaz.com>
+Installed-Size: 12857
+Depends: systemd, adduser
+Filename: pool/main/s/structured-proxy/structured-proxy_4.2.0_amd64.deb
+Size: 3917448
+MD5sum: af0e419811f1a5c5adbc6856d73f8578
+SHA1: c728439b938802f94682f7d7c807ccbb771d5a46
+SHA256: afc34853af78174d22bd107842e89a6b60ce01960473461beef2d8c3a0ea067b
+SHA512: 3c97820526c4f65ced9dac2dac7cec0e6a562c6fcaf367742f04d70641aa4242aab0a0bf5c12f41b8b316918f3e3fdd90892a908f04d3d406d1e51a9b80b6444
+Homepage: https://github.com/structured-world/structured-proxy
+Description: Universal gRPC to REST transcoding proxy
+ structured-proxy is a config-driven gRPC to REST transcoding proxy. One
+ binary serves any gRPC service from a proto descriptor set and a YAML config,
+ with no code generation and no custom handlers.
+ .
+ The service ships disabled: set an upstream address and proto descriptors in
+ /etc/structured-proxy/config.yaml, then enable it with systemctl.
+
+Package: structured-proxy
+Architecture: amd64
+Version: 4.3.0
+Priority: optional
+Section: net
+Maintainer: Dmitry Prudnikov <mail@polaz.com>
+Installed-Size: 12675
+Depends: systemd, adduser
+Filename: pool/main/s/structured-proxy/structured-proxy_4.3.0_amd64.deb
+Size: 3681772
+MD5sum: fc364fcbe1af3e42e2217665b34de994
+SHA1: c9bc3dde290327a9f67d7e17aa557fb3f635ece9
+SHA256: 4ad8d7b0b6a0a7dc91e2f75ef9e1f485f082668d6fa446cb7658bee7c9e006c7
+SHA512: ca5ff4fca25e526f893c1fe451465d2f4efbd45144dc6126a9c4f22a338416fbbcaecbd02d866271ea57811f94319d5808239e335fb2006e4ad8be3ee0605f94
+Homepage: https://github.com/structured-world/structured-proxy
+Description: Universal gRPC to REST transcoding proxy
+ structured-proxy is a config-driven gRPC to REST transcoding proxy. One
+ binary serves any gRPC service from a proto descriptor set and a YAML config,
+ with no code generation and no custom handlers.
+ .
+ The service ships disabled: set an upstream address and proto descriptors in
+ /etc/structured-proxy/config.yaml, then enable it with systemctl.
+
+Package: structured-proxy
+Architecture: amd64
+Version: 5.0.0
+Priority: optional
+Section: net
+Maintainer: Dmitry Prudnikov <mail@polaz.com>
+Installed-Size: 12944
+Depends: systemd, adduser
+Filename: pool/main/s/structured-proxy/structured-proxy_5.0.0_amd64.deb
+Size: 3755720
+MD5sum: fb3ebfa696eee849e4759f4691737c57
+SHA1: c13a75e4e812a868f3f6bdd894fb087b41cdf703
+SHA256: 935746871d042d0aa5feb5cb8eb342b8a144897907ebfe318be4cf8c46a0f17f
+SHA512: 5e2c19c12b9e4295bb54a0fc4777bffb34feaee5f14f4a6ca6db248bfa5f14efc709ccbd5089d72fafd0157f4ccbfbba19ee0a76c3b05b335321880bf55096f9
+Homepage: https://github.com/structured-world/structured-proxy
+Description: Universal gRPC to REST transcoding proxy
+ structured-proxy is a config-driven gRPC to REST transcoding proxy. One
+ binary serves any gRPC service from a proto descriptor set and a YAML config,
+ with no code generation and no custom handlers.
+ .
+ The service ships disabled: set an upstream address and proto descriptors in
+ /etc/structured-proxy/config.yaml, then enable it with systemctl.
+
+Package: structured-proxy
+Architecture: amd64
+Version: 6.0.0
+Priority: optional
+Section: net
+Maintainer: Dmitry Prudnikov <mail@polaz.com>
+Installed-Size: 14300
+Depends: systemd, adduser
+Filename: pool/main/s/structured-proxy/structured-proxy_6.0.0_amd64.deb
+Size: 4073408
+MD5sum: 1b156dd35e437145b20e6092f9ef60e7
+SHA1: 9f268b885697b76b7421210a2bbf18a64e83af63
+SHA256: 189e8ef3a5fa183cd61ac6f8aca896a3b63346f0108a8f4948f2f419db61d687
+SHA512: fd99a52fd0784ff6adb637469c4f1157585f05da1c577163a2a97c6c65d35b7ebc564aaa60d74cdfddc175bf5de379f681f3fb3e79f6aa5e5998fed515193ff3
+Homepage: https://github.com/structured-world/structured-proxy
+Description: Universal gRPC to REST transcoding proxy
+ structured-proxy is a config-driven gRPC to REST transcoding proxy. One
+ binary serves any gRPC service from a proto descriptor set and a YAML config,
+ with no code generation and no custom handlers.
+ .
+ The service ships disabled: set an upstream address and proto descriptors in
+ /etc/structured-proxy/config.yaml, then enable it with systemctl.
+
+Package: structured-proxy
+Architecture: amd64
+Version: 8.1.0
+Priority: optional
+Section: net
+Maintainer: Dmitry Prudnikov <mail@polaz.com>
+Installed-Size: 14481
+Depends: systemd, adduser
+Filename: pool/main/s/structured-proxy/structured-proxy_8.1.0_amd64.deb
+Size: 4139536
+MD5sum: 059c9f093d3b1a4fa53f1654d7d07ae8
+SHA1: c1964993b665b69b4657b29be4f1acd8da59149c
+SHA256: df4bd65c64adec9084a4d183162f83f5270b1ddcfb93ec57e6ed2fe7af5fed7e
+SHA512: 7f9b9f07036fd858089437ee7008a187adb59e801dc39a2dc030a1d9668c69d4d171e47f84bd5d6e4295463e6e2ea83a54b38b4d4293698707b69e0148bbaa33
+Homepage: https://github.com/structured-world/structured-proxy
+Description: Universal gRPC to REST transcoding proxy
+ structured-proxy is a config-driven gRPC to REST transcoding proxy. One
+ binary serves any gRPC service from a proto descriptor set and a YAML config,
+ with no code generation and no custom handlers.
+ .
+ The service ships disabled: set an upstream address and proto descriptors in
+ /etc/structured-proxy/config.yaml, then enable it with systemctl.
+
+Package: structured-proxy
+Architecture: amd64
+Version: 8.1.1
+Priority: optional
+Section: net
+Maintainer: Dmitry Prudnikov <mail@polaz.com>
+Installed-Size: 14562
+Depends: systemd, adduser
+Filename: pool/main/s/structured-proxy/structured-proxy_8.1.1_amd64.deb
+Size: 4150408
+MD5sum: 134dcc0e73914cf33c2fd68dc15a47c9
+SHA1: 62f42dcfbe0a1666f34c9252fc1e49166cb97a2e
+SHA256: 557a128f9399c71f1a7efc0338d90d92ec00e657ccfa55546322cbbcb91c227a
+SHA512: 5530f4956225fdd7a94cac1a7ce5cfc8b63ee94e308113f7de505eff43853d74e06f631302f43530a8cd4e3dad8ffb309458acfbf0b46c49664af8e774cd4b6e
+Homepage: https://github.com/structured-world/structured-proxy
+Description: Universal gRPC to REST transcoding proxy
+ structured-proxy is a config-driven gRPC to REST transcoding proxy. One
+ binary serves any gRPC service from a proto descriptor set and a YAML config,
+ with no code generation and no custom handlers.
+ .
+ The service ships disabled: set an upstream address and proto descriptors in
+ /etc/structured-proxy/config.yaml, then enable it with systemctl.
+
+Package: structured-proxy
+Architecture: amd64
+Version: 8.1.2
+Priority: optional
+Section: net
+Maintainer: Dmitry Prudnikov <mail@polaz.com>
+Installed-Size: 17126
+Depends: systemd, adduser
+Filename: pool/main/s/structured-proxy/structured-proxy_8.1.2_amd64.deb
+Size: 4531704
+MD5sum: 8f3cb9ee1099b3320ceeb07e99cf4961
+SHA1: deda279f6b9012b611a054b6f3dae8623b941130
+SHA256: 055cac94e6abe16711b8c23c613db234a03abba167a48bc768aa2aca22640637
+SHA512: 70a2a8f850f65757553bf709d988246d4866aa3df0819d48750560cf7b4295b15bde9cad8f3c3278f9f59c45e47b59c03b2a8804e5addddd4515205881944c26
+Homepage: https://github.com/structured-world/structured-proxy
+Description: Universal gRPC to REST transcoding proxy
+ structured-proxy is a config-driven gRPC to REST transcoding proxy. One
+ binary serves any gRPC service from a proto descriptor set and a YAML config,
+ with no code generation and no custom handlers.
+ .
+ The service ships disabled: set an upstream address and proto descriptors in
+ /etc/structured-proxy/config.yaml, then enable it with systemctl.
+
+Package: structured-proxy
+Architecture: amd64
+Version: 8.1.3
+Priority: optional
+Section: net
+Maintainer: Dmitry Prudnikov <mail@polaz.com>
+Installed-Size: 17034
+Depends: systemd, adduser
+Filename: pool/main/s/structured-proxy/structured-proxy_8.1.3_amd64.deb
+Size: 4515232
+MD5sum: e926120d8e5494533d39c3310e0b1f78
+SHA1: 33e263e0dff8ba6c5c8076fd000078f968c60bcf
+SHA256: 22e7ee6311b7aa770acfa2179b4356838bc952976537c5cbe5397a1f1f0d6018
+SHA512: 032c1845d2c515fe2454b186eabddfde7ce328df09ca27b178d016bd59df3a39c8b43a1b4f038ba1b3165e2ad433eabe7e2d527ecb0584803d7709048173b4b8
+Homepage: https://github.com/structured-world/structured-proxy
+Description: Universal gRPC to REST transcoding proxy
+ structured-proxy is a config-driven gRPC to REST transcoding proxy. One
+ binary serves any gRPC service from a proto descriptor set and a YAML config,
+ with no code generation and no custom handlers.
+ .
+ The service ships disabled: set an upstream address and proto descriptors in
+ /etc/structured-proxy/config.yaml, then enable it with systemctl.
+
