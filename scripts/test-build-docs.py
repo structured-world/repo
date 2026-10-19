@@ -2,7 +2,7 @@
 """Checks that each install card of the site shows its own project's platforms.
 
 Two projects declare different Fedora releases, architectures, Ubuntu
-releases and setup commands; every card must carry the values of the manifest
+releases, setup and install commands; every card must carry the values of the manifest
 that declared its package, never those of another project.
 """
 import importlib.util
@@ -27,14 +27,14 @@ def manifest(name, fedora, arch, codenames, versions, rpm_setup, deb_setup):
                     {"id": "fedora", "name": "Fedora", "versions": fedora, "prefix": "fc", "arch": arch},
                 ],
                 "repoSetup": rpm_setup,
-                "installCmd": "sudo dnf install",
+                "installCmd": f"{name}-rpm-install",
             },
             "deb": {
                 "distros": [
                     {"id": "ubuntu", "name": "Ubuntu", "codenames": codenames, "versions": versions},
                 ],
                 "repoSetup": deb_setup,
-                "installCmd": "sudo apt-get install",
+                "installCmd": f"{name}-deb-install",
             },
         },
         "docs": [],
@@ -73,6 +73,10 @@ for display, own, other in (("Alpha", alpha, beta), ("Beta", beta, alpha)):
     check(supported in rpm[0], f"{display}: RPM card does not say {supported!r}")
     check(rpm_platform["repoSetup"] in rpm[0], f"{display}: RPM card lacks its own setup")
     check(other["platforms"]["rpm"]["repoSetup"] not in rpm[0], f"{display}: RPM card has another setup")
+    check(rpm_platform["installCmd"] in rpm[0], f"{display}: RPM card lacks its own install command")
+    check(
+        other["platforms"]["rpm"]["installCmd"] not in rpm[0], f"{display}: RPM card has another install command"
+    )
     deb_platform = own["platforms"]["deb"]
     for c in deb_platform["distros"][0]["codenames"]:
         check(f">{c}<" in deb[0], f"{display}: DEB card lacks {c}")
@@ -80,5 +84,9 @@ for display, own, other in (("Alpha", alpha, beta), ("Beta", beta, alpha)):
         check(f">{c}<" not in deb[0], f"{display}: DEB card shows {c} of another project")
     check(deb_platform["repoSetup"] in deb[0], f"{display}: DEB card lacks its own setup")
     check(other["platforms"]["deb"]["repoSetup"] not in deb[0], f"{display}: DEB card has another setup")
+    check(deb_platform["installCmd"] in deb[0], f"{display}: DEB card lacks its own install command")
+    check(
+        other["platforms"]["deb"]["installCmd"] not in deb[0], f"{display}: DEB card has another install command"
+    )
 
 print("build-docs.py: install cards per project OK")
