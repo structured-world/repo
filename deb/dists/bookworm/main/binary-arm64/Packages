@@ -456,3 +456,26 @@ Description: Universal gRPC to REST transcoding proxy
  The service ships disabled: set an upstream address and proto descriptors in
  /etc/structured-proxy/config.yaml, then enable it with systemctl.
 
+Package: tetherloom-server
+Architecture: arm64
+Version: 0.1.1
+Priority: optional
+Section: net
+Maintainer: Tetherloom Release <oss@sw.foundation>
+Installed-Size: 29539
+Depends: libc6 (>= 2.34), libgcc-s1 (>= 4.2), systemd
+Filename: pool/main/t/tetherloom-server/tetherloom-server_0.1.1_arm64.deb
+Size: 8665556
+MD5sum: 905cf15b459420caf454ae269fbe0bec
+SHA1: b1f79a38ee360d86cb512b9a6278105af15700de
+SHA256: 929e7adf4687033a3f8bee898cd57ba03cdfbdd03df5dad526119bd9a7b16db6
+SHA512: a3bc1e6816892e0d61c74ee4e9bf1d0bb81163470eb2a90c2de1280660bcff06e17eba4091716f56ba45982de1a271e937f2fa1fdef3b0ff477bc69fa939a18b
+Homepage: https://tetherloom.com
+Description: Tetherloom management server
+ The Tetherloom management server: one self-hosted process with embedded
+ storage, a local control socket and the HTTPS endpoint for setup and
+ sign-in.
+ .
+ The service is installed disabled. Review /etc/tetherloom/server.toml, then
+ start it with systemctl enable --now tetherloom-server.
+
