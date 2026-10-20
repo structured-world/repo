@@ -503,10 +503,24 @@ jobs:
           fi
           ls -la packages
 
+      # The Tetherloom repository is private: the token above, scoped to this
+      # repository, gets 404 for its runs. This one reads only its workflow
+      # runs and artifacts, and only the download step receives it.
+      - name: Generate Tetherloom read token
+        if: steps.tetherloom-runid.outputs.run_id != ''
+        uses: actions/create-github-app-token@29824e69f54612133e76f7eaac726eef6c875baf
+        id: tetherloom-token
+        with:
+          app-id: ${{ secrets.RELEASER_APP_ID }}
+          private-key: ${{ secrets.RELEASER_APP_PRIVATE_KEY }}
+          owner: structured-world
+          repositories: tetherloom
+          permission-actions: read
+
       - name: Download tetherloom artifacts
         if: steps.tetherloom-runid.outputs.run_id != ''
         env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          GH_TOKEN: ${{ steps.tetherloom-token.outputs.token }}
           EVENT_NAME: ${{ github.event_name }}
         run: |
           RUN_ID="${{ steps.tetherloom-runid.outputs.run_id }}"
