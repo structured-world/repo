@@ -567,7 +567,8 @@ jobs:
           if ! gh run download "$RUN_ID" -R "$REPO" -D packages \
             --pattern "deb-*" \
             --pattern "rpm-fc*" \
-            --pattern "repo-meta-tetherloom"; then
+            --pattern "repo-meta-tetherloom" \
+            --pattern "srpm"; then
             echo "Error: failed to download artifacts for run $RUN_ID" >&2
             exit 1
           fi
@@ -587,6 +588,12 @@ jobs:
             echo "Error: unexpected artifact directories found in packages/" >&2
             find packages -mindepth 1 -maxdepth 1 -type d \
               ! -name 'deb-*' ! -name 'rpm-fc*' ! -name 'srpm' ! -name 'repo-meta-*' -print >&2
+            exit 1
+          fi
+          # gh run download succeeds when any requested pattern matches;
+          # require the source packages independently of the binary artifacts.
+          if ! compgen -G 'packages/srpm/tetherloom-server-*.src.rpm' > /dev/null; then
+            echo "Error: no Tetherloom source RPMs found for run $RUN_ID" >&2
             exit 1
           fi
           # Verify at least one tetherloom .deb or .rpm was downloaded.
