@@ -597,7 +597,9 @@ jobs:
             exit 1
           fi
           # Verify at least one tetherloom .deb or .rpm was downloaded.
-          if ! find packages -type f \( -name 'tetherloom*.deb' -o -name 'tetherloom*.rpm' \) | grep -q .; then
+          if ! find packages -type f ! -path 'packages/srpm/*' \
+              \( -name 'tetherloom*.deb' -o -name 'tetherloom*.rpm' \) \
+              ! -name '*.src.rpm' ! -name '*.nosrc.rpm' | grep -q .; then
             echo "Error: no tetherloom RPM/DEB artifacts found in packages/ for run $RUN_ID" >&2
             exit 1
           fi
