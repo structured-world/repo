@@ -98,6 +98,26 @@ Description: Unified database for AI-native applications
  document and time-series modalities in one engine. Queries use OpenCypher;
  writes commit atomically across modalities.
 
+Package: coordinode
+Architecture: arm64
+Version: 0.9.0
+Priority: optional
+Section: database
+Maintainer: Dmitry Prudnikov <mail@polaz.com>
+Installed-Size: 35058
+Depends: systemd, adduser
+Filename: pool/main/c/coordinode/coordinode_0.9.0_arm64.deb
+Size: 10193832
+MD5sum: fa2d4867e74e58f39f9245cea17be0f4
+SHA1: 2039fd820f94e516de663e89017626334714de06
+SHA256: ef33789ba3df8767a4dc512f082f60b28ecc9a270530c4614c923a2ea736edab
+SHA512: 46bd311998a6fc047b2fc963e3db2a7b05b96ec9ff827cdaecafb0e3424390883a3c6615b31fa28280dec3a624c4e483b072986b565cea96a9aadf9119675e2f
+Homepage: https://github.com/structured-world/coordinode
+Description: Unified database for AI-native applications
+ CoordiNode is a unified database combining graph, vector, full-text,
+ document and time-series modalities in one engine. Queries use OpenCypher;
+ writes commit atomically across modalities.
+
 Package: structured-proxy
 Architecture: arm64
 Version: 3.0.2
