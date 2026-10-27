@@ -38,6 +38,9 @@ jobs:
       - name: Require independent source and binary Tetherloom artifacts
         run: python3 scripts/test-tetherloom-artifacts.py
 
+      - name: Verify publication artifact lifecycle
+        run: python3 scripts/test-tetherloom-publication.py
+
   build-docs:
     name: build-docs.py install cards
     runs-on: ubuntu-latest
