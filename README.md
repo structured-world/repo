@@ -18,6 +18,26 @@ source-repo/                           repo (during publish)
 
 See [manifests/strongswan/manifest.json](manifests/strongswan/manifest.json) for an example (also used as committed fallback).
 
+## Tetherloom publication artifacts
+
+Tetherloom Actions artifacts are temporary transfer files. After signing and
+pushing the repository output, the publisher deletes only the artifact IDs
+recorded for that release attempt. The download token stays read-only; cleanup
+uses a separate token restricted to Actions write access on Tetherloom. The
+release application must have that permission granted in its installation.
+
+The same commit stores a minimal receipt under `.publications/tetherloom/`.
+Repeated delivery of an already published attempt skips the artifact download
+and resumes cleanup from current `main`, even if the source has started or failed
+a newer attempt. A failed push does not authorize deletion, and a failed
+deletion remains a visible workflow failure that can be retried. A new source
+attempt is independent; artifacts uploaded after the recorded snapshot are
+never swept into an older cleanup. Published signed packages and release assets
+remain available; Actions retention is only a fallback for abandoned transfers.
+Dispatches identify the source attempt explicitly. Older dispatches without an
+attempt can be retried after the source run completes successfully; they cannot
+admit an unfinished rerun based on an earlier attempt's notification.
+
 ## Quick Install
 
 ### Fedora (RPM)

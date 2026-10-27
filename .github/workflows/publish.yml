@@ -55,6 +55,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
+          # Retries keep the event SHA, but publication receipts live on current main.
+          ref: main
           fetch-depth: 0
           token: ${{ steps.app-token.outputs.token }}
 
@@ -505,7 +507,7 @@ jobs:
 
       # The Tetherloom repository is private: the token above, scoped to this
       # repository, gets 404 for its runs. This one reads only its workflow
-      # runs and artifacts, and only the download step receives it.
+      # runs and artifacts for download and publication identity checks.
       - name: Generate Tetherloom read token
         if: steps.tetherloom-runid.outputs.run_id != ''
         uses: actions/create-github-app-token@29824e69f54612133e76f7eaac726eef6c875baf
@@ -517,8 +519,17 @@ jobs:
           repositories: tetherloom
           permission-actions: read
 
-      - name: Download tetherloom artifacts
+      - name: Prepare Tetherloom publication
         if: steps.tetherloom-runid.outputs.run_id != ''
+        id: tetherloom-publication
+        env:
+          GH_TOKEN: ${{ steps.tetherloom-token.outputs.token }}
+          SOURCE_RUN_ID: ${{ steps.tetherloom-runid.outputs.run_id }}
+          SOURCE_RUN_ATTEMPT: ${{ github.event.client_payload.tetherloom_run_attempt }}
+        run: python3 scripts/tetherloom-publication.py prepare --run-id "$SOURCE_RUN_ID" --state "$RUNNER_TEMP/tetherloom-publication.json"
+
+      - name: Download tetherloom artifacts
+        if: steps.tetherloom-runid.outputs.run_id != '' && steps.tetherloom-publication.outputs.published != 'true'
         env:
           GH_TOKEN: ${{ steps.tetherloom-token.outputs.token }}
           EVENT_NAME: ${{ github.event_name }}
@@ -621,6 +632,7 @@ jobs:
           ls -la packages
 
       - name: Prepare package metadata
+        if: steps.tetherloom-publication.outputs.published != 'true' || steps.runid.outputs.run_id != '' || steps.coordinode-runid.outputs.run_id != '' || steps.structured-proxy-runid.outputs.run_id != ''
         run: |
           # Copy repo-meta-* artifacts into packages/meta/<project>/ for build-docs.py.
           # Artifact contents are copied as-is; build-docs.py looks for manifest.json inside each dir.
@@ -651,6 +663,7 @@ jobs:
           fi
 
       - name: Update package repositories
+        if: steps.tetherloom-publication.outputs.published != 'true' || steps.runid.outputs.run_id != '' || steps.coordinode-runid.outputs.run_id != '' || steps.structured-proxy-runid.outputs.run_id != ''
         env:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         run: |
@@ -671,6 +684,7 @@ jobs:
           scripts/update-repos.sh
 
       - name: Build docs
+        if: steps.tetherloom-publication.outputs.published != 'true' || steps.runid.outputs.run_id != '' || steps.coordinode-runid.outputs.run_id != '' || steps.structured-proxy-runid.outputs.run_id != ''
         run: |
           # Pinned until markdown v4 output (toc extension + toc_tokens shape) is validated against docs templates.
           python3 -m pip install --user "markdown>=3.6,<4"
@@ -680,7 +694,15 @@ jobs:
         run: |
           rm -rf packages
 
+      - name: Seal Tetherloom publication receipt
+        if: steps.tetherloom-runid.outputs.run_id != '' && steps.tetherloom-publication.outputs.published != 'true'
+        env:
+          GH_TOKEN: ${{ steps.tetherloom-token.outputs.token }}
+        run: python3 scripts/tetherloom-publication.py seal --state "$RUNNER_TEMP/tetherloom-publication.json"
+
       - name: Commit and push
+        env:
+          TETHERLOOM_RECEIPT: ${{ steps.tetherloom-publication.outputs.receipt_path }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -707,6 +729,9 @@ jobs:
           fi
           if [ -d rpm ]; then
             git add rpm
+          fi
+          if [ -n "$TETHERLOOM_RECEIPT" ]; then
+            git add -- "$TETHERLOOM_RECEIPT"
           fi
           if [ -d docs ]; then
             git add docs
@@ -739,3 +764,23 @@ jobs:
               exit 1
             fi
           fi
+
+      # Only the final consumer may retire transfer artifacts. A dispatch from
+      # the source run is not publication; the signed output and receipt must
+      # first survive the push above. Failed cleanup can retry from that receipt.
+      - name: Generate Tetherloom cleanup token
+        if: steps.tetherloom-runid.outputs.run_id != ''
+        uses: actions/create-github-app-token@29824e69f54612133e76f7eaac726eef6c875baf
+        id: tetherloom-cleanup-token
+        with:
+          app-id: ${{ secrets.RELEASER_APP_ID }}
+          private-key: ${{ secrets.RELEASER_APP_PRIVATE_KEY }}
+          owner: structured-world
+          repositories: tetherloom
+          permission-actions: write
+
+      - name: Retire published Tetherloom artifacts
+        if: steps.tetherloom-runid.outputs.run_id != ''
+        env:
+          GH_TOKEN: ${{ steps.tetherloom-cleanup-token.outputs.token }}
+        run: python3 scripts/tetherloom-publication.py cleanup --state "$RUNNER_TEMP/tetherloom-publication.json"
