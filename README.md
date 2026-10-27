@@ -28,7 +28,8 @@ release application must have that permission granted in its installation.
 
 The same commit stores a minimal receipt under `.publications/tetherloom/`.
 Repeated delivery of an already published attempt skips the artifact download
-and resumes cleanup. A failed push does not authorize deletion, and a failed
+and resumes cleanup from current `main`, even if the source has started or failed
+a newer attempt. A failed push does not authorize deletion, and a failed
 deletion remains a visible workflow failure that can be retried. A new source
 attempt is independent; artifacts uploaded after the recorded snapshot are
 never swept into an older cleanup. Published signed packages and release assets

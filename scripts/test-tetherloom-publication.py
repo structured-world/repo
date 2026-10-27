@@ -144,6 +144,32 @@ class Publication(unittest.TestCase):
         publication.cleanup(self.state)
         self.assertEqual(self.deleted, [11, 12])
 
+    def test_old_dispatch_resumes_partial_cleanup_during_new_attempt(self):
+        # A published attempt remains eligible for cleanup when a new build starts.
+        self.publish()
+        self.fail = 12
+        with self.assertRaises(PermissionError):
+            publication.cleanup(self.state)
+        self.fail = None
+        self.run.update(run_attempt=2, status='in_progress', conclusion=None)
+        self.artifacts[13] = {'id': 13, 'workflow_run': {'id': 123, 'head_sha': 'a' * 40}}
+        self.output.unlink()
+        publication.prepare(123, self.state, self.output, expected_attempt=1)
+        self.assertIn('published=true\n', self.output.read_text())
+        publication.cleanup(self.state)
+        self.assertEqual(self.deleted, [11, 12])
+        self.assertEqual(list(self.artifacts), [13])
+
+    def test_old_dispatch_resumes_cleanup_after_new_attempt_failed(self):
+        # A later failed attempt cannot revoke the earlier committed cleanup fact.
+        self.publish()
+        self.run.update(run_attempt=2, status='completed', conclusion='failure')
+        self.output.unlink()
+        publication.prepare(123, self.state, self.output, expected_attempt=1)
+        self.assertIn('published=true\n', self.output.read_text())
+        publication.cleanup(self.state)
+        self.assertEqual(self.deleted, [11, 12])
+
     def test_other_run_is_rejected_before_any_delete(self):
         # All surviving IDs are checked before deleting any member of the set.
         self.publish()

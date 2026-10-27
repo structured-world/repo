@@ -79,15 +79,28 @@ def save(path, value):
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + '\n')
 
 
+def committed_receipt(path):
+    committed = subprocess.run(['git', 'show', f'HEAD:{path.as_posix()}'],
+                               check=True, capture_output=True, text=True)
+    return json.loads(committed.stdout)
+
+
 def prepare(run_id, state, output, expected_attempt=None):
-    identity = source(run_id, expected_attempt)
+    # A committed publication authorizes its own cleanup, independently of the
+    # live attempt's progress. Only unpublished attempts need fresh admission.
+    if expected_attempt is not None:
+        identity = {'run_id': positive(run_id), 'attempt': positive(expected_attempt)}
+    else:
+        identity = source(run_id)
     path = receipt_path(identity)
     published = path.exists()
     if published:
-        receipt = json.loads(path.read_text())
+        receipt = committed_receipt(path)
         if any(receipt[key] != value for key, value in identity.items()):
             raise ValueError('publication receipt does not match the source')
     else:
+        if expected_attempt is not None:
+            identity = source(run_id, expected_attempt)
         receipt = dict(identity, artifacts=artifact_ids(run_id))
         if not receipt['artifacts']:
             raise ValueError('release has no transfer artifacts')
@@ -111,9 +124,7 @@ def seal(state):
 def cleanup(state):
     receipt = json.loads(state.read_text())
     path = receipt_path(receipt)
-    committed = subprocess.run(['git', 'show', f'HEAD:{path.as_posix()}'],
-                               check=True, capture_output=True, text=True)
-    if json.loads(committed.stdout) != receipt:
+    if committed_receipt(path) != receipt:
         raise ValueError('cleanup requires the committed publication receipt')
     ids = receipt['artifacts']
     if not ids or any(type(i) is not int or i <= 0 for i in ids) or len(set(ids)) != len(ids):
