@@ -72,6 +72,40 @@ class Publication(unittest.TestCase):
         publication.seal(self.state)
         self.commit()
 
+    def retry_checkout(self):
+        # A rerun keeps its original event commit; checkout may explicitly select main.
+        event = subprocess.run(['git', 'rev-parse', 'HEAD~1'], check=True,
+                               capture_output=True, text=True).stdout.strip()
+        subprocess.run(['git', 'branch', '-f', 'published-main', 'HEAD'], check=True)
+        subprocess.run(['git', 'checkout', '-q', '--detach', event], check=True)
+        workflow = yaml.safe_load((ROOT / '.github/workflows/publish.yml').read_text())
+        checkout = next(step for step in workflow['jobs']['publish']['steps']
+                        if step.get('name') == 'Checkout repo')
+        ref = checkout['with'].get('ref')
+        if ref == 'main':
+            subprocess.run(['git', 'checkout', '-q', '--detach', 'published-main'], check=True)
+        elif ref is not None:
+            self.fail(f'unexpected publication checkout ref: {ref}')
+
+    def event_commit(self):
+        subprocess.run(['git', 'init', '-q'], check=True)
+        Path('event').write_text('event before publication\n')
+        subprocess.run(['git', 'add', 'event'], check=True)
+        subprocess.run(['git', '-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.org',
+                        'commit', '-qm', 'Event fixture'], check=True)
+
+    def test_workflow_rerun_after_complete_cleanup_reads_pushed_receipt(self):
+        # Reproduces event-SHA checkout after every transfer artifact has been retired.
+        self.event_commit()
+        self.publish()
+        publication.cleanup(self.state)
+        self.retry_checkout()
+        self.output.unlink()
+        self.prepare()
+        self.assertIn('published=true\n', self.output.read_text())
+        publication.cleanup(self.state)
+        self.assertEqual(self.deleted, [11, 12])
+
     def test_failed_publication_cannot_delete_artifacts(self):
         # Even a sealed local receipt cannot authorize deletion before its commit.
         self.prepare()
