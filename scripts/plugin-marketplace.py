@@ -5,9 +5,10 @@ import base64
 import hashlib
 import json
 import os
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import re
 import tempfile
+import tarfile
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -59,6 +60,36 @@ def source_file(client, path, commit):
     return json.loads(base64.b64decode(response["content"]))
 
 
+def verify_npm_executable(client, npm):
+    """Check the published bytes without extracting or executing source-repository code."""
+    binary = PurePosixPath(npm['bin']['gitlab-mcp-plugin'])
+    if binary.is_absolute() or '..' in binary.parts:
+        raise ValueError('The npm executable must be package-relative')
+    expected_url = f'https://registry.npmjs.org/@structured-world/gitlab-mcp/-/gitlab-mcp-{npm["version"]}.tgz'
+    distribution = npm.get('dist', {})
+    integrity = distribution.get('integrity')
+    if (distribution.get('tarball') != expected_url or not isinstance(integrity, str)
+            or not re.fullmatch(r'sha512-[A-Za-z0-9+/]{86}==', integrity)):
+        raise ValueError('The npm distribution metadata is incomplete')
+    digest = base64.b64decode(integrity.removeprefix('sha512-'), validate=True)
+    with tempfile.TemporaryFile() as artifact:
+        client.download(expected_url, artifact)
+        artifact.seek(0)
+        if hashlib.file_digest(artifact, 'sha512').digest() != digest:
+            raise ValueError('The npm distribution integrity does not match')
+        artifact.seek(0)
+        try:
+            with tarfile.open(fileobj=artifact, mode='r|gz') as archive:
+                for member in archive:
+                    if member.name == 'package/' + str(binary):
+                        if member.isfile() and member.size > 0:
+                            return
+                        break
+        except tarfile.TarError as error:
+            raise ValueError('The npm distribution archive is invalid') from error
+    raise ValueError('The declared npm executable is missing or empty')
+
+
 def candidate(client, release_tag=None):
     """Verify all distribution paths before returning publishable metadata."""
     if release_tag is None:
@@ -93,6 +124,7 @@ def candidate(client, release_tag=None):
             or not isinstance(npm["bin"]["gitlab-mcp-plugin"], str)
             or not isinstance(npm.get("engines", {}).get("node"), str)):
         raise ValueError("The released npm connector is unavailable")
+    verify_npm_executable(client, npm)
 
     release_url = f"https://github.com/{REPOSITORY}/releases/tag/{tag}"
     if release["html_url"] != release_url:

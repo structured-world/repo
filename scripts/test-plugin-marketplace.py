@@ -8,6 +8,7 @@ import json
 import os
 from pathlib import Path
 import tempfile
+import tarfile
 import unittest
 from unittest.mock import patch
 import zipfile
@@ -63,6 +64,23 @@ class ReleaseFixture:
         self.npm = {"name": "@structured-world/gitlab-mcp", "version": version,
                     "bin": {"gitlab-mcp-plugin": "dist/src/plugin/main.js"},
                     "engines": {"node": ">=24"}}
+        self.npm_url = f'https://registry.npmjs.org/@structured-world/gitlab-mcp/-/gitlab-mcp-{version}.tgz'
+        self.pack_npm()
+
+    def pack_npm(self, include_binary=True):
+        stream = io.BytesIO()
+        metadata = {key: value for key, value in self.npm.items() if key != 'dist'}
+        with tarfile.open(fileobj=stream, mode='w:gz') as archive:
+            files = {'package/package.json': json.dumps(metadata).encode()}
+            if include_binary:
+                files['package/dist/src/plugin/main.js'] = b'// fixture connector\n'
+            for name, content in files.items():
+                info = tarfile.TarInfo(name)
+                info.size = len(content)
+                archive.addfile(info, io.BytesIO(content))
+        self.npm_archive = stream.getvalue()
+        integrity = base64.b64encode(hashlib.sha512(self.npm_archive).digest()).decode()
+        self.npm['dist'] = {'tarball': self.npm_url, 'integrity': 'sha512-' + integrity}
 
     def json(self, path):
         if path.endswith("/releases/latest") or path.endswith("/releases/tags/" + self.tag):
@@ -83,6 +101,9 @@ class ReleaseFixture:
         return self.npm
 
     def download(self, url, destination):
+        if url == self.npm_url:
+            destination.write(self.npm_archive)
+            return
         if not url.startswith(self.asset_root):
             raise AssertionError(url)
         destination.write(self.sidecar if url.endswith(".sha256") else self.archive)
@@ -116,6 +137,15 @@ class PublicationTests(unittest.TestCase):
         self.assertEqual(snapshot["manifest"], fixture.manifest)
         self.assertEqual(snapshot["commit"], fixture.commit)
         self.assertEqual(snapshot["sha256"], fixture.checksum)
+
+    def test_declared_but_missing_npm_executable_is_rejected(self):
+        # Registry bin metadata cannot establish that the downloadable package can launch.
+        fixture = ReleaseFixture()
+        fixture.pack_npm(include_binary=False)
+        before = self.catalog.read_bytes()
+        with self.assertRaisesRegex(ValueError, 'executable'):
+            self.refresh(fixture)
+        self.assertEqual(self.catalog.read_bytes(), before)
 
     def test_retry_is_byte_identical_and_old_refresh_does_not_downgrade(self):
         # Duplicate notifications and delayed releases must preserve the selected version.
