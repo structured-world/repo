@@ -6,12 +6,20 @@ on:
       - "scripts/**"
       - ".github/workflows/ci.yml"
       - ".github/workflows/publish.yml"
+      - ".github/workflows/plugins.yml"
+      - ".agents/plugins/**"
+      - "templates/**"
+      - "manifests/plugins/**"
   push:
     branches: [main]
     paths:
       - "scripts/**"
       - ".github/workflows/ci.yml"
       - ".github/workflows/publish.yml"
+      - ".github/workflows/plugins.yml"
+      - ".agents/plugins/**"
+      - "templates/**"
+      - "manifests/plugins/**"
 
 permissions:
   contents: read
@@ -54,3 +62,17 @@ jobs:
 
       - name: Each install card shows its own project's platforms
         run: python3 scripts/test-build-docs.py
+
+      - name: Verify plugin release admission and catalog rendering
+        run: |
+          python3 -B scripts/test-plugin-marketplace.py
+          python3 -B scripts/test-plugin-catalog.py
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+
+      - name: Register the real catalog in a clean Codex profile
+        run: |
+          npm install --prefix "$RUNNER_TEMP/codex-cli" --no-save --no-package-lock @openai/codex@0.163.0
+          python3 -B scripts/qualify-codex-marketplace.py --codex "$RUNNER_TEMP/codex-cli/node_modules/.bin/codex"

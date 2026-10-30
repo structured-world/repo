@@ -1,0 +1,84 @@
+name: Publish Plugin Marketplace
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: 'Published GitLab MCP tag; empty selects the latest stable release'
+        type: string
+        required: false
+        default: ''
+  repository_dispatch:
+    types: [refresh-gitlab-mcp-plugin]
+
+permissions:
+  contents: read
+
+# Share the package publisher's lock: both write the site and sitemap on main.
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Require the publication branch
+        env:
+          REF: ${{ github.ref }}
+        run: test "$REF" = refs/heads/main
+
+      - name: Generate publication token
+        uses: actions/create-github-app-token@v3
+        id: app-token
+        with:
+          app-id: ${{ secrets.RELEASER_APP_ID }}
+          private-key: ${{ secrets.RELEASER_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: ${{ github.event.repository.name }}
+
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+          token: ${{ steps.app-token.outputs.token }}
+          # Keep the APT/RPM blobs out of a metadata-only publication.
+          sparse-checkout: |
+            .agents/plugins
+            manifests/plugins
+            plugins
+            scripts
+            templates
+
+      - name: Verify the released plugin and refresh the catalog
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.release_tag || github.event.client_payload.release_tag }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT_NAME" = repository_dispatch ] && [ -z "$RELEASE_TAG" ]; then
+            echo 'A release dispatch must identify its published tag' >&2
+            exit 1
+          fi
+          if [ -n "$RELEASE_TAG" ]; then
+            python3 -B scripts/plugin-marketplace.py --release-tag "$RELEASE_TAG"
+          else
+            python3 -B scripts/plugin-marketplace.py
+          fi
+
+      - name: Generate the plugin page
+        run: |
+          python3 -m pip install --user 'markdown>=3.6,<4'
+          python3 -B scripts/build-docs.py --plugins-only
+
+      - name: Publish verified catalog and page
+        run: |
+          git add -- .agents/plugins/marketplace.json manifests/plugins plugins/index.html index.html sitemap.xml sitemap.txt
+          if git diff --cached --quiet; then
+            echo "Plugin marketplace already current"
+            exit 0
+          fi
+          git config user.name 'sw-release-bot[bot]'
+          git config user.email '255865126+sw-release-bot[bot]@users.noreply.github.com'
+          git commit -m 'chore: publish verified plugin marketplace'
+          git push origin HEAD:main

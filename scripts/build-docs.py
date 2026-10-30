@@ -9,6 +9,7 @@ or manifests/*/manifest.json (committed fallback), then generates:
   - sitemap.xml, sitemap.txt, robots.txt
 """
 import json
+import argparse
 import os
 import re
 import shutil
@@ -17,6 +18,7 @@ from datetime import datetime, timezone
 from html import escape
 from html.parser import HTMLParser
 from pathlib import Path
+from plugin_catalog import generate as generate_plugins
 
 try:
     import markdown
@@ -845,6 +847,13 @@ def generate_sitemap(pages):
 # Main
 # ---------------------------------------------------------------------------
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--plugins-only', action='store_true',
+                        help='Update only the plugin catalog page and its sitemap entry')
+    args = parser.parse_args()
+    if args.plugins_only:
+        generate_plugins(ROOT, SITE_BASE_URL)
+        return
     manifests = load_manifests()
     if not manifests:
         print("Warning: no manifests found; generating minimal site", file=sys.stderr)
@@ -853,6 +862,7 @@ def main():
     generate_index(manifests, pages)
     generate_docs_index(pages, DOCS_DIR / "_template.html")
     generate_sitemap(pages)
+    generate_plugins(ROOT, SITE_BASE_URL)
 
     print(f"Generated {len(pages)} docs pages, index.html, docs/index.html, sitemap.xml, robots.txt")
 
