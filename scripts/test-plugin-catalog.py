@@ -42,7 +42,7 @@ class CatalogTests(unittest.TestCase):
         self.catalog_path.write_text(json.dumps(self.catalog))
         self.snapshot_path = self.root / "manifests/plugins/gitlab-mcp.json"
         self.snapshot_path.parent.mkdir(parents=True)
-        self.snapshot = {"commit": "a" * 40, "release": "https://github.com/structured-world/gitlab-mcp/releases/tag/test",
+        self.snapshot = {"source": dict(self.catalog['plugins'][0]['source']), "release": "https://github.com/structured-world/gitlab-mcp/releases/tag/test",
                          "download": "https://github.com/structured-world/gitlab-mcp/releases/download/test/bundle.zip",
                          "checksum": "https://github.com/structured-world/gitlab-mcp/releases/download/test/bundle.zip.sha256",
                          "sha256": "0" * 64, "runtime": {"node": ">=24"},
@@ -65,7 +65,7 @@ class CatalogTests(unittest.TestCase):
         html = self.root.joinpath("plugins/index.html").read_text()
         self.assertIn("codex://plugins/install/gitlab-mcp?marketplace=sw-foundation", html)
         self.assertIn("v13.0.0", html)
-        self.assertIn(self.snapshot["commit"], html)
+        self.assertIn(self.snapshot["source"]["sha"], html)
         self.assertIn(self.snapshot["download"], html)
         for name, value in self.unrelated.items():
             self.assertEqual((self.root / name).read_bytes(), value)
@@ -95,10 +95,22 @@ class CatalogTests(unittest.TestCase):
     def test_snapshot_must_belong_to_the_selected_commit(self):
         # A stale listing must not show another version beside the selected installer.
         self.add_plugin()
-        self.snapshot["commit"] = "b" * 40
+        self.snapshot["source"]["sha"] = "b" * 40
         self.snapshot_path.write_text(json.dumps(self.snapshot))
         with self.assertRaises(ValueError):
             generate(self.root, "https://repo.sw.foundation")
+
+    def test_snapshot_must_match_the_repository_and_subdirectory(self):
+        # An unchanged SHA cannot bind a listing to a different repository or plugin path.
+        self.add_plugin()
+        original = dict(self.catalog['plugins'][0]['source'])
+        for field, value in [('url', 'https://github.com/example/other.git'),
+                             ('path', './plugins/other')]:
+            with self.subTest(field=field):
+                self.catalog['plugins'][0]['source'] = {**original, field: value}
+                self.catalog_path.write_text(json.dumps(self.catalog))
+                with self.assertRaisesRegex(ValueError, 'source'):
+                    generate(self.root, 'https://repo.sw.foundation')
 
     def test_catalog_install_policy_is_reflected_in_the_page(self):
         # Source releases cannot re-enable installation disabled by the catalog owner.

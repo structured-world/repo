@@ -135,7 +135,7 @@ class PublicationTests(unittest.TestCase):
         })
         snapshot = json.loads((self.root / "manifests/plugins/gitlab-mcp.json").read_text())
         self.assertEqual(snapshot["manifest"], fixture.manifest)
-        self.assertEqual(snapshot["commit"], fixture.commit)
+        self.assertEqual(snapshot["source"], entry["source"])
         self.assertEqual(snapshot["sha256"], fixture.checksum)
 
     def test_declared_but_missing_npm_executable_is_rejected(self):

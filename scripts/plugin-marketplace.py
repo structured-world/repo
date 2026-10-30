@@ -175,7 +175,7 @@ def candidate(client, release_tag=None):
         "policy": {"installation": "AVAILABLE", "authentication": "ON_INSTALL"},
         "category": "Developer Tools",
     }
-    snapshot = {"commit": commit, "release": release_url, "download": assets[ARCHIVE],
+    snapshot = {"source": entry['source'], "release": release_url, "download": assets[ARCHIVE],
                 "checksum": assets[ARCHIVE + ".sha256"], "sha256": checksum, "manifest": manifest,
                 "runtime": {"node": npm["engines"]["node"]}}
     return entry, snapshot

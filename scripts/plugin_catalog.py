@@ -31,7 +31,7 @@ def read_catalog(root):
         source = entry["source"]
         manifest = snapshot["manifest"]
         if (source["source"] != "git-subdir" or not re.fullmatch(r"[0-9a-f]{40}", source["sha"])
-                or snapshot["commit"] != source["sha"] or manifest["name"] != name):
+                or snapshot["source"] != source or manifest["name"] != name):
             raise ValueError("Plugin listing and immutable catalog source disagree")
         rows.append((entry, snapshot))
     return catalog, rows
@@ -59,7 +59,7 @@ def cards(catalog, rows):
   {action}
   <p class="install-note">Add the marketplace below before using this button.</p>
   <div class="card-links"><a href="{https(snapshot['download'])}">Standalone ZIP</a><a href="{https(snapshot['checksum'])}">SHA-256</a><a href="{https(snapshot['release'])}">Release notes</a></div>
-  <details><summary>Verified source</summary><p>Source is pinned to <code>{escape(snapshot['commit'])}</code>.</p><p>ZIP SHA-256: <code>{escape(snapshot['sha256'])}</code></p></details>
+  <details><summary>Verified source</summary><p>Source is pinned to <code>{escape(snapshot['source']['sha'])}</code>.</p><p>ZIP SHA-256: <code>{escape(snapshot['sha256'])}</code></p></details>
 </article>''')
     if not output:
         return '<div class="empty-state"><h2>Releases are on their way</h2><p>Only verified, published plugins appear here. You can add the marketplace now; refresh it after the first plugin release.</p></div>'
