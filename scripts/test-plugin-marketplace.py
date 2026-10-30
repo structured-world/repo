@@ -147,6 +147,30 @@ class PublicationTests(unittest.TestCase):
             self.refresh(fixture)
         self.assertEqual(self.catalog.read_bytes(), before)
 
+    def test_missing_codex_listing_metadata_is_rejected_before_publication(self):
+        # Admission must reject missing renderer inputs before touching catalog outputs.
+        for field in ['extensions', 'displayName', 'shortDescription']:
+            with self.subTest(field=field):
+                fixture = ReleaseFixture()
+                if field == 'extensions':
+                    del fixture.manifest[field]
+                else:
+                    del fixture.manifest['extensions']['com.openai']['interface'][field]
+                rewritten = io.BytesIO()
+                with zipfile.ZipFile(io.BytesIO(fixture.archive)) as original:
+                    with zipfile.ZipFile(rewritten, 'w') as archive:
+                        for entry in original.infolist():
+                            content = original.read(entry)
+                            if entry.filename == 'plugins/gitlab-mcp/plugin.json':
+                                content = json.dumps(fixture.manifest).encode()
+                            archive.writestr(entry, content)
+                fixture.archive = rewritten.getvalue()
+                fixture.checksum = hashlib.sha256(fixture.archive).hexdigest()
+                fixture.sidecar = f'{fixture.checksum}  gitlab-mcp-codex.zip\n'.encode()
+                fixture.release['assets'][0]['size'] = len(fixture.archive)
+                with self.assertRaisesRegex(ValueError, 'interface'):
+                    marketplace.candidate(fixture)
+
     def test_retry_is_byte_identical_and_old_refresh_does_not_downgrade(self):
         # Duplicate notifications and delayed releases must preserve the selected version.
         self.refresh(ReleaseFixture("13.1.0"))

@@ -112,6 +112,15 @@ def candidate(client, release_tag=None):
     manifest = source_file(client, f"{SOURCE_PATH}/plugin.json", commit)
     if manifest["name"] != PLUGIN or manifest["version"] != released_version:
         raise ValueError("Source plugin version differs from the release")
+    interface = manifest.get('extensions')
+    for field in ('com.openai', 'interface'):
+        if not isinstance(interface, dict):
+            break
+        interface = interface.get(field)
+    if (not isinstance(interface, dict)
+            or any(not isinstance(interface.get(field), str) or not interface[field].strip()
+                   for field in ('displayName', 'shortDescription'))):
+        raise ValueError('Source plugin lacks Codex interface metadata')
     launcher = source_file(client, f"{SOURCE_PATH}/mcp.json", commit)["mcpServers"]["gitlab-sw"]
     expected_args = ["-y", "--package", f"{PACKAGE}@{released_version}",
                      "gitlab-mcp-plugin", "${PLUGIN_DATA}"]
