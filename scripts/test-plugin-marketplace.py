@@ -82,6 +82,18 @@ class ReleaseFixture:
         integrity = base64.b64encode(hashlib.sha512(self.npm_archive).digest()).decode()
         self.npm['dist'] = {'tarball': self.npm_url, 'integrity': 'sha512-' + integrity}
 
+    def replace_archive_member(self, name, content):
+        rewritten = io.BytesIO()
+        with zipfile.ZipFile(io.BytesIO(self.archive)) as original:
+            with zipfile.ZipFile(rewritten, 'w') as archive:
+                for entry in original.infolist():
+                    data = content if entry.filename == name else original.read(entry)
+                    archive.writestr(entry, data)
+        self.archive = rewritten.getvalue()
+        self.checksum = hashlib.sha256(self.archive).hexdigest()
+        self.sidecar = f'{self.checksum}  gitlab-mcp-codex.zip\n'.encode()
+        self.release['assets'][0]['size'] = len(self.archive)
+
     def json(self, path):
         if path.endswith("/releases/latest") or path.endswith("/releases/tags/" + self.tag):
             return self.release
@@ -156,28 +168,28 @@ class PublicationTests(unittest.TestCase):
                     del fixture.manifest[field]
                 else:
                     del fixture.manifest['extensions']['com.openai']['interface'][field]
-                rewritten = io.BytesIO()
-                with zipfile.ZipFile(io.BytesIO(fixture.archive)) as original:
-                    with zipfile.ZipFile(rewritten, 'w') as archive:
-                        for entry in original.infolist():
-                            content = original.read(entry)
-                            if entry.filename == 'plugins/gitlab-mcp/plugin.json':
-                                content = json.dumps(fixture.manifest).encode()
-                            archive.writestr(entry, content)
-                fixture.archive = rewritten.getvalue()
-                fixture.checksum = hashlib.sha256(fixture.archive).hexdigest()
-                fixture.sidecar = f'{fixture.checksum}  gitlab-mcp-codex.zip\n'.encode()
-                fixture.release['assets'][0]['size'] = len(fixture.archive)
+                fixture.replace_archive_member('plugins/gitlab-mcp/plugin.json',
+                                               json.dumps(fixture.manifest).encode())
                 with self.assertRaisesRegex(ValueError, 'interface'):
                     marketplace.candidate(fixture)
+
+    def test_empty_standalone_connector_is_not_publishable(self):
+        # A valid checksum cannot make an empty connector a usable release artifact.
+        fixture = ReleaseFixture()
+        fixture.replace_archive_member('plugins/gitlab-mcp/runtime/src/plugin/main.js', b'')
+        with self.assertRaisesRegex(ValueError, 'runtime'):
+            self.refresh(fixture)
 
     def test_retry_is_byte_identical_and_old_refresh_does_not_downgrade(self):
         # Duplicate notifications and delayed releases must preserve the selected version.
         self.refresh(ReleaseFixture("13.1.0"))
         before = self.catalog.read_bytes()
+        snapshot_path = self.root / 'manifests/plugins/gitlab-mcp.json'
+        snapshot_before = snapshot_path.read_bytes()
         self.assertFalse(self.refresh(ReleaseFixture("13.1.0")))
         self.assertFalse(self.refresh(ReleaseFixture("13.0.0")))
         self.assertEqual(self.catalog.read_bytes(), before)
+        self.assertEqual(snapshot_path.read_bytes(), snapshot_before)
 
     def test_incomplete_or_inconsistent_release_preserves_existing_catalog(self):
         # Every verification happens before either committed input can change.

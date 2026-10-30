@@ -173,7 +173,8 @@ def candidate(client, release_tag=None):
                 if (embedded.get("type") != "stdio" or embedded.get("command") != "node"
                         or embedded.get("args") != ["${PLUGIN_ROOT}/runtime/src/plugin/main.js", "${PLUGIN_DATA}"]):
                     raise ValueError("Release archive does not contain the standalone connector")
-                archive.getinfo(f"{SOURCE_PATH}/runtime/src/plugin/main.js")
+                if archive.getinfo(f"{SOURCE_PATH}/runtime/src/plugin/main.js").file_size == 0:
+                    raise ValueError('Release archive has an empty connector runtime')
         except (KeyError, zipfile.BadZipFile, json.JSONDecodeError) as error:
             raise ValueError("Release archive is incomplete") from error
 

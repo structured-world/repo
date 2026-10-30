@@ -67,6 +67,8 @@ class CatalogTests(unittest.TestCase):
         self.assertIn("v13.0.0", html)
         self.assertIn(self.snapshot["source"]["sha"], html)
         self.assertIn(self.snapshot["download"], html)
+        self.assertIn(self.snapshot["checksum"], html)
+        self.assertIn(self.snapshot["release"], html)
         for name, value in self.unrelated.items():
             self.assertEqual((self.root / name).read_bytes(), value)
         self.assertEqual(self.root.joinpath("index.html").read_text(),
