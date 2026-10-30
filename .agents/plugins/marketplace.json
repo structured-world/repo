@@ -1,0 +1,7 @@
+{
+  "name": "sw-foundation",
+  "interface": {
+    "displayName": "sw.foundation"
+  },
+  "plugins": []
+}

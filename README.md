@@ -18,6 +18,67 @@ source-repo/                           repo (during publish)
 
 See [manifests/strongswan/manifest.json](manifests/strongswan/manifest.json) for an example (also used as committed fallback).
 
+## Codex plugin marketplace
+
+The shared marketplace is `.agents/plugins/marketplace.json`, named `sw-foundation`.
+Its [plugin catalog](https://repo.sw.foundation/plugins/) shows only verified,
+published releases. Add the source once with Codex CLI:
+
+```bash
+codex plugin marketplace add structured-world/repo --sparse .agents/plugins
+```
+
+Then use **Install in Codex** on a plugin card, or install its identifier from the
+CLI, for example `codex plugin add gitlab-mcp@sw-foundation` after its first eligible
+release. Installation links open the host's confirmation flow only for a known
+marketplace. They do not import a ZIP or authorize an account. GitLab MCP requires
+Node.js 24+ and supports configuring either a local GitLab connection or an existing
+MCP server after installation, through its private connection panel.
+
+To refresh the catalog, run `codex plugin marketplace upgrade sw-foundation`, then
+review plugin updates in Codex. Plugin sources are pinned to verified commits.
+Standalone ZIP downloads and their checksums remain in the source project's GitHub
+release. Claude Desktop MCPB bundles and Claude Code configuration are separate.
+
+### Publisher and recovery
+
+GitLab MCP's release workflow sends `refresh-gitlab-mcp-plugin` to this repository
+only after npm, release assets and its other publication steps succeed. The
+`Publish Plugin Marketplace` workflow verifies that exact released tag, so a newer
+unfinished release cannot hide the completed publication. Dispatch payloads cannot
+select arbitrary source repositories or commits. Manual dispatch can specify a
+tag or leave it empty to reconcile the latest stable release. The
+release app must already be installed on both repositories with Contents write
+permission. The existing `RELEASER_APP_ID` and `RELEASER_APP_PRIVATE_KEY` secrets
+provide its identity; the catalog does not use package-signing secrets.
+
+Before changing the entry, `scripts/plugin-marketplace.py` verifies the source
+manifest and pinned npm launcher, the published npm binary, and the standalone
+ZIP against its SHA-256 sidecar. It stores the verified public listing metadata
+under `manifests/plugins/` and commits it with the catalog and rendered page.
+Incomplete, inconsistent or changed publications fail without replacing the live
+catalog. Older releases cannot downgrade an existing entry. Repeating the workflow
+is safe; use its manual dispatch to reconcile after a failed notification or a
+concurrent branch update. It does not create or publish a source release.
+
+The plugin publisher shares the package publisher's concurrency group. It invokes
+`scripts/build-docs.py --plugins-only`, updating shared navigation while preserving
+existing package and documentation content and sitemap metadata. Normal site generation also renders the plugin page.
+Its sparse checkout does not download the APT/RPM package tree.
+The initial catalog is empty until the configurable GitLab MCP release is available.
+
+Validate changes with Python 3.11+:
+
+```bash
+python3 -B scripts/test-plugin-marketplace.py
+python3 -B scripts/test-plugin-catalog.py
+uv run --with 'markdown>=3.6,<4' python -B scripts/test-build-docs.py
+python3 -B scripts/qualify-codex-marketplace.py --codex /path/to/codex
+```
+
+CLI and fixture checks do not establish desktop UI qualification or public release
+availability. Verify those against the released package before advertising them.
+
 ## Tetherloom publication artifacts
 
 Tetherloom Actions artifacts are temporary transfer files. After signing and

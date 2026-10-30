@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Plugins | sw.foundation</title>
+  <meta name="description" content="Released sw.foundation plugins for Codex. Add one marketplace, install a plugin, and connect your own services.">
+  <link rel="canonical" href="{{CANONICAL}}">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" type="image/png" href="https://avatars.githubusercontent.com/u/228206483?v=4&amp;s=32">
+  <style>
+    :root { --bg:#fafafa; --panel:#fff; --text:#18181b; --muted:#52525b; --line:#e4e4e7; --accent:#2563eb; --wash:#eff6ff; }
+    @media(prefers-color-scheme:dark) { :root { --bg:#09090b; --panel:#141418; --text:#f4f4f5; --muted:#a1a1aa; --line:#27272a; --accent:#60a5fa; --wash:#101c32; } }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    a { color:var(--accent); text-underline-offset:4px; }
+    a:focus-visible,button:focus-visible,summary:focus-visible { outline:3px solid var(--accent); outline-offset:5px; }
+    .wrap { max-width:1120px; margin:auto; padding:0 28px; }
+    nav { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:24px; padding:25px 0; border-bottom:1px solid var(--line); }
+    nav a { color:var(--muted); text-decoration:none; }
+    .brand { color:var(--text); font-weight:750; letter-spacing:-.03em; }
+    .nav-links { display:flex; gap:24px; }
+    header { padding:64px 0 36px; max-width:750px; }
+    .eyebrow { color:var(--accent); font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; }
+    h1 { margin:12px 0 14px; font-size:clamp(36px,7vw,62px); line-height:1.08; font-weight:700; letter-spacing:-.055em; }
+    header p { max-width:590px; font-size:19px; color:var(--muted); }
+    .collection-head { display:flex; justify-content:space-between; align-items:center; margin:20px 0; font-size:14px; }
+    .count { color:var(--muted); }
+    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,360px),1fr)); gap:24px; }
+    .plugin-card,.empty-state { border:1px solid var(--line); border-radius:18px; padding:28px; background:var(--panel); }
+    .card-meta { display:flex; justify-content:space-between; align-items:center; gap:20px; font-size:12px; }
+    .tag { color:var(--accent); background:var(--wash); padding:4px 9px; border-radius:6px; font-weight:600; }
+    .version,.plugin-card p,.empty-state p { color:var(--muted); }
+    h2 { font-size:25px; letter-spacing:-.035em; line-height:1.25; margin:22px 0 10px; }
+    .empty-state h2 { margin-top:0; }
+    .empty-state { grid-column:1/-1; }
+    dl { border-top:1px solid var(--line); margin:25px 0; padding-top:16px; font-size:13px; }
+    dl div { display:flex; gap:20px; justify-content:space-between; padding:5px 0; }
+    dt { color:var(--muted); } dd { margin:0; text-align:right; }
+    .button { display:flex; align-items:center; justify-content:space-between; border:0; border-radius:8px; padding:12px 16px; text-decoration:none; font-weight:650; }
+    .primary { color:#fff; background:#2563eb; }
+    .primary:hover { background:#1d4ed8; }
+    .unavailable { color:var(--muted); background:var(--bg); border:1px solid var(--line); }
+    .install-note { font-size:12px; margin-top:8px; }
+    .card-links { display:flex; flex-wrap:wrap; gap:18px; font-size:13px; margin:22px 0; }
+    details { font-size:12px; border-top:1px solid var(--line); padding-top:14px; }
+    summary { cursor:pointer; color:var(--muted); }
+    code { font:13px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace; overflow-wrap:anywhere; }
+    .setup { margin:44px 0 64px; padding:30px; border:1px solid var(--line); border-radius:18px; background:var(--wash); }
+    .setup h2 { margin-top:0; }
+    .setup p { color:var(--muted); max-width:790px; }
+    .command { display:flex; align-items:center; justify-content:space-between; gap:16px; border:1px solid var(--line); border-radius:9px; padding:14px 16px; background:var(--panel); }
+    .command code { white-space:pre-wrap; }
+    button { cursor:pointer; background:var(--bg); color:var(--text); border:1px solid var(--line); padding:8px 12px; border-radius:6px; white-space:nowrap; }
+    #copy-status { display:block; min-height:24px; font-size:12px; color:var(--muted); }
+    .steps { padding-left:22px; color:var(--muted); }
+    .steps li { padding:4px 0; }
+    footer { display:flex; justify-content:space-between; flex-wrap:wrap; gap:20px; color:var(--muted); font-size:13px; padding:24px 0 40px; border-top:1px solid var(--line); }
+    @media(max-width:520px) { .wrap { padding:0 18px; } header { padding-top:40px; } .plugin-card,.setup { padding:22px; } .command { align-items:flex-start; flex-direction:column; } .nav-links { gap:14px; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav aria-label="Main"><a class="brand" href="/">sw.foundation</a><div class="nav-links"><a href="/">Packages</a><a href="/docs/">Docs</a><a href="https://github.com/structured-world/repo">Source ↗</a></div></nav>
+    <main>
+      <header><span class="eyebrow">{{MARKETPLACE_NAME}} / Plugins</span><h1>Your tools.<br>Inside Codex.</h1><p>Install released plugins from one marketplace. Connect your own accounts and choose where your tools run.</p></header>
+      <div class="collection-head"><strong>Plugin collection</strong><span class="count">{{PLUGIN_COUNT}} released</span></div>
+      <section class="grid" aria-label="Released plugins">{{PLUGIN_CARDS}}</section>
+      <section class="setup" id="setup" aria-labelledby="setup-title">
+        <h2 id="setup-title">Add the marketplace once</h2>
+        <p>With Codex CLI installed, run this command on the computer where you use Codex. It adds the plugin catalog; it does not install or authorize a plugin.</p>
+        <div class="command"><code id="setup-command">codex plugin marketplace add structured-world/repo --sparse .agents/plugins</code><button id="copy-command" hidden type="button">Copy command</button></div>
+        <span id="copy-status" role="status" aria-live="polite"></span>
+        <ol class="steps"><li>Choose a plugin above and select <strong>Install in Codex</strong>.</li><li>Review and confirm installation in Codex.</li><li>Open the plugin's settings to connect your service. Enter secrets in its private setup panel.</li></ol>
+        <p>Installation buttons require this marketplace to be registered. If Codex cannot find it, it opens the Plugins page. Desktop plugins run locally; GitLab MCP requires Node.js 24+.</p>
+        <p>To refresh the catalog, run <code>codex plugin marketplace upgrade sw-foundation</code>. Review available plugin updates in Codex.</p>
+      </section>
+    </main>
+    <footer><span>Open source tools by sw.foundation</span><span><a href="https://developers.openai.com/plugins/build/plugins">Codex marketplace guide</a> · <a href="https://github.com/structured-world/repo">View catalog source</a></span></footer>
+  </div>
+  <script>
+    const button = document.getElementById('copy-command');
+    if (navigator.clipboard) {
+      button.hidden = false;
+      button.addEventListener('click', async () => {
+        const status = document.getElementById('copy-status');
+        try {
+          await navigator.clipboard.writeText(document.getElementById('setup-command').textContent);
+          status.textContent = 'Command copied.';
+        } catch {
+          status.textContent = 'Select the command above and copy it.';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

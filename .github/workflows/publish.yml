@@ -748,6 +748,9 @@ jobs:
           if [ -f index.html ]; then
             git add index.html
           fi
+          if [ -d plugins ]; then
+            git add plugins
+          fi
           git status
 
           if git diff --staged --quiet; then
