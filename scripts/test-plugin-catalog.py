@@ -68,6 +68,7 @@ class CatalogTests(unittest.TestCase):
         self.assertIn(self.snapshot["source"]["sha"], html)
         self.assertIn(self.snapshot["download"], html)
         self.assertIn(self.snapshot["checksum"], html)
+        self.assertIn(self.snapshot["sha256"], html)
         self.assertIn(self.snapshot["release"], html)
         for name, value in self.unrelated.items():
             self.assertEqual((self.root / name).read_bytes(), value)

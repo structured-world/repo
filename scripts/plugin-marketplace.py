@@ -170,6 +170,8 @@ def candidate(client, release_tag=None):
                 if json.loads(archive.read(f"{SOURCE_PATH}/plugin.json")) != manifest:
                     raise ValueError("Archive manifest differs from the immutable source")
                 embedded = json.loads(archive.read(f"{SOURCE_PATH}/mcp.json"))["mcpServers"]["gitlab-sw"]
+                # The release producer qualifies the extracted runtime before upload;
+                # this catalog verifies immutable release identity and archive integrity.
                 if (embedded.get("type") != "stdio" or embedded.get("command") != "node"
                         or embedded.get("args") != ["${PLUGIN_ROOT}/runtime/src/plugin/main.js", "${PLUGIN_DATA}"]):
                     raise ValueError("Release archive does not contain the standalone connector")
