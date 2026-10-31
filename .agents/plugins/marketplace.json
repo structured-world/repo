@@ -3,5 +3,20 @@
   "interface": {
     "displayName": "sw.foundation"
   },
-  "plugins": []
+  "plugins": [
+    {
+      "name": "gitlab-mcp",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/structured-world/gitlab-mcp.git",
+        "path": "./plugins/gitlab-mcp",
+        "sha": "9562b9eb92ba95bdb73670c8460c4f56bb452bb2"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
 }
