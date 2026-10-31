@@ -371,6 +371,29 @@ Description: Universal gRPC to REST transcoding proxy
  The service ships disabled: set an upstream address and proto descriptors in
  /etc/structured-proxy/config.yaml, then enable it with systemctl.
 
+Package: structured-proxy
+Architecture: arm64
+Version: 8.1.5
+Priority: optional
+Section: net
+Maintainer: Dmitry Prudnikov <mail@polaz.com>
+Installed-Size: 14214
+Depends: systemd, adduser
+Filename: pool/main/s/structured-proxy/structured-proxy_8.1.5_arm64.deb
+Size: 3830912
+MD5sum: efe244fd3dc9f576667953316f240532
+SHA1: 6951e9388e332b38b1b10c79c48617393f2a7c19
+SHA256: e6553da611b7232830addac16ea037612cd0d3bbd4e765b5f67d476a1d6f5952
+SHA512: ceb530e8f02cee286e2e3014072be7b7f2b328a0103ebea01c50cf7360341def6ed534d6a91f02983fe80541d4b457b6c1af71630b41ac3e1a833967efd5326a
+Homepage: https://github.com/structured-world/structured-proxy
+Description: Universal gRPC to REST transcoding proxy
+ structured-proxy is a config-driven gRPC to REST transcoding proxy. One
+ binary serves any gRPC service from a proto descriptor set and a YAML config,
+ with no code generation and no custom handlers.
+ .
+ The service ships disabled: set an upstream address and proto descriptors in
+ /etc/structured-proxy/config.yaml, then enable it with systemctl.
+
 Package: tetherloom-server
 Architecture: arm64
 Version: 0.1.1
