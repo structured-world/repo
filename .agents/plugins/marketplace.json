@@ -10,7 +10,7 @@
         "source": "git-subdir",
         "url": "https://github.com/structured-world/gitlab-mcp.git",
         "path": "./plugins/gitlab-mcp",
-        "sha": "c0a751b1494684a4ade8f6ad8f64cfaa4fd50a4f"
+        "sha": "5794156230134e7e2abe95ac64aa3f68080dff11"
       },
       "policy": {
         "installation": "AVAILABLE",
