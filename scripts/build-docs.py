@@ -198,7 +198,58 @@ def load_manifests():
 
     for m in manifests:
         _validate_manifest(m)
+        _keep_served_releases(m)
     return manifests
+
+
+def served_releases():
+    """The DEB dists and Fedora releases the repository serves.
+
+    Read from scripts/releases.env, which update-repos.sh reads too; the
+    environment variables DEB_DISTS and RPM_RELEASES override it, as they do
+    for that script.
+    """
+    values = {}
+    for line in (ROOT / "scripts" / "releases.env").read_text(encoding="utf-8").splitlines():
+        match = re.fullmatch(r'(SERVED_[A-Z_]+)="([^"]*)"', line.strip())
+        if match:
+            values[match.group(1)] = match.group(2)
+    dists = os.environ.get("DEB_DISTS") or values["SERVED_DEB_DISTS"]
+    releases = os.environ.get("RPM_RELEASES") or values["SERVED_RPM_RELEASES"]
+    return set(dists.split()), set(releases.split())
+
+
+def _keep_served_releases(m):
+    """Drop from manifest *m* every release the repository does not serve.
+
+    A project's manifest may still name releases the repository has retired;
+    the site lists only what can be installed from it. A distro left with no
+    release is dropped.
+    """
+    dists, releases = served_releases()
+    platforms = m.get("platforms", {})
+    rpm = platforms.get("rpm")
+    if isinstance(rpm, dict):
+        kept = []
+        for distro in rpm.get("distros", []):
+            distro["versions"] = [v for v in distro.get("versions", []) if str(v) in releases]
+            if distro["versions"]:
+                kept.append(distro)
+        rpm["distros"] = kept
+    deb = platforms.get("deb")
+    if isinstance(deb, dict):
+        kept = []
+        for distro in deb.get("distros", []):
+            codenames = distro.get("codenames", [])
+            versions = distro.get("versions", [])
+            # codenames[i] and versions[i] name the same release.
+            pairs = [(c, versions[i] if i < len(versions) else None)
+                     for i, c in enumerate(codenames) if c in dists]
+            distro["codenames"] = [c for c, _ in pairs]
+            distro["versions"] = [v for _, v in pairs if v is not None]
+            if distro["codenames"]:
+                kept.append(distro)
+        deb["distros"] = kept
 
 
 # ---------------------------------------------------------------------------

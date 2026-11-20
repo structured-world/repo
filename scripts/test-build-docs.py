@@ -89,4 +89,23 @@ for display, own, other in (("Alpha", alpha, beta), ("Beta", beta, alpha)):
         other["platforms"]["deb"]["installCmd"] not in deb[0], f"{display}: DEB card has another install command"
     )
 
+# A manifest naming releases the repository no longer serves: the site keeps
+# only the served ones (scripts/releases.env), each codename with its own
+# version, and drops a distro left with none.
+dists, releases = build_docs.served_releases()
+check({"noble", "resolute"} <= dists and "jammy" not in dists, "served DEB dists are not the expected set")
+check({"44", "45"} <= releases and "43" not in releases, "served Fedora releases are not the expected set")
+stale = manifest(
+    "stale", ["43", "44", "45"], "x86_64", ["resolute", "jammy", "noble"], ["26.04", "22.04", "24.04"], "s", "s"
+)
+stale["platforms"]["deb"]["distros"].append(
+    {"id": "debian", "name": "Debian", "codenames": ["buster"], "versions": ["10"]}
+)
+build_docs._keep_served_releases(stale)
+check(stale["platforms"]["rpm"]["distros"][0]["versions"] == ["44", "45"], "a retired Fedora release listed")
+ubuntu = stale["platforms"]["deb"]["distros"]
+check(len(ubuntu) == 1, "a distro with no served release kept")
+check(ubuntu[0]["codenames"] == ["resolute", "noble"], "a retired Ubuntu release listed")
+check(ubuntu[0]["versions"] == ["26.04", "24.04"], "codenames and versions no longer pair up")
+
 print("build-docs.py: install cards per project OK")
