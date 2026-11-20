@@ -22,6 +22,8 @@
 #  14. release lists split on any whitespace, tabs included
 #  15. RPM retention orders by epoch first
 #  16. one limit per dist over its dist-agnostic and dist-specific files
+#  17. the limit counts versions: two builds of one version are one version
+#  18. a release list with no names is refused, the tree untouched
 #
 # Requires: apt-ftparchive, dpkg-deb, gnupg, gzip, createrepo_c, rpm, rpmsign.
 set -euo pipefail
@@ -403,4 +405,42 @@ for ver in 1.1 1.2; do
   [ ! -e "$pool/mixed_${ver}_amd64.deb" ] || fail "$CASE: dist-agnostic $ver kept with no dist listing it"
 done
 
-echo "update-repos.sh: publish OK (16 cases)"
+# --- case 17: the limit counts versions, not files --------------------------
+# During the move to builds per dist, one version can sit in a dist's index
+# twice (its dist-agnostic and its dist-specific build); that is still one
+# version, and the previous one stays.
+CASE="deb-same-version-two-builds"
+fresh_repo "$CASE"
+mkdeb dual 1.9 amd64
+mkdeb dual 2.0 amd64
+mkdeb dual 2.0 amd64 noble
+(cd "$REPO" && DEB_DISTS="noble" KEEP_VERSIONS=2 scripts/update-repos.sh) \
+  || fail "$CASE: publish failed"
+pool="$REPO/deb/pool/main/d/dual"
+[ -e "$pool/dual_1.9_amd64.deb" ] || fail "$CASE: a second build of 2.0 crowded out 1.9"
+[ -e "$pool/dual_2.0_amd64.deb" ] || fail "$CASE: the dist-agnostic 2.0 pruned"
+[ -e "$pool/dual_2.0_noble_amd64.deb" ] || fail "$CASE: the noble 2.0 pruned"
+grep -q '^Version: 1.9$' "$REPO/deb/dists/noble/main/binary-amd64/Packages" \
+  || fail "$CASE: noble does not list 1.9"
+
+# --- case 18: a release list with no names is refused -----------------------
+# Whitespace alone yields no dist or release: refused before anything is
+# copied, pruned or removed, instead of every served package looking retired.
+CASE="release-lists-blank"
+fresh_repo "$CASE"
+mkdir -p "$REPO/deb/pool/main/a/agnostic"
+mkdeb agnostic 1.0 amd64
+mv "$REPO/packages/deb/agnostic_1.0_amd64.deb" "$REPO/deb/pool/main/a/agnostic/"
+mkdir -p "$REPO/rpm/fc44"
+cp "$previous"/rpm/fc44/*.rpm "$REPO/rpm/fc44/"
+for setting in DEB_DISTS=$' \t\n' RPM_RELEASES=$' \t\n'; do
+  if (cd "$REPO" && env "$setting" scripts/update-repos.sh >/dev/null 2>&1); then
+    fail "$CASE: a blank ${setting%%=*} accepted"
+  fi
+done
+[ -e "$REPO/deb/pool/main/a/agnostic/agnostic_1.0_amd64.deb" ] \
+  || fail "$CASE: a blank list deleted a served package"
+[ -n "$(find "$REPO/rpm/fc44" -name '*.rpm' -print -quit)" ] \
+  || fail "$CASE: a blank list removed a served release"
+
+echo "update-repos.sh: publish OK (18 cases)"

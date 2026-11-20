@@ -41,6 +41,11 @@ done
 # membership, iteration) uses these same tokens.
 read -r -d '' -a SERVED_RELEASES <<< "$RPM_RELEASES" || true
 read -r -d '' -a SERVED_DISTS <<< "$DEB_DISTS" || true
+# A list with no names would make every served release look retired.
+if [ "${#SERVED_RELEASES[@]}" -eq 0 ] || [ "${#SERVED_DISTS[@]}" -eq 0 ]; then
+  echo "Error: RPM_RELEASES and DEB_DISTS must each name at least one release" >&2
+  exit 1
+fi
 for release in "${SERVED_RELEASES[@]}"; do
   if ! [[ "$release" =~ ^[0-9]+$ ]]; then
     echo "Error: invalid Fedora release '$release' in RPM_RELEASES" >&2
@@ -89,8 +94,10 @@ deb_file_dist() {
 }
 
 # select_kept KIND ENTRY...: of the files of one package group, print the
-# paths kept: the KEEP_VERSIONS newest, less any built before AGE_CUTOFF other
-# than the newest. KIND is deb or rpm and picks the comparison; each entry is
+# paths kept: those of the KEEP_VERSIONS newest versions, less any built
+# before AGE_CUTOFF outside the newest version. The limit counts versions,
+# not files: a version's dist-agnostic and dist-specific builds share one
+# slot. KIND is deb or rpm and picks the comparison; each entry is
 # "<version>\t<build time>\t<path>".
 select_kept() {
   local kind="$1"
@@ -109,11 +116,19 @@ select_kept() {
     ordered+=("${entries[$newest]}")
     entries=("${entries[@]:0:$newest}" "${entries[@]:$((newest + 1))}")
   done
-  local entry built
-  for ((i = 0; i < ${#ordered[@]} && i < KEEP_VERSIONS; i++)); do
+  # Equal versions sit next to each other in that order; rank counts the
+  # distinct versions seen so far, 0 for the newest.
+  local entry built version previous="" rank=-1
+  for ((i = 0; i < ${#ordered[@]}; i++)); do
+    version="${ordered[$i]%%$'\t'*}"
+    if [ "$rank" -lt 0 ] || version_newer "$kind" "$previous" "$version"; then
+      rank=$((rank + 1))
+      previous="$version"
+    fi
+    [ "$rank" -lt "$KEEP_VERSIONS" ] || break
     entry="${ordered[$i]#*$'\t'}"
     built="${entry%%$'\t'*}"
-    if [ "$i" -eq 0 ] || [ "$built" -ge "$AGE_CUTOFF" ]; then
+    if [ "$rank" -eq 0 ] || [ "$built" -ge "$AGE_CUTOFF" ]; then
       printf '%s\n' "${entry#*$'\t'}"
     fi
   done
