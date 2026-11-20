@@ -24,6 +24,7 @@
 #  16. one limit per dist over its dist-agnostic and dist-specific files
 #  17. the limit counts versions: two builds of one version are one version
 #  18. a release list with no names is refused, the tree untouched
+#  19. an incoming SRPM for a release that is not served is skipped unsigned
 #
 # Requires: apt-ftparchive, dpkg-deb, gnupg, gzip, createrepo_c, rpm, rpmsign.
 set -euo pipefail
@@ -443,4 +444,18 @@ done
 [ -n "$(find "$REPO/rpm/fc44" -name '*.rpm' -print -quit)" ] \
   || fail "$CASE: a blank list removed a served release"
 
-echo "update-repos.sh: publish OK (18 cases)"
+# --- case 19: an incoming SRPM for a release that is not served -------------
+# It is skipped before it is copied or signed: an fc43 source package that
+# could not be signed must not stop the publish of the served ones.
+CASE="srpm-release-not-served"
+fresh_repo "$CASE"
+mkdir -p "$REPO/packages/srpm"
+echo "not an rpm" > "$REPO/packages/srpm/probe-1.0-1.fc43.src.rpm"
+(cd "$REPO" && scripts/update-repos.sh) > "$WORK/$CASE.log" 2>&1 \
+  || fail "$CASE: an unserved SRPM stopped the publish"
+[ ! -e "$REPO/rpm/SRPMS/probe-1.0-1.fc43.src.rpm" ] \
+  || fail "$CASE: an SRPM for a release that is not served copied"
+grep -q 'fc43, which is not served' "$WORK/$CASE.log" \
+  || fail "$CASE: no warning for the skipped SRPM"
+
+echo "update-repos.sh: publish OK (19 cases)"

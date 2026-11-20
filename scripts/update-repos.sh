@@ -645,6 +645,13 @@ publish_rpm() {
     for srpm in "${srpms[@]}"; do
       local srpm_name
       srpm_name=$(basename "$srpm")
+      # Skipped before it is copied or signed, as binary RPMs are: a source
+      # package for a retired release must not stop the served ones.
+      if [[ "$srpm_name" =~ \.fc([0-9]+)\.src\.rpm$ ]] \
+          && ! rpm_release_served "${BASH_REMATCH[1]}"; then
+        echo "Warning: SRPM built for fc${BASH_REMATCH[1]}, which is not served: $srpm_name; skipping" >&2
+        continue
+      fi
       # Same cp -n + existence check pattern as RPM section above (see comment there).
       # Concurrency group in publish.yml prevents parallel runs.
       if cp -n "$srpm" "$srpm_dir/" 2>/dev/null && [ -e "$srpm_dir/$srpm_name" ]; then
