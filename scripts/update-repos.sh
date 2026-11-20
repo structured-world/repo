@@ -37,9 +37,22 @@ for setting in KEEP_VERSIONS MAX_AGE_DAYS; do
     exit 1
   fi
 done
-for release in $RPM_RELEASES; do
+# Each list is split once, on any whitespace, and every check below (validity,
+# membership, iteration) uses these same tokens.
+read -r -d '' -a SERVED_RELEASES <<< "$RPM_RELEASES" || true
+read -r -d '' -a SERVED_DISTS <<< "$DEB_DISTS" || true
+for release in "${SERVED_RELEASES[@]}"; do
   if ! [[ "$release" =~ ^[0-9]+$ ]]; then
     echo "Error: invalid Fedora release '$release' in RPM_RELEASES" >&2
+    exit 1
+  fi
+done
+# Checked before anything is copied, pruned or removed: a rejected value must
+# leave the tree as it was, not make every dist-specific package look retired.
+# The name becomes a path component, so separators and traversal are refused.
+for dist in "${SERVED_DISTS[@]}"; do
+  if ! [[ "$dist" =~ ^[A-Za-z0-9_-]+$ ]]; then
+    echo "Error: invalid dist name '$dist' in DEB_DISTS" >&2
     exit 1
   fi
 done
@@ -48,12 +61,20 @@ AGE_CUTOFF=$(( $(date +%s) - MAX_AGE_DAYS * 86400 ))
 
 # rpm_release_served N: whether Fedora release N is in RPM_RELEASES.
 rpm_release_served() {
-  [[ " $RPM_RELEASES " == *" $1 "* ]]
+  local release
+  for release in "${SERVED_RELEASES[@]}"; do
+    [ "$release" = "$1" ] && return 0
+  done
+  return 1
 }
 
 # deb_dist_served DIST: whether DIST is in DEB_DISTS.
 deb_dist_served() {
-  [[ " $DEB_DISTS " == *" $1 "* ]]
+  local dist
+  for dist in "${SERVED_DISTS[@]}"; do
+    [ "$dist" = "$1" ] && return 0
+  done
+  return 1
 }
 
 # deb_file_dist FILE: the dist token of a dist-specific file name
@@ -67,11 +88,11 @@ deb_file_dist() {
   fi
 }
 
-# prune_group KIND ENTRY...: of the files of one package group, keep the
-# KEEP_VERSIONS newest, and of those drop any built before AGE_CUTOFF except
-# the newest. KIND is deb or rpm and picks the comparison; each entry is
+# select_kept KIND ENTRY...: of the files of one package group, print the
+# paths kept: the KEEP_VERSIONS newest, less any built before AGE_CUTOFF other
+# than the newest. KIND is deb or rpm and picks the comparison; each entry is
 # "<version>\t<build time>\t<path>".
-prune_group() {
+select_kept() {
   local kind="$1"
   shift
   local -a entries=("$@")
@@ -88,35 +109,64 @@ prune_group() {
     ordered+=("${entries[$newest]}")
     entries=("${entries[@]:0:$newest}" "${entries[@]:$((newest + 1))}")
   done
-  local entry built path
-  for ((i = 1; i < ${#ordered[@]}; i++)); do
+  local entry built
+  for ((i = 0; i < ${#ordered[@]} && i < KEEP_VERSIONS; i++)); do
     entry="${ordered[$i]#*$'\t'}"
     built="${entry%%$'\t'*}"
-    path="${entry#*$'\t'}"
-    if [ "$i" -ge "$KEEP_VERSIONS" ]; then
-      rm -f -- "$path"
-      echo "Pruned $path (keeping the $KEEP_VERSIONS newest versions)"
-    elif [ "$built" -lt "$AGE_CUTOFF" ]; then
-      rm -f -- "$path"
-      echo "Pruned $path (built more than $MAX_AGE_DAYS days ago)"
+    if [ "$i" -eq 0 ] || [ "$built" -ge "$AGE_CUTOFF" ]; then
+      printf '%s\n' "${entry#*$'\t'}"
     fi
   done
 }
 
-# version_newer KIND A B: whether version A sorts after B.
+# prune_group KIND ENTRY...: remove the files of one package group that
+# select_kept does not keep.
+prune_group() {
+  local kind="$1"
+  shift
+  local -A kept=()
+  local path entry
+  while IFS= read -r path; do
+    kept[$path]=1
+  done < <(select_kept "$kind" "$@")
+  for entry in "$@"; do
+    path="${entry##*$'\t'}"
+    if [ -z "${kept[$path]:-}" ]; then
+      rm -f -- "$path"
+      echo "Pruned $path (past the $KEEP_VERSIONS newest versions or $MAX_AGE_DAYS days)"
+    fi
+  done
+}
+
+# Per served dist, the dist-agnostic file names its index leaves out: a file
+# another dist still keeps but this one no longer counts among its newest.
+declare -A DEB_INDEX_EXCLUDED=()
+
+# version_newer KIND A B: whether version A sorts after B. An RPM version is
+# EPOCH:VERSION-RELEASE, compared as rpm compares them (epoch first).
 version_newer() {
   local kind="$1" a="$2" b="$3"
   if [ "$kind" = deb ]; then
     dpkg --compare-versions "$a" gt "$b"
   else
-    [ "$(rpm --eval "%{lua: print(rpm.vercmp('$a', '$b'))}")" = 1 ]
+    [ "$(rpm --eval "%{lua: print(rpm.ver('$a') > rpm.ver('$b'))}")" = true ]
   fi
 }
 
+# rpm_evr_valid EVR: whether EVR has the shape and characters rpm allows in a
+# version, so it can stand inside the Lua string literal above. The values
+# come from package headers that another repository's build produced, while
+# this script holds the signing key; a header is data, never code.
+rpm_evr_valid() {
+  [[ "$1" =~ ^[0-9]+:[A-Za-z0-9._+~^]+-[A-Za-z0-9._+~^]+$ ]]
+}
+
 # prune_deb_pool: a dist-specific package built for a dist the repository no
-# longer serves is removed; every other package keeps its newest versions per
-# dist (the dist token of a dist-specific file name; none for a dist-agnostic
-# one) and architecture, as prune_group selects them.
+# longer serves is removed. Every other package is limited per served dist
+# and architecture over what that dist's index lists: its own dist-specific
+# files and the dist-agnostic ones, as select_kept chooses. A dist-agnostic
+# file one dist drops while another keeps it is left out of the first one's
+# index (DEB_INDEX_EXCLUDED); a file no served dist keeps is removed.
 prune_deb_pool() {
   [ -d deb/pool ] || return 0
   local -A groups=()
@@ -135,13 +185,43 @@ prune_deb_pool() {
     # first member's ar header holds it as decimal seconds at bytes 24-35.
     built=$(head -c 36 "$deb" | tail -c 12 | tr -d ' ')
     [[ "$built" =~ ^[0-9]+$ ]] || continue
-    key="$name|$dist|$arch"
-    groups[$key]+="${version}"$'\t'"${built}"$'\t'"${deb}"$'\n'
+    key="$name|$arch"
+    groups[$key]+="${dist}"$'\t'"${version}"$'\t'"${built}"$'\t'"${deb}"$'\n'
   done < <(find deb/pool -type f -name '*.deb' -print0)
-  local -a members
+  local -A kept=()
+  local -a members subset
+  local member entry_dist path served
   for key in "${!groups[@]}"; do
     mapfile -t members < <(printf '%s' "${groups[$key]}")
-    prune_group deb "${members[@]}"
+    for served in "${SERVED_DISTS[@]}"; do
+      subset=()
+      for member in "${members[@]}"; do
+        entry_dist="${member%%$'\t'*}"
+        if [ -z "$entry_dist" ] || [ "$entry_dist" = "$served" ]; then
+          subset+=("${member#*$'\t'}")
+        fi
+      done
+      [ "${#subset[@]}" -gt 0 ] || continue
+      local -A kept_here=()
+      while IFS= read -r path; do
+        kept_here[$path]=1
+        kept[$path]=1
+      done < <(select_kept deb "${subset[@]}")
+      for member in "${subset[@]}"; do
+        path="${member##*$'\t'}"
+        if [ -z "${kept_here[$path]:-}" ] && [ -z "$(deb_file_dist "$path")" ]; then
+          DEB_INDEX_EXCLUDED[$served]+=" $(basename "$path")"
+        fi
+      done
+      unset kept_here
+    done
+    for member in "${members[@]}"; do
+      path="${member##*$'\t'}"
+      if [ -z "${kept[$path]:-}" ]; then
+        rm -f -- "$path"
+        echo "Pruned $path (no served dist keeps it among its $KEEP_VERSIONS newest versions or $MAX_AGE_DAYS days)"
+      fi
+    done
   done
 }
 
@@ -161,9 +241,13 @@ prune_rpm_dir() {
       echo "Removed $rpm_path (fc${BASH_REMATCH[1]} is not served)"
       continue
     fi
-    info=$(rpm -qp --nosignature --qf '%{NAME}\t%{ARCH}\t%{VERSION}-%{RELEASE}\t%{BUILDTIME}' "$rpm_path" 2>/dev/null) || continue
+    info=$(rpm -qp --nosignature --qf '%{NAME}\t%{ARCH}\t%{EPOCHNUM}:%{VERSION}-%{RELEASE}\t%{BUILDTIME}' "$rpm_path" 2>/dev/null) || continue
     IFS=$'\t' read -r name arch evr built <<< "$info"
     [[ "$built" =~ ^[0-9]+$ ]] || continue
+    if ! rpm_evr_valid "$evr"; then
+      echo "Error: $rpm_path has a version rpm does not allow: '$evr'" >&2
+      exit 1
+    fi
     key="$name|$arch"
     groups[$key]+="${evr}"$'\t'"${built}"$'\t'"${rpm_path}"$'\n'
   done < <(find "$dir" -maxdepth 1 -type f -name '*.rpm' -print0)
@@ -262,16 +346,8 @@ publish_deb() {
   prune_deb_pool
 
   local dist_dir dist
-  local -a configured_dists
-  # read -a splits on whitespace without glob expansion (nullglob is on).
-  read -r -a configured_dists <<< "$DEB_DISTS"
-  for dist in "${configured_dists[@]}"; do
-    # Same rule as the on-disk scan below; rejects separators and traversal
-    # before the name is ever used as a path component.
-    if ! printf '%s' "$dist" | grep -Eq '^[A-Za-z0-9_-]+$'; then
-      echo "Error: invalid dist name '$dist' in DEB_DISTS" >&2
-      exit 1
-    fi
+  # The names were validated with the settings, before anything changed.
+  for dist in "${SERVED_DISTS[@]}"; do
     mkdir -p "deb/dists/$dist"
   done
   # A dist the repository no longer serves goes, indexes and all.
@@ -289,7 +365,7 @@ publish_deb() {
     # Served dist names: used to tell dist-specific debs (…_noble_amd64.deb)
     # from dist-agnostic ones (…_amd64.deb) which belong in every dist's index.
     local known_dists=""
-    for dist in "${configured_dists[@]}"; do
+    for dist in "${SERVED_DISTS[@]}"; do
       known_dists="${known_dists:+${known_dists}|}${dist}"
     done
 
@@ -330,8 +406,15 @@ publish_deb() {
         # on the Filename field alone (paragraph mode), never on whole-stanza
         # regexes — a $-anchored whole-stanza match silently selects nothing
         # because Filename is not the last field (see #25).
-        if ! awk -v dist="$dist" -v arch="$arch" -v dists="$known_dists" '
-          BEGIN { RS=""; ORS="\n\n" }
+        # A dist-agnostic file this dist no longer counts among its newest
+        # versions is left out (see prune_deb_pool).
+        if ! awk -v dist="$dist" -v arch="$arch" -v dists="$known_dists" \
+            -v excluded="${DEB_INDEX_EXCLUDED[$dist]:-}" '
+          BEGIN {
+            RS=""; ORS="\n\n"
+            n = split(excluded, names, " ")
+            for (i = 1; i <= n; i++) skip[names[i]] = 1
+          }
           {
             fn = ""
             n = split($0, lines, "\n")
@@ -341,6 +424,7 @@ publish_deb() {
             if (fn == "") next
             sub(/^Filename: /, "", fn)
             sub(/^.*\//, "", fn)
+            if (fn in skip) next
             if (fn ~ ("_" dist "_" arch "\\.(deb|ddeb|udeb)$")) { print; next }
             if (fn ~ ("_" arch "\\.(deb|ddeb|udeb)$") && fn !~ ("_(" dists ")_")) { print }
           }' "$packages_all" > "$arch_dir/Packages"; then

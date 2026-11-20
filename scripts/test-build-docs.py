@@ -108,4 +108,13 @@ check(len(ubuntu) == 1, "a distro with no served release kept")
 check(ubuntu[0]["codenames"] == ["resolute", "noble"], "a retired Ubuntu release listed")
 check(ubuntu[0]["versions"] == ["26.04", "24.04"], "codenames and versions no longer pair up")
 
+# A format left with no served release disappears, so the site offers no
+# install card for packages the repository no longer holds.
+retired = manifest("retired", ["41", "42"], "x86_64", ["resolute"], ["26.04"], "r-rpm-setup", "r-deb-setup")
+build_docs._keep_served_releases(retired)
+check("rpm" not in retired["platforms"], "a format with no served release kept")
+retired_html = build_docs.gen_install_tabs([retired])
+check("r-rpm-setup" not in retired_html, "an install card for a format with no served release")
+check("r-deb-setup" in retired_html, "the served format lost its install card")
+
 print("build-docs.py: install cards per project OK")

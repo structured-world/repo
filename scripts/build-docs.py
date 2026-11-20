@@ -224,7 +224,8 @@ def _keep_served_releases(m):
 
     A project's manifest may still name releases the repository has retired;
     the site lists only what can be installed from it. A distro left with no
-    release is dropped.
+    release is dropped, and a format left with no distro too: the install
+    cards are drawn for every format a manifest names.
     """
     dists, releases = served_releases()
     platforms = m.get("platforms", {})
@@ -236,6 +237,8 @@ def _keep_served_releases(m):
             if distro["versions"]:
                 kept.append(distro)
         rpm["distros"] = kept
+        if not kept:
+            del platforms["rpm"]
     deb = platforms.get("deb")
     if isinstance(deb, dict):
         kept = []
@@ -250,6 +253,8 @@ def _keep_served_releases(m):
             if distro["codenames"]:
                 kept.append(distro)
         deb["distros"] = kept
+        if not kept:
+            del platforms["deb"]
 
 
 # ---------------------------------------------------------------------------

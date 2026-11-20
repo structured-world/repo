@@ -18,6 +18,10 @@
 #  11. the same age limit for RPMs
 #  12. a Fedora release that is not served: its directory and source packages
 #      are removed and an incoming package for it is skipped
+#  13. a rejected DEB_DISTS leaves an existing tree untouched
+#  14. release lists split on any whitespace, tabs included
+#  15. RPM retention orders by epoch first
+#  16. one limit per dist over its dist-agnostic and dist-specific files
 #
 # Requires: apt-ftparchive, dpkg-deb, gnupg, gzip, createrepo_c, rpm, rpmsign.
 set -euo pipefail
@@ -54,6 +58,39 @@ mkdeb() {
   echo test > "$d/usr/share/doc/$name/README"
   SOURCE_DATE_EPOCH="$built" dpkg-deb -b "$d" \
     "$REPO/packages/deb/${name}_${ver}${dist:+_$dist}_${arch}.deb" >/dev/null
+}
+
+# primary_xml DIR: the primary metadata of the RPM repository in DIR, read
+# through the file repomd.xml names and the decompressor its suffix calls for
+# (createrepo_c's default compression differs between versions).
+primary_xml() {
+  local href
+  href=$(grep -o 'href="repodata/[^"]*primary\.xml[^"]*"' "$1/repodata/repomd.xml" | head -n1)
+  href="${href#href=\"}"
+  href="${href%\"}"
+  case "$href" in
+    *.gz) zcat "$1/$href" ;;
+    *.zst) zstd -dcq "$1/$href" ;;
+    *.xz) xzcat "$1/$href" ;;
+    *.bz2) bzcat "$1/$href" ;;
+    *) cat "$1/$href" ;;
+  esac
+}
+
+# mkrpm VERSION RELEASE [EPOCH]: a throwaway noarch RPM in the incoming
+# directory, from the probe spec.
+mkrpm() {
+  local ver="$1" rel="$2" epoch="${3:-}" spec
+  spec="$HOME/rpmbuild/SPECS/probe-$ver-$rel-${epoch:-0}.spec"
+  sed -e "s/^Version: 1.0$/Version: $ver/" -e "s/^Release: 1.fc44$/Release: $rel/" \
+    "$HOME/rpmbuild/SPECS/probe.spec" > "$spec"
+  if [ -n "$epoch" ]; then
+    sed -i "s/^Name: probe$/Name: probe\nEpoch: $epoch/" "$spec"
+  fi
+  rpmbuild -bb --define "_topdir $HOME/rpmbuild" "$spec" >/dev/null 2>&1 \
+    || fail "$CASE: could not build probe $ver-$rel"
+  mkdir -p "$REPO/packages/rpm"
+  cp "$HOME/rpmbuild/RPMS/noarch/probe-$ver-$rel.noarch.rpm" "$REPO/packages/rpm/"
 }
 
 # assert_dist_indexed DIST: signed Release/InRelease and a Packages.gz per arch.
@@ -234,8 +271,7 @@ done
 for ver in 1.9 1.10 1.11 1.12 1.13; do
   [ -e "$REPO/rpm/fc44/probe-$ver-1.fc44.noarch.rpm" ] || fail "$CASE: newest version $ver pruned"
 done
-primary=$(find "$REPO/rpm/fc44/repodata" -name '*primary.xml.gz' | head -n1)
-[ "$(zcat "$primary" | grep -c '<name>probe</name>')" -eq 5 ] \
+[ "$(primary_xml "$REPO/rpm/fc44" | grep -c '<name>probe</name>')" -eq 5 ] \
   || fail "$CASE: the metadata does not list exactly the kept versions"
 
 # --- case 9: invalid limits and release lists are refused ------------------
@@ -299,4 +335,72 @@ cp "$HOME/rpmbuild/RPMS/noarch/probe-1.0-1.fc43.noarch.rpm" "$REPO/packages/rpm/
 [ ! -e "$REPO/rpm/fc41" ] || fail "$CASE: a release directory that is not served kept"
 [ ! -e "$REPO/rpm/fc43" ] || fail "$CASE: a package for a release that is not served published"
 
-echo "update-repos.sh: publish OK (12 cases)"
+# --- case 13: a rejected DEB_DISTS leaves the tree untouched ---------------
+# The settings are checked before anything is copied, pruned or removed: a
+# bad value must not make every dist-specific package look retired.
+CASE="deb-dists-invalid-existing-tree"
+fresh_repo "$CASE"
+mkdir -p "$REPO/deb/pool/main/n/noblonly"
+mkdeb noblonly 1.0 amd64 noble
+mv "$REPO/packages/deb/noblonly_1.0_noble_amd64.deb" "$REPO/deb/pool/main/n/noblonly/"
+if (cd "$REPO" && DEB_DISTS="../staging" scripts/update-repos.sh >/dev/null 2>&1); then
+  fail "$CASE: script accepted a traversal dist name"
+fi
+[ -e "$REPO/deb/pool/main/n/noblonly/noblonly_1.0_noble_amd64.deb" ] \
+  || fail "$CASE: a rejected setting deleted a served package"
+
+# --- case 14: release lists split on any whitespace -------------------------
+CASE="release-lists-whitespace"
+fresh_repo "$CASE"
+mkdir -p "$REPO/rpm/fc44"
+cp "$previous"/rpm/fc44/*.rpm "$REPO/rpm/fc44/"
+mkdeb noblonly 1.0 amd64 noble
+(cd "$REPO" && RPM_RELEASES=$'44\t45' DEB_DISTS=$'trixie\tnoble' scripts/update-repos.sh) \
+  || fail "$CASE: publish failed"
+[ -n "$(find "$REPO/rpm/fc44" -name '*.rpm' -print -quit)" ] \
+  || fail "$CASE: a release listed after a tab was removed"
+[ -e "$REPO/deb/pool/main/n/noblonly/noblonly_1.0_noble_amd64.deb" ] \
+  || fail "$CASE: a package for a dist listed after a tab was skipped"
+assert_dist_indexed noble
+
+# --- case 15: RPM retention follows the epoch -------------------------------
+# 1:1.0 is newer than 0:9.0; with one version kept, the epoch bump stays.
+CASE="rpm-epoch"
+fresh_repo "$CASE"
+mkrpm 9.0 1.fc44
+mkrpm 1.0 2.fc44 1
+(cd "$REPO" && KEEP_VERSIONS=1 scripts/update-repos.sh) || fail "$CASE: publish failed"
+[ -e "$REPO/rpm/fc44/probe-1.0-2.fc44.noarch.rpm" ] || fail "$CASE: the epoch bump pruned"
+[ ! -e "$REPO/rpm/fc44/probe-9.0-1.fc44.noarch.rpm" ] || fail "$CASE: the older epoch kept"
+
+# --- case 16: one limit per dist over dist-agnostic and dist-specific files -
+# A package moving from one dist-agnostic build to builds per dist: what a
+# dist's index lists (its own files and the dist-agnostic ones) holds at most
+# KEEP_VERSIONS versions, and a dist-agnostic file no served dist still
+# lists is removed.
+CASE="deb-mixed-retention"
+fresh_repo "$CASE"
+for ver in 1.0 1.1 1.2; do
+  mkdeb mixed "$ver" amd64
+done
+for ver in 2.0 2.1; do
+  mkdeb mixed "$ver" amd64 noble
+done
+(cd "$REPO" && DEB_DISTS="noble trixie" KEEP_VERSIONS=2 scripts/update-repos.sh) \
+  || fail "$CASE: publish failed"
+noble="$REPO/deb/dists/noble/main/binary-amd64/Packages"
+trixie="$REPO/deb/dists/trixie/main/binary-amd64/Packages"
+[ "$(grep -c '^Package: mixed$' "$noble")" -eq 2 ] || fail "$CASE: noble lists more than the limit"
+grep -q '^Version: 2.1$' "$noble" || fail "$CASE: noble lacks its newest version"
+grep -q '^Version: 2.0$' "$noble" || fail "$CASE: noble lacks its second version"
+[ "$(grep -c '^Package: mixed$' "$trixie")" -eq 2 ] || fail "$CASE: trixie does not keep two versions"
+grep -q '^Version: 1.2$' "$trixie" || fail "$CASE: trixie lacks the newest dist-agnostic version"
+pool="$REPO/deb/pool/main/m/mixed"
+[ ! -e "$pool/mixed_1.0_amd64.deb" ] || fail "$CASE: a version no dist lists kept"
+(cd "$REPO" && DEB_DISTS="noble" KEEP_VERSIONS=2 scripts/update-repos.sh) \
+  || fail "$CASE: second publish failed"
+for ver in 1.1 1.2; do
+  [ ! -e "$pool/mixed_${ver}_amd64.deb" ] || fail "$CASE: dist-agnostic $ver kept with no dist listing it"
+done
+
+echo "update-repos.sh: publish OK (16 cases)"
