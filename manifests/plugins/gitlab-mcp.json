@@ -3,16 +3,16 @@
     "source": "git-subdir",
     "url": "https://github.com/structured-world/gitlab-mcp.git",
     "path": "./plugins/gitlab-mcp",
-    "sha": "0c12e2eae934863f473354b8faeaba51a56a52b3"
+    "sha": "53028bbd6762c2a287f37fe1751179911fab0533"
   },
-  "release": "https://github.com/structured-world/gitlab-mcp/releases/tag/gitlab-mcp-v13.4.0",
-  "download": "https://github.com/structured-world/gitlab-mcp/releases/download/gitlab-mcp-v13.4.0/gitlab-mcp-codex.zip",
-  "checksum": "https://github.com/structured-world/gitlab-mcp/releases/download/gitlab-mcp-v13.4.0/gitlab-mcp-codex.zip.sha256",
-  "sha256": "ce6ad39c9b9cf3340561dc8baf1897fdde8a018140ed58829ea11eccb6e1ed71",
+  "release": "https://github.com/structured-world/gitlab-mcp/releases/tag/gitlab-mcp-v13.5.0",
+  "download": "https://github.com/structured-world/gitlab-mcp/releases/download/gitlab-mcp-v13.5.0/gitlab-mcp-codex.zip",
+  "checksum": "https://github.com/structured-world/gitlab-mcp/releases/download/gitlab-mcp-v13.5.0/gitlab-mcp-codex.zip.sha256",
+  "sha256": "3287ef553d4673b741a7e1493f6426622ef5b3bc384211a6c6f7cec9fcbfd0b8",
   "manifest": {
     "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
     "name": "gitlab-mcp",
-    "version": "13.4.0",
+    "version": "13.5.0",
     "description": "Advanced GitLab MCP server",
     "author": {
       "name": "Dmitry Prudnikov",
